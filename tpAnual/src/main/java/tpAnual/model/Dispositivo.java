@@ -17,6 +17,8 @@ public class Dispositivo {
 		this.nombreDisp = nombDisp;
 		this.kWh = kWh;
 		this.estadoDisp = true;
+		
+		//lo mismo q la fecha de cliente
 		this.fechaRegistro = LocalDateTime.now();
 		this.startTime = System.nanoTime();		
 	}
