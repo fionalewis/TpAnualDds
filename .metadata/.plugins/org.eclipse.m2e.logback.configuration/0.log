@@ -1,0 +1,37 @@
+2018-04-17 01:09:10,723 [Worker-3] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2018-04-17 01:11:33,939 [Worker-9] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: proyectoDdS:tpDdS:0.0.1-SNAPSHOT @ C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\pom.xml.
+2018-04-17 01:11:34,830 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:11:34,831 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\main\resources
+2018-04-17 01:11:34,834 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:11:34,834 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\test\resources
+2018-04-17 01:11:36,115 [Worker-9] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: proyectoDdS:tpDdS:0.0.1-SNAPSHOT @ C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\pom.xml.
+2018-04-17 01:11:37,529 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:11:37,531 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\main\resources
+2018-04-17 01:11:37,533 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:11:37,534 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\test\resources
+2018-04-17 01:12:20,367 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:12:20,368 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\main\resources
+2018-04-17 01:12:20,369 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:12:20,370 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\test\resources
+2018-04-17 01:16:51,121 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:16:51,134 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\main\resources
+2018-04-17 01:16:51,135 [Worker-6] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:16:51,136 [Worker-6] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\test\resources
+2018-04-17 01:18:06,920 [Worker-1] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: proyectoDdS:tpDdS:0.0.1-SNAPSHOT @ C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\pom.xml.
+2018-04-17 01:18:08,086 [Worker-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.pom
+2018-04-17 01:18:08,407 [Worker-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.pom
+2018-04-17 01:18:08,624 [Worker-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/code/gson/gson-parent/2.8.2/gson-parent-2.8.2.pom
+2018-04-17 01:18:08,801 [Worker-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/code/gson/gson-parent/2.8.2/gson-parent-2.8.2.pom
+2018-04-17 01:18:09,502 [Worker-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar
+2018-04-17 01:18:10,616 [Worker-1] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar
+2018-04-17 01:18:11,255 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:18:11,276 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\main\resources
+2018-04-17 01:18:11,278 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:18:11,279 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\test\resources
+2018-04-17 01:18:16,428 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:18:16,456 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\main\resources
+2018-04-17 01:18:16,458 [Worker-5] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:18:16,460 [Worker-5] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\test\resources
+2018-04-17 01:20:41,559 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-04-17 01:20:41,560 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\HP\Desktop\Nacho\Facu\DDS\Workspace\dds-tp\TpAnualDds\tpAnual\src\main\resources
+2018-04-17 01:20:41,561 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
