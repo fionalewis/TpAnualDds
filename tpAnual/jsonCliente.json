@@ -1,0 +1,42 @@
+VALID JSON (RFC 4627)
+Formatted JSON Data
+[  
+   {  
+      "tipoDoc":"DNI",
+      "nroDoc":40505652,
+      "telefono":45454545,
+      "domicilio":"medrano 333",
+      "nombreYApellido":"juan perez",
+      "username":"xd",
+      "password":"contrasena",
+      "dispositivos":[  
+         {  
+            "nombreDisp":"heladera",
+            "kWh":10
+         },
+         {  
+            "nombreDisp":"microondas",
+            "kWh":11
+         }
+      ]
+   },
+   {  
+      "tipoDoc":"DNI",
+      "nroDoc":20505652,
+      "telefono":55454545,
+      "domicilio":"callefalsa 123",
+      "nombreYApellido":"homero thompson",
+      "username":"B0ssman69",
+      "password":"12345",
+      "dispositivos":[  
+         {  
+            "nombreDisp":"heladera",
+            "kWh":100
+         },
+         {  
+            "nombreDisp":"microondas",
+            "kWh":110
+         }
+      ]
+   }
+]

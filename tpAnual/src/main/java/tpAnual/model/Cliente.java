@@ -1,6 +1,7 @@
 package tpAnual;
 
 import java.util.List;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Cliente extends Usuario {
@@ -11,18 +12,21 @@ public class Cliente extends Usuario {
 	private int nroDoc;
 	private int telefono;
 	private String domicilio;
-	private double consumo;
 	private Categoria categ = new Categoria("R1");
-	private List<Dispositivo> dispositivos;
+	private List<Dispositivo> dispositivos = new ArrayList<>();
 	
-	public Cliente(String name,String surname,String username,String pass,
-					TipoDocumento tDoc,int nDoc,int tel,String dom) {
-		super(name,surname,username,pass);
+	public Cliente(TipoDocumento tDoc,int nDoc,int tel,String dom,
+			String name,String username,String pass,List<Dispositivo> dispositivos) {
 		this.tipoDoc = tDoc;
 		this.nroDoc = nDoc;
 		this.telefono = tel;
 		this.domicilio = dom;
-		this.dispositivos = new ArrayList<>();
+		this.dispositivos.addAll(dispositivos) ;
+		this.nombreYApellido = name;
+		//la fecha no estoy seguro, por ahi cuando te llega del json lo instancias devuelta y ahi estaria mal
+		this.fechaAlta = LocalDateTime.now();
+		this.userName = username;
+		this.password = pass;
 	}
 
 	//Getters y Setters
