@@ -12,7 +12,7 @@ import com.google.gson.stream.JsonReader;
 
 public class DAOJson {
 	
-	public static Object deserializarObjeto(Class clase, String ruta) throws FileNotFoundException, InstantiationException, IllegalAccessException {
+	public static <T> Object deserializarObjeto(Class<T> clase, String ruta) throws FileNotFoundException, InstantiationException, IllegalAccessException {
 		Gson gson = new Gson();
 		JsonReader reader = new JsonReader(new FileReader(ruta));
 		

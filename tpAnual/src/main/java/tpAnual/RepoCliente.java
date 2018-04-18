@@ -1,4 +1,4 @@
-package tpAnual.model;
+package tpAnual;
 
 import java.io.FileNotFoundException;
 import java.util.List;

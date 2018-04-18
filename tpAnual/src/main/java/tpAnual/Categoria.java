@@ -6,39 +6,39 @@ public class Categoria {
 	private double cargoFijo;
 	private double cargoVariable;
 	
+	//Constructores
 	public Categoria() {}
+
+	public Categoria(String codClasif) {
+		this.clasif = codClasif;
+	}
 	
 	public Categoria(String clasif,double cF,double cV) {
 		this.clasif = clasif;
 		this.cargoFijo = cF;
 		this.cargoVariable = cV;
 	}
-
-	public Categoria(String codClasif) {
-		this.clasif = codClasif;
-	}
-
+	
+	//Getters y Setters
 	public String getClasif() {
 		return clasif;
 	}
-
 	public double getCargoFijo() {
 		return cargoFijo;
 	}
-
 	public double getCargoVariable() {
 		return cargoVariable;
 	}
-	
 	public void setClasif(String clasifCat) {
 		this.clasif = clasifCat;
 	}
-	
 	public void setValores(double cF,double cV) {
 		this.cargoFijo = cF;
 		this.cargoVariable = cV;
 	}
 
+	//
+	
 	public Categoria actualizarCategoria(double consumo,Categoria myCateg) {
 	  if(consumo <= 150){myCateg.setClasif("R1");myCateg.setValores(18.76, 0.644);}
 	  	else if(consumo <= 325 ){myCateg.setClasif("R2");myCateg.setValores(35.32, 0.644);}

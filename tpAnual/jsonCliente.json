@@ -6,17 +6,18 @@ Formatted JSON Data
       "nroDoc":40505652,
       "telefono":45454545,
       "domicilio":"medrano 333",
-      "nombreYApellido":"juan perez",
+      "nombre":"juan"",
+      "apellido":"perez",
       "username":"xd",
       "password":"contrasena",
       "dispositivos":[  
          {  
             "nombreDisp":"heladera",
-            "kWh":10
+            "kWh":0.063,
          },
          {  
             "nombreDisp":"microondas",
-            "kWh":11
+            "kWh":0.64,
          }
       ]
    },
@@ -25,17 +26,18 @@ Formatted JSON Data
       "nroDoc":20505652,
       "telefono":55454545,
       "domicilio":"callefalsa 123",
-      "nombreYApellido":"homero thompson",
+      "nombre":"homero",
+      "apellido":"thompson",
       "username":"B0ssman69",
       "password":"12345",
       "dispositivos":[  
          {  
-            "nombreDisp":"heladera",
-            "kWh":100
+            "nombreDisp":"televisor",
+            "kWh":0.14,
          },
          {  
-            "nombreDisp":"microondas",
-            "kWh":110
+            "nombreDisp":"aire acondicionado",
+            "kWh":1.013,
          }
       ]
    }

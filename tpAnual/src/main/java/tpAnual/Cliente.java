@@ -1,8 +1,8 @@
 package tpAnual;
 
 import java.util.List;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class Cliente extends Usuario {
 
@@ -14,19 +14,27 @@ public class Cliente extends Usuario {
 	private String domicilio;
 	private Categoria categ = new Categoria("R1");
 	private List<Dispositivo> dispositivos = new ArrayList<>();
+	private double consumo; //Habías borrado esta variable sin querer
 	
-	public Cliente(TipoDocumento tDoc,int nDoc,int tel,String dom,
-			String name,String username,String pass,List<Dispositivo> dispositivos) {
+	//Este sería un constructor default para cuando un usuario cree una cuenta
+	public Cliente(String name,String surname,String username,String pass,
+					TipoDocumento tDoc,int nDoc,int tel,String dom) {
+		super(name,surname,username,pass);
 		this.tipoDoc = tDoc;
 		this.nroDoc = nDoc;
 		this.telefono = tel;
 		this.domicilio = dom;
-		this.dispositivos.addAll(dispositivos) ;
-		this.nombreYApellido = name;
-		//la fecha no estoy seguro, por ahi cuando te llega del json lo instancias devuelta y ahi estaria mal
-		this.fechaAlta = LocalDateTime.now();
-		this.userName = username;
-		this.password = pass;
+	}
+	
+	//Constructor para el json
+	public Cliente(String name,String surname,String username,String pass,int y,int m,int d,
+					TipoDocumento tDoc,int nDoc,int tel,String dom,List<Dispositivo> disp) {
+		super(name,surname,username,pass);
+		this.tipoDoc = tDoc;
+		this.nroDoc = nDoc;
+		this.telefono = tel;
+		this.domicilio = dom;
+		this.dispositivos.addAll(disp);
 	}
 
 	//Getters y Setters
@@ -76,7 +84,7 @@ public class Cliente extends Usuario {
 		return categ;
 	}
 
-	public String categoria(int consumo,Categoria categ) {
+	public String categoria(double consumo,Categoria categ) {
 		categ.actualizarCategoria(consumo,categ);
 		return categ.getClasif();
 	}
@@ -85,6 +93,13 @@ public class Cliente extends Usuario {
 
 	@Override public double calcularConsumo() {
 		this.consumo = this.dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual()).sum();
+		return consumo;
+	}
+	
+	//Método duplicado para poder pasar una fecha final con la que evaluar los test, después lo mejoro
+	
+	public double calcularConsumo(LocalDateTime fechaFin) {
+		this.consumo = this.dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual(unDisp.getFechaRegistro(),fechaFin)).sum();
 		return consumo;
 	}
 	
