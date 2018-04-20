@@ -1,0 +1,24 @@
+[  
+   {  
+      'tipoDoc':"DNI",
+      'nroDoc':"40505652",
+      'telefono':"45454545",
+      'domicilio':"medrano 333",
+      'nombre':"juan",
+      'apellido':"perez",
+      'userName':"xd",
+      'password':"contrasena",
+      'dispositivos':[]
+   },
+   {  
+      'tipoDoc':"DNI",
+      'nroDoc':"20505652",
+      'telefono':"55454545",
+      'domicilio':"callefalsa 123",
+      'nombre':"homero",
+      'apellido':"thompson",
+      'userName':"B0ssman69",
+      'password':"12345",
+      'dispositivos':[]
+   }
+]

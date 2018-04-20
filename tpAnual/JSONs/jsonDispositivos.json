@@ -1,0 +1,9 @@
+[  
+         {  
+            'nombreDisp' : "heladera",
+            'kWh' : 0.063
+         },
+         {  'nombreDisp' : "microondas",
+            'kWh':0.64
+         }
+]
