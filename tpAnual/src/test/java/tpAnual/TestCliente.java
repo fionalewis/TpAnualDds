@@ -3,25 +3,24 @@ package tpAnual;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
-
 import org.junit.*;
-
 import tpAnual.Cliente.TipoDocumento;
+
 
 public class TestCliente {
 	
-	private static final TipoDocumento DNI = null;
+	//private static final TipoDocumento DNI = null;
 	private Cliente clienteDePrueba;
 	private List<Dispositivo> dispositivosPrueba = new ArrayList<>();
 	Dispositivo tele = new Dispositivo("Televisor",0.14);
-	Dispositivo aire = new Dispositivo("Aire acondicionado",1.013); //Por si llega a ser necesario agregar más tests
+	Dispositivo aire = new Dispositivo("Aire acondicionado",1.013); //Por si llega a ser necesario agregar mï¿½s tests
 	LocalDateTime fechaFinalParaTest = LocalDateTime.of(2018,4,18,7,50,0);
 	
 	@Before
 	public void init() {
 		dispositivosPrueba.add(tele);
-		this.clienteDePrueba = new Cliente("bart","simpson","elbarto","12345",2018,3,1,DNI,
-								4444444,11111111,"Avenida Siempreviva 742",dispositivosPrueba);
+		this.clienteDePrueba = new Cliente("bart","simpson","elbarto","12345",2018,3,1,TipoDocumento.DNI,
+								"4444444","11111111","Avenida Siempreviva 742",dispositivosPrueba);
 		tele.setFechaRegistro(2018,2,5,22,15,0); //Instanciamos la fecha de registro de los dispositivos
 		aire.setFechaRegistro(2018,4,10,0,0,0);
 	}
@@ -70,5 +69,4 @@ public class TestCliente {
 	public void testCantDispositivosEncendidos() {
 		Assert.assertEquals(clienteDePrueba.cantDisp(true),1);
 	}
-
 }

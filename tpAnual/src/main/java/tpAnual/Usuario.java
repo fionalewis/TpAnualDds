@@ -10,14 +10,6 @@ public abstract class Usuario {
 	protected String userName;
 	protected String password;
 	
-	public Usuario(String name,String surname,String userName,String pass) {
-		setNombre(name);
-		setApellido(surname);
-		setUserName(userName);
-		setPassword(pass);
-		this.fechaAlta = LocalDate.now(); //Sólo LocalDate porque los usuarios no necesitan saber su hora de registro, pero si llega a ser necesario lo podemos modificar
-	}
-	
 	public String getNombre() {
 		return nombre;
 	}
@@ -49,6 +41,6 @@ public abstract class Usuario {
 		this.password = password;
 	}
 	
-	public abstract double calcularConsumo(); //Redefinido por cada clase según lo que necesiten hacer
+	public abstract double calcularConsumo(); //Redefinido por cada clase segï¿½n lo que necesiten hacer
 		
 }

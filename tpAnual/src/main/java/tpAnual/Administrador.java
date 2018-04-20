@@ -9,16 +9,28 @@ public class Administrador extends Usuario {
 
 	private int codAdmin;
 	private List<Integer> codigosAdmins = new ArrayList<>(); //Temporal hasta que tengamos una BDD para los usuarios o mueva esto a la clase Programa
+
+	public Administrador() {
+		super();		
+	}	
 	
 	//Constructor default
 	public Administrador(String nombre,String apellido,String username,String pass) {
-		super(nombre,apellido,username,pass);
+		setNombre(nombre);
+		setApellido(apellido);
+		setUserName(userName);
+		setPassword(pass);
+		this.fechaAlta = LocalDate.now();
 		this.codAdmin = this.asignarCod();		
 	}
 	
 	//Constructor del json
 	public Administrador(String nombre,String apellido,String username,String pass,int y,int m,int d) {
-		super(nombre,apellido,username,pass);
+		setNombre(nombre);
+		setApellido(apellido);
+		setUserName(userName);
+		setPassword(pass);
+		this.fechaAlta = LocalDate.now();
 		this.codAdmin = this.asignarCod();
 		this.fechaAlta = LocalDate.of(y,m,d);
 	}
@@ -42,6 +54,6 @@ public class Administrador extends Usuario {
 	    return elapsedMonths;
 	}
 	
-	public double calcularConsumo() {return 0;} //Por ahora hasta que se nos informe qué hace el admin
+	public double calcularConsumo() {return 0;} //Por ahora hasta que se nos informe quï¿½ hace el admin
 
 }

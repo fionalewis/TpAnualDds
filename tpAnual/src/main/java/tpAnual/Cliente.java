@@ -2,6 +2,7 @@ package tpAnual;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Cliente extends Usuario {
@@ -9,17 +10,25 @@ public class Cliente extends Usuario {
 	public enum TipoDocumento { DNI, CI, LE, LI }
 
 	private TipoDocumento tipoDoc;
-	private int nroDoc;
-	private int telefono;
+	private String nroDoc;
+	private String telefono;
 	private String domicilio;
 	private Categoria categ = new Categoria("R1");
 	private List<Dispositivo> dispositivos = new ArrayList<>();
-	private double consumo; //Habías borrado esta variable sin querer
+	private double consumo;
 	
-	//Este sería un constructor default para cuando un usuario cree una cuenta
+	public Cliente() {
+		super();
+	}
+		
+	//Este serï¿½a un constructor default para cuando un usuario cree una cuenta
 	public Cliente(String name,String surname,String username,String pass,
-					TipoDocumento tDoc,int nDoc,int tel,String dom) {
-		super(name,surname,username,pass);
+					TipoDocumento tDoc,String nDoc,String tel,String dom) {
+		setNombre(name);
+		setApellido(surname);
+		setUserName(userName);
+		setPassword(pass);
+		this.fechaAlta = LocalDate.now();
 		this.tipoDoc = tDoc;
 		this.nroDoc = nDoc;
 		this.telefono = tel;
@@ -28,8 +37,12 @@ public class Cliente extends Usuario {
 	
 	//Constructor para el json
 	public Cliente(String name,String surname,String username,String pass,int y,int m,int d,
-					TipoDocumento tDoc,int nDoc,int tel,String dom,List<Dispositivo> disp) {
-		super(name,surname,username,pass);
+					TipoDocumento tDoc,String nDoc,String tel,String dom,List<Dispositivo> disp) {
+		setNombre(name);
+		setApellido(surname);
+		setUserName(userName);
+		setPassword(pass);
+		this.fechaAlta = LocalDate.now();
 		this.tipoDoc = tDoc;
 		this.nroDoc = nDoc;
 		this.telefono = tel;
@@ -45,16 +58,16 @@ public class Cliente extends Usuario {
 	public void setTipoDoc(TipoDocumento tipoDoc) {
 		this.tipoDoc = tipoDoc;
 	}
-	public int getNroDoc() {
+	public String getNroDoc() {
 		return nroDoc;
 	}
-	public void setNroDoc(int nroDoc) {
+	public void setNroDoc(String nroDoc) {
 		this.nroDoc = nroDoc;
 	}
-	public int getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
-	public void setTelefono(int telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 	public String getDomicilio() {
@@ -96,7 +109,7 @@ public class Cliente extends Usuario {
 		return consumo;
 	}
 	
-	//Método duplicado para poder pasar una fecha final con la que evaluar los test, después lo mejoro
+	//Mï¿½todo duplicado para poder pasar una fecha final con la que evaluar los test, despuï¿½s lo mejoro
 	
 	public double calcularConsumo(LocalDateTime fechaFin) {
 		this.consumo = this.dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual(unDisp.getFechaRegistro(),fechaFin)).sum();

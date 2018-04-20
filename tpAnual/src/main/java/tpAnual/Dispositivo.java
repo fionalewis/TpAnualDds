@@ -12,6 +12,10 @@ public class Dispositivo {
 	private LocalDateTime fechaRegistro;
 	private double horasDeUso = 0;
 	
+	public Dispositivo() {
+		super();
+	}
+	
 	//Constructor por default
 	public Dispositivo(String nombDisp,double kWh) {
 		this.nombreDisp = nombDisp;
@@ -20,12 +24,12 @@ public class Dispositivo {
 		this.fechaRegistro = LocalDateTime.now();	
 	}
 	
-	//Opción de constructor para el json
+	//Opciï¿½n de constructor para el json
 	public Dispositivo(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec) {
 		setNombreDisp(nombDisp);
 		setkWh(kWh);
 		setEstadoDisp(true);
-		this.fechaRegistro = LocalDateTime.of(year,month,day,hour,min,sec); //Así podemos elegir una fecha random por nuestra cuenta, y de paso se hace mas fácil para los tests
+		this.fechaRegistro = LocalDateTime.of(year,month,day,hour,min,sec); //Asï¿½ podemos elegir una fecha random por nuestra cuenta, y de paso se hace mas fï¿½cil para los tests
 	}
 	
 	//Getters y Setters
@@ -63,15 +67,15 @@ public class Dispositivo {
 	
 	//Funcionalidades
 
-	/* A futuro seguro va a hacer falta redefinir esto con un do while según el estado del dispositivo 
-	 y/o rediseñar toda la clase con del state pattern o algo */
+	/* A futuro seguro va a hacer falta redefinir esto con un do while segï¿½n el estado del dispositivo 
+	 y/o rediseï¿½ar toda la clase con del state pattern o algo */
 	
     public double calculoDeHoras(LocalDateTime fechaInicio){
         LocalDateTime currentDate = LocalDateTime.now();
         Duration period = Duration.between(fechaRegistro,currentDate);
         double periodSeconds = period.getSeconds();
         this.horasDeUso = (periodSeconds/86400)*24;
-        //No borren estas líneas comentadas porfa! Tengo un par de dudas de ese código que quiero poner y quiero consultarlas
+        //No borren estas lï¿½neas comentadas porfa! Tengo un par de dudas de ese cï¿½digo que quiero poner y quiero consultarlas
         //DecimalFormat h = new DecimalFormat("#.#####");
         //double horasUso = Double.parseDouble(h.format(horasDeUso));
         int temp = (int)(horasDeUso*100.0);
