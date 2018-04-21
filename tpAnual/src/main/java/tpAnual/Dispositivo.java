@@ -84,7 +84,7 @@ public class Dispositivo {
 	}
     
 	public double consumoActual() {
-		this.horasDeUso = this.calculoDeHoras(fechaRegistro);
+		horasDeUso = calculoDeHoras(fechaRegistro);
 		double consumoActual = horasDeUso*kWh;
 		return consumoActual;	
 	}
@@ -95,14 +95,14 @@ public class Dispositivo {
 	        LocalDateTime currentDate = fechaFinal;
 	        Duration period = Duration.between(fechaRegistro,currentDate);
 	        double periodSeconds = period.getSeconds();
-	        this.horasDeUso = (periodSeconds/86400)*24;
+	        horasDeUso = (periodSeconds/86400)*24;
 	        int temp = (int)(horasDeUso*100.0);
 	        double horasUsoShort = ((double)temp)/100.0;
 	        return horasUsoShort;
 		}
 
 	public double consumoActual(LocalDateTime fechaRegistro,LocalDateTime fechaFin) {
-		this.horasDeUso = this.calculoDeHoras(fechaRegistro,fechaFin);
+		horasDeUso = calculoDeHoras(fechaRegistro,fechaFin);
 		double consumoActual = horasDeUso*kWh;
 		return consumoActual;
 	}

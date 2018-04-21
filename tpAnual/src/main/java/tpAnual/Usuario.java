@@ -41,6 +41,6 @@ public abstract class Usuario {
 		this.password = password;
 	}
 	
-	public abstract double calcularConsumo(); //Redefinido por cada clase seg�n lo que necesiten hacer
+	public abstract double calcularConsumo(); //Redefinido por cada clase segun lo que necesiten hacer
 		
 }

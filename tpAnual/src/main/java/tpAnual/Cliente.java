@@ -15,13 +15,12 @@ public class Cliente extends Usuario {
 	private String domicilio;
 	private Categoria categ = new Categoria("R1");
 	private List<Dispositivo> dispositivos = new ArrayList<>();
-	private double consumo;
 	
 	public Cliente() {
 		super();
 	}
 		
-	//Este ser�a un constructor default para cuando un usuario cree una cuenta
+	//Este seria un constructor default para cuando un usuario cree una cuenta
 	public Cliente(String name,String surname,String username,String pass,
 					TipoDocumento tDoc,String nDoc,String tel,String dom) {
 		setNombre(name);
@@ -98,21 +97,22 @@ public class Cliente extends Usuario {
 	}
 
 	public String categoria(double consumo,Categoria categ) {
+		consumo = calcularConsumo();
 		categ.actualizarCategoria(consumo,categ);
 		return categ.getClasif();
 	}
 	
 	//Consumo
 
-	@Override public double calcularConsumo() {
-		this.consumo = this.dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual()).sum();
+	@Override public double calcularConsumo() { //Le podriamos cambiar el nombre a consumo() pero bue no hace la dif ahora
+		double consumo = this.dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual()).sum();
 		return consumo;
 	}
 	
-	//M�todo duplicado para poder pasar una fecha final con la que evaluar los test, despu�s lo mejoro
+	//Metodo duplicado para poder pasar una fecha final con la que evaluar los test
 	
 	public double calcularConsumo(LocalDateTime fechaFin) {
-		this.consumo = this.dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual(unDisp.getFechaRegistro(),fechaFin)).sum();
+		double consumo = this.dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual(unDisp.getFechaRegistro(),fechaFin)).sum();
 		return consumo;
 	}
 	

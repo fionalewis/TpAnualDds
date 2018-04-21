@@ -9,11 +9,10 @@ import tpAnual.Cliente.TipoDocumento;
 
 public class TestCliente {
 	
-	//private static final TipoDocumento DNI = null;
 	private Cliente clienteDePrueba;
 	private List<Dispositivo> dispositivosPrueba = new ArrayList<>();
 	Dispositivo tele = new Dispositivo("Televisor",0.14);
-	Dispositivo aire = new Dispositivo("Aire acondicionado",1.013); //Por si llega a ser necesario agregar m�s tests
+	Dispositivo aire = new Dispositivo("Aire acondicionado",1.013); //Por si llega a ser necesario agregar mas tests
 	LocalDateTime fechaFinalParaTest = LocalDateTime.of(2018,4,18,7,50,0);
 	
 	@Before
