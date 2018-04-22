@@ -2,59 +2,39 @@ package tpAnual;
 
 public class Categoria {
 	
-	private String clasif;
-	private double cargoFijo;
-	private double cargoVariable;
+	private CategoriaContext context = new CategoriaContext();
+	private double consumo;
+	private Categoria1 stateR1 = new Categoria1();
+	private Categoria2 stateR2 = new Categoria2();
+	private Categoria3 stateR3 = new Categoria3();
+	private Categoria4 stateR4 = new Categoria4();
+	private Categoria5 stateR5 = new Categoria5();
+	private Categoria6 stateR6 = new Categoria6();
+	private Categoria7 stateR7 = new Categoria7();
+	private Categoria8 stateR8 = new Categoria8();
+	private Categoria9 stateR9 = new Categoria9();
 	
-	//Constructores
 	public Categoria() {}
-
-	public Categoria(String codClasif) {
-		this.clasif = codClasif;
+	public Categoria(double _consumo) {
+		consumo = _consumo;
+		actualizarCategoria(consumo);
+		context.calcularTarifa(consumo);
 	}
 	
-	public Categoria(String clasif,double cF,double cV) {
-		this.clasif = clasif;
-		this.cargoFijo = cF;
-		this.cargoVariable = cV;
+	public void actualizarCategoria(double consumo) {                                                
+		if(consumo <= 100 ) { stateR1.actualizarCategoria(context); return; }                                                      
+		if(consumo <= 325 ) { stateR2.actualizarCategoria(context); return; }                                   
+	  	if(consumo <= 400 ) { stateR3.actualizarCategoria(context); return; }                                   
+	  	if(consumo <= 450 ) { stateR4.actualizarCategoria(context); return; }                                   
+	  	if(consumo <= 500 ) { stateR5.actualizarCategoria(context); return; }                                   
+	  	if(consumo <= 600 ) { stateR6.actualizarCategoria(context); return; }                                   
+	  	if(consumo <= 700 ) { stateR7.actualizarCategoria(context); return; }                                   
+	  	if(consumo <= 1400) { stateR8.actualizarCategoria(context); return; }                                   
+	  	if(consumo > 1400 ) { stateR9.actualizarCategoria(context); return; }                                   
 	}
 	
-	//Getters y Setters
-	public String getClasif() {
-		return clasif;
-	}
-	public double getCargoFijo() {
-		return cargoFijo;
-	}
-	public double getCargoVariable() {
-		return cargoVariable;
-	}
-	public void setClasif(String clasifCat) {
-		this.clasif = clasifCat;
-	}
-	public void setValores(double cF,double cV) {
-		this.cargoFijo = cF;
-		this.cargoVariable = cV;
-	}
-
-	//
-	
-	public Categoria actualizarCategoria(double consumo,Categoria myCateg) {
-	  if(consumo <= 150){myCateg.setClasif("R1");myCateg.setValores(18.76, 0.644);}
-	  	else if(consumo <= 325 ){myCateg.setClasif("R2");myCateg.setValores(35.32, 0.644);}
-	  	else if(consumo <= 400 ){myCateg.setClasif("R3");myCateg.setValores(60.71, 0.681);}
-	  	else if(consumo <= 450 ){myCateg.setClasif("R4");myCateg.setValores(71.74, 0.738);}
-	  	else if(consumo <= 500 ){myCateg.setClasif("R5");myCateg.setValores(110.38, 0.794);}
-	  	else if(consumo <= 600 ){myCateg.setClasif("R6");myCateg.setValores(220.75, 0.832);}
-	  	else if(consumo <= 700 ){myCateg.setClasif("R7");myCateg.setValores(443.59, 0.851);}
-	  	else if(consumo <= 1400 ){myCateg.setClasif("R8");myCateg.setValores(545.96, 0.851);}
-	  	else {myCateg.setClasif("R9");myCateg.setValores(887.19, 0.851);}
-	  	return myCateg;
-	}
-	
-	public double calculoTarifa(Categoria categ,float consumo) {
-		categ.actualizarCategoria(consumo,categ);
-		double tarifa = categ.getCargoVariable()*consumo + categ.getCargoFijo();
-		return tarifa;
-	}
+	public String categoriaActual() { return context.getState().getCategoriaActual(); }
+	public double tarifaActual() { return context.calcularTarifa(consumo); } 
 }
+
+

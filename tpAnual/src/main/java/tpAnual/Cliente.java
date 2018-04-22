@@ -13,9 +13,8 @@ public class Cliente extends Usuario {
 	private String nroDoc;
 	private String telefono;
 	private String domicilio;
-	private Categoria categ = new Categoria("R1");
+	private Categoria categoria = new Categoria();
 	private List<Dispositivo> dispositivos = new ArrayList<>();
-	private double consumo;
 	
 	public Cliente() {
 		super();
@@ -94,32 +93,29 @@ public class Cliente extends Usuario {
 	//Categoria
 	
 	public Categoria getCateg() {
-		return categ;
-	}
-
-	public String categoria(double consumo,Categoria categ) {
-		categ.actualizarCategoria(consumo,categ);
-		return categ.getClasif();
+		return categoria;
 	}
 	
 	//Consumo
 
 	@Override public double calcularConsumo() {
-		this.consumo = this.dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual()).sum();
+		double consumo = dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual()).sum();
+		categoria = new Categoria(consumo);
 		return consumo;
 	}
 	
 	//M�todo duplicado para poder pasar una fecha final con la que evaluar los test, despu�s lo mejoro
 	
 	public double calcularConsumo(LocalDateTime fechaFin) {
-		this.consumo = this.dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual(unDisp.getFechaRegistro(),fechaFin)).sum();
+		double consumo = dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual(fechaFin)).sum();
+		categoria = new Categoria(consumo); //se actualiza la categoria cuando se calcula el consumo
 		return consumo;
 	}
 	
 	//Funcionalidades
 	
 	public boolean algunoEncendido(List<Dispositivo> dispositivos) {
-		return dispositivos.stream().anyMatch(unDisp -> unDisp.isEstadoDisp() == true);
+		return this.dispositivos.stream().anyMatch(unDisp -> unDisp.isEstadoDisp() == true);
 	}
 	
 	public int cantDispositivos() {
@@ -127,13 +123,15 @@ public class Cliente extends Usuario {
 	}
 	
 	public int cantDisp(boolean opcion) { //Prendido = true, Apagado = false
-		int apagados = 0, prendidos =0;
+		int apagados = 0, prendidos = 0;
+		
 		for (Dispositivo unDisp: dispositivos) {
 			if(unDisp.isEstadoDisp()) {
-				prendidos++;
-				apagados = dispositivos.size() - prendidos;
+				prendidos++;				
 			}
 		}
+		apagados = dispositivos.size() - prendidos;
+		
 		if(opcion) {
 			return prendidos;
 		} else {return apagados;}

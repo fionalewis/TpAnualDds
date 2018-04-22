@@ -9,7 +9,6 @@ import tpAnual.Cliente.TipoDocumento;
 
 public class TestCliente {
 	
-	//private static final TipoDocumento DNI = null;
 	private Cliente clienteDePrueba;
 	private List<Dispositivo> dispositivosPrueba = new ArrayList<>();
 	Dispositivo tele = new Dispositivo("Televisor",0.14);
@@ -45,14 +44,13 @@ public class TestCliente {
 
 	@Test
 	public void testGetCategDefault() {
-		Assert.assertEquals(clienteDePrueba.getCateg().getClasif(),"R1");
+		Assert.assertEquals(clienteDePrueba.getCateg().categoriaActual(),"R1");
 	}
 	
 	@Test
 	public void testActualizarCategoriaR2PorTenerConsumoDeLaTele() {
-		double cons = clienteDePrueba.calcularConsumo();
-		Categoria categ = clienteDePrueba.getCateg();
-		Assert.assertEquals(clienteDePrueba.categoria(cons,categ),"R2");
+		clienteDePrueba.calcularConsumo();
+		Assert.assertEquals(clienteDePrueba.getCateg().categoriaActual(),"R2");
 	}
 
 	@Test
