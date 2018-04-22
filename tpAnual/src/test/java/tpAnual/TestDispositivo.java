@@ -1,10 +1,7 @@
 package tpAnual;
 
-import org.junit.Assert;
 import java.time.LocalDateTime;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 public class TestDispositivo {
 	
@@ -18,13 +15,13 @@ public class TestDispositivo {
 	
 	@Test
 	public void calculoDeHorasTele() {
-		LocalDateTime fechaInicioTest = tele.getFechaRegistro();
-		Assert.assertEquals(1713.58,tele.calculoDeHoras(fechaInicioTest,fechaFinalParaTest),5);
+		//LocalDateTime fechaInicioTest = tele.getFechaRegistro();
+		Assert.assertEquals(1713.58,tele.calculoDeHoras(fechaFinalParaTest),5);//(fechaInicioTest,fechaFinalParaTest),5);
 	}
 	
 	@Test
 	public void consumoActualTele() {
-		Assert.assertEquals(239.9012,tele.consumoActual(),5);
+		Assert.assertEquals(239.9012,tele.consumoActual(fechaFinalParaTest),5);
 	}
 
 }

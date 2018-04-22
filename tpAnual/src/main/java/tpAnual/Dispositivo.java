@@ -2,7 +2,6 @@ package tpAnual;
 
 import java.time.LocalDateTime;
 import java.time.Duration;
-//import java.text.*;
 
 public class Dispositivo {
 	
@@ -24,7 +23,7 @@ public class Dispositivo {
 		this.fechaRegistro = LocalDateTime.now();	
 	}
 	
-	//Opci�n de constructor para el json
+	//Opci�n de constructor para los tests
 	public Dispositivo(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec) {
 		setNombreDisp(nombDisp);
 		setkWh(kWh);
@@ -70,41 +69,28 @@ public class Dispositivo {
 	/* A futuro seguro va a hacer falta redefinir esto con un do while seg�n el estado del dispositivo 
 	 y/o redise�ar toda la clase con del state pattern o algo */
 	
-    public double calculoDeHoras(LocalDateTime fechaInicio){
-        LocalDateTime currentDate = LocalDateTime.now();
+	public double calculoDeHoras() {
+		LocalDateTime currentDate = LocalDateTime.now();
         Duration period = Duration.between(fechaRegistro,currentDate);
         double periodSeconds = period.getSeconds();
-        this.horasDeUso = (periodSeconds/86400)*24;
-        //No borren estas l�neas comentadas porfa! Tengo un par de dudas de ese c�digo que quiero poner y quiero consultarlas
-        //DecimalFormat h = new DecimalFormat("#.#####");
-        //double horasUso = Double.parseDouble(h.format(horasDeUso));
-        int temp = (int)(horasDeUso*100.0);
-        double horasUsoShort = ((double)temp)/100.0;
-        return horasUsoShort;
+        horasDeUso = periodSeconds/3600;
+        return horasDeUso;
 	}
-    
+	
 	public double consumoActual() {
-		horasDeUso = calculoDeHoras(fechaRegistro);
-		double consumoActual = horasDeUso*kWh;
-		return consumoActual;	
+		horasDeUso = calculoDeHoras();
+		return horasDeUso*kWh;
 	}
 	
-	//Para poder definir la fecha final en los tests
-	
-	public double calculoDeHoras(LocalDateTime fechaInicio,LocalDateTime fechaFinal){
-	        LocalDateTime currentDate = fechaFinal;
-	        Duration period = Duration.between(fechaRegistro,currentDate);
-	        double periodSeconds = period.getSeconds();
-	        horasDeUso = (periodSeconds/86400)*24;
-	        int temp = (int)(horasDeUso*100.0);
-	        double horasUsoShort = ((double)temp)/100.0;
-	        return horasUsoShort;
-		}
-
-	public double consumoActual(LocalDateTime fechaRegistro,LocalDateTime fechaFin) {
-		horasDeUso = calculoDeHoras(fechaRegistro,fechaFin);
-		double consumoActual = horasDeUso*kWh;
-		return consumoActual;
+	public double calculoDeHoras(LocalDateTime fechaFin) {
+        Duration period = Duration.between(fechaRegistro,fechaFin);
+        double periodSeconds = period.getSeconds();
+        horasDeUso = periodSeconds/3600;
+        return horasDeUso;
 	}
-
+	
+	public double consumoActual(LocalDateTime fechaFin) {
+		horasDeUso = calculoDeHoras(fechaFin);
+		return horasDeUso*kWh;	
+	}
 }

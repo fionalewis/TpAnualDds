@@ -13,14 +13,14 @@ public class Cliente extends Usuario {
 	private String nroDoc;
 	private String telefono;
 	private String domicilio;
-	private Categoria categ = new Categoria("R1");
+	private Categoria categoria = new Categoria();
 	private List<Dispositivo> dispositivos = new ArrayList<>();
 	
 	public Cliente() {
 		super();
 	}
 		
-	//Este seria un constructor default para cuando un usuario cree una cuenta
+	//Este ser�a un constructor default para cuando un usuario cree una cuenta
 	public Cliente(String name,String surname,String username,String pass,
 					TipoDocumento tDoc,String nDoc,String tel,String dom) {
 		setNombre(name);
@@ -93,33 +93,29 @@ public class Cliente extends Usuario {
 	//Categoria
 	
 	public Categoria getCateg() {
-		return categ;
-	}
-
-	public String categoria(double consumo,Categoria categ) {
-		consumo = calcularConsumo();
-		categ.actualizarCategoria(consumo,categ);
-		return categ.getClasif();
+		return categoria;
 	}
 	
 	//Consumo
 
-	@Override public double calcularConsumo() { //Le podriamos cambiar el nombre a consumo() pero bue no hace la dif ahora
-		double consumo = this.dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual()).sum();
+	@Override public double calcularConsumo() {
+		double consumo = dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual()).sum();
+		categoria = new Categoria(consumo);
 		return consumo;
 	}
 	
-	//Metodo duplicado para poder pasar una fecha final con la que evaluar los test
+	//M�todo duplicado para poder pasar una fecha final con la que evaluar los test, despu�s lo mejoro
 	
 	public double calcularConsumo(LocalDateTime fechaFin) {
-		double consumo = this.dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual(unDisp.getFechaRegistro(),fechaFin)).sum();
+		double consumo = dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual(fechaFin)).sum();
+		categoria = new Categoria(consumo); //se actualiza la categoria cuando se calcula el consumo
 		return consumo;
 	}
 	
 	//Funcionalidades
 	
 	public boolean algunoEncendido(List<Dispositivo> dispositivos) {
-		return dispositivos.stream().anyMatch(unDisp -> unDisp.isEstadoDisp() == true);
+		return this.dispositivos.stream().anyMatch(unDisp -> unDisp.isEstadoDisp() == true);
 	}
 	
 	public int cantDispositivos() {
@@ -127,13 +123,15 @@ public class Cliente extends Usuario {
 	}
 	
 	public int cantDisp(boolean opcion) { //Prendido = true, Apagado = false
-		int apagados = 0, prendidos =0;
+		int apagados = 0, prendidos = 0;
+		
 		for (Dispositivo unDisp: dispositivos) {
 			if(unDisp.isEstadoDisp()) {
-				prendidos++;
-				apagados = dispositivos.size() - prendidos;
+				prendidos++;				
 			}
 		}
+		apagados = dispositivos.size() - prendidos;
+		
 		if(opcion) {
 			return prendidos;
 		} else {return apagados;}
