@@ -11,9 +11,7 @@ public class Dispositivo {
 	private LocalDateTime fechaRegistro;
 	private double horasDeUso = 0;
 	
-	public Dispositivo() {
-		super();
-	}
+	public Dispositivo() {}
 	
 	//Constructor por default
 	public Dispositivo(String nombDisp,double kWh) {
@@ -23,12 +21,12 @@ public class Dispositivo {
 		this.fechaRegistro = LocalDateTime.now();	
 	}
 	
-	//Opci�n de constructor para los tests
+	//Constructor para los test (por si hace falta)
 	public Dispositivo(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec) {
 		setNombreDisp(nombDisp);
 		setkWh(kWh);
 		setEstadoDisp(true);
-		this.fechaRegistro = LocalDateTime.of(year,month,day,hour,min,sec); //As� podemos elegir una fecha random por nuestra cuenta, y de paso se hace mas f�cil para los tests
+		this.fechaRegistro = LocalDateTime.of(year,month,day,hour,min,sec); //Asi se puede elegir la fecha p/los tests
 	}
 	
 	//Getters y Setters
@@ -66,8 +64,8 @@ public class Dispositivo {
 	
 	//Funcionalidades
 
-	/* A futuro seguro va a hacer falta redefinir esto con un do while seg�n el estado del dispositivo 
-	 y/o redise�ar toda la clase con del state pattern o algo */
+	/* A futuro seguro va a hacer falta redefinir esto con un do while segun el estado del dispositivo 
+	 y/o rehacer con el state pattern o algo idk */
 	
 	public double calculoDeHoras() {
 		LocalDateTime currentDate = LocalDateTime.now();

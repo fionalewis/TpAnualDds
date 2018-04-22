@@ -15,8 +15,7 @@ public class TestDispositivo {
 	
 	@Test
 	public void calculoDeHorasTele() {
-		//LocalDateTime fechaInicioTest = tele.getFechaRegistro();
-		Assert.assertEquals(1713.58,tele.calculoDeHoras(fechaFinalParaTest),5);//(fechaInicioTest,fechaFinalParaTest),5);
+		Assert.assertEquals(1713.58,tele.calculoDeHoras(fechaFinalParaTest),5);
 	}
 	
 	@Test

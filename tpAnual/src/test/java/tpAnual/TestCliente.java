@@ -20,7 +20,7 @@ public class TestCliente {
 		dispositivosPrueba.add(tele);
 		this.clienteDePrueba = new Cliente("bart","simpson","elbarto","12345",2018,3,1,TipoDocumento.DNI,
 								"4444444","11111111","Avenida Siempreviva 742",dispositivosPrueba);
-		tele.setFechaRegistro(2018,2,5,22,15,0); //Instanciamos la fecha de registro de los dispositivos
+		tele.setFechaRegistro(2018,2,5,22,15,0);
 		aire.setFechaRegistro(2018,4,10,0,0,0);
 	}
 	
@@ -41,7 +41,7 @@ public class TestCliente {
 		clienteDePrueba.quitarDispositivo(tele);
 		Assert.assertFalse(clienteDePrueba.getDispositivos().contains(tele));
 	}
-
+	
 	@Test
 	public void testGetCategDefault() {
 		Assert.assertEquals(clienteDePrueba.getCateg().categoriaActual(),"R1");
@@ -67,4 +67,5 @@ public class TestCliente {
 	public void testCantDispositivosEncendidos() {
 		Assert.assertEquals(clienteDePrueba.cantDisp(true),1);
 	}
+
 }

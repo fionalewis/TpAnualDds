@@ -1,23 +1,36 @@
 package tpAnual;
 
-public interface StateCategoria {
-	public void actualizarCategoria(CategoriaContext context);
-	String getCategoriaActual();
-    double getValorFijo();
-    double getValorVariable();
-    void setValorFijo(double valFijo);
-    void setValorVariable(double valVariable);
+public abstract class StateCategoria {
+	
+    public String categoriaR;
+    public double valorFijo;
+    public double valorVariable;
+	
+	public StateCategoria(String categoria,double cargoFijo,double cargoVariable) {
+		this.categoriaR = categoria;
+		setValorFijo(cargoFijo);
+		setValorVariable(cargoVariable);
+	}
+    
+    public String getCategoriaActual(){return categoriaR;}                                                
+    public double getValorFijo(){return valorFijo;}                                                       
+    public double getValorVariable(){return valorFijo;}                                                   
+    public void setValorFijo(double valFijo){this.valorFijo = valFijo;}                                   
+    public void setValorVariable(double valVariable){this.valorVariable = valVariable;}                    
+    public void actualizarCategoria(CategoriaContext context){context.setState(this);}
+    
 }
 
 class CategoriaContext {
+	
 	private StateCategoria catState;                                                                 
     
-	//Default                                                                                        
+	//Default
 	CategoriaContext() {                                                                             
-	    setState(  new Categoria1() );                                                                
+	    setState(new Categoria1());
 	}                                                                                                
 	                                                                                                 
-	//este setter solo se deberia usar aca en cualquier otro momento usar actualizarCategoria        
+	//este setter solo se deberia usar aca en cualquier otro momento usar actualizarCategoria
 	void setState(StateCategoria newState) {                                                   
 	    catState = newState;                                                                         
 	}                                                                                                
@@ -32,110 +45,56 @@ class CategoriaContext {
 	
 }
 
-class Categoria1 implements StateCategoria {                                                                 
-	String categoriaR = "R1";                                                                                
-	double valorFijo = 18.76;                                                                                
-	double valorVariable = 0.644;
-	public String getCategoriaActual() { return categoriaR; }                                                
-    public double getValorFijo() { return valorFijo; }                                                       
-    public double getValorVariable() { return valorFijo; }                                                   
-    public void setValorFijo(double valFijo) { this.valorFijo = valFijo; }                                   
-    public void setValorVariable(double valVariable) {this.valorVariable = valVariable; }                    
-    public void actualizarCategoria(CategoriaContext context) {context.setState(this);}
+class Categoria1 extends StateCategoria {
+	Categoria1(){
+		super("R1",18.76,0.644);
+	}
 }
 
-class Categoria2 implements StateCategoria {                                                                 
-	String categoriaR = "R2";                                                                                
-	double valorFijo = 35.32;                                                                                
-	double valorVariable = 0.644;                                                                            
-	public String getCategoriaActual() { return categoriaR; }                                                
-    public double getValorFijo() { return valorFijo; }                                                       
-    public double getValorVariable() { return valorFijo; }                                                   
-    public void setValorFijo(double valFijo) { this.valorFijo = valFijo; }                                   
-    public void setValorVariable(double valVariable) {this.valorVariable = valVariable; }                    
-    public void actualizarCategoria(CategoriaContext context) {context.setState(this);}
+class Categoria2 extends StateCategoria {
+	Categoria2(){
+		super("R2",35.32,0.644);
+	}
 }
 
-class Categoria3 implements StateCategoria {                                                                 
-	String categoriaR = "R3";                                                                                
-	double valorFijo = 60.71;                                                                                
-	double valorVariable = 0.681;                                                                            
-	public String getCategoriaActual() { return categoriaR; }                                                
-    public double getValorFijo() { return valorFijo; }                                                       
-    public double getValorVariable() { return valorFijo; }                                                   
-    public void setValorFijo(double valFijo) { this.valorFijo = valFijo; }                                   
-    public void setValorVariable(double valVariable) {this.valorVariable = valVariable; }                    
-    public void actualizarCategoria(CategoriaContext context) {context.setState(this);}
+class Categoria3 extends StateCategoria {
+	Categoria3(){
+		super("R3",60.71,0.681);
+	}
 }                                                                                                            
                                                                                                              
-class Categoria4 implements StateCategoria {                                                                 
-	String categoriaR = "R4";                                                                                
-	double valorFijo = 71.74;                                                                                
-	double valorVariable = 0.738;                                                                            
-	public String getCategoriaActual() { return categoriaR; }                                                
-    public double getValorFijo() { return valorFijo; }                                                       
-    public double getValorVariable() { return valorFijo; }                                                   
-    public void setValorFijo(double valFijo) { this.valorFijo = valFijo; }                                   
-    public void setValorVariable(double valVariable) {this.valorVariable = valVariable; }                    
-    public void actualizarCategoria(CategoriaContext context) {context.setState(this);}
+class Categoria4 extends StateCategoria {
+	Categoria4(){
+		super("R4",71.74,0.738);
+	}
 }                                                                                                            
                                                                                                              
-class Categoria5 implements StateCategoria {                                                                 
-	String categoriaR = "R5";                                                                                
-	double valorFijo = 110.38;                                                                               
-	double valorVariable = 0.794;                                                                            
-	public String getCategoriaActual() { return categoriaR; }                                                
-    public double getValorFijo() { return valorFijo; }                                                       
-    public double getValorVariable() { return valorFijo; }                                                   
-    public void setValorFijo(double valFijo) { this.valorFijo = valFijo; }                                   
-    public void setValorVariable(double valVariable) {this.valorVariable = valVariable; }                    
-    public void actualizarCategoria(CategoriaContext context) {context.setState(this);}
+class Categoria5 extends StateCategoria {
+	Categoria5(){
+		super("R5",110.38,0.794);
+	}
 }                                                                                                            
                                                                                                              
-class Categoria6 implements StateCategoria {                                                                 
-	String categoriaR = "R6";                                                                                
-	double valorFijo = 220.75;                                                                               
-	double valorVariable = 0.832;                                                                            
-	public String getCategoriaActual() { return categoriaR; }                                                
-    public double getValorFijo() { return valorFijo; }                                                       
-    public double getValorVariable() { return valorFijo; }                                                   
-    public void setValorFijo(double valFijo) { this.valorFijo = valFijo; }                                   
-    public void setValorVariable(double valVariable) {this.valorVariable = valVariable; }                    
-    public void actualizarCategoria(CategoriaContext context) {context.setState(this);}
+class Categoria6 extends StateCategoria {
+	Categoria6(){
+		super("R6",220.75,0.832);
+	}
 }                                                                                                            
                                                                                                              
-class Categoria7 implements StateCategoria {                                                                 
-	String categoriaR = "R7";                                                                                
-	double valorFijo = 443.59;                                                                               
-	double valorVariable = 0.851;                                                                            
-	public String getCategoriaActual() { return categoriaR; }                                                
-    public double getValorFijo() { return valorFijo; }                                                       
-    public double getValorVariable() { return valorFijo; }                                                   
-    public void setValorFijo(double valFijo) { this.valorFijo = valFijo; }                                   
-    public void setValorVariable(double valVariable) {this.valorVariable = valVariable; }                    
-    public void actualizarCategoria(CategoriaContext context) {context.setState(this);}
+class Categoria7 extends StateCategoria {
+	Categoria7(){
+		super("R7",443.59,0.851);
+	}
 }                                                                                                            
                                                                                                              
-class Categoria8 implements StateCategoria {                                                                 
-	String categoriaR = "R8";                                                                                
-	double valorFijo = 545.96;                                                                               
-	double valorVariable = 0.851;                                                                            
-	public String getCategoriaActual() { return categoriaR; }                                                
-    public double getValorFijo() { return valorFijo; }                                                       
-    public double getValorVariable() { return valorFijo; }                                                   
-    public void setValorFijo(double valFijo) { this.valorFijo = valFijo; }                                   
-    public void setValorVariable(double valVariable) {this.valorVariable = valVariable; }                    
-    public void actualizarCategoria(CategoriaContext context) {context.setState(this);}
+class Categoria8 extends StateCategoria {
+	Categoria8(){
+		super("R8",545.96,0.851);
+	}
 }                                                                                      
                                                                                                              
-class Categoria9 implements StateCategoria {                                                                 
-	String categoriaR = "R9";                                                                                
-	double valorFijo = 887.19;                                                                               
-	double valorVariable = 0.851;                                                                            
-	public String getCategoriaActual() { return categoriaR; }                                                
-    public double getValorFijo() { return valorFijo; }                                                       
-    public double getValorVariable() { return valorFijo; }                                                   
-    public void setValorFijo(double valFijo) { this.valorFijo = valFijo; }                                   
-    public void setValorVariable(double valVariable) {this.valorVariable = valVariable; }                    
-    public void actualizarCategoria(CategoriaContext context) {context.setState(this);}
+class Categoria9 extends StateCategoria {
+	Categoria9(){
+		super("R9",887.19,0.851);
+	}
 }

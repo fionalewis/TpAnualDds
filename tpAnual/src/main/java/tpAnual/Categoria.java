@@ -15,6 +15,7 @@ public class Categoria {
 	private Categoria9 stateR9 = new Categoria9();
 	
 	public Categoria() {}
+	
 	public Categoria(double _consumo) {
 		consumo = _consumo;
 		actualizarCategoria(consumo);
@@ -22,19 +23,19 @@ public class Categoria {
 	}
 	
 	public void actualizarCategoria(double consumo) {                                                
-		if(consumo <= 100 ) { stateR1.actualizarCategoria(context); return; }                                                      
-		if(consumo <= 325 ) { stateR2.actualizarCategoria(context); return; }                                   
-	  	if(consumo <= 400 ) { stateR3.actualizarCategoria(context); return; }                                   
-	  	if(consumo <= 450 ) { stateR4.actualizarCategoria(context); return; }                                   
-	  	if(consumo <= 500 ) { stateR5.actualizarCategoria(context); return; }                                   
-	  	if(consumo <= 600 ) { stateR6.actualizarCategoria(context); return; }                                   
-	  	if(consumo <= 700 ) { stateR7.actualizarCategoria(context); return; }                                   
-	  	if(consumo <= 1400) { stateR8.actualizarCategoria(context); return; }                                   
-	  	if(consumo > 1400 ) { stateR9.actualizarCategoria(context); return; }                                   
+		if(consumo <= 100){stateR1.actualizarCategoria(context);return;}                                                      
+		if(consumo <= 325){stateR2.actualizarCategoria(context);return;}                                   
+	  	if(consumo <= 400){stateR3.actualizarCategoria(context);return;}                                   
+	  	if(consumo <= 450){stateR4.actualizarCategoria(context);return;}                                   
+	  	if(consumo <= 500){stateR5.actualizarCategoria(context);return;}                                   
+	  	if(consumo <= 600){stateR6.actualizarCategoria(context);return;}                                   
+	  	if(consumo <= 700){stateR7.actualizarCategoria(context);return;}                                   
+	  	if(consumo <= 1400){stateR8.actualizarCategoria(context);return;}                                   
+	  	if(consumo > 1400){stateR9.actualizarCategoria(context);return;}                                   
 	}
 	
-	public String categoriaActual() { return context.getState().getCategoriaActual(); }
-	public double tarifaActual() { return context.calcularTarifa(consumo); } 
+	public String categoriaActual() {return context.getState().getCategoriaActual();}
+	public StateCategoria cualCateg() {return context.getState();}
+	public double tarifaActual() {return context.calcularTarifa(consumo);}
+	
 }
-
-

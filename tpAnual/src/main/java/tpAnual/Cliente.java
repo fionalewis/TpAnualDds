@@ -20,7 +20,7 @@ public class Cliente extends Usuario {
 		super();
 	}
 		
-	//Este ser�a un constructor default para cuando un usuario cree una cuenta
+	//Constructor default p/cuando un usuario cree una cuenta
 	public Cliente(String name,String surname,String username,String pass,
 					TipoDocumento tDoc,String nDoc,String tel,String dom) {
 		setNombre(name);
@@ -104,7 +104,7 @@ public class Cliente extends Usuario {
 		return consumo;
 	}
 	
-	//M�todo duplicado para poder pasar una fecha final con la que evaluar los test, despu�s lo mejoro
+	//Duplicado para poder pasarle una fechaFin en los tests
 	
 	public double calcularConsumo(LocalDateTime fechaFin) {
 		double consumo = dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual(fechaFin)).sum();
