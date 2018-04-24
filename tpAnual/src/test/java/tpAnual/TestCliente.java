@@ -12,7 +12,7 @@ public class TestCliente {
 	private Cliente clienteDePrueba;
 	private List<Dispositivo> dispositivosPrueba = new ArrayList<>();
 	Dispositivo tele = new Dispositivo("Televisor",0.14);
-	Dispositivo aire = new Dispositivo("Aire acondicionado",1.013); //Por si llega a ser necesario agregar mas tests
+	Dispositivo aire = new Dispositivo("Aire acondicionado",1.013); //Por si llega a ser necesario agregar m�s tests
 	LocalDateTime fechaFinalParaTest = LocalDateTime.of(2018,4,18,7,50,0);
 	
 	@Before
@@ -20,7 +20,7 @@ public class TestCliente {
 		dispositivosPrueba.add(tele);
 		this.clienteDePrueba = new Cliente("bart","simpson","elbarto","12345",2018,3,1,TipoDocumento.DNI,
 								"4444444","11111111","Avenida Siempreviva 742",dispositivosPrueba);
-		tele.setFechaRegistro(2018,2,5,22,15,0);
+		tele.setFechaRegistro(2018,2,5,22,15,0); //Instanciamos la fecha de registro de los dispositivos
 		aire.setFechaRegistro(2018,4,10,0,0,0);
 	}
 	
@@ -41,16 +41,17 @@ public class TestCliente {
 		clienteDePrueba.quitarDispositivo(tele);
 		Assert.assertFalse(clienteDePrueba.getDispositivos().contains(tele));
 	}
-	
+
 	@Test
 	public void testGetCategDefault() {
-		Assert.assertEquals(clienteDePrueba.getCateg().categoriaActual(),"R1");
+		Assert.assertEquals(clienteDePrueba.getCateg().getClasif(),"R1");
 	}
 	
 	@Test
 	public void testActualizarCategoriaR2PorTenerConsumoDeLaTele() {
-		clienteDePrueba.calcularConsumo();
-		Assert.assertEquals(clienteDePrueba.getCateg().categoriaActual(),"R2");
+		double cons = clienteDePrueba.calcularConsumo();
+		Categoria categ = clienteDePrueba.getCateg();
+		Assert.assertEquals(clienteDePrueba.categoria(cons,categ),"R2");
 	}
 
 	@Test
@@ -67,5 +68,4 @@ public class TestCliente {
 	public void testCantDispositivosEncendidos() {
 		Assert.assertEquals(clienteDePrueba.cantDisp(true),1);
 	}
-
 }

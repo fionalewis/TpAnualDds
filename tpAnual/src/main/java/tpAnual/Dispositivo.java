@@ -14,11 +14,11 @@ public class Dispositivo {
 	public Dispositivo() {}
 	
 	//Constructor por default
-	public Dispositivo(String nombDisp,double kWh) {
-		this.nombreDisp = nombDisp;
-		this.kWh = kWh;
-		this.estadoDisp = true;
-		this.fechaRegistro = LocalDateTime.now();	
+	public Dispositivo(String nombDisp,double kWhora) {
+		nombreDisp = nombDisp;
+		kWh = kWhora;
+		estadoDisp = true;
+		fechaRegistro = LocalDateTime.now();	
 	}
 	
 	//Constructor para los test (por si hace falta)
@@ -67,7 +67,7 @@ public class Dispositivo {
 	/* A futuro seguro va a hacer falta redefinir esto con un do while segun el estado del dispositivo 
 	 y/o rehacer con el state pattern o algo idk */
 	
-	public double calculoDeHoras() {
+	public double calculoDeHoras() { //(LocalDateTime fechaInicio)
 		LocalDateTime currentDate = LocalDateTime.now();
         Duration period = Duration.between(fechaRegistro,currentDate);
         double periodSeconds = period.getSeconds();
@@ -91,4 +91,5 @@ public class Dispositivo {
 		horasDeUso = calculoDeHoras(fechaFin);
 		return horasDeUso*kWh;	
 	}
+	
 }

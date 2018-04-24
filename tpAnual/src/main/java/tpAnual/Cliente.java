@@ -13,7 +13,7 @@ public class Cliente extends Usuario {
 	private String nroDoc;
 	private String telefono;
 	private String domicilio;
-	private Categoria categoria = new Categoria();
+	private Categoria categoria = new Categoria("R1");
 	private List<Dispositivo> dispositivos = new ArrayList<>();
 	
 	public Cliente() {
@@ -96,11 +96,15 @@ public class Cliente extends Usuario {
 		return categoria;
 	}
 	
+	public String categoria(double consumo,Categoria categ) {
+		categ.actualizarCategoria(consumo,categ);
+		return categ.getClasif();
+	}
+	
 	//Consumo
 
 	@Override public double calcularConsumo() {
 		double consumo = dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual()).sum();
-		categoria = new Categoria(consumo);
 		return consumo;
 	}
 	
@@ -108,7 +112,6 @@ public class Cliente extends Usuario {
 	
 	public double calcularConsumo(LocalDateTime fechaFin) {
 		double consumo = dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoActual(fechaFin)).sum();
-		categoria = new Categoria(consumo); //se actualiza la categoria cuando se calcula el consumo
 		return consumo;
 	}
 	

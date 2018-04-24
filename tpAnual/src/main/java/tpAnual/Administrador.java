@@ -54,6 +54,6 @@ public class Administrador extends Usuario {
 	    return elapsedMonths;
 	}
 	
-	public double calcularConsumo() {return 0;} //Por ahora hasta que se nos informe qu� hace el admin
+	public double calcularConsumo() {return 0;} //Por ahora hasta que se nos informe lo que hace el admin
 
 }
