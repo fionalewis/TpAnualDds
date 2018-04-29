@@ -30,7 +30,6 @@ public class Administrador extends Usuario {
 		setApellido(apellido);
 		setUserName(userName);
 		setPassword(pass);
-		this.fechaAlta = LocalDate.now();
 		this.codAdmin = this.asignarCod();
 		this.fechaAlta = LocalDate.of(y,m,d);
 	}

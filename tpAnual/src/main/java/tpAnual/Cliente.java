@@ -13,7 +13,6 @@ public class Cliente extends Usuario {
 	private String nroDoc;
 	private String telefono;
 	private String domicilio;
-	private Categoria categoria = new Categoria("R1");
 	private List<Dispositivo> dispositivos = new ArrayList<>();
 	
 	public Cliente() {
@@ -90,17 +89,6 @@ public class Cliente extends Usuario {
 		dispositivos.remove(dispositivo);
 	}
 	
-	//Categoria
-	
-	public Categoria getCateg() {
-		return categoria;
-	}
-	
-	public String categoria(double consumo,Categoria categ) {
-		categ.actualizarCategoria(consumo,categ);
-		return categ.getClasif();
-	}
-	
 	//Consumo
 
 	@Override public double calcularConsumo() {
@@ -115,6 +103,16 @@ public class Cliente extends Usuario {
 		return consumo;
 	}
 	
+	//Para obtener la tarifa
+	/* Ya no generamos una instancia de categoria por cliente, por lo que el cliente no tiene asignada
+	 * una categoria ni tampoco recategorizamos porque todavia no tenemos al encargado de esa tarea. */
+	
+	public double obtenerTarifa(double cons) {
+		cons = calcularConsumo();
+		double tarifaAprox = Categoria.obtenerTarifa(cons);
+		return tarifaAprox;
+	}
+	
 	//Funcionalidades
 	
 	public boolean algunoEncendido(List<Dispositivo> dispositivos) {
@@ -127,7 +125,6 @@ public class Cliente extends Usuario {
 	
 	public int cantDisp(boolean opcion) { //Prendido = true, Apagado = false
 		int apagados = 0, prendidos = 0;
-		
 		for (Dispositivo unDisp: dispositivos) {
 			if(unDisp.isEstadoDisp()) {
 				prendidos++;				

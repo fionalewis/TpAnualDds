@@ -20,6 +20,7 @@ public class TestAdministrador {
 	public void cantidadDeMesesComoAdmin() {
 		LocalDate fechaR = adminDePrueba.getFechaAlta();
 		Assert.assertEquals(adminDePrueba.cantMesesComoAdmin(fechaR),38);
+		System.out.println("Test cantidadDeMesesComoAdmin: En el intervalo seleccionado han pasado 38 meses: " + adminDePrueba.cantMesesComoAdmin(fechaR));
 	}
 
 }

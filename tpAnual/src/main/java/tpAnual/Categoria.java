@@ -1,23 +1,22 @@
 package tpAnual;
 
+import java.io.FileNotFoundException;
+import java.util.List;
+
 public class Categoria {
 	
+	/* Fijamos un maximo muy grande en R9 asi quedaba mas simple el codigo y no habia necesidad de usar un minimo */
+	
 	private String clasif;
+	private double consumo;
+	private int max;
 	private double cargoFijo;
 	private double cargoVariable;
 	
 	//Constructores
 	
-	public Categoria() {}
-
-	public Categoria(String codClasif) {
-		this.clasif = codClasif;
-	}
-	
-	public Categoria(String clasif,double cF,double cV) {
-		this.clasif = clasif;
-		this.cargoFijo = cF;
-		this.cargoVariable = cV;
+	public Categoria(double cons) {
+		consumo = cons;
 	}
 	
 	//Getters y Setters
@@ -41,29 +40,49 @@ public class Categoria {
 		this.cargoVariable = cargoVariable;
 	}
 	
-	//Para settear todo de una y que no quede tanto codigo repetido, si hace falta separarlo despues lo hacemos
-	//Lo dejo explicado en la tabla de decisiones
-
-	public void setterCateg(String cat,double cF,double cV) {
-		clasif = cat; cargoFijo = cF; cargoVariable = cV;
+	//Dejo los setters por si usamos alguno para los tests
+	
+	public double getConsumo() {
+		return consumo;
+	}
+	public void setConsumo(double consumo) {
+		this.consumo = consumo;
+	}
+	public int getMax() {
+		return max;
+	}
+	public void setMax(int max) {
+		this.max = max;
 	}
 	
-	public Categoria actualizarCategoria(double consumo,Categoria myCateg) {
-	  if(consumo <= 150){myCateg.setterCateg("R1",18.76,0.644);}
-	  	else if(consumo <= 325){myCateg.setterCateg("R2",35.32,0.644);}
-	  	else if(consumo <= 400){myCateg.setterCateg("R3",60.71,0.681);}
-	  	else if(consumo <= 450){myCateg.setterCateg("R4",71.74,0.738);}
-	  	else if(consumo <= 500){myCateg.setterCateg("R5",110.38,0.794);}
-	  	else if(consumo <= 600){myCateg.setterCateg("R6",220.75,0.832);}
-	  	else if(consumo <= 700){myCateg.setterCateg("R7",443.59,0.851);}
-	  	else if(consumo <= 1400){myCateg.setterCateg("R8",545.96,0.851);}
-	  	else {myCateg.setterCateg("R9",887.19,0.851);}
-	  	return myCateg;
-	}
+	//Metodos para obtener la tarifa
 	
-	public double calculoTarifa(Categoria categ,double consumo) {
-		categ.actualizarCategoria(consumo,categ);
-		double tarifa = categ.getCargoVariable()*consumo + categ.getCargoFijo();
+	public double calculoTarifa(double consumo) {
+		double tarifa = cargoVariable*consumo + cargoFijo;
 		return tarifa;
 	}
+
+	public static double obtenerTarifa(double consumo) {
+	List<Categoria> categorias = null;
+	double tarifa = 0;
+	try {
+		categorias = DAOJson.deserializarLista(Categoria.class, "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json");
+	} catch (FileNotFoundException e) {
+		System.out.println("No se ha encontrado el archivo.");
+	} catch (InstantiationException e) {
+		System.out.println("Error en la inicialización.");
+	} catch (IllegalAccessException e) {
+		System.out.println("Error de acceso.");
+	}
+	for(int i=0;i<=9;i++) {
+		int cont = 0;
+		Categoria c = categorias.get(cont);
+		if(consumo<=(c.getMax())) {
+			tarifa = c.calculoTarifa(consumo);break;
+		}
+		cont++;
+	}
+	return tarifa;
+	}
+	
 }

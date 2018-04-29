@@ -28,6 +28,7 @@ public class TestCliente {
 	@Test
 	public void testCalcularConsumoSoloConLaTeleEnLista() {
 		Assert.assertEquals(239.9012,clienteDePrueba.calcularConsumo(fechaFinalParaTest),5);
+		System.out.println("Test calcularConsumoSoloConLaTeleEnLista:\n El consumo del cliente sólo con la tele es aproximadamente de 239.9012 kWh: " + clienteDePrueba.calcularConsumo(fechaFinalParaTest));
 	}
 
 	@Test
@@ -43,18 +44,6 @@ public class TestCliente {
 	}
 
 	@Test
-	public void testGetCategDefault() {
-		Assert.assertEquals(clienteDePrueba.getCateg().getClasif(),"R1");
-	}
-	
-	@Test
-	public void testActualizarCategoriaR2PorTenerConsumoDeLaTele() {
-		double cons = clienteDePrueba.calcularConsumo();
-		Categoria categ = clienteDePrueba.getCateg();
-		Assert.assertEquals(clienteDePrueba.categoria(cons,categ),"R2");
-	}
-
-	@Test
 	public void testAlgunoEncendido() {
 		Assert.assertTrue(clienteDePrueba.algunoEncendido(clienteDePrueba.getDispositivos()));
 	}
@@ -62,10 +51,12 @@ public class TestCliente {
 	@Test
 	public void testCantDispositivosApagados() {
 		Assert.assertEquals(clienteDePrueba.cantDisp(false),0);
+		System.out.println("Test cantDispositivosApagados:\n Al tener únicamente a la tele en la lista, la cantidad de dispositivos apagados es cero: " + clienteDePrueba.cantDisp(false));
 	}
 	
 	@Test
 	public void testCantDispositivosEncendidos() {
 		Assert.assertEquals(clienteDePrueba.cantDisp(true),1);
+		System.out.println("Test cantDispositivosApagados:\n Al tener únicamente a la tele en la lista, la cantidad de dispositivos encendidos es uno: " + clienteDePrueba.cantDisp(true));
 	}
 }

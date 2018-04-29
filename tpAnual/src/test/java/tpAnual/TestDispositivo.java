@@ -15,12 +15,14 @@ public class TestDispositivo {
 	
 	@Test
 	public void calculoDeHorasTele() {
-		Assert.assertEquals(1713.58,tele.calculoDeHoras(fechaFinalParaTest),5);
+		Assert.assertEquals(1713.58,tele.calculoDeHoras(fechaFinalParaTest),0.1);
+		System.out.println("Test calculoDeHorasTele:\n  En el intervalo seleccionado pasaron aprox. 1713.58hs: " + tele.calculoDeHoras(fechaFinalParaTest));
 	}
 	
 	@Test
 	public void consumoActualTele() {
-		Assert.assertEquals(239.9012,tele.consumoActual(fechaFinalParaTest),5);
+		Assert.assertEquals(239.9012,tele.consumoActual(fechaFinalParaTest),0.1);
+		System.out.println("Test consumoActualTele:\n  En el intervalo seleccionado el consumo de la tele fue de aprox. 239.9012 kWh: " + tele.consumoActual(fechaFinalParaTest));
 	}
 
 }
