@@ -8,8 +8,6 @@ import org.junit.Test;
 
 /* Acuerdense de revisar si tienen los JSONs en la misma ubicacion antes de correr los tests !!! */
 
-// Estan repetidos los try catch hasta que veamos como manejar las excepciones con el patron que dijo Nico o algo
-
 public class TestJson {
 
 	@Test
@@ -17,13 +15,8 @@ public class TestJson {
 		List<Cliente> clientes = null;
 		try {
 			clientes = DAOJson.deserializarLista(Cliente.class, "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json");
-		} catch (FileNotFoundException e) {
-			System.out.println("No se ha encontrado el archivo.");
-			//e.printStackTrace(); porque Nico dijo que solo tire el msj, sino lo agregamos
-		} catch (InstantiationException e) {
-			System.out.println("Error en la inicialización.");
-		} catch (IllegalAccessException e) {
-			System.out.println("Error de acceso.");
+		} catch (Exception e) {
+			ExceptionsHandler.catchear(e);
 		}
 		Assert.assertEquals(2, clientes.size());
 		System.out.println("Test JsonTraeClientes: El tamaño de la lista de clientes del json es dos: " + clientes.size());
@@ -34,12 +27,8 @@ public class TestJson {
     	Cliente cli = null;
 		try {
 			cli = (Cliente) DAOJson.buscarIndexEnLista(Cliente.class, 1,"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json");
-		} catch (FileNotFoundException e) {
-			System.out.println("No se ha encontrado el archivo.");
-		} catch (InstantiationException e) {
-			System.out.println("Error en la inicialización.");
-		} catch (IllegalAccessException e) {
-			System.out.println("Error de acceso.");
+		} catch (Exception e) {
+			ExceptionsHandler.catchear(e);
 		}
     	Assert.assertEquals("homero",cli.nombre);
 		System.out.println("Test JsonTraeUnCliente: El nombre del cliente del json es: " + cli.nombre);
@@ -51,12 +40,8 @@ public class TestJson {
     	Dispositivo disp = null;
 		try {
 			disp = (Dispositivo) DAOJson.buscarIndexEnLista(Dispositivo.class, 1,"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json");
-		} catch (FileNotFoundException e) {
-			System.out.println("No se ha encontrado el archivo.");
-		} catch (InstantiationException e) {
-			System.out.println("Error en la inicialización.");
-		} catch (IllegalAccessException e) {
-			System.out.println("Error de acceso.");
+		} catch (Exception e) {
+			ExceptionsHandler.catchear(e);
 		}
     	Assert.assertEquals("microondas", disp.getNombreDisp());
     	System.out.println("Test JsonTraeUnDispositivo: El nombre del dispositivo del json es: " + disp.getNombreDisp());
@@ -67,12 +52,8 @@ public class TestJson {
     	Administrador admin = null;
     	try {
     		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class, 0,"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonAdministradores.json");
-		} catch (FileNotFoundException e) {
-			System.out.println("No se ha encontrado el archivo.");
-		} catch (InstantiationException e) {
-			System.out.println("Error en la inicialización.");
-		} catch (IllegalAccessException e) {
-			System.out.println("Error de acceso.");
+		} catch (Exception e) {
+			ExceptionsHandler.catchear(e);
 		}
     	Assert.assertEquals(20000, admin.getCodAdmin());	//C:\Users\Salome\git\TpAnualDds\tpAnual\JSONs Dejenme esto aca para poder hacer pruebas en windows
     	System.out.println("Test JsonTraeUnAdmin: El código del admin en la posición 0 es 20000: " + admin.getCodAdmin());
@@ -83,12 +64,8 @@ public class TestJson {
 		List<Categoria> categorias = null;
 		try {
 			categorias = DAOJson.deserializarLista(Categoria.class, "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json");
-		} catch (FileNotFoundException e) {
-			System.out.println("No se ha encontrado el archivo.");
-		} catch (InstantiationException e) {
-			System.out.println("Error en la inicialización.");
-		} catch (IllegalAccessException e) {
-			System.out.println("Error de acceso.");
+		} catch (Exception e) {
+			ExceptionsHandler.catchear(e);
 		}
 		Assert.assertEquals(9, categorias.size());
 		System.out.println("Test JsonTraeCategorias:\n El tamaño de la lista de categorias del json es nueve: " + categorias.size());

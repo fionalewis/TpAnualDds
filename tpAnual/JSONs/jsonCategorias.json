@@ -1,54 +1,63 @@
 [  
    {  
       'clasif':"R1",
+      'min':0,
       'max':150,
       'cargoFijo':18.76,
       'cargoVariable':0.644
    },
    {  
       'clasif':"R2",
+      'min':150,
       'max':325,
       'cargoFijo':35.32,
       'cargoVariable':0.644
    },
    {  
       'clasif':"R3",
+      'min':325,
       'max':400,
       'cargoFijo':60.71,
       'cargoVariable':0.681
    },
    {  
       'clasif':"R4",
+      'min':400,
       'max':450,
       'cargoFijo':71.74,
       'cargoVariable':0.738
    },
    {  
       'clasif':"R5",
+      'min':450,
       'max':500,
       'cargoFijo':110.38,
       'cargoVariable':0.794
    },
    {  
       'clasif':"R6",
+      'min':500,
       'max':600,
       'cargoFijo':220.75,
       'cargoVariable':0.832
    },
    {  
       'clasif':"R7",
+      'min':600,
       'max':700,
       'cargoFijo':443.59,
       'cargoVariable':0.851
    },
    {  
       'clasif':"R8",
+      'min':700,
       'max':1400,
       'cargoFijo':545.96,
       'cargoVariable':0.851
    },
    {  
       'clasif':"R9",
+      'min':1400,
       'max':1000000,
       'cargoFijo':887.19,
       'cargoVariable':0.851

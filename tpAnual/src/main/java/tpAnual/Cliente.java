@@ -1,6 +1,11 @@
 package tpAnual;
 
+//import capaPresentacion.Programa;
+
 import java.util.List;
+
+import capaPresentacion.Programa;
+
 import java.util.ArrayList;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,6 +19,7 @@ public class Cliente extends Usuario {
 	private String telefono;
 	private String domicilio;
 	private List<Dispositivo> dispositivos = new ArrayList<>();
+	private Categoria categ;
 	
 	public Cliente() {
 		super();
@@ -74,8 +80,21 @@ public class Cliente extends Usuario {
 	public void setDomicilio(String domicilio) {
 		this.domicilio = domicilio;
 	}
+	public Categoria getCateg() {
+		return categ;
+	}
+	public void setCateg(Categoria categoria) {
+		this.categ = categoria;
+	}
+	public void setCateg() {
+		this.categ = Programa.categoria(this.calcularConsumo());
+	}
 	
 	//Dispositivos
+	
+	public void setDispositivos(List<Dispositivo> dispositivos) {
+		this.dispositivos = dispositivos;
+	}
 	
 	public List<Dispositivo> getDispositivos() {
 		return dispositivos;
@@ -103,14 +122,15 @@ public class Cliente extends Usuario {
 		return consumo;
 	}
 	
-	//Para obtener la tarifa
-	/* Ya no generamos una instancia de categoria por cliente, por lo que el cliente no tiene asignada
-	 * una categoria ni tampoco recategorizamos porque todavia no tenemos al encargado de esa tarea. */
+	/* Para obtener la tarifa. El admin va a ser el unico que pueda usar este metodo
+	 * para hacer alguna cosulta del estilo clienteX.obtenerTarifa(), podemos pasarlo
+	 * a su clase como obtenerTarifa(clienteX) tambien, pero para esta entrega seria
+	 * complicarlo para nada
+	 */
 	
-	public double obtenerTarifa(double cons) {
-		cons = calcularConsumo();
-		double tarifaAprox = Categoria.obtenerTarifa(cons);
-		return tarifaAprox;
+	public double obtenerTarifa() {
+		double cons = calcularConsumo();
+		return getCateg().calculoTarifa(cons);
 	}
 	
 	//Funcionalidades
@@ -130,8 +150,7 @@ public class Cliente extends Usuario {
 				prendidos++;				
 			}
 		}
-		apagados = dispositivos.size() - prendidos;
-		
+		apagados = this.cantDispositivos() - prendidos;
 		if(opcion) {
 			return prendidos;
 		} else {return apagados;}

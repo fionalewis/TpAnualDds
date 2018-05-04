@@ -1,19 +1,19 @@
 package tpAnual;
 
-import java.io.FileNotFoundException;
-import java.util.List;
-
 public class Categoria {
 	
-	/* Fijamos un maximo muy grande en R9 asi quedaba mas simple el codigo y no habia necesidad de usar un minimo */
+	/* Fijamos un maximo muy grande en R9 asi quedaba mas simple el codigo */
 	
 	private String clasif;
 	private double consumo;
+	private int min;
 	private int max;
 	private double cargoFijo;
 	private double cargoVariable;
 	
 	//Constructores
+	
+	public Categoria() {}
 	
 	public Categoria(double cons) {
 		consumo = cons;
@@ -54,35 +54,18 @@ public class Categoria {
 	public void setMax(int max) {
 		this.max = max;
 	}
+	public int getMin() {
+		return min;
+	}
+	public void setMin(int min) {
+		this.min = min;
+	}
 	
-	//Metodos para obtener la tarifa
-	
+	//Tarifa
+
 	public double calculoTarifa(double consumo) {
 		double tarifa = cargoVariable*consumo + cargoFijo;
 		return tarifa;
-	}
-
-	public static double obtenerTarifa(double consumo) {
-	List<Categoria> categorias = null;
-	double tarifa = 0;
-	try {
-		categorias = DAOJson.deserializarLista(Categoria.class, "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json");
-	} catch (FileNotFoundException e) {
-		System.out.println("No se ha encontrado el archivo.");
-	} catch (InstantiationException e) {
-		System.out.println("Error en la inicialización.");
-	} catch (IllegalAccessException e) {
-		System.out.println("Error de acceso.");
-	}
-	for(int i=0;i<=9;i++) {
-		int cont = 0;
-		Categoria c = categorias.get(cont);
-		if(consumo<=(c.getMax())) {
-			tarifa = c.calculoTarifa(consumo);break;
-		}
-		cont++;
-	}
-	return tarifa;
 	}
 	
 }
