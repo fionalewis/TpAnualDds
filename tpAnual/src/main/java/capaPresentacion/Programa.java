@@ -19,8 +19,8 @@ public class Programa {
 		List<Categoria> categorias = null;
 		Categoria categoria = null;
 		try {
-			categorias = DAOJson.deserializarLista(Categoria.class,"//C://Users//Salome//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json"); // //home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json
-		} catch (Exception e) {
+			categorias = DAOJson.deserializarLista(Categoria.class,"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json");
+			} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
 		for(Categoria c: categorias) {
