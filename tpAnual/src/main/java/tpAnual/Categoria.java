@@ -1,5 +1,7 @@
 package tpAnual;
 
+import capaPresentacion.Programa;
+
 public class Categoria {
 	
 	/* Fijamos un maximo muy grande en R9 asi quedaba mas simple el codigo */
@@ -68,6 +70,12 @@ public class Categoria {
 		return tarifa;
 	}
 	
+	//Seguro haya que corregir este metodo acorde a como sea exactamente la consulta
+	//o dependiendo de quien tenga la responsabilidad de hacerla
 	
+	public static boolean perteneceACateg(String categ,double consumo) {
+		Categoria c = Programa.categoria(consumo);
+		return c.getClasif().equals(categ);
+	}
 	
 }

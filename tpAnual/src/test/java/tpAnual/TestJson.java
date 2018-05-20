@@ -6,6 +6,10 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
+import tpAnual.devices.Dispositivo;
+import tpAnual.users.Administrador;
+import tpAnual.users.Cliente;
+
 /* Acuerdense de revisar si tienen los JSONs en la misma ubicacion antes de correr los tests !!! */
 
 public class TestJson {
@@ -30,8 +34,8 @@ public class TestJson {
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
-    	Assert.assertEquals("homero",cli.nombre);
-		System.out.println("Test JsonTraeUnCliente: El nombre del cliente del json es: " + cli.nombre);
+    	Assert.assertEquals("homero",cli.getNombre());
+		System.out.println("Test JsonTraeUnCliente: El nombre del cliente del json es: " + cli.getNombre());
     	Assert.assertEquals("homero",cli.getNombre());
     }
     

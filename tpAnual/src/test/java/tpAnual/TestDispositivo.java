@@ -3,9 +3,11 @@ package tpAnual;
 import java.time.LocalDateTime;
 import org.junit.*;
 
+import tpAnual.devices.DispositivoInteligente;
+
 public class TestDispositivo {
 	
-	Dispositivo tele = new Dispositivo("Televisor",0.14);
+	DispositivoInteligente tele = new DispositivoInteligente("Televisor",0.14,0.1,"SAMSUNG");
 	LocalDateTime fechaFinalParaTest = LocalDateTime.of(2018,4,18,7,50,0);
 
 	@Before
@@ -21,8 +23,8 @@ public class TestDispositivo {
 	
 	@Test
 	public void consumoActualTele() {
-		Assert.assertEquals(239.9012,tele.consumoActual(fechaFinalParaTest),0.1);
-		System.out.println("Test consumoActualTele:\n  En el intervalo seleccionado el consumo de la tele fue de aprox. 239.9012 kWh: " + tele.consumoActual(fechaFinalParaTest));
+		Assert.assertEquals(239.9012,tele.consumoTotal(fechaFinalParaTest),0.1);
+		System.out.println("Test consumoActualTele:\n  En el intervalo seleccionado el consumo de la tele fue de aprox. 239.9012 kWh: " + tele.consumoTotal(fechaFinalParaTest));
 	}
 
 }

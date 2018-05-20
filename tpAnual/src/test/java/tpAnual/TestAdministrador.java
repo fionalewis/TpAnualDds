@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import tpAnual.users.Administrador;
+
 import java.time.LocalDate;
 
 public class TestAdministrador {
