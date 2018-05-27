@@ -2,9 +2,9 @@ package capaPresentacion;
 
 import java.util.List;
 
+import Exceptions.ExceptionsHandler;
 import tpAnual.Categoria;
 import tpAnual.DAOJson;
-import tpAnual.ExceptionsHandler;
 import tpAnual.users.Cliente;
 import tpAnual.users.Cliente.TipoDocumento;
 

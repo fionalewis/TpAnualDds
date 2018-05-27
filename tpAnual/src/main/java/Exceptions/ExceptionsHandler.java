@@ -1,4 +1,4 @@
-package tpAnual;
+package Exceptions;
 
 import java.io.FileNotFoundException;
 
@@ -14,6 +14,8 @@ public class ExceptionsHandler {
 			System.out.println("Error en la inicialización.");
 		} else if (e instanceof IllegalAccessException) {
 			System.out.println("Error de acceso.");
+		} else if (e instanceof CaracterInvalidoException) {
+			System.out.println("Caracter Invalido.");
 		}
 	}
 	

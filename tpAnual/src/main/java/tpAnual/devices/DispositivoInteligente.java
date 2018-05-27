@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import tpAnual.Sensor;
 import tpAnual.deviceState.Encendido;
 import tpAnual.deviceState.EstadoDispositivo;
 
@@ -16,6 +15,12 @@ public class DispositivoInteligente extends Dispositivo {
 	private List<Sensor> sensores = new ArrayList<>();
 	
 	private EstadoDispositivo estadoDisp;
+	private double temperatura;
+	private double movimiento; //0 o 1
+	private double luz; // en unidad de intensidad luminica
+	private double humedad; // en %
+	
+	
 	
 	//Constructor default
 	public DispositivoInteligente(String nombDisp,double kWh,double kWhAhorro,String fabricante) {
@@ -63,6 +68,30 @@ public class DispositivoInteligente extends Dispositivo {
 	}
 	public void setEstadoDisp(EstadoDispositivo estadoDisp) {
 		this.estadoDisp = estadoDisp;
+	}
+	public void setTemperatura(double unaTemp) {
+		this.temperatura = unaTemp;
+	}
+	public double getTemperatura() {
+		return temperatura;
+	}
+	public void setMovimiento(double hayMovimiento) {
+		this.movimiento = hayMovimiento;
+	}
+	public double getMovimiento() {
+		return movimiento;
+	}
+	public void setLuz(double luz) {
+		this.luz = luz;
+	}
+	public double getLuz() {
+		return luz;
+	}
+	public void setHumedad(double humedad) {
+		this.humedad = humedad;
+	}
+	public double getHumedad() {
+		return humedad;
 	}
 	
 	//Sensores	
