@@ -1,8 +1,9 @@
-package Commands;
+package tpAnual;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import Reglas.Regla;
 import tpAnual.devices.Sensor;
 
 public abstract class Actuador {

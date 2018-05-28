@@ -16,10 +16,10 @@ public class DispositivoInteligente extends Dispositivo {
 	
 	private EstadoDispositivo estadoDisp;
 	
-	private double temperatura;
-	private double movimiento; //0 o 1
-	private double luz; // en unidad de intensidad luminica
-	private double humedad; // en %
+	private Sensor temperatura = new Sensor("temperatura", this);
+	private Sensor movimiento = new Sensor("movimiento", this); //0 o 1
+	private Sensor luz = new Sensor("luz", this); // en unidad de intensidad luminica
+	private Sensor humedad = new Sensor("humedad", this); // en %
 	
 	
 	
@@ -71,28 +71,28 @@ public class DispositivoInteligente extends Dispositivo {
 		this.estadoDisp = estadoDisp;
 	}
 	public void setTemperatura(double unaTemp) {
-		this.temperatura = unaTemp;
+		temperatura.setMagnitud(unaTemp);
 	}
 	public double getTemperatura() {
-		return temperatura;
+		return temperatura.getMagnitud();
 	}
 	public void setMovimiento(double hayMovimiento) {
-		this.movimiento = hayMovimiento;
+		this.movimiento.setMagnitud(hayMovimiento);
 	}
 	public double getMovimiento() {
-		return movimiento;
+		return movimiento.getMagnitud();
 	}
-	public void setLuz(double luz) {
-		this.luz = luz;
+	public void setLuz(double unaLuz) {
+		luz.setMagnitud(unaLuz);
 	}
 	public double getLuz() {
-		return luz;
+		return luz.getMagnitud();
 	}
-	public void setHumedad(double humedad) {
-		this.humedad = humedad;
+	public void setHumedad(double unaHumedad) {
+		humedad.setMagnitud(unaHumedad);
 	}
 	public double getHumedad() {
-		return humedad;
+		return humedad.getMagnitud();
 	}
 	
 	//Sensores	

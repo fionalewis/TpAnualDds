@@ -1,4 +1,4 @@
-package Commands;
+package Reglas;
 
 import Exceptions.CaracterInvalidoException;
 import tpAnual.devices.Sensor;

@@ -1,4 +1,4 @@
-package Commands;
+package Reglas;
 
 import org.apache.commons.lang3.EnumUtils;
 

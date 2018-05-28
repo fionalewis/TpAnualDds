@@ -1,4 +1,4 @@
-package Commands;
+package Reglas;
 
 import tpAnual.devices.Sensor;
 

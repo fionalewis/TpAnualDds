@@ -1,12 +1,13 @@
-package Commands;
+package Reglas;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.EnumUtils;
 
-import Commands.Comparacion.SignosComparaciones;
 import Exceptions.CaracterInvalidoException;
+import Reglas.Comparacion.SignosComparaciones;
+import tpAnual.Actuador;
 import tpAnual.devices.DispositivoInteligente;
 import tpAnual.devices.Sensor;
 
