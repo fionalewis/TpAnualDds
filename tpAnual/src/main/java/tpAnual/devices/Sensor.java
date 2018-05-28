@@ -33,12 +33,18 @@ public class Sensor {
 		this.magnitud = unaMagnitud;
 	}
 	
-	public String getNombreMagnitud(){
-		return this.nombreMagnitud;
-	}
-	
 	public double getMagnitud(){
 		return this.magnitud;
 	}
 	
+	public String getNombreMagnitud(){
+		return this.nombreMagnitud;
+	}
+	
+	public void aumentarMagnitud(double valor){
+		this.magnitud += valor;
+	}
+	public void disminuirMagnitud(double valor){
+		this.magnitud -= valor;
+	}
 }

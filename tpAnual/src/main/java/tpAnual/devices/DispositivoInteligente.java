@@ -16,11 +16,11 @@ public class DispositivoInteligente extends Dispositivo {
 	
 	private EstadoDispositivo estadoDisp;
 	
-	private Sensor temperatura = new Sensor("temperatura", this);
+	/*private Sensor temperatura = new Sensor("temperatura", this);
 	private Sensor movimiento = new Sensor("movimiento", this); //0 o 1
 	private Sensor luz = new Sensor("luz", this); // en unidad de intensidad luminica
 	private Sensor humedad = new Sensor("humedad", this); // en %
-	
+	*/
 	
 	
 	//Constructor default
@@ -70,30 +70,6 @@ public class DispositivoInteligente extends Dispositivo {
 	public void setEstadoDisp(EstadoDispositivo estadoDisp) {
 		this.estadoDisp = estadoDisp;
 	}
-	public void setTemperatura(double unaTemp) {
-		temperatura.setMagnitud(unaTemp);
-	}
-	public double getTemperatura() {
-		return temperatura.getMagnitud();
-	}
-	public void setMovimiento(double hayMovimiento) {
-		this.movimiento.setMagnitud(hayMovimiento);
-	}
-	public double getMovimiento() {
-		return movimiento.getMagnitud();
-	}
-	public void setLuz(double unaLuz) {
-		luz.setMagnitud(unaLuz);
-	}
-	public double getLuz() {
-		return luz.getMagnitud();
-	}
-	public void setHumedad(double unaHumedad) {
-		humedad.setMagnitud(unaHumedad);
-	}
-	public double getHumedad() {
-		return humedad.getMagnitud();
-	}
 	
 	//Sensores	
 
@@ -102,6 +78,41 @@ public class DispositivoInteligente extends Dispositivo {
 	}
 	public void setSensores(List<Sensor> sensores) {
 		this.sensores = sensores;
+	}
+	public void agregarSensor(Sensor unSensor){
+		sensores.add(unSensor);
+	}
+	public void aumentarIntensidadSensor(String nombreSensor, double valor){
+		Sensor sen = getSensoresConNombre(nombreSensor);
+		if(!sen.equals(null))
+			sen.aumentarMagnitud(valor);
+		else System.out.println("sensor no encontrado");
+	}
+	public void disminuirIntensidadSensor(String nombreSensor, double valor){
+		Sensor sen = getSensoresConNombre(nombreSensor);
+		if(!sen.equals(null))
+			sen.disminuirMagnitud(valor);
+		else System.out.println("sensor no encontrado");
+	}
+	public void setMagnitudSensor(String nombreSensor, double valor){
+		Sensor sen = getSensoresConNombre(nombreSensor);
+		if(!sen.equals(null))
+			sen.setMagnitud(valor);
+		else System.out.println("sensor no encontrado");
+	}
+	public double getMagnitudSensor(String nombreSensor){
+		Sensor sen = getSensoresConNombre(nombreSensor);
+		if(!sen.equals(null))
+			return sen.getMagnitud();
+		else System.out.println("sensor no encontrado");
+		return 0.0; //excepsion
+	}
+	public Sensor getSensoresConNombre(String nombreSensor){
+		for(Sensor sen:this.sensores){
+			if(sen.getNombreMagnitud().equals(nombreSensor))
+				return sen;
+		}
+		return null;
 	}
 	
 	//Funcionalidades

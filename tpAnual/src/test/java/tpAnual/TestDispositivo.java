@@ -4,15 +4,19 @@ import java.time.LocalDateTime;
 import org.junit.*;
 
 import tpAnual.devices.DispositivoInteligente;
+import tpAnual.devices.Sensor;
 
 public class TestDispositivo {
 	
 	DispositivoInteligente tele = new DispositivoInteligente("Televisor",0.14,0.1,"SAMSUNG");
 	LocalDateTime fechaFinalParaTest = LocalDateTime.of(2018,4,18,7,50,0);
+	Sensor sensorVolumen = new Sensor("volumen",tele);
 
 	@Before
 	public void init() {
 		tele.setFechaRegistro(2018,2,5,22,15,0);
+		tele.agregarSensor(sensorVolumen);
+		tele.setMagnitudSensor("volumen", 20);
 	}
 	
 	@Test
@@ -25,6 +29,12 @@ public class TestDispositivo {
 	public void consumoActualTele() {
 		Assert.assertEquals(239.9012,tele.consumoTotal(fechaFinalParaTest),0.1);
 		System.out.println("Test consumoActualTele:\n  En el intervalo seleccionado el consumo de la tele fue de aprox. 239.9012 kWh: " + tele.consumoTotal(fechaFinalParaTest));
+	}
+	
+	@Test
+	public void subirVolumenTele() {
+		tele.aumentarIntensidadSensor("volumen", 5);
+		Assert.assertEquals(25, tele.getMagnitudSensor("volumen"),0.1);
 	}
 
 }
