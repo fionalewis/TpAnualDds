@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Commands.Actuador;
+import Commands.Comparacion;
 
 public class Sensor {
+	
 	private String nombreMagnitud;
 	private double magnitud = 0;
-	private List<Actuador> actuadores = new ArrayList<>();
+	private int intervalo; //segundos
+	private List<Comparacion> subscribers = new ArrayList<>(); 
 	
 	public void notificar(){
-		for(Actuador act:actuadores){
-			act.recibirMagnitud(this);
+		for(Comparacion subs:subscribers){
+			subs.update();
 		}
 	}
 	

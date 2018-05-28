@@ -3,7 +3,6 @@ package Commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import tpAnual.Regla;
 import tpAnual.devices.Sensor;
 
 public abstract class Actuador {

@@ -15,6 +15,7 @@ public class DispositivoInteligente extends Dispositivo {
 	private List<Sensor> sensores = new ArrayList<>();
 	
 	private EstadoDispositivo estadoDisp;
+	
 	private double temperatura;
 	private double movimiento; //0 o 1
 	private double luz; // en unidad de intensidad luminica
