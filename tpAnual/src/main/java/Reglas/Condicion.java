@@ -3,7 +3,6 @@ package Reglas;
 import org.apache.commons.lang3.EnumUtils;
 
 import Exceptions.CaracterInvalidoException;
-import tpAnual.devices.Sensor;
 
 public abstract class Condicion {
 	

@@ -16,9 +16,6 @@ public class Sensor {
 	}
 	
 	//funcionalidades
-	public void medir(){
-		notificar();
-	}
 	public void notificar(){
 		for(Condicion subs:subscribers){
 			subs.update();
@@ -28,9 +25,15 @@ public class Sensor {
 		subscribers.add(cond);
 	}
 	
+	//para disparar evaluar las condiciones
+	public void medir(){
+		notificar();
+	}
+	
 	//magnitud
 	public void setMagnitud(double unaMagnitud){
 		this.magnitud = unaMagnitud;
+		notificar();
 	}
 	public double getMagnitud(){
 		return this.magnitud;

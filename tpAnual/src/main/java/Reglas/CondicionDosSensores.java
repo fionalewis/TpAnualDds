@@ -16,10 +16,10 @@ public class CondicionDosSensores extends Condicion{
 		s2.subscribir(this);
 	}
 	
+	//llamado por sensor
 	@Override
 	public void update(){
-		this.estado = evaluar(sensor1.getMagnitud(), sensor2.getMagnitud());
-		this.regla.evaluarCondiciones();		
+		this.estado = evaluar(sensor1.getMagnitud(), sensor2.getMagnitud());	
 	}
 	
 }

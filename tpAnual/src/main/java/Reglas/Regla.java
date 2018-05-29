@@ -10,24 +10,22 @@ import tpAnual.devices.Sensor;
 
 public class Regla {
 	
-	private DispositivoInteligente disp;
 	private List<Condicion> condiciones = new ArrayList<>(); // condiciones q c/u es una comparacion binaria
 	private List<Actuador> actuadores = new ArrayList<>(); //acciones
 	private int contador;
+	private DispositivoInteligente disp;
 	private String criterioCondiciones; // AND , OR
 	private enum criterios{AND,OR}
+	private boolean state; //para test NO AGREGAR AL DIAGRAMA DE CLASES
 	
-	public Regla(DispositivoInteligente dispo, String critCond){
-		this.disp = dispo;
+	public Regla(DispositivoInteligente unDispo,String critCond){
+		this.disp = unDispo;
 		this.criterioCondiciones = critCond;
 	}
 	
 	//getters y setters
 	public void setCondiciones(List<Condicion> comparaciones){
 		this.condiciones = comparaciones;
-	}
-	public void setDispositivo(DispositivoInteligente disp){
-		this.disp = disp;
 	}
 	public void setActuadores(List<Actuador> acts){
 		this.actuadores = acts;
@@ -39,29 +37,35 @@ public class Regla {
 		this.criterioCondiciones = comparacion;
 		EnumUtils.isValidEnum(criterios.class, comparacion);	
 	}
-	public Condicion getUnaCondicion(int indice){
+	public Condicion getCondicionConIndice(int indice){
 		return condiciones.get(indice);
 	}
 	public Condicion getCondicion(Condicion con){
-		int i = condiciones.indexOf(con);
-		return condiciones.get(i);
+		return getCondicionConIndice(condiciones.indexOf(con));
 	}
-	
+	public boolean getState(){
+		return this.state;
+	}
 	// ============================
-	public void evaluarCondiciones(){
+	public void aplicarRegla(){
 			
-		for(Condicion conp:this.condiciones){
-			if(conp.getEstado()){
+		for(Condicion con:this.condiciones){
+			if(con.getEstado()){
 				contador++;
 			}
 		}
-		switch (criterioCondiciones){
+		
+		if(criterioCondiciones.equals("AND")){
+			evaluarCondicionesAND(contador);
+		}else evaluarCondicionesOR(contador);
+		
+		/*switch (criterioCondiciones){
 			case "AND":
 				evaluarCondicionesAND(contador);
 			case "OR":
 				evaluarCondicionesOR(contador);
 			default: return;
-		}
+		}*/
 	}
 	
 	public void evaluarCondicionesAND(int cont){
@@ -70,15 +74,17 @@ public class Regla {
 			for(Actuador act:actuadores){
 				act.execute(disp);
 			}
+			this.state = true; //para test 
 		}
 	}
 	
 	public void evaluarCondicionesOR(int cont){
 		if(contador>0){
-			System.out.println("La regla cumplioal menos una condicion");
+			System.out.println("La regla cumplio al menos una condicion");
 			for(Actuador act:actuadores){
 				act.execute(disp);
 			}
+			this.state = true; //para test
 		}
 	}
 	

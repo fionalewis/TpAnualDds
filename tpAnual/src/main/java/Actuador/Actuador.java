@@ -2,12 +2,17 @@ package Actuador;
 
 import tpAnual.devices.Dispositivo;
 
-public abstract class Actuador {
+public class Actuador {
 	
 	private int idFabricante; 
 	private String orden;
 	private ActuadorAdapter adapter = new ActuadorAdapter();
 	
+	public Actuador(int unIDFab, String unaOrden){
+		idFabricante = unIDFab;
+		orden = unaOrden;
+		
+	}
 	
 	public void execute(Dispositivo dispo){
 		adapter.execute(idFabricante,dispo, orden);

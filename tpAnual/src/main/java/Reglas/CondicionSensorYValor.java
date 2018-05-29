@@ -15,9 +15,10 @@ public class CondicionSensorYValor extends Condicion{
 		this.sensor.subscribir(this);
 	}
 	
+	//llamado por sensor
 	@Override
 	public void update(){
-		this.estado = evaluar(sensor.getMagnitud(), valorFijo);
+		this.estado = evaluar(sensor.getMagnitud(), valorFijo); //evalua la condicion y le avisa regla
 	}
 	
 }
