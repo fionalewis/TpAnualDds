@@ -4,12 +4,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import Actuador.Actuador;
 import Exceptions.CaracterInvalidoException;
-import Reglas.Condicion;
-import Reglas.Regla;
-import tpAnual.devices.DispositivoInteligente;
-import tpAnual.devices.Sensor;
+import modelo.Actuador.Actuador;
+import modelo.Reglas.Condicion;
+import modelo.Reglas.Regla;
+import modelo.devices.DispositivoInteligente;
+import modelo.devices.Sensor;
 
 public class TestRegla {
 	DispositivoInteligente aircon = new DispositivoInteligente("Aire Acondicionado",0.14,0.1,"Phillip");

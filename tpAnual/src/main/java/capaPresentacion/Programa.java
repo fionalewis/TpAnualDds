@@ -3,10 +3,10 @@ package capaPresentacion;
 import java.util.List;
 
 import Exceptions.ExceptionsHandler;
-import tpAnual.DAOJson;
-import tpAnual.users.Categoria;
-import tpAnual.users.Cliente;
-import tpAnual.users.Cliente.TipoDocumento;
+import modelo.DAOJson;
+import modelo.users.Categoria;
+import modelo.users.Cliente;
+import modelo.users.Cliente.TipoDocumento;
 
 public class Programa {
 	

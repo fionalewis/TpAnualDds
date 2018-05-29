@@ -1,6 +1,6 @@
-package Reglas;
+package modelo.Reglas;
 
-import tpAnual.devices.Sensor;
+import modelo.devices.Sensor;
 
 public class CondicionDosSensores extends Condicion{
 

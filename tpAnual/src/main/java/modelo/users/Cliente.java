@@ -1,14 +1,14 @@
-package tpAnual.users;
+package modelo.users;
 
 import java.util.List;
 
 import capaPresentacion.Programa;
-import tpAnual.deviceState.Encendido;
-import tpAnual.devices.Dispositivo;
-import tpAnual.devices.DispositivoEstandar;
-import tpAnual.devices.DispositivoInteligente;
-import tpAnual.devices.DispositivoConvertido;
-import tpAnual.deviceState.AhorroEnergia;
+import modelo.deviceState.AhorroEnergia;
+import modelo.deviceState.Encendido;
+import modelo.devices.Dispositivo;
+import modelo.devices.DispositivoConvertido;
+import modelo.devices.DispositivoEstandar;
+import modelo.devices.DispositivoInteligente;
 
 import java.util.ArrayList;
 import java.time.LocalDate;

@@ -1,12 +1,13 @@
-package Reglas;
+package modelo.Reglas;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.EnumUtils;
-import Actuador.Actuador;
+
 import Exceptions.CaracterInvalidoException;
-import tpAnual.devices.DispositivoInteligente;
-import tpAnual.devices.Sensor;
+import modelo.Actuador.Actuador;
+import modelo.devices.DispositivoInteligente;
+import modelo.devices.Sensor;
 
 public class Regla {
 	

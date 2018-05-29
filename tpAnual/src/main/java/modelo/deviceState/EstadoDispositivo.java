@@ -1,8 +1,8 @@
-package tpAnual.deviceState;
+package modelo.deviceState;
 
 import java.time.LocalDateTime;
 
-import tpAnual.devices.DispositivoInteligente;
+import modelo.devices.DispositivoInteligente;
 
 public interface EstadoDispositivo {
 	

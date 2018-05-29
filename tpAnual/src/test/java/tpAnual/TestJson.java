@@ -7,10 +7,11 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import Exceptions.ExceptionsHandler;
-import tpAnual.devices.Dispositivo;
-import tpAnual.users.Administrador;
-import tpAnual.users.Categoria;
-import tpAnual.users.Cliente;
+import modelo.DAOJson;
+import modelo.devices.Dispositivo;
+import modelo.users.Administrador;
+import modelo.users.Categoria;
+import modelo.users.Cliente;
 
 /* Acuerdense de revisar si tienen los JSONs en la misma ubicacion antes de correr los tests !!! */
 

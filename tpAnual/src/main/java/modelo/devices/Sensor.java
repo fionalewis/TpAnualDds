@@ -1,8 +1,9 @@
-package tpAnual.devices;
+package modelo.devices;
 
 import java.util.ArrayList;
 import java.util.List;
-import Reglas.Condicion;
+
+import modelo.Reglas.Condicion;
 
 public class Sensor {
 	

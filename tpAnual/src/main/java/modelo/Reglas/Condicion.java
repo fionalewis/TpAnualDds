@@ -1,4 +1,4 @@
-package Reglas;
+package modelo.Reglas;
 
 import org.apache.commons.lang3.EnumUtils;
 

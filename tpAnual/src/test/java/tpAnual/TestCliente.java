@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.ArrayList;
 import org.junit.*;
 
-import tpAnual.devices.DispositivoInteligente;
-import tpAnual.users.Cliente;
-import tpAnual.users.Cliente.TipoDocumento;
+import modelo.devices.DispositivoInteligente;
+import modelo.users.Cliente;
+import modelo.users.Cliente.TipoDocumento;
 
 
 public class TestCliente {

@@ -1,8 +1,8 @@
-package tpAnual.deviceState;
+package modelo.deviceState;
 
 import java.time.LocalDateTime;
 
-import tpAnual.devices.DispositivoInteligente;
+import modelo.devices.DispositivoInteligente;
 
 public class Apagado implements EstadoDispositivo{
 
@@ -31,13 +31,13 @@ public class Apagado implements EstadoDispositivo{
 
 	@Override
 	public double consumoEnUltimasHoras(int horas,DispositivoInteligente disp) {
-		System.out.println("El dispositivo está apagado. No es posible realizar la consulta.");
+		System.out.println("El dispositivo est? apagado. No es posible realizar la consulta.");
 		return 0;
 	}
 
 	@Override
 	public double consumoTotal(LocalDateTime fechaInicio, LocalDateTime fechaFin,DispositivoInteligente disp) {
-		System.out.println("El dispositivo está apagado. No es posible realizar la consulta.");
+		System.out.println("El dispositivo est? apagado. No es posible realizar la consulta.");
 		return 0;
 	}
 	

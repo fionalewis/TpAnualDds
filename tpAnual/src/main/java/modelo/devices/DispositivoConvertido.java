@@ -1,4 +1,4 @@
-package tpAnual.devices;
+package modelo.devices;
 
 public class DispositivoConvertido extends DispositivoInteligente {
 	

@@ -1,4 +1,4 @@
-package tpAnual.devices;
+package modelo.devices;
 
 import java.time.LocalDateTime;
 

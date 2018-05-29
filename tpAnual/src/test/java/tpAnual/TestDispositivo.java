@@ -3,8 +3,8 @@ package tpAnual;
 import java.time.LocalDateTime;
 import org.junit.*;
 
-import tpAnual.devices.DispositivoInteligente;
-import tpAnual.devices.Sensor;
+import modelo.devices.DispositivoInteligente;
+import modelo.devices.Sensor;
 
 public class TestDispositivo {
 	

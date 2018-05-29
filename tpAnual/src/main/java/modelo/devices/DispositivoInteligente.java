@@ -1,12 +1,12 @@
-package tpAnual.devices;
+package modelo.devices;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import tpAnual.deviceState.Encendido;
-import tpAnual.deviceState.EstadoDispositivo;
+import modelo.deviceState.Encendido;
+import modelo.deviceState.EstadoDispositivo;
 
 public class DispositivoInteligente extends Dispositivo {
 	

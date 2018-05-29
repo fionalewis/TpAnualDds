@@ -1,6 +1,6 @@
-package Actuador;
+package modelo.Actuador;
 
-import tpAnual.devices.Dispositivo;
+import modelo.devices.Dispositivo;
 
 public class Actuador {
 	
