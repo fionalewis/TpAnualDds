@@ -11,30 +11,27 @@ import modelo.deviceState.EstadoDispositivo;
 public class DispositivoInteligente extends Dispositivo {
 	
 	public double kWhAhorro;
-	public String fabricante; //seguro con enum
 	//private List<Sensor> sensores = new ArrayList<>();
 	Map<String, Sensor> sensores = new HashMap<String, Sensor>();
 	private EstadoDispositivo estadoDisp;
 	
 	//Constructor default
-	public DispositivoInteligente(String nombDisp,double kWh,double kWhAhorro,String fabricante) {
+	public DispositivoInteligente(String nombDisp,double kWh,double kWhAhorro) {
 		setNombreDisp(nombDisp);
 		setkWh(kWh);
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.now());
 		setkWhAhorro(kWhAhorro);
-		setFabricante(fabricante);
 	}
 	
 	//Constructor para los tests
 	public DispositivoInteligente(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec,
-									double kWhAhorro,String fabricante) {
+									double kWhAhorro) {
 		setNombreDisp(nombDisp);
 		setkWh(kWh);
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.of(year,month,day,hour,min,sec));
 		setkWhAhorro(kWhAhorro);
-		setFabricante(fabricante);
 	}
 	
 	//Constructor para la conversion
@@ -50,12 +47,6 @@ public class DispositivoInteligente extends Dispositivo {
 	}
 	public void setkWhAhorro(double kWhAhorro) {
 		this.kWhAhorro = kWhAhorro;
-	}
-	public String getFabricante() {
-		return fabricante;
-	}
-	public void setFabricante(String fabricante) {
-		this.fabricante = fabricante;
 	}
 	public EstadoDispositivo getEstadoDisp() {
 		return estadoDisp;

@@ -8,7 +8,7 @@ import modelo.devices.Sensor;
 
 public class TestDispositivo {
 	
-	DispositivoInteligente tele = new DispositivoInteligente("Televisor",0.14,0.1,"SAMSUNG");
+	DispositivoInteligente tele = new DispositivoInteligente("Televisor",0.14,0.1);
 	LocalDateTime fechaFinalParaTest = LocalDateTime.of(2018,4,18,7,50,0);
 	Sensor sensorVolumen = new Sensor("volumen",tele);
 

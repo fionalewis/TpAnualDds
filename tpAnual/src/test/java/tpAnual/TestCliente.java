@@ -14,8 +14,8 @@ public class TestCliente {
 	
 	private Cliente clienteDePrueba;
 	private List<DispositivoInteligente> dispositivosPrueba = new ArrayList<>();
-	DispositivoInteligente tele = new DispositivoInteligente("Televisor",0.14,0.1,"SAMSUNG");
-	DispositivoInteligente aire = new DispositivoInteligente("Aire acondicionado",1.013,1,"LG"); //Por si llega a ser necesario agregar m�s tests
+	DispositivoInteligente tele = new DispositivoInteligente("Televisor",0.14,0.1);
+	DispositivoInteligente aire = new DispositivoInteligente("Aire acondicionado",1.013,1); //Por si llega a ser necesario agregar m�s tests
 	LocalDateTime fechaFinalParaTest = LocalDateTime.of(2018,4,18,7,50,0);
 	
 	@Before

@@ -10,7 +10,6 @@ public class DispositivoConvertido extends DispositivoInteligente {
 		setkWh(disp.getkWh());
 		setDispOriginal(disp);
 		setkWhAhorro(kWhAhorro);
-		setFabricante(fabricante);
 	}
 
 	public DispositivoEstandar getDispOriginal() {

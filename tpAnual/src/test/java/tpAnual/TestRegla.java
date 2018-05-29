@@ -12,7 +12,7 @@ import modelo.devices.DispositivoInteligente;
 import modelo.devices.Sensor;
 
 public class TestRegla {
-	DispositivoInteligente aircon = new DispositivoInteligente("Aire Acondicionado",0.14,0.1,"Phillip");
+	DispositivoInteligente aircon = new DispositivoInteligente("Aire Acondicionado",0.14,0.1);
 	Sensor sensorTemperatura = new Sensor("temperatura",aircon);
 	Sensor sensorHumedad = new Sensor("humedad",aircon);
 	Sensor sensorMovimiento = new Sensor("movimiento",aircon);
