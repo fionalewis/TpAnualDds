@@ -8,7 +8,6 @@ import tpAnual.devices.Dispositivo;
 import tpAnual.devices.DispositivoEstandar;
 import tpAnual.devices.DispositivoInteligente;
 import tpAnual.devices.DispositivoConvertido;
-import tpAnual.Categoria;
 import tpAnual.deviceState.AhorroEnergia;
 
 import java.util.ArrayList;

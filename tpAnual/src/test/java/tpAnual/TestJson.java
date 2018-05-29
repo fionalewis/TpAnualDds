@@ -9,6 +9,7 @@ import org.junit.Test;
 import Exceptions.ExceptionsHandler;
 import tpAnual.devices.Dispositivo;
 import tpAnual.users.Administrador;
+import tpAnual.users.Categoria;
 import tpAnual.users.Cliente;
 
 /* Acuerdense de revisar si tienen los JSONs en la misma ubicacion antes de correr los tests !!! */

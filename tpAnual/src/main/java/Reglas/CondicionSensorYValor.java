@@ -2,16 +2,17 @@ package Reglas;
 
 import tpAnual.devices.Sensor;
 
-public class ComparacionSensorYValor extends Comparacion{
+public class CondicionSensorYValor extends Condicion{
 
 	private Sensor sensor;
 	private Double valorFijo;
 	
-	public ComparacionSensorYValor(Regla reg, Sensor sen,  double valor, String comp){
+	public CondicionSensorYValor(Regla reg, Sensor sen,  double valor, String comp){
 		this.regla = reg;
 		this.sensor = sen;
 		this.valorFijo = valor;
 		this.comparacion = comp;
+		this.sensor.subscribir(this);
 	}
 	
 	@Override

@@ -5,11 +5,11 @@ import org.apache.commons.lang3.EnumUtils;
 import Exceptions.CaracterInvalidoException;
 import tpAnual.devices.Sensor;
 
-public abstract class Comparacion {
+public abstract class Condicion {
 	
 	protected Regla regla;
-	protected String comparacion;
-	protected enum SignosComparaciones {MAYOR,MENOR,IGUAL,DISTINTO}
+	protected String comparacion; //Mayor, Menor, Igual o distinto
+	protected enum CriterioComparacion {MAYOR,MENOR,IGUAL,DISTINTO}
 	protected boolean estado = false;
 	
 	public boolean evaluar(double x, double y){
@@ -57,13 +57,16 @@ public abstract class Comparacion {
 	
 	public void setComparacion(String comparacion) throws CaracterInvalidoException{
 		this.comparacion = comparacion;
-		EnumUtils.isValidEnum(SignosComparaciones.class, comparacion);	
+		EnumUtils.isValidEnum(CriterioComparacion.class, comparacion);	
 	}
-
 
 	public abstract void update();
 
 	public boolean getEstado(){
 		return this.estado;
+	}
+	
+	public String getComparacion(){
+		return this.comparacion;
 	}
 }
