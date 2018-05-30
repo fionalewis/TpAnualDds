@@ -68,4 +68,6 @@ public abstract class Condicion {
 	public String getComparacion(){
 		return this.comparacion;
 	}
+	
+	public abstract String getExpresion();
 }

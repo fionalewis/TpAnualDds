@@ -22,4 +22,8 @@ public class CondicionDosSensores extends Condicion{
 		this.estado = evaluar(sensor1.getMagnitud(), sensor2.getMagnitud());	
 	}
 	
+	public String getExpresion(){
+		return sensor1.getNombreMagnitud().concat(comparacion).concat(sensor2.getNombreMagnitud());
+	}
+	
 }

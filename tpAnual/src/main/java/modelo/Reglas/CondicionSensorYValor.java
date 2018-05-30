@@ -21,4 +21,7 @@ public class CondicionSensorYValor extends Condicion{
 		this.estado = evaluar(sensor.getMagnitud(), valorFijo); //evalua la condicion y le avisa regla
 	}
 	
+	public String getExpresion(){
+		return sensor.getNombreMagnitud().concat(comparacion).concat(valorFijo.toString());
+	}
 }

@@ -51,7 +51,9 @@ public class Sensor {
 	public void disminuirMagnitud(double valor){
 		this.magnitud -= valor;
 	}
-	
+	public List<Condicion> getSubscribers(){
+		return subscribers;
+	}
 	//intervalo
 	public void setIntervalo(int unIntervalo){ //en segundos
 		this.intervalo = unIntervalo;
