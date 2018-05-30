@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+import Exceptions.CaracterInvalidoException;
 import modelo.Actuador.Actuador;
 import modelo.Reglas.Condicion;
 import modelo.Reglas.Regla;
@@ -33,9 +34,11 @@ public class Entrega1 {
 	private static Condicion humedadMenor50;
 	private static Condicion hayGenteCasa;
 	private static Condicion tempInMayorOut;
+	private static List<Condicion> condicionesExistentes = new ArrayList<Condicion>();
 	
 	private static Actuador prenderAire = new Actuador(1,"Prender el aire");
 	private static Actuador prenderLuz = new Actuador(2,"Prender la luz");
+	private static List<Actuador> actuadoresExistentes = new ArrayList<Actuador>();
 	
 	private static Regla reglaCopada = new Regla("Una regla muy copada",aircon,"AND");
 	private static List<Regla> reglasExistentes = new ArrayList<Regla>();
@@ -336,18 +339,12 @@ public class Entrega1 {
 
 	public static void imprimirDispoI(){
 		List<DispositivoInteligente> dispos = nico.getDispInteligente();
-		int size = dispos.size();
-		for(int i=1; i<size; i++){
 		dispos.stream().forEach(d -> System.out.print(dispos.indexOf(d) + ". " + d.getNombreDisp() + "\n"));
-		}
 	}
 	
 	public static void imprimirDispoS(){
 		List<DispositivoEstandar> dispos = nico.getDispEstandar();
-		int size = dispos.size();
-		for(int i=1; i<size; i++){
 		dispos.stream().forEach(d -> System.out.print(dispos.indexOf(d) + ". " + d.getNombreDisp() + "\n"));
-		}
 	}
 	
 	//sensores
@@ -614,7 +611,7 @@ public class Entrega1 {
 	}
 	
 	//reglas
-	public static void reglas(){
+	public static void reglas() throws CaracterInvalidoException{
 		System.out.println("\nElija una opcion:"
 				+ "\n1. Seleccionar una regla para mas opciones"
 				+ "\n2. Agregar una regla nueva"
@@ -639,9 +636,9 @@ public class Entrega1 {
 		}
 	}
 	
-	public static void seleccionarRegla(){
-		System.out.println("Seleccione una regla para mas operaciones: \n");
-		int i = 1;
+	public static void seleccionarRegla() throws CaracterInvalidoException{
+		System.out.println("Seleccione una regla: \n");
+		int i = 0;
 		for(Regla reg:reglasExistentes){
 			System.out.println(i + ". " + reg.getNombreRegla());
 			i++;
@@ -714,16 +711,15 @@ public class Entrega1 {
 	}
 	
 	//condiciones
-	public static void seleccionarCondicion(Regla reg){
+	public static void seleccionarCondicion(Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nSeleccione una condicion: ");
 		in = new Scanner(System.in);
 		Condicion con = reg.getCondiciones().get(in.nextInt());
 		
 		System.out.println("\nElija una opcion: "
 				+ "\n1. Evaluar la condicion seleccionada"
-				+ "\n2. Quitar la condicion seleccionada"
-				+ "\n3. Volver al menu anterior"
-				+ "\n4. Volver al menu principal");
+				+ "\n2. Volver al menu anterior"
+				+ "\n3. Volver al menu principal");
 		
 		in = new Scanner(System.in);
 		
@@ -732,20 +728,16 @@ public class Entrega1 {
 			evaluarCondicion(con,reg);
 			break;
 		case 2:
-			quitarCondicion(reg);
-			break;
-		case 3:
 			seleccionarRegla();
 			break;
-		case 4:
+		case 3:
 			menuPrincipal();
 			break;
 		default: seleccionarCondicion(reg);
 		}
-		
 	}
 	
-	public static void evaluarCondicion(Condicion con, Regla reg){
+	public static void evaluarCondicion(Condicion con, Regla reg) throws CaracterInvalidoException{
 		con.update();
 		System.out.println("\nElija una opcion: "
 				+ "\n1. Volver al menu anterior"
@@ -764,7 +756,7 @@ public class Entrega1 {
 		}
 	}
 	
-	public static void agregarCondicion(Regla reg){
+	public static void agregarCondicion(Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nSeleccione un dispositivo: ");
 		imprimirDispoI();
 		in = new Scanner(System.in);
@@ -801,7 +793,7 @@ public class Entrega1 {
 		posAgregarCondicion(reg);
 	}
 
-	public static void posAgregarCondicion(Regla reg){
+	public static void posAgregarCondicion(Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nElija una opcion:"
 				+ "\n1. Agregar otra condicion"
 				+ "\n2. Volver al menu anterior"
@@ -822,7 +814,7 @@ public class Entrega1 {
 		}
 	}
 	
-	public static void quitarCondicion(Regla reg){
+	public static void quitarCondicion(Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nSeleccione una condicion para quitar: ");
 		in = new Scanner(System.in);
 		Condicion con = reg.getCondiciones().get(in.nextInt());
@@ -855,43 +847,263 @@ public class Entrega1 {
 	}
 
 	// actuadores
-	public static void seleccionarActuador(Regla reg){
+	public static void seleccionarActuador(Regla reg) throws CaracterInvalidoException{
+		System.out.println("\nSeleccione un actuador: ");
+		in = new Scanner(System.in);
+		Actuador act = reg.getActuadores().get(in.nextInt());
 		
-	}
-
-	public static void agregarActuador(Regla reg){
+		System.out.println("\nElija una opcion: "
+				+ "\n1. Evaluar el actuador seleccionado"
+				+ "\n2. Volver al menu anterior"
+				+ "\n3. Volver al menu principal");
 		
-	}
-
-	public static void quitarActuador(Regla reg){
+		in = new Scanner(System.in);
 		
-	}
-
-	public static void cambiarCriterioComp(Regla reg){
-		
-	}
-
-	public static void aplicarRegla(Regla reg){
-		
-	}
-
-	public static void posSeleccionarRegla(){
-		
-	}
-	
-	public static void agregarRegla(){
-		
+		switch(in.nextInt()){
+		case 1:
+			evaluarActuador(act,reg);
+			break;
+		case 2:
+			seleccionarRegla();
+			break;
+		case 3:
+			menuPrincipal();
+			break;
+		default: seleccionarCondicion(reg);
+		}
 	}
 	
-	public static void posAgregarRegla(){
+	public static void evaluarActuador(Actuador act,Regla reg) throws CaracterInvalidoException{
+		System.out.println("\nElija un dispositivo: ");
+		imprimirDispoI();
+		in = new Scanner(System.in);
+		DispositivoInteligente dispo = nico.getDispInteligente().get(in.nextInt());
+		act.execute(dispo);
 		
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Volver al menu anterior"
+				+ "\n2. Volver al menu principal");
+		in = new Scanner(System.in);
+		
+		switch(in.nextInt()){
+		case 1:
+			seleccionarActuador(reg);
+			break;
+		case 2:
+			menuPrincipal();
+			break;
+		default:evaluarActuador(act,reg);
+		}
+	}
+
+	public static void agregarActuador(Regla reg) throws CaracterInvalidoException{
+		
+		System.out.println("Elija un dispositivo: ");
+		imprimirDispoI();
+		in = new Scanner(System.in);
+		DispositivoInteligente dispo = nico.getDispInteligente().get(in.nextInt());
+		
+		System.out.println("Ingrese un ID de fabricante: ");
+		in = new Scanner(System.in);
+		int id = in.nextInt();
+		
+		System.out.println("Ingrese una orden: ");
+		in = new Scanner(System.in);
+		String orden = in.toString();
+		
+		Actuador act = new Actuador(id,orden);
+		
+		System.out.println("\nQue desea hacer con el actuador creado: "
+				+ "\n1. Agregarlo a la regla"
+				+ "\n2. Evaluarlo a un dispositivo"
+				+ "\n3. Volver al menu anterior"
+				+ "\n4. Volver al menu principal");
+		
+		in = new Scanner(System.in);
+		
+		switch(in.nextInt()){
+		case 1:
+			reg.agregarActuador(act);
+			break;
+		case 2:
+			evaluarActuador(act,reg);
+			break;
+		case 3:
+			seleccionarRegla();
+			break;
+		case 4:
+			menuPrincipal();
+			break;
+		default: seleccionarCondicion(reg);
+		}
+	}
+
+	public static void quitarActuador(Regla reg) throws CaracterInvalidoException{
+		List<Actuador> acts = reg.getActuadores();
+		System.out.println("Seleccione un actuador para quitar: \n");
+		acts.stream().forEach(a -> System.out.println(acts.indexOf(a) + ". " +a.getOrden()));
+		in = new Scanner(System.in);
+		Actuador act = reg.getActuadores().get(in.nextInt());
+		reg.quitarActuador(act);
+		System.out.println("La lista de actuadores quedo asi: \n");
+		reg.getActuadores().stream().forEach(a -> System.out.println(a.getOrden()));
+		
+		System.out.println("\nElija una opcion:"
+				+ "\n1. quitar otro actuador"
+				+ "\n2. Volver al menu anterior"
+				+ "\n3. Volver al menu principal");
+		in = new Scanner(System.in);
+		
+		switch(in.nextInt()){
+		case 1:
+			quitarActuador(reg);
+			break;
+		case 2:
+			seleccionarRegla();
+			break;
+		case 3:
+			menuPrincipal();
+			break;
+		default:quitarActuador(reg);
+		}
+		
+	}
+
+	public static void cambiarCriterioComp(Regla reg) throws CaracterInvalidoException{
+		System.out.println("Ingrese el nuevo criterio de comparacion (AND u OR)\n");
+		in = new Scanner(System.in);
+		String criterio = in.toString();
+
+		try{
+			reg.setComparacionCondiciones(criterio);
+			}catch(Exception CaracterInvalidoExcepsion) {
+				System.out.println("\nOpcion invalida\n");
+			}
+		
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Volver al menu anterior"
+				+ "\n2. Volver al menu principal");
+		in = new Scanner(System.in);
+		
+		switch(in.nextInt()){
+		case 1:
+			seleccionarRegla();
+			break;
+		case 2:
+			menuPrincipal();
+			break;
+		default:quitarActuador(reg);
+		}
+		
+	}
+
+	public static void aplicarRegla(Regla reg) throws CaracterInvalidoException{
+		reg.aplicarRegla();
+		System.out.println("\nElija una opcion: "
+				+ "\n1. Volver al menu anterior"
+				+ "\n2. Volver al menu principal");
+		in = new Scanner(System.in);
+		
+		switch(in.nextInt()){
+		case 1:
+			seleccionarRegla();
+			break;
+		case 2:
+			menuPrincipal();
+			break;
+		default: aplicarRegla(reg);
+		}
 	}
 	
-	public static void quitarRegla(){
+	public static void agregarRegla() throws CaracterInvalidoException{
 		
+		System.out.println("Ingrese un nombre para la regla\n");
+		in = new Scanner(System.in);
+		String nombre = in.toString();
+		
+		System.out.println("Seleccione una condicion para agregarla a la regla\n");
+		int i = 0;
+		condicionesExistentes.stream().forEach(c -> System.out.println(i + ". " + c.getExpresion()));
+		in = new Scanner(System.in);
+		Condicion con = condicionesExistentes.get(in.nextInt());
+		
+		System.out.println("Seleccione un actuador para agregarlo a la regla\n");
+		int ii = 0;
+		actuadoresExistentes.stream().forEach(a -> System.out.println(ii + ". " + a.getOrden()));
+		in = new Scanner(System.in);
+		Actuador act = actuadoresExistentes.get(in.nextInt());
+		
+		System.out.println("Ingrese un criterio de comparacion (AND u OR)\n");
+		in = new Scanner(System.in);
+		String criterio = in.toString();
+
+		Regla regla = new Regla(nombre,aircon,criterio);
+		
+		regla.agregarCondicion(con);
+		regla.agregarActuador(act);
+		reglasExistentes.add(regla);
+		
+		System.out.println("La lista de reglas quedo asi: \n");
+		reglasExistentes.stream().forEach(r -> System.out.println(r.getNombreRegla()));
+		
+		posAgregarRegla();
 	}
-	public static void posQuitarRegla(){
+	
+	public static void posAgregarRegla() throws CaracterInvalidoException{
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Agregar otra regla"
+				+ "\n2. Volver al menu anterior"
+				+ "\n3. Volver al menu principal");
+		in = new Scanner(System.in);
 		
+		switch(in.nextInt()){
+		case 1:
+			agregarRegla();
+			break;
+		case 2:
+			reglas();
+			break;
+		case 3:
+			menuPrincipal();
+			break;
+		default:agregarRegla();
+		}
+	}
+	
+	public static void quitarRegla() throws CaracterInvalidoException{
+		//mostrar lista reglas existentes
+		System.out.println("Seleccione una regla: \n");
+		reglasExistentes.stream().forEach(r -> System.out.print(
+				reglasExistentes.indexOf(r) + ". " + r.getNombreRegla() + "\n" ));
+	
+		in = new Scanner(System.in);	
+		Regla reg = reglasExistentes.get(in.nextInt());
+		reglasExistentes.remove(reg);
+
+		System.out.println("La lista de reglas quedo asi: \n");
+		reglasExistentes.stream().forEach(r -> System.out.println(r.getNombreRegla()));
+		
+		posQuitarRegla();
+	}
+	public static void posQuitarRegla() throws CaracterInvalidoException{
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Agregar otra regla"
+				+ "\n2. Volver al menu anterior"
+				+ "\n3. Volver al menu principal");
+		in = new Scanner(System.in);
+		
+		switch(in.nextInt()){
+		case 1:
+			quitarRegla();
+			break;
+		case 2:
+			reglas();
+			break;
+		case 3:
+			menuPrincipal();
+			break;
+		default:quitarRegla();
+		}
 	}
 	
 	public static void init(){
@@ -918,5 +1130,10 @@ public class Entrega1 {
 		humedadMenor50 = reglaCopada.getCondicionConIndice(1);
 		hayGenteCasa = reglaCopada.getCondicionConIndice(2);
 		reglasExistentes.add(reglaCopada);
+		condicionesExistentes.add(tempIgual30);
+		condicionesExistentes.add(humedadMenor50);
+		condicionesExistentes.add(hayGenteCasa);
+		actuadoresExistentes.add(prenderAire);
+		actuadoresExistentes.add(prenderLuz);
 	}
 }

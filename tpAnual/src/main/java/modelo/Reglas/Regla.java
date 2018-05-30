@@ -33,6 +33,9 @@ public class Regla {
 	public List<Condicion> getCondiciones(){
 		return this.condiciones;
 	}
+	public void agregarCondicion(Condicion unaCondicion){
+		condiciones.add(unaCondicion);
+	}
 	public void quitarCondicion(Condicion unaCondicion){
 		condiciones.remove(unaCondicion);
 	}
@@ -44,6 +47,9 @@ public class Regla {
 	}
 	public void agregarActuador(Actuador act){
 		actuadores.add(act);
+	}
+	public void quitarActuador(Actuador act){
+		actuadores.remove(act);
 	}
 	public void setComparacionCondiciones(String comparacion) throws CaracterInvalidoException{
 		this.criterioCondiciones = comparacion;
