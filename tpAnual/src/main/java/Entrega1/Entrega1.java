@@ -40,7 +40,7 @@ public class Entrega1 {
 	private static Actuador prenderLuz = new Actuador(2,"Prender la luz");
 	private static List<Actuador> actuadoresExistentes = new ArrayList<Actuador>();
 	
-	private static Regla reglaCopada = new Regla("Una regla muy copada",aircon,"AND");
+	private static Regla reglaCopada = new Regla("Una regla muy copada",aircon,"OR");
 	private static List<Regla> reglasExistentes = new ArrayList<Regla>();
 	
 	public static void main(String[] args) throws CaracterInvalidoException{
@@ -186,6 +186,8 @@ public class Entrega1 {
 			break;
 		default:dispoInteligentes();
 		}
+		SeleccionarDispo();
+		
 	}
 	
 	public static void quitarDispo(boolean tipoDispo) throws CaracterInvalidoException{
@@ -279,7 +281,8 @@ public class Entrega1 {
 			menuPrincipal();
 			break;
 		default:SeleccionarDispo();
-		}		
+		}	
+		dispoInteligentes();
 	}
 	
 	//dispositivos en general
@@ -425,6 +428,7 @@ public class Entrega1 {
 			break;
 		default:posSeleccionarSensor(sensor,dispo);
 		}
+		sensores(dispo);
 		
 	}
 	
@@ -936,6 +940,7 @@ public class Entrega1 {
 			break;
 		default: seleccionarCondicion(reg);
 		}
+		seleccionarRegla();
 	}
 
 	public static void quitarActuador(Regla reg) throws CaracterInvalidoException{
