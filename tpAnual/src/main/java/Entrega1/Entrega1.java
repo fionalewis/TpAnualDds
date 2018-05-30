@@ -43,12 +43,12 @@ public class Entrega1 {
 	private static Regla reglaCopada = new Regla("Una regla muy copada",aircon,"AND");
 	private static List<Regla> reglasExistentes = new ArrayList<Regla>();
 	
-	public static void main(String[] args){
+	public static void main(String[] args) throws CaracterInvalidoException{
 		init();
 		menuPrincipal();
 	}
 	
-	public static void menuPrincipal(){
+	public static void menuPrincipal() throws CaracterInvalidoException{
 		System.out.print("Bienvenido Nico! \nPor favor elija una opcion:"
 			+ "\n1. Ver tus dispositivos estandares"
 			+ "\n2. Ver tus dispositivos inteligentes"
@@ -74,7 +74,7 @@ public class Entrega1 {
 	}
 	
 	//dispositivos estandares
-	public static void dispoEstandares(){
+	public static void dispoEstandares() throws CaracterInvalidoException{
 		List<DispositivoEstandar> dispos = nico.getDispEstandar();
 		dispos.stream().forEach(d -> System.out.print(d.getNombreDisp() + "\n"));
 		
@@ -103,7 +103,7 @@ public class Entrega1 {
 		}
 	}
 	
-	public static void convertirDispEstandar(){
+	public static void convertirDispEstandar() throws CaracterInvalidoException{
 		
 		List<DispositivoEstandar> dispos = nico.getDispEstandar();
 		System.out.println("Elija un dispositivo: \n");
@@ -122,7 +122,7 @@ public class Entrega1 {
 		
 	}
 	
-	public static void posConvertir(){
+	public static void posConvertir() throws CaracterInvalidoException{
 		
 		System.out.print("\nPor favor elija una opcion:"
 				+ "\n1. Convertir otro dispositivo"
@@ -143,7 +143,7 @@ public class Entrega1 {
 	}
 	
 	//dispositivos inteligentes
-	public static void dispoInteligentes(){
+	public static void dispoInteligentes() throws CaracterInvalidoException{
 		
 		List<DispositivoInteligente> dispos = nico.getDispInteligente();
 		System.out.println("\nTus dispositivos inteligentes son: \n");
@@ -188,7 +188,7 @@ public class Entrega1 {
 		}
 	}
 	
-	public static void quitarDispo(boolean tipoDispo){
+	public static void quitarDispo(boolean tipoDispo) throws CaracterInvalidoException{
 		
 		if(tipoDispo){
 			System.out.println("\nElija un dispositivo: ");
@@ -216,7 +216,7 @@ public class Entrega1 {
 		
 	}
 	
-	public static void posQuitar(boolean tipoDispo){
+	public static void posQuitar(boolean tipoDispo) throws CaracterInvalidoException{
 		System.out.print("\nPor favor elija una opcion:"
 			+ "\n1. Quitar otro dispositivo"
 			+ "\n2. Volver al menu principal\n");
@@ -234,7 +234,7 @@ public class Entrega1 {
 		}
 	}
 	
-	public static void SeleccionarDispo(){
+	public static void SeleccionarDispo() throws CaracterInvalidoException{
 		System.out.println("Elige un dispositivo:\n");
 		imprimirDispoI();
 		in = new Scanner(System.in);
@@ -283,7 +283,7 @@ public class Entrega1 {
 	}
 	
 	//dispositivos en general
-	public static void agregarDispo(boolean tipoDispo){//0 estandar 1 inteligente
+	public static void agregarDispo(boolean tipoDispo) throws CaracterInvalidoException{//0 estandar 1 inteligente
 		
 		String nombre = " ";
 		double kwh;
@@ -317,7 +317,7 @@ public class Entrega1 {
 		posAgregarDispo(tipoDispo);
 	}
 	
-	public static void posAgregarDispo(boolean tipoDispo){
+	public static void posAgregarDispo(boolean tipoDispo) throws CaracterInvalidoException{
 		
 		System.out.print("\nPor favor elija una opcion:"
 				+ "\n1. Agregar otro dispositivo"
@@ -348,7 +348,7 @@ public class Entrega1 {
 	}
 	
 	//sensores
-	public static void sensores(DispositivoInteligente dispo){
+	public static void sensores(DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println("Elija una opcion:"
 			+ "\n1. Seleccionar un sensor para mas operaciones"
 			+ "\n2. Agregar un nuevo sensor"
@@ -377,7 +377,7 @@ public class Entrega1 {
 		}	
 	}
 	
-	public static void seleccionesSensor(DispositivoInteligente dispo){
+	public static void seleccionesSensor(DispositivoInteligente dispo) throws CaracterInvalidoException{
 		Sensor sen = seleccionarSen(dispo);
 		posSeleccionarSensor(sen,dispo);
 	}
@@ -397,7 +397,7 @@ public class Entrega1 {
 		return dispo.getSensores().get(nombre);
 	}
 	
-	public static void posSeleccionarSensor(Sensor sensor, DispositivoInteligente dispo){
+	public static void posSeleccionarSensor(Sensor sensor, DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println("Elija una opcion:"
 				+ "\n1. Ver valor"
 				+ "\n2. Ver subscriptores"
@@ -428,7 +428,7 @@ public class Entrega1 {
 		
 	}
 	
-	public static void valorSensor(Sensor sensor, DispositivoInteligente dispo){
+	public static void valorSensor(Sensor sensor, DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println(sensor.getMagnitud());
 		
 		System.out.println("\nElija una opcion:"
@@ -456,7 +456,7 @@ public class Entrega1 {
 		}
 	}
 	
-	public static void subirValorSensor(Sensor sensor,DispositivoInteligente dispo){
+	public static void subirValorSensor(Sensor sensor,DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println("\nIngrese cuanto desea subir:\n");
 		in = new Scanner(System.in);
 		sensor.aumentarMagnitud(in.nextInt());
@@ -465,7 +465,7 @@ public class Entrega1 {
 		posSubirValorSensor(sensor,dispo);
 	}
 
-	public static void posSubirValorSensor(Sensor sensor,DispositivoInteligente dispo){
+	public static void posSubirValorSensor(Sensor sensor,DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println("\nElija una opcion:"
 				+ "\n1. Seguir subiendo"
 				+ "\n2. Volver al menu anterior"
@@ -487,7 +487,7 @@ public class Entrega1 {
 		}
 	}
 
-	public static void bajarValorSensor(Sensor sensor,DispositivoInteligente dispo){
+	public static void bajarValorSensor(Sensor sensor,DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println("\nIngrese cuanto desea bajar:\n");
 		in = new Scanner(System.in);
 		sensor.disminuirMagnitud(in.nextInt());
@@ -496,7 +496,7 @@ public class Entrega1 {
 		posBajarValorSensor(sensor,dispo);
 	}
 
-	public static void posBajarValorSensor(Sensor sensor,DispositivoInteligente dispo){
+	public static void posBajarValorSensor(Sensor sensor,DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println("\nElija una opcion:"
 				+ "\n1. Seguir bajando"
 				+ "\n2. Volver al menu anterior"
@@ -518,7 +518,7 @@ public class Entrega1 {
 		}
 	}
 	
-	public static void agregarSensor(DispositivoInteligente dispo){
+	public static void agregarSensor(DispositivoInteligente dispo) throws CaracterInvalidoException{
 		String nombre;
 		double valor;
 		System.out.println("\nIngrese un nombre:");
@@ -543,7 +543,7 @@ public class Entrega1 {
 		posAgregarSensor(dispo);
 	}
 	
-	public static void posAgregarSensor(DispositivoInteligente dispo){
+	public static void posAgregarSensor(DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println("\nElija una opcion:"
 				+ "\n1. Agregar otro sensor"
 				+ "\n2. Volver al menu anterior"
@@ -564,7 +564,7 @@ public class Entrega1 {
 		}
 	}
 	
-	public static void quitarSensor(DispositivoInteligente dispo){
+	public static void quitarSensor(DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println("\nElija un sensor para quitar:");
 		Set<String> sensoresSet = dispo.getSensores().keySet();
 	    int i = 0;
@@ -589,7 +589,7 @@ public class Entrega1 {
 		
 	}
 	
-	public static void posQuitarSensor(DispositivoInteligente dispo){
+	public static void posQuitarSensor(DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println("\nElija una opcion:"
 				+ "\n1. Quitar otro sensor"
 				+ "\n2. Volver al menu anterior"
