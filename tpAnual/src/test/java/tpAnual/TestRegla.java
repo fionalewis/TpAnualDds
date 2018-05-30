@@ -24,7 +24,7 @@ public class TestRegla {
 	Actuador prenderAire = new Actuador(1,"Prender el aire");
 	Actuador prenderLuz = new Actuador(2,"Prender la luz");
 	
-	Regla reglaCopada = new Regla(aircon,"AND");
+	Regla reglaCopada = new Regla("reglaCopada",aircon,"AND");
 	
 	@Before
 	public void init() {
