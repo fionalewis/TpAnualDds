@@ -18,8 +18,10 @@ public class Regla {
 	private String criterioCondiciones; // AND , OR
 	private enum criterios{AND,OR}
 	private boolean state; //para test NO AGREGAR AL DIAGRAMA DE CLASES
+	private String nombreRegla; //solo para mostrar en el main
 	
-	public Regla(DispositivoInteligente unDispo,String critCond){
+	public Regla(String unNombreRegla,DispositivoInteligente unDispo,String critCond){
+		this.nombreRegla = unNombreRegla;
 		this.disp = unDispo;
 		this.criterioCondiciones = critCond;
 	}
@@ -28,8 +30,17 @@ public class Regla {
 	public void setCondiciones(List<Condicion> comparaciones){
 		this.condiciones = comparaciones;
 	}
+	public List<Condicion> getCondiciones(){
+		return this.condiciones;
+	}
+	public void quitarCondicion(Condicion unaCondicion){
+		condiciones.remove(unaCondicion);
+	}
 	public void setActuadores(List<Actuador> acts){
 		this.actuadores = acts;
+	}
+	public List<Actuador> getActuadores(){
+		return this.actuadores;
 	}
 	public void agregarActuador(Actuador act){
 		actuadores.add(act);
@@ -37,6 +48,9 @@ public class Regla {
 	public void setComparacionCondiciones(String comparacion) throws CaracterInvalidoException{
 		this.criterioCondiciones = comparacion;
 		EnumUtils.isValidEnum(criterios.class, comparacion);	
+	}
+	public String getComparacionCondiciones(){
+		return this.criterioCondiciones;
 	}
 	public Condicion getCondicionConIndice(int indice){
 		return condiciones.get(indice);
@@ -46,6 +60,12 @@ public class Regla {
 	}
 	public boolean getState(){
 		return this.state;
+	}
+	public void setNombreRegla(String unNombreRegla){
+		this.nombreRegla = unNombreRegla;
+	}
+	public String getNombreRegla(){
+		return this.nombreRegla;
 	}
 	// ============================
 	public void aplicarRegla(){

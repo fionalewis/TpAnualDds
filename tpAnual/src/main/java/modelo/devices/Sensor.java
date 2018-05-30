@@ -29,6 +29,7 @@ public class Sensor {
 	//para disparar evaluar las condiciones
 	public void medir(){
 		notificar();
+		//evaluar intervalo
 	}
 	
 	//magnitud

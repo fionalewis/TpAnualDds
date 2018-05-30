@@ -8,7 +8,7 @@ public class CondicionSensorYValor extends Condicion{
 	private Double valorFijo;
 	
 	public CondicionSensorYValor(Regla reg, Sensor sen,  double valor, String comp){
-		this.regla = reg;
+		//this.regla = reg;
 		this.sensor = sen;
 		this.valorFijo = valor;
 		this.comparacion = comp;
@@ -19,6 +19,11 @@ public class CondicionSensorYValor extends Condicion{
 	@Override
 	public void update(){
 		this.estado = evaluar(sensor.getMagnitud(), valorFijo); //evalua la condicion y le avisa regla
+		System.out.println("Se evalu¨® si: ");
+		System.out.println("\nEl sensor, " + sensor.getNombreMagnitud() + " = " + sensor.getMagnitud());
+		System.out.println(" es: " + comparacion + " al ");
+		System.out.println(" valor fijo = " + valorFijo);
+		System.out.println("\nCon resultado: " + estado);
 	}
 	
 	public String getExpresion(){

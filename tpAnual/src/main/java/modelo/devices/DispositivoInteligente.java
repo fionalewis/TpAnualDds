@@ -66,6 +66,9 @@ public class DispositivoInteligente extends Dispositivo {
 	public void agregarSensor(Sensor unSensor){
 		sensores.put(unSensor.getNombreMagnitud(),unSensor);
 	}
+	public void quitarSensor(Sensor unSensor){
+		sensores.remove(unSensor.getNombreMagnitud(),unSensor);
+	}
 	public void aumentarIntensidadSensor(String nombreSensor, double valor){
 		Sensor sen = getSensoresConNombre(nombreSensor);
 		sen.aumentarMagnitud(valor);

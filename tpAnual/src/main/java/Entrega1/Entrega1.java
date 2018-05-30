@@ -37,12 +37,12 @@ public class Entrega1 {
 	private static Actuador prenderAire = new Actuador(1,"Prender el aire");
 	private static Actuador prenderLuz = new Actuador(2,"Prender la luz");
 	
-	private static Regla reglaCopada = new Regla(aircon,"AND");
+	private static Regla reglaCopada = new Regla("Una regla muy copada",aircon,"AND");
+	private static List<Regla> reglasExistentes = new ArrayList<Regla>();
 	
 	public static void main(String[] args){
 		init();
 		menuPrincipal();
-		
 	}
 	
 	public static void menuPrincipal(){
@@ -70,6 +70,7 @@ public class Entrega1 {
 		}
 	}
 	
+	//dispositivos estandares
 	public static void dispoEstandares(){
 		List<DispositivoEstandar> dispos = nico.getDispEstandar();
 		dispos.stream().forEach(d -> System.out.print(d.getNombreDisp() + "\n"));
@@ -138,6 +139,7 @@ public class Entrega1 {
 			
 	}
 	
+	//dispositivos inteligentes
 	public static void dispoInteligentes(){
 		
 		List<DispositivoInteligente> dispos = nico.getDispInteligente();
@@ -183,60 +185,6 @@ public class Entrega1 {
 		}
 	}
 	
-	public static void agregarDispo(boolean tipoDispo){//0 estandar 1 inteligente
-		
-		String nombre = " ";
-		double kwh;
-		double ahorroOConsumo;
-		System.out.println("\nIngrese un nombre:");
-		in = new Scanner(System.in);
-		nombre = in.toString();
-		
-		System.out.println("\nIngrese un kwh:");
-		in = new Scanner(System.in);
-		kwh = in.nextFloat();
-		
-		if(tipoDispo){
-			System.out.println("\nIngrese un kwhAhorro:");
-			in = new Scanner(System.in);
-			ahorroOConsumo = in.nextFloat();		
-			DispositivoInteligente dispo = new DispositivoInteligente(nombre,kwh,ahorroOConsumo);
-			nico.agregarDispInteligente(dispo);
-		} else{
-			System.out.println("\nIngrese horas consumidas:");
-			in = new Scanner(System.in);
-			ahorroOConsumo = in.nextFloat();
-			DispositivoEstandar dispo = new DispositivoEstandar(nombre,kwh,(int) ahorroOConsumo);
-		}
-		
-		System.out.println("\nTus dispositivos inteligentes son: \n");
-		imprimirDispoI();
-		System.out.println("\nTus dispositivos Estandares son: \n");
-		imprimirDispoS();
-		
-		posDispoIntel(tipoDispo);
-	}
-	
-	public static void posDispoIntel(boolean tipoDispo){
-		
-		System.out.print("\nPor favor elija una opcion:"
-				+ "\n1. Agregar otro dispositivo"
-				+ "\n2. Volver al menu principal\n");
-			
-			in = new Scanner(System.in);
-				
-			switch(in.nextInt()){
-			case 1:
-				agregarDispo(tipoDispo);
-				break;
-			case 2:
-				menuPrincipal();
-				break;
-			default: posDispoIntel(tipoDispo);
-			}
-			
-	}
-	
 	public static void quitarDispo(boolean tipoDispo){
 		
 		if(tipoDispo){
@@ -279,7 +227,7 @@ public class Entrega1 {
 		case 2:
 			menuPrincipal();
 			break;
-		default: posDispoIntel(tipoDispo);
+		default: posAgregarDispo(tipoDispo);
 		}
 	}
 	
@@ -331,10 +279,61 @@ public class Entrega1 {
 		}		
 	}
 	
-	public static void reglas(){
+	//dispositivos en general
+	public static void agregarDispo(boolean tipoDispo){//0 estandar 1 inteligente
 		
+		String nombre = " ";
+		double kwh;
+		double ahorroOConsumo;
+		System.out.println("\nIngrese un nombre:");
+		in = new Scanner(System.in);
+		nombre = in.toString();
+		
+		System.out.println("\nIngrese un kwh:");
+		in = new Scanner(System.in);
+		kwh = in.nextFloat();
+		
+		if(tipoDispo){
+			System.out.println("\nIngrese un kwhAhorro:");
+			in = new Scanner(System.in);
+			ahorroOConsumo = in.nextFloat();		
+			DispositivoInteligente dispo = new DispositivoInteligente(nombre,kwh,ahorroOConsumo);
+			nico.agregarDispInteligente(dispo);
+		} else{
+			System.out.println("\nIngrese horas consumidas:");
+			in = new Scanner(System.in);
+			ahorroOConsumo = in.nextFloat();
+			DispositivoEstandar dispo = new DispositivoEstandar(nombre,kwh,(int) ahorroOConsumo);
+		}
+		
+		System.out.println("\nTus dispositivos inteligentes son: \n");
+		imprimirDispoI();
+		System.out.println("\nTus dispositivos Estandares son: \n");
+		imprimirDispoS();
+		
+		posAgregarDispo(tipoDispo);
 	}
 	
+	public static void posAgregarDispo(boolean tipoDispo){
+		
+		System.out.print("\nPor favor elija una opcion:"
+				+ "\n1. Agregar otro dispositivo"
+				+ "\n2. Volver al menu principal\n");
+			
+			in = new Scanner(System.in);
+				
+			switch(in.nextInt()){
+			case 1:
+				agregarDispo(tipoDispo);
+				break;
+			case 2:
+				menuPrincipal();
+				break;
+			default: posAgregarDispo(tipoDispo);
+			}
+			
+	}
+
 	public static void imprimirDispoI(){
 		List<DispositivoInteligente> dispos = nico.getDispInteligente();
 		int size = dispos.size();
@@ -351,6 +350,7 @@ public class Entrega1 {
 		}
 	}
 	
+	//sensores
 	public static void sensores(DispositivoInteligente dispo){
 		System.out.println("Elija una opcion:"
 			+ "\n1. Seleccionar un sensor para mas operaciones"
@@ -381,6 +381,11 @@ public class Entrega1 {
 	}
 	
 	public static void seleccionesSensor(DispositivoInteligente dispo){
+		Sensor sen = seleccionarSen(dispo);
+		posSeleccionarSensor(sen,dispo);
+	}
+	
+	public static Sensor seleccionarSen(DispositivoInteligente dispo){
 		System.out.println("\nElija un sensor:");
 		Set<String> sensoresSet = dispo.getSensores().keySet();
 	    int i = 0;
@@ -392,8 +397,10 @@ public class Entrega1 {
 		in = new Scanner(System.in);
 		
 		String nombre = sensoresList.get(in.nextInt());
-		Sensor sensor = dispo.getSensores().get(nombre);
-		
+		return dispo.getSensores().get(nombre);
+	}
+	
+	public static void posSeleccionarSensor(Sensor sensor, DispositivoInteligente dispo){
 		System.out.println("Elija una opcion:"
 				+ "\n1. Ver valor"
 				+ "\n2. Ver subscriptores"
@@ -402,10 +409,10 @@ public class Entrega1 {
 				+ "\n5. Volver al menu principal");
 		
 		in = new Scanner(System.in);
-			
+		
 		switch(in.nextInt()){
 		case 1:
-			System.out.println(sensor.getMagnitud());
+			valorSensor(sensor, dispo);
 			break;
 		case 2:
 			sensor.getSubscribers().forEach(s -> System.out.println(s.getExpresion()));
@@ -419,17 +426,113 @@ public class Entrega1 {
 		case 5:
 			menuPrincipal();
 			break;
-		default:seleccionesSensor(dispo);
+		default:posSeleccionarSensor(sensor,dispo);
+		}
+		
+	}
+	
+	public static void valorSensor(Sensor sensor, DispositivoInteligente dispo){
+		System.out.println(sensor.getMagnitud());
+		
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Subir valor"
+				+ "\n2. Bajar valor"
+				+ "\n3. Volver al menu anterior"
+				+ "\n4. Volver al menu principal");
+
+		in = new Scanner(System.in);
+			
+		switch(in.nextInt()){
+		case 1:
+			subirValorSensor(sensor,dispo);
+			break;
+		case 2:
+			bajarValorSensor(sensor,dispo);
+			break;
+		case 3:
+			sensores(dispo);
+			break;
+		case 4:
+			menuPrincipal();
+			break;
+		default:valorSensor(sensor,dispo);
+		}
+	}
+	
+	public static void subirValorSensor(Sensor sensor,DispositivoInteligente dispo){
+		System.out.println("\nIngrese cuanto desea subir:\n");
+		in = new Scanner(System.in);
+		sensor.aumentarMagnitud(in.nextInt());
+		System.out.println("\nEl valor final del sensor es de: "
+				+ sensor.getMagnitud());
+		posSubirValorSensor(sensor,dispo);
+	}
+
+	public static void posSubirValorSensor(Sensor sensor,DispositivoInteligente dispo){
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Seguir subiendo"
+				+ "\n2. Volver al menu anterior"
+				+ "\n3. Volver al menu principal");
+
+		in = new Scanner(System.in);
+			
+		switch(in.nextInt()){
+		case 1:
+			subirValorSensor(sensor,dispo);
+			break;
+		case 2:
+			valorSensor(sensor,dispo);
+			break;
+		case 3:
+			menuPrincipal();
+			break;
+		default:posSubirValorSensor(sensor,dispo);
+		}
+	}
+
+	public static void bajarValorSensor(Sensor sensor,DispositivoInteligente dispo){
+		System.out.println("\nIngrese cuanto desea bajar:\n");
+		in = new Scanner(System.in);
+		sensor.disminuirMagnitud(in.nextInt());
+		System.out.println("\nEl valor final del sensor es de: "
+				+ sensor.getMagnitud());
+		posBajarValorSensor(sensor,dispo);
+	}
+
+	public static void posBajarValorSensor(Sensor sensor,DispositivoInteligente dispo){
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Seguir bajando"
+				+ "\n2. Volver al menu anterior"
+				+ "\n3. Volver al menu principal");
+
+		in = new Scanner(System.in);
+			
+		switch(in.nextInt()){
+		case 1:
+			bajarValorSensor(sensor,dispo);
+			break;
+		case 2:
+			valorSensor(sensor,dispo);
+			break;
+		case 3:
+			menuPrincipal();
+			break;
+		default:posBajarValorSensor(sensor,dispo);
 		}
 	}
 	
 	public static void agregarSensor(DispositivoInteligente dispo){
 		String nombre;
+		double valor;
 		System.out.println("\nIngrese un nombre:");
 		in = new Scanner(System.in);
 		nombre = in.toString();
+		System.out.println("\nIngrese un valor inicial para el sensor:");
+		in = new Scanner(System.in);
+		valor = in.nextInt();
 		
 		Sensor sensor = new Sensor(nombre,dispo);
+		sensor.setMagnitud(valor);
 		dispo.agregarSensor(sensor);
 		 
 		System.out.println("\nTus sensore son:");
@@ -440,14 +543,354 @@ public class Entrega1 {
 			i++;
 		}
 		
-		posAgregarSensor();
+		posAgregarSensor(dispo);
 	}
 	
-	public static void posAgregarSensor(){
+	public static void posAgregarSensor(DispositivoInteligente dispo){
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Agregar otro sensor"
+				+ "\n2. Volver al menu anterior"
+				+ "\n3. Volver al menu principal");
+		in = new Scanner(System.in);
 		
+		switch(in.nextInt()){
+		case 1:
+			agregarSensor(dispo);
+			break;
+		case 2:
+			seleccionesSensor(dispo);
+			break;
+		case 3:
+			menuPrincipal();
+			break;
+		default:posAgregarSensor(dispo);
+		}
 	}
 	
 	public static void quitarSensor(DispositivoInteligente dispo){
+		System.out.println("\nElija un sensor para quitar:");
+		Set<String> sensoresSet = dispo.getSensores().keySet();
+	    int i = 0;
+		for(String sen:sensoresSet){
+			System.out.println(i + ". " + sen + "\n");
+			i++;
+		}
+		List<String> sensoresList = new ArrayList<>(sensoresSet);
+		in = new Scanner(System.in);
+		
+		String nombre = sensoresList.get(in.nextInt());
+		Sensor sensor = dispo.getSensores().get(nombre);
+		
+		dispo.quitarSensor(sensor);
+		System.out.println("\nTus sensores son: \n");
+		sensoresSet = dispo.getSensores().keySet();
+		for(String sen:sensoresSet){
+			System.out.println(sen + "\n");
+		}
+		
+		posQuitarSensor(dispo);
+		
+	}
+	
+	public static void posQuitarSensor(DispositivoInteligente dispo){
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Quitar otro sensor"
+				+ "\n2. Volver al menu anterior"
+				+ "\n3. Volver al menu principal");
+		in = new Scanner(System.in);
+		
+		switch(in.nextInt()){
+		case 1:
+			quitarSensor(dispo);
+			break;
+		case 2:
+			seleccionesSensor(dispo);
+			break;
+		case 3:
+			menuPrincipal();
+			break;
+		default:posAgregarSensor(dispo);
+		}
+	}
+	
+	//reglas
+	public static void reglas(){
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Seleccionar una regla para mas opciones"
+				+ "\n2. Agregar una regla nueva"
+				+ "\n3. Quitar  una regla"
+				+ "\n4. Volver al menu principal");
+
+		in = new Scanner(System.in);
+			
+		switch(in.nextInt()){
+		case 1:
+			seleccionarRegla();
+			break;
+		case 2:
+			agregarRegla();
+			break;
+		case 3:
+			quitarRegla();
+			break;
+		case 4:
+			menuPrincipal();
+		default:reglas();
+		}
+	}
+	
+	public static void seleccionarRegla(){
+		System.out.println("Seleccione una regla para mas operaciones: \n");
+		int i = 1;
+		for(Regla reg:reglasExistentes){
+			System.out.println(i + ". " + reg.getNombreRegla());
+			i++;
+		}
+		
+		in = new Scanner(System.in);
+		
+		Regla reg = reglasExistentes.get(in.nextInt());
+		List<Condicion> conds = reg.getCondiciones();
+		List<Actuador> acts = reg.getActuadores();
+		
+		
+		System.out.println("Las condiciones son: \n");
+		conds.stream().forEach(c -> System.out.println(conds.indexOf(c) + ". " 
+								+ c.getExpresion()));
+		
+		System.out.println("Los actuadores son: \n");
+		acts.stream().forEach(a -> System.out.println(acts.indexOf(a) + ". " +a.getOrden()));
+		
+		System.out.println("El criterio de comparacion es: ");
+		System.out.println(reg.getComparacionCondiciones());
+		
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Seleccionar Condicion"
+				+ "\n2.	Agregar Condicion"
+				+ "\n3. Quitar Condicion"
+				+ "\n4. Seleccionar Actuador"
+				+ "\n5. Agregar Actuador"
+				+ "\n6. Quitar Actuador"
+				+ "\n7. Cambiar criterio de comparacion"
+				+ "\n8. Aplicar regla"
+				+ "\n9. Volver al menu anterior"
+				+ "\n10. Volver al menu principal");
+
+		in = new Scanner(System.in);
+			
+		switch(in.nextInt()){
+		case 1:
+			seleccionarCondicion(reg);
+			break;
+		case 2:
+			agregarCondicion(reg);
+			break;
+		case 3:
+			quitarCondicion(reg);
+			break;
+		case 4:
+			agregarActuador(reg);
+			break;
+		case 5:
+			seleccionarActuador(reg);
+			break;
+		case 6:
+			quitarActuador(reg);
+			break;
+		case 7:
+			cambiarCriterioComp(reg);
+			break;
+		case 8:
+			aplicarRegla(reg);
+			break;
+		case 9:
+			reglas();
+			break;
+		case 10:
+			menuPrincipal();
+		default:seleccionarRegla();
+		}
+		
+	}
+	
+	//condiciones
+	public static void seleccionarCondicion(Regla reg){
+		System.out.println("\nSeleccione una condicion: ");
+		in = new Scanner(System.in);
+		Condicion con = reg.getCondiciones().get(in.nextInt());
+		
+		System.out.println("\nElija una opcion: "
+				+ "\n1. Evaluar la condicion seleccionada"
+				+ "\n2. Quitar la condicion seleccionada"
+				+ "\n3. Volver al menu anterior"
+				+ "\n4. Volver al menu principal");
+		
+		in = new Scanner(System.in);
+		
+		switch(in.nextInt()){
+		case 1:
+			evaluarCondicion(con,reg);
+			break;
+		case 2:
+			quitarCondicion(reg);
+			break;
+		case 3:
+			seleccionarRegla();
+			break;
+		case 4:
+			menuPrincipal();
+			break;
+		default: seleccionarCondicion(reg);
+		}
+		
+	}
+	
+	public static void evaluarCondicion(Condicion con, Regla reg){
+		con.update();
+		System.out.println("\nElija una opcion: "
+				+ "\n1. Volver al menu anterior"
+				+ "\n2. Volver al menu principal");
+		
+		in = new Scanner(System.in);
+		
+		switch(in.nextInt()){
+		case 1:
+			seleccionarCondicion(reg);
+			break;
+		case 2:
+			menuPrincipal();
+			break;
+		default: evaluarCondicion(con,reg);
+		}
+	}
+	
+	public static void agregarCondicion(Regla reg){
+		System.out.println("\nSeleccione un dispositivo: ");
+		imprimirDispoI();
+		in = new Scanner(System.in);
+		DispositivoInteligente dispo = nico.getDispInteligente().get(in.nextInt()); 
+
+		Sensor sen = seleccionarSen(dispo);
+		
+		System.out.println("\nIngrese criterio de comparacion: (MAYOR, MENOR, IGUAL o DISTINTO)");
+		in = new Scanner(System.in);
+		String criterio = in.toString();
+		
+		System.out.println("\nCon que desea compararlo: "
+				+ "\n1. Otro Sensor"
+				+ "\n2. Un valor fijo");
+		in = new Scanner(System.in);
+		
+		if(in.nextInt() == 1){
+			Sensor sen2 = seleccionarSen(dispo);
+			reg.crearCondicionDosSensores(sen, sen2, criterio);
+		} else if(in.nextInt() == 2){
+			System.out.println("\nIngrese el valor a comparar: ");
+			in = new Scanner(System.in);
+			int valorFijo = in.nextInt();
+			reg.crearCondicionSensoresYValor(sen, valorFijo, criterio);
+		} else {
+			System.out.println("\nOpcion invalida\n");
+			agregarCondicion(reg);
+		}
+		
+		System.out.println("La lista de condiciones quedo asi: \n");
+		List<Condicion> conds = reg.getCondiciones();
+		conds.stream().forEach(c -> System.out.println(c.getExpresion()));
+		
+		posAgregarCondicion(reg);
+	}
+
+	public static void posAgregarCondicion(Regla reg){
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Agregar otra condicion"
+				+ "\n2. Volver al menu anterior"
+				+ "\n3. Volver al menu principal");
+		in = new Scanner(System.in);
+		
+		switch(in.nextInt()){
+		case 1:
+			agregarCondicion(reg);
+			break;
+		case 2:
+			seleccionarCondicion(reg);
+			break;
+		case 3:
+			menuPrincipal();
+			break;
+		default:posAgregarCondicion(reg);
+		}
+	}
+	
+	public static void quitarCondicion(Regla reg){
+		System.out.println("\nSeleccione una condicion para quitar: ");
+		in = new Scanner(System.in);
+		Condicion con = reg.getCondiciones().get(in.nextInt());
+		reg.quitarCondicion(con);
+		
+		List<Condicion> conds = reg.getCondiciones();
+		
+		System.out.println("La lista de condiciones quedo asi: \n");
+		conds.stream().forEach(c -> System.out.println(c.getExpresion()));
+		
+		System.out.println("\nElija una opcion: "
+				+ "\n1. Quitar otra condicion"
+				+ "\n1. Volver al menu anterior"
+				+ "\n2. Volver al menu principal");
+		
+		in = new Scanner(System.in);
+		
+		switch(in.nextInt()){
+		case 1:
+			quitarCondicion(reg);
+			break;
+		case 2:
+			seleccionarCondicion(reg);
+			break;
+		case 3:
+			menuPrincipal();
+			break;
+		default: quitarCondicion(reg);
+		}
+	}
+
+	// actuadores
+	public static void seleccionarActuador(Regla reg){
+		
+	}
+
+	public static void agregarActuador(Regla reg){
+		
+	}
+
+	public static void quitarActuador(Regla reg){
+		
+	}
+
+	public static void cambiarCriterioComp(Regla reg){
+		
+	}
+
+	public static void aplicarRegla(Regla reg){
+		
+	}
+
+	public static void posSeleccionarRegla(){
+		
+	}
+	
+	public static void agregarRegla(){
+		
+	}
+	
+	public static void posAgregarRegla(){
+		
+	}
+	
+	public static void quitarRegla(){
+		
+	}
+	public static void posQuitarRegla(){
 		
 	}
 	
@@ -474,5 +917,6 @@ public class Entrega1 {
 		tempIgual30 = reglaCopada.getCondicionConIndice(0);
 		humedadMenor50 = reglaCopada.getCondicionConIndice(1);
 		hayGenteCasa = reglaCopada.getCondicionConIndice(2);
+		reglasExistentes.add(reglaCopada);
 	}
 }

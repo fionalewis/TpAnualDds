@@ -6,7 +6,7 @@ import Exceptions.CaracterInvalidoException;
 
 public abstract class Condicion {
 	
-	protected Regla regla;
+	//protected Regla regla;
 	protected String comparacion; //Mayor, Menor, Igual o distinto
 	protected enum CriterioComparacion {MAYOR,MENOR,IGUAL,DISTINTO}
 	protected boolean estado = false;
