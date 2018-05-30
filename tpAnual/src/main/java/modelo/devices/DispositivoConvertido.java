@@ -4,7 +4,7 @@ public class DispositivoConvertido extends DispositivoInteligente {
 	
 	private DispositivoEstandar dispOriginal;
 
-	public DispositivoConvertido(DispositivoEstandar disp,double kWhAhorro,String fabricante) {
+	public DispositivoConvertido(DispositivoEstandar disp,double kWhAhorro) {
 		super();
 		setNombreDisp(disp.getNombreDisp());
 		setkWh(disp.getkWh());

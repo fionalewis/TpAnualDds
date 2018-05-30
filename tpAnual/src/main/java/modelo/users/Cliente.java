@@ -22,9 +22,8 @@ public class Cliente extends Usuario {
 	private String nroDoc;
 	private String telefono;
 	private String domicilio;
-	private List<DispositivoInteligente> dispositivos = new ArrayList<>();
-	private List<Dispositivo> dispTotales = new ArrayList<>();
-	private List<DispositivoEstandar> dispEstandar = new ArrayList<>();
+	private List<DispositivoInteligente> dispInteligentes = new ArrayList<>();
+	private List<DispositivoEstandar> dispEstandares = new ArrayList<>();
 	private Categoria categ;
 	private int puntos = 0;
 	
@@ -59,7 +58,7 @@ public class Cliente extends Usuario {
 		this.nroDoc = nDoc;
 		this.telefono = tel;
 		this.domicilio = dom;
-		this.dispositivos.addAll(disp);
+		this.dispInteligentes.addAll(disp);
 		setCateg();
 	}
 
@@ -107,66 +106,49 @@ public class Cliente extends Usuario {
 	
 	//Dispositivos
 
-	//Para la lista de dispositivos en general
-	
-	public List<Dispositivo> getDispTotales() {
-		return dispTotales;
-	}
-	public void setDispTotales(List<Dispositivo> dispTotales) {
-		this.dispTotales = dispTotales;
-	}
-	public void agregarAListaGral(Dispositivo dispositivo) {
-		dispTotales.add(dispositivo);
-	}
-	public void quitarDispositivo(Dispositivo dispositivo) {
-		dispTotales.remove(dispositivo);
-	}
 	public List<DispositivoEstandar> getDispEstandar() {
-		return dispEstandar;
+		return dispEstandares;
 	}
 	public void setDispEstandar(List<DispositivoEstandar> dispEstandar) {
-		this.dispEstandar = dispEstandar;
+		this.dispEstandares = dispEstandar;
 	}
 	public void agregarADispEstandar(DispositivoEstandar dispositivo) {
-		dispEstandar.add(dispositivo);
+		dispEstandares.add(dispositivo);
 	}
 	public void quitarDispEstandar(DispositivoEstandar dispositivo) {
-		dispEstandar.remove(dispositivo);
+		dispEstandares.remove(dispositivo);
 	}
 	
 	//Para la lista de dispositivos inteligentes
 
-	public void setDispositivos(List<DispositivoInteligente> dispositivos) {
-		this.dispositivos = dispositivos;
+	public void setDispInteligente(List<DispositivoInteligente> dispositivos) {
+		this.dispInteligentes = dispositivos;
 	}
 	
-	public List<DispositivoInteligente> getDispositivos() {
-		return dispositivos;
+	public List<DispositivoInteligente> getDispInteligente() {
+		return dispInteligentes;
 	}
 
-	public void agregarDispositivo(Dispositivo dispositivo) {
+	public void agregarDispInteligente(Dispositivo dispositivo) {
 		if(dispositivo instanceof DispositivoInteligente){
-			dispositivos.add((DispositivoInteligente) dispositivo);
-			agregarAListaGral(dispositivo);
+			dispInteligentes.add((DispositivoInteligente) dispositivo);
 			puntos+=15;
 		} else if(dispositivo instanceof DispositivoConvertido) {
-			dispositivos.add((DispositivoConvertido) dispositivo);
-			agregarAListaGral(dispositivo);
+			dispInteligentes.add((DispositivoConvertido) dispositivo);
 			} else {
-			agregarAListaGral(dispositivo);
 			agregarADispEstandar((DispositivoEstandar) dispositivo);
 			}		
 	}
-	
-	public void quitarDispositivo(DispositivoInteligente dispositivo) {
-		dispositivos.remove(dispositivo);
+	public void quitarDispInteligente(DispositivoInteligente dispositivo) {
+		dispInteligentes.remove(dispositivo);
 	}
 	
 	//Conversion de dispositivos
 	
-	public void agregarModuloAdaptador(DispositivoEstandar disp,double kwhA,String fabricante) {
-		DispositivoConvertido dispConvertido = new DispositivoConvertido(disp,kwhA,fabricante);
-		agregarDispositivo(dispConvertido);
+	public void agregarModuloAdaptador(DispositivoEstandar disp,double kwhA) {
+		DispositivoConvertido dispConvertido = new DispositivoConvertido(disp,kwhA);
+		agregarDispInteligente(dispConvertido);
+		quitarDispEstandar(disp);
 		puntos+=10;
 	}
 	
@@ -174,14 +156,14 @@ public class Cliente extends Usuario {
 	//Consumo
 
 	@Override public double calcularConsumo() {
-		double consumo = dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
+		double consumo = dispInteligentes.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
 		return consumo;
 	}
 	
 	//Duplicado para poder pasarle una fechaFin en los tests
 	
 	public double calcularConsumo(LocalDateTime fechaFin) {
-		double consumo = dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoTotal(fechaFin)).sum();
+		double consumo = dispInteligentes.stream().mapToDouble(unDisp -> unDisp.consumoTotal(fechaFin)).sum();
 		return consumo;
 	}
 	
@@ -199,16 +181,16 @@ public class Cliente extends Usuario {
 	//Funcionalidades
 	
 	public boolean algunoEncendido(List<DispositivoInteligente> dispositivos) {
-		return this.dispositivos.stream().anyMatch(unDisp -> unDisp.getEstadoDisp() instanceof Encendido);
+		return this.dispInteligentes.stream().anyMatch(unDisp -> unDisp.getEstadoDisp() instanceof Encendido);
 	}
 	
 	public int cantDispositivos() {
-		return dispositivos.size();
+		return dispInteligentes.size();
 	}
 	
 	public int cantDisp(boolean opcion) { //Prendidos = true	Apagados = false
 		int apagados = 0, prendidos = 0;
-		for (DispositivoInteligente unDisp: dispositivos) {
+		for (DispositivoInteligente unDisp: dispInteligentes) {
 			if(unDisp.getEstadoDisp() instanceof Encendido || unDisp.getEstadoDisp() instanceof AhorroEnergia) {
 				prendidos++;				
 			}

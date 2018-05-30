@@ -36,19 +36,19 @@ public class TestCliente {
 
 	@Test
 	public void testAgregarDispositivo() {
-		clienteDePrueba.agregarDispositivo(aire);
-		Assert.assertTrue(clienteDePrueba.getDispositivos().contains(aire));
+		clienteDePrueba.agregarDispInteligente(aire);
+		Assert.assertTrue(clienteDePrueba.getDispInteligente().contains(aire));
 	}
 
 	@Test
 	public void testQuitarDispositivo() {
-		clienteDePrueba.quitarDispositivo(tele);
-		Assert.assertFalse(clienteDePrueba.getDispositivos().contains(tele));
+		clienteDePrueba.quitarDispInteligente(tele);
+		Assert.assertFalse(clienteDePrueba.getDispInteligente().contains(tele));
 	}
 
 	@Test
 	public void testAlgunoEncendido() {
-		Assert.assertTrue(clienteDePrueba.algunoEncendido(clienteDePrueba.getDispositivos()));
+		Assert.assertTrue(clienteDePrueba.algunoEncendido(clienteDePrueba.getDispInteligente()));
 	}
 
 	@Test

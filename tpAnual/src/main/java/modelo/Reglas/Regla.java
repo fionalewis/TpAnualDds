@@ -56,17 +56,15 @@ public class Regla {
 			}
 		}
 		
-		if(criterioCondiciones.equals("AND")){
-			evaluarCondicionesAND(contador);
-		}else evaluarCondicionesOR(contador);
-		
-		/*switch (criterioCondiciones){
+		switch (criterioCondiciones){
 			case "AND":
 				evaluarCondicionesAND(contador);
+				break;
 			case "OR":
 				evaluarCondicionesOR(contador);
+				break;
 			default: return;
-		}*/
+		}
 	}
 	
 	public void evaluarCondicionesAND(int cont){
@@ -94,7 +92,7 @@ public class Regla {
 	//1 variable con 1 fijo o 2 variables
 	//signo comparacion
 
-	public void crearCondicionConDosSensores(Sensor sen1, Sensor sen2, String comparacion){ 
+	public void crearCondicionDosSensores(Sensor sen1, Sensor sen2, String comparacion){ 
 		Condicion comp = new CondicionDosSensores(this,sen1,sen2,comparacion); //sen1 comparacion sen2
 		condiciones.add(comp);
 	}

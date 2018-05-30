@@ -137,6 +137,10 @@ public class DispositivoInteligente extends Dispositivo {
 		return estadoDisp.estaApagado();
 	}
 	
+	public boolean estaEnAhorro(){
+		return estadoDisp.estaEncendido() && estadoDisp.estaEnAhorro();
+	}
+	
 	public double consumoEnUltimasHoras(int horas){
 		return estadoDisp.consumoEnUltimasHoras(horas, this);
 	}

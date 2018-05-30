@@ -31,6 +31,11 @@ public class AhorroEnergia implements EstadoDispositivo {
 	}
 
 	@Override
+	public boolean estaEnAhorro() {
+		return true;
+	}
+	
+	@Override
 	public double consumoEnUltimasHoras(int horas,DispositivoInteligente disp) {
 		return disp.getkWhAhorro()*horas;
 	}

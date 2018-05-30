@@ -11,6 +11,7 @@ public interface EstadoDispositivo {
 	public void ahorroEnergia(DispositivoInteligente disp);
 	public boolean estaEncendido();
 	public boolean estaApagado();
+	public boolean estaEnAhorro();
 	public double consumoEnUltimasHoras(int horas,DispositivoInteligente disp);
 	public double consumoTotal(LocalDateTime fechaInicio,LocalDateTime fechaFin,DispositivoInteligente disp);
 
