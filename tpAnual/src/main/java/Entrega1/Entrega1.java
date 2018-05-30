@@ -1,10 +1,8 @@
 package Entrega1;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -12,7 +10,6 @@ import Exceptions.CaracterInvalidoException;
 import modelo.Actuador.Actuador;
 import modelo.Reglas.Condicion;
 import modelo.Reglas.Regla;
-import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.Sensor;
@@ -20,7 +17,8 @@ import modelo.users.Cliente;
 
 public class Entrega1 {
 	
-	private static Scanner in;
+	private static Scanner in = new Scanner(System.in);
+	private static int a = 0;
 	private static Cliente nico = new Cliente();
 	private static DispositivoInteligente aircon = new DispositivoInteligente("Aire Acondicionado",0.14,0.1);
 	private static DispositivoEstandar tele = new DispositivoEstandar("Televisor",0.14,5);
@@ -33,7 +31,6 @@ public class Entrega1 {
 	private static Condicion tempIgual30;
 	private static Condicion humedadMenor50;
 	private static Condicion hayGenteCasa;
-	private static Condicion tempInMayorOut;
 	private static List<Condicion> condicionesExistentes = new ArrayList<Condicion>();
 	
 	private static Actuador prenderAire = new Actuador(1,"Prender el aire");
@@ -54,8 +51,6 @@ public class Entrega1 {
 			+ "\n2. Ver tus dispositivos inteligentes"
 			+ "\n3. Ver tus puntajes"
 			+ "\n4. Ver Reglas\n");
-			
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -83,8 +78,6 @@ public class Entrega1 {
 			+ "\n2. Agregar un nuevo dispositivo"
 			+ "\n3. Quitar un dispositivo."
 			+ "\n4. Volver al menu principal\n");
-				
-		in = new Scanner(System.in);
 			
 		switch(in.nextInt()){
 		case 1:
@@ -109,7 +102,6 @@ public class Entrega1 {
 		System.out.println("Elija un dispositivo: \n");
 		imprimirDispoS();
 		
-		in = new Scanner(System.in);
 		DispositivoEstandar dis = dispos.get(in.nextInt());
 		nico.agregarModuloAdaptador(dis, 0.05);
 		
@@ -127,8 +119,6 @@ public class Entrega1 {
 		System.out.print("\nPor favor elija una opcion:"
 				+ "\n1. Convertir otro dispositivo"
 				+ "\n2. Volver al menu principal\n");
-			
-			in = new Scanner(System.in);
 				
 			switch(in.nextInt()){
 			case 1:
@@ -146,7 +136,8 @@ public class Entrega1 {
 	public static void dispoInteligentes() throws CaracterInvalidoException{
 		
 		List<DispositivoInteligente> dispos = nico.getDispInteligente();
-		System.out.println("\nTus dispositivos inteligentes son: \n");
+		System.out.println("\nMENU DISPOSITICO INTELIGENTES \n" + 
+							"Tus dispositivos inteligentes son: \n");
 		imprimirDispoI();
 		
 		System.out.print("\nPor favor elija una opcion:"
@@ -156,17 +147,17 @@ public class Entrega1 {
 			+ "\n4. Quitar un dispositivo"
 			+ "\n5. Seleccionar un dispositivo"
 			+ "\n6. Volver al menu principal\n");
-				
-		in = new Scanner(System.in);
 			
 		switch(in.nextInt()){
 		case 1:
+			System.out.println("\nDispositivos encendidos: \n");
 			dispos.stream().forEach(d -> {
 				if(d.estaEncendido())
 					System.out.println(d.getNombreDisp() + "\n");
 			});
 			break;
 		case 2:
+			System.out.println("\nDispositivos apagados: \n");
 			dispos.stream().forEach(d -> {
 				if(d.estaApagado())
 					System.out.println(d.getNombreDisp() + "\n");
@@ -186,7 +177,7 @@ public class Entrega1 {
 			break;
 		default:dispoInteligentes();
 		}
-		SeleccionarDispo();
+		dispoInteligentes();
 		
 	}
 	
@@ -195,7 +186,6 @@ public class Entrega1 {
 		if(tipoDispo){
 			System.out.println("\nElija un dispositivo: ");
 			imprimirDispoI();
-			in = new Scanner(System.in);
 			DispositivoInteligente dis = nico.getDispInteligente().get(in.nextInt());
 			nico.quitarDispInteligente(dis);
 			System.out.println("Tus dispositivos inteligentes son:\n");
@@ -205,7 +195,6 @@ public class Entrega1 {
 		}else{
 			System.out.println("\nElija un dispositivo: ");
 			imprimirDispoS();
-			in = new Scanner(System.in);
 			DispositivoEstandar dis = nico.getDispEstandar().get(in.nextInt());
 			nico.quitarDispEstandar(dis);
 			System.out.println("Tus dispositivos inteligentes son:\n");
@@ -222,8 +211,6 @@ public class Entrega1 {
 		System.out.print("\nPor favor elija una opcion:"
 			+ "\n1. Quitar otro dispositivo"
 			+ "\n2. Volver al menu principal\n");
-			
-		in = new Scanner(System.in);
 				
 		switch(in.nextInt()){
 		case 1:
@@ -237,52 +224,106 @@ public class Entrega1 {
 	}
 	
 	public static void SeleccionarDispo() throws CaracterInvalidoException{
-		System.out.println("Elige un dispositivo:\n");
+		System.out.println("Elija un dispositivo:\n");
 		imprimirDispoI();
-		in = new Scanner(System.in);
-		
 		DispositivoInteligente dis = nico.getDispInteligente().get(in.nextInt());
-		if(dis.estaApagado()){
-			System.out.println("\nDispositivo apagado");
-		}else if(dis.estaEncendido() && !dis.estaEnAhorro()){
-			System.out.println("\nDispositivo encendido");
-		}else if(dis.estaEncendido() && dis.estaEnAhorro()){
-			System.out.println("\nDispositivo encendido y en modo ahorro de energia");
-		}
+		imprimirEstado(dis);
+		operarConDispoSelected(dis);
+	}
+	
+	public static void imprimirEstado(DispositivoInteligente dis){
+		System.out.println("\nEl estado del dispositivo es: \n"
+				+ dis.estadoDispo() + "\n");
 		
-		System.out.println("\nDispositivo apagado"
-			+ "\nElija una opcion:"
-			+ "\n1. Encenderme"
-			+ "\n2. Apagarme"
-			+ "\n3. Activar Modo Ahorro de Energia"
-			+ "\n4. Ver sensores"
-			+ "\n5. Volver al menu anterior"
-			+ "\n6. Volver al menu principal");
-			
-		in = new Scanner(System.in);
-			
-		switch(in.nextInt()){
-		case 1:
-			dis.encender();
-			break;
-		case 2:
-			dis.apagar();
-			break;
-		case 3:
-			dis.ahorroEnergia();
-			break;
-		case 4:
-			sensores(dis);
-			break;
-		case 5:
+	}
+	
+	public static void operarConDispoSelected(DispositivoInteligente dis) throws CaracterInvalidoException{
+		System.out.println("\nElija una opcion:"
+				+ "\n1. Encenderme"
+				+ "\n2. Apagarme"
+				+ "\n3. Activar Modo Ahorro de Energia"
+				+ "\n4. Ver sensores"
+				+ "\n5. Ver energia consumida en las ultimas n horas"
+				+ "\n6. Ver energia consumida en un periodo"
+				+ "\n7. Volver al menu anterior"
+				+ "\n8. Volver al menu principal");
+				
+			switch(in.nextInt()){
+			case 1:dis.encender();
+				 System.out.println(dis.estadoDispo());
+				break;
+			case 2:
+				dis.apagar();
+				System.out.println(dis.estadoDispo());
+				break;
+			case 3:
+				dis.ahorroEnergia();
+				System.out.println(dis.estadoDispo());
+				break;
+			case 4:
+				sensores(dis);
+				break;
+			case 5:
+				consumoNhoras(dis);
+				break;
+			case 6:
+				consumoPeriodo(dis);
+				break;
+			case 7:
+				dispoInteligentes();
+				break;
+			case 8:
+				menuPrincipal();
+				break;
+			default:SeleccionarDispo();
+			}	
 			dispoInteligentes();
-			break;
-		case 6:
-			menuPrincipal();
-			break;
-		default:SeleccionarDispo();
-		}	
-		dispoInteligentes();
+	}
+	
+	public static void consumoNhoras(DispositivoInteligente dis) throws CaracterInvalidoException{
+		System.out.println("\nIngrese la cantidad de horas que desea evaluar\n");
+		int horas = in.nextInt();
+		double consumo = dis.consumoEnUltimasHoras(horas);
+		System.out.println("\nEl consumo fue de: " + consumo + "\n");
+		operarConDispoSelected(dis);
+	}
+	
+	public static void consumoPeriodo(DispositivoInteligente dis) throws CaracterInvalidoException{
+		System.out.println("Fecha inicial:\n");
+		//int year,int month,int day,int hour,int min,int sec
+		System.out.println("Ingrese anio inicial\n");
+		int yearI = in.nextInt();
+		System.out.println("Ingrese mes inicial\n");
+		int monI = in.nextInt();
+		System.out.println("Ingrese dia inicial\n");
+		int dayI = in.nextInt();
+		System.out.println("Ingrese hora inicial\n");
+		int hourI = in.nextInt();
+		System.out.println("Ingrese minuto inicial\n");
+		int minI = in.nextInt();
+		System.out.println("Ingrese segundo inicial\n");
+		int secI = in.nextInt();
+		
+		System.out.println("Ingrese fecha final: \n");
+		System.out.println("Ingrese anio final\n");
+		int yearF = in.nextInt();
+		System.out.println("Ingrese mes final\n");
+		int monF = in.nextInt();
+		System.out.println("Ingrese dia final\n");
+		int dayF = in.nextInt();
+		System.out.println("Ingrese hora final\n");
+		int hourF = in.nextInt();
+		System.out.println("Ingrese minuto final\n");
+		int minF = in.nextInt();
+		System.out.println("Ingrese segundo final\n");
+		int secF = in.nextInt();
+		
+		LocalDateTime fechaI = LocalDateTime.of(yearI,monI,dayI,hourI,minI,secI);
+		LocalDateTime fechaF = LocalDateTime.of(yearF,monF,dayF,hourF,minF,secF);
+		double consumo = dis.consumoTotal(fechaI,fechaF);
+		System.out.println("\nEl consumo fue de: " + consumo + "\n");
+		operarConDispoSelected(dis);
+		
 	}
 	
 	//dispositivos en general
@@ -292,24 +333,22 @@ public class Entrega1 {
 		double kwh;
 		double ahorroOConsumo;
 		System.out.println("\nIngrese un nombre:");
-		in = new Scanner(System.in);
-		nombre = in.toString();
+		in.nextLine();
+		nombre = in.nextLine();
 		
 		System.out.println("\nIngrese un kwh:");
-		in = new Scanner(System.in);
 		kwh = in.nextFloat();
 		
 		if(tipoDispo){
 			System.out.println("\nIngrese un kwhAhorro:");
-			in = new Scanner(System.in);
 			ahorroOConsumo = in.nextFloat();		
 			DispositivoInteligente dispo = new DispositivoInteligente(nombre,kwh,ahorroOConsumo);
 			nico.agregarDispInteligente(dispo);
 		} else{
 			System.out.println("\nIngrese horas consumidas:");
-			in = new Scanner(System.in);
 			ahorroOConsumo = in.nextFloat();
 			DispositivoEstandar dispo = new DispositivoEstandar(nombre,kwh,(int) ahorroOConsumo);
+			nico.agregarADispEstandar(dispo);
 		}
 		
 		System.out.println("\nTus dispositivos inteligentes son: \n");
@@ -325,8 +364,6 @@ public class Entrega1 {
 		System.out.print("\nPor favor elija una opcion:"
 				+ "\n1. Agregar otro dispositivo"
 				+ "\n2. Volver al menu principal\n");
-			
-			in = new Scanner(System.in);
 				
 			switch(in.nextInt()){
 			case 1:
@@ -358,7 +395,6 @@ public class Entrega1 {
 			+ "\n3. Quitar un sensor"
 			+ "\n4. Volver al menu anterior"
 			+ "\n5. Volver al menu principal");
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -394,21 +430,20 @@ public class Entrega1 {
 			i++;
 		}
 		List<String> sensoresList = new ArrayList<>(sensoresSet);
-		in = new Scanner(System.in);
 		
 		String nombre = sensoresList.get(in.nextInt());
 		return dispo.getSensores().get(nombre);
 	}
 	
 	public static void posSeleccionarSensor(Sensor sensor, DispositivoInteligente dispo) throws CaracterInvalidoException{
-		System.out.println("Elija una opcion:"
+		System.out.println("Elija una opcion: (tener en cuenta que movimiento es un sensor binario)"
+				+ "\n Aca se permitira subir y bajar pero no se debe hacerlo"
 				+ "\n1. Ver valor"
 				+ "\n2. Ver subscriptores"
 				+ "\n3. Ver intervalo de medicion"
-				+ "\n4. Volver al menu anterior"
-				+ "\n5. Volver al menu principal");
-		
-		in = new Scanner(System.in);
+				+ "\n4. Notificar a sus subscriptores"
+				+ "\n5. Volver al menu anterior"
+				+ "\n6. Volver al menu principal");
 		
 		switch(in.nextInt()){
 		case 1:
@@ -421,9 +456,12 @@ public class Entrega1 {
 			System.out.println(sensor.getIntervalo());
 			break;
 		case 4:
-			sensores(dispo);
+			notifyFans(sensor,dispo);
 			break;
 		case 5:
+			sensores(dispo);
+			break;
+		case 6:
 			menuPrincipal();
 			break;
 		default:posSeleccionarSensor(sensor,dispo);
@@ -440,8 +478,6 @@ public class Entrega1 {
 				+ "\n2. Bajar valor"
 				+ "\n3. Volver al menu anterior"
 				+ "\n4. Volver al menu principal");
-
-		in = new Scanner(System.in);
 			
 		switch(in.nextInt()){
 		case 1:
@@ -462,7 +498,6 @@ public class Entrega1 {
 	
 	public static void subirValorSensor(Sensor sensor,DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println("\nIngrese cuanto desea subir:\n");
-		in = new Scanner(System.in);
 		sensor.aumentarMagnitud(in.nextInt());
 		System.out.println("\nEl valor final del sensor es de: "
 				+ sensor.getMagnitud());
@@ -474,8 +509,6 @@ public class Entrega1 {
 				+ "\n1. Seguir subiendo"
 				+ "\n2. Volver al menu anterior"
 				+ "\n3. Volver al menu principal");
-
-		in = new Scanner(System.in);
 			
 		switch(in.nextInt()){
 		case 1:
@@ -493,7 +526,6 @@ public class Entrega1 {
 
 	public static void bajarValorSensor(Sensor sensor,DispositivoInteligente dispo) throws CaracterInvalidoException{
 		System.out.println("\nIngrese cuanto desea bajar:\n");
-		in = new Scanner(System.in);
 		sensor.disminuirMagnitud(in.nextInt());
 		System.out.println("\nEl valor final del sensor es de: "
 				+ sensor.getMagnitud());
@@ -505,8 +537,6 @@ public class Entrega1 {
 				+ "\n1. Seguir bajando"
 				+ "\n2. Volver al menu anterior"
 				+ "\n3. Volver al menu principal");
-
-		in = new Scanner(System.in);
 			
 		switch(in.nextInt()){
 		case 1:
@@ -526,10 +556,9 @@ public class Entrega1 {
 		String nombre;
 		double valor;
 		System.out.println("\nIngrese un nombre:");
-		in = new Scanner(System.in);
-		nombre = in.toString();
+		in.nextLine();
+		nombre = in.nextLine();
 		System.out.println("\nIngrese un valor inicial para el sensor:");
-		in = new Scanner(System.in);
 		valor = in.nextInt();
 		
 		Sensor sensor = new Sensor(nombre,dispo);
@@ -552,7 +581,6 @@ public class Entrega1 {
 				+ "\n1. Agregar otro sensor"
 				+ "\n2. Volver al menu anterior"
 				+ "\n3. Volver al menu principal");
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -577,7 +605,6 @@ public class Entrega1 {
 			i++;
 		}
 		List<String> sensoresList = new ArrayList<>(sensoresSet);
-		in = new Scanner(System.in);
 		
 		String nombre = sensoresList.get(in.nextInt());
 		Sensor sensor = dispo.getSensores().get(nombre);
@@ -598,7 +625,6 @@ public class Entrega1 {
 				+ "\n1. Quitar otro sensor"
 				+ "\n2. Volver al menu anterior"
 				+ "\n3. Volver al menu principal");
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -614,6 +640,13 @@ public class Entrega1 {
 		}
 	}
 	
+	public static void notifyFans(Sensor sen,DispositivoInteligente dispo) throws CaracterInvalidoException{
+		System.out.println("\nLos subscriptores son: \n");
+		sen.getSubscribers().forEach(s -> System.out.println(s.getExpresion()));
+		sen.notificar();
+		posSeleccionarSensor(sen,dispo);
+	}
+	
 	//reglas
 	public static void reglas() throws CaracterInvalidoException{
 		System.out.println("\nElija una opcion:"
@@ -621,8 +654,6 @@ public class Entrega1 {
 				+ "\n2. Agregar una regla nueva"
 				+ "\n3. Quitar  una regla"
 				+ "\n4. Volver al menu principal");
-
-		in = new Scanner(System.in);
 			
 		switch(in.nextInt()){
 		case 1:
@@ -647,8 +678,6 @@ public class Entrega1 {
 			System.out.println(i + ". " + reg.getNombreRegla());
 			i++;
 		}
-		
-		in = new Scanner(System.in);
 		
 		Regla reg = reglasExistentes.get(in.nextInt());
 		List<Condicion> conds = reg.getCondiciones();
@@ -676,8 +705,6 @@ public class Entrega1 {
 				+ "\n8. Aplicar regla"
 				+ "\n9. Volver al menu anterior"
 				+ "\n10. Volver al menu principal");
-
-		in = new Scanner(System.in);
 			
 		switch(in.nextInt()){
 		case 1:
@@ -717,15 +744,12 @@ public class Entrega1 {
 	//condiciones
 	public static void seleccionarCondicion(Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nSeleccione una condicion: ");
-		in = new Scanner(System.in);
 		Condicion con = reg.getCondiciones().get(in.nextInt());
 		
 		System.out.println("\nElija una opcion: "
 				+ "\n1. Evaluar la condicion seleccionada"
 				+ "\n2. Volver al menu anterior"
 				+ "\n3. Volver al menu principal");
-		
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -747,8 +771,6 @@ public class Entrega1 {
 				+ "\n1. Volver al menu anterior"
 				+ "\n2. Volver al menu principal");
 		
-		in = new Scanner(System.in);
-		
 		switch(in.nextInt()){
 		case 1:
 			seleccionarCondicion(reg);
@@ -763,26 +785,23 @@ public class Entrega1 {
 	public static void agregarCondicion(Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nSeleccione un dispositivo: ");
 		imprimirDispoI();
-		in = new Scanner(System.in);
 		DispositivoInteligente dispo = nico.getDispInteligente().get(in.nextInt()); 
 
 		Sensor sen = seleccionarSen(dispo);
 		
 		System.out.println("\nIngrese criterio de comparacion: (MAYOR, MENOR, IGUAL o DISTINTO)");
-		in = new Scanner(System.in);
-		String criterio = in.toString();
+		in.nextLine();
+		String criterio = in.nextLine();
 		
 		System.out.println("\nCon que desea compararlo: "
 				+ "\n1. Otro Sensor"
 				+ "\n2. Un valor fijo");
-		in = new Scanner(System.in);
-		
-		if(in.nextInt() == 1){
+		int op = in.nextInt();
+		if(op == 1){
 			Sensor sen2 = seleccionarSen(dispo);
 			reg.crearCondicionDosSensores(sen, sen2, criterio);
-		} else if(in.nextInt() == 2){
+		} else if(op == 2){
 			System.out.println("\nIngrese el valor a comparar: ");
-			in = new Scanner(System.in);
 			int valorFijo = in.nextInt();
 			reg.crearCondicionSensoresYValor(sen, valorFijo, criterio);
 		} else {
@@ -802,7 +821,6 @@ public class Entrega1 {
 				+ "\n1. Agregar otra condicion"
 				+ "\n2. Volver al menu anterior"
 				+ "\n3. Volver al menu principal");
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -820,7 +838,6 @@ public class Entrega1 {
 	
 	public static void quitarCondicion(Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nSeleccione una condicion para quitar: ");
-		in = new Scanner(System.in);
 		Condicion con = reg.getCondiciones().get(in.nextInt());
 		reg.quitarCondicion(con);
 		
@@ -833,8 +850,6 @@ public class Entrega1 {
 				+ "\n1. Quitar otra condicion"
 				+ "\n1. Volver al menu anterior"
 				+ "\n2. Volver al menu principal");
-		
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -853,15 +868,12 @@ public class Entrega1 {
 	// actuadores
 	public static void seleccionarActuador(Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nSeleccione un actuador: ");
-		in = new Scanner(System.in);
 		Actuador act = reg.getActuadores().get(in.nextInt());
 		
 		System.out.println("\nElija una opcion: "
 				+ "\n1. Evaluar el actuador seleccionado"
 				+ "\n2. Volver al menu anterior"
 				+ "\n3. Volver al menu principal");
-		
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -880,14 +892,12 @@ public class Entrega1 {
 	public static void evaluarActuador(Actuador act,Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nElija un dispositivo: ");
 		imprimirDispoI();
-		in = new Scanner(System.in);
 		DispositivoInteligente dispo = nico.getDispInteligente().get(in.nextInt());
 		act.execute(dispo);
 		
 		System.out.println("\nElija una opcion:"
 				+ "\n1. Volver al menu anterior"
 				+ "\n2. Volver al menu principal");
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -904,16 +914,14 @@ public class Entrega1 {
 		
 		System.out.println("Elija un dispositivo: ");
 		imprimirDispoI();
-		in = new Scanner(System.in);
 		DispositivoInteligente dispo = nico.getDispInteligente().get(in.nextInt());
 		
-		System.out.println("Ingrese un ID de fabricante: ");
-		in = new Scanner(System.in);
+		System.out.println("Ingrese un ID de fabricante: (un numero entero)");
 		int id = in.nextInt();
 		
 		System.out.println("Ingrese una orden: ");
-		in = new Scanner(System.in);
-		String orden = in.toString();
+		in.nextLine();
+		String orden = in.nextLine();
 		
 		Actuador act = new Actuador(id,orden);
 		
@@ -922,8 +930,6 @@ public class Entrega1 {
 				+ "\n2. Evaluarlo a un dispositivo"
 				+ "\n3. Volver al menu anterior"
 				+ "\n4. Volver al menu principal");
-		
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -947,7 +953,6 @@ public class Entrega1 {
 		List<Actuador> acts = reg.getActuadores();
 		System.out.println("Seleccione un actuador para quitar: \n");
 		acts.stream().forEach(a -> System.out.println(acts.indexOf(a) + ". " +a.getOrden()));
-		in = new Scanner(System.in);
 		Actuador act = reg.getActuadores().get(in.nextInt());
 		reg.quitarActuador(act);
 		System.out.println("La lista de actuadores quedo asi: \n");
@@ -957,7 +962,6 @@ public class Entrega1 {
 				+ "\n1. quitar otro actuador"
 				+ "\n2. Volver al menu anterior"
 				+ "\n3. Volver al menu principal");
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -976,8 +980,8 @@ public class Entrega1 {
 
 	public static void cambiarCriterioComp(Regla reg) throws CaracterInvalidoException{
 		System.out.println("Ingrese el nuevo criterio de comparacion (AND u OR)\n");
-		in = new Scanner(System.in);
-		String criterio = in.toString();
+		in.nextLine();
+		String criterio = in.nextLine();
 
 		try{
 			reg.setComparacionCondiciones(criterio);
@@ -988,7 +992,6 @@ public class Entrega1 {
 		System.out.println("\nElija una opcion:"
 				+ "\n1. Volver al menu anterior"
 				+ "\n2. Volver al menu principal");
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -1007,7 +1010,6 @@ public class Entrega1 {
 		System.out.println("\nElija una opcion: "
 				+ "\n1. Volver al menu anterior"
 				+ "\n2. Volver al menu principal");
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -1023,24 +1025,22 @@ public class Entrega1 {
 	public static void agregarRegla() throws CaracterInvalidoException{
 		
 		System.out.println("Ingrese un nombre para la regla\n");
-		in = new Scanner(System.in);
-		String nombre = in.toString();
+		in.nextLine();
+		String nombre = in.nextLine();
 		
 		System.out.println("Seleccione una condicion para agregarla a la regla\n");
 		int i = 0;
 		condicionesExistentes.stream().forEach(c -> System.out.println(i + ". " + c.getExpresion()));
-		in = new Scanner(System.in);
 		Condicion con = condicionesExistentes.get(in.nextInt());
 		
 		System.out.println("Seleccione un actuador para agregarlo a la regla\n");
 		int ii = 0;
 		actuadoresExistentes.stream().forEach(a -> System.out.println(ii + ". " + a.getOrden()));
-		in = new Scanner(System.in);
 		Actuador act = actuadoresExistentes.get(in.nextInt());
 		
 		System.out.println("Ingrese un criterio de comparacion (AND u OR)\n");
-		in = new Scanner(System.in);
-		String criterio = in.toString();
+		in.nextLine();
+		String criterio = in.nextLine();
 
 		Regla regla = new Regla(nombre,aircon,criterio);
 		
@@ -1059,7 +1059,6 @@ public class Entrega1 {
 				+ "\n1. Agregar otra regla"
 				+ "\n2. Volver al menu anterior"
 				+ "\n3. Volver al menu principal");
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:
@@ -1080,8 +1079,7 @@ public class Entrega1 {
 		System.out.println("Seleccione una regla: \n");
 		reglasExistentes.stream().forEach(r -> System.out.print(
 				reglasExistentes.indexOf(r) + ". " + r.getNombreRegla() + "\n" ));
-	
-		in = new Scanner(System.in);	
+		
 		Regla reg = reglasExistentes.get(in.nextInt());
 		reglasExistentes.remove(reg);
 
@@ -1095,7 +1093,6 @@ public class Entrega1 {
 				+ "\n1. Agregar otra regla"
 				+ "\n2. Volver al menu anterior"
 				+ "\n3. Volver al menu principal");
-		in = new Scanner(System.in);
 		
 		switch(in.nextInt()){
 		case 1:

@@ -33,6 +33,11 @@ public class Apagado implements EstadoDispositivo{
 	public boolean estaEnAhorro() {
 		return false;
 	}
+	
+	@Override
+	public String darEstado() {
+		return "Esta apagado";
+	}
 
 	@Override
 	public double consumoEnUltimasHoras(int horas,DispositivoInteligente disp) {

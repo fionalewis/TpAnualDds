@@ -36,6 +36,11 @@ public class Encendido implements EstadoDispositivo {
 	}
 	
 	@Override
+	public String darEstado() {
+		return "Esta encendido";
+	}
+	
+	@Override
 	public double consumoEnUltimasHoras(int horas,DispositivoInteligente disp) {
 		return disp.getkWh()*horas;
 	}

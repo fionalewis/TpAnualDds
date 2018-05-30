@@ -36,6 +36,11 @@ public class AhorroEnergia implements EstadoDispositivo {
 	}
 	
 	@Override
+	public String darEstado() {
+		return "Esta en modo ahorro de energia";
+	}
+	
+	@Override
 	public double consumoEnUltimasHoras(int horas,DispositivoInteligente disp) {
 		return disp.getkWhAhorro()*horas;
 	}

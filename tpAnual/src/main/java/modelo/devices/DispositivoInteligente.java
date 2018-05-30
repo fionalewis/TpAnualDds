@@ -54,6 +54,9 @@ public class DispositivoInteligente extends Dispositivo {
 	public void setEstadoDisp(EstadoDispositivo estadoDisp) {
 		this.estadoDisp = estadoDisp;
 	}
+	public String estadoDispo(){ //SOLO PARA MOSTRAR EN ENTREGA 1 
+		return this.estadoDisp.darEstado();
+	}
 	
 	//Sensores	
 
