@@ -31,4 +31,13 @@ public class CondicionDosSensores extends Condicion{
 		return sensor1.getNombreMagnitud().concat(comparacion).concat(sensor2.getNombreMagnitud());
 	}
 	
+	//CUANDO ALGUIEN DESDE AFUERA DESEA AVALUAR LAS CONDICIONES, 
+	//Y NO SER DISPARADO AUTOMATICAMENTE POR SENSORES
+	//ESTO ESTA PARA CONSULTARLE AL SENSOR EL VALOR ACTUAL DE LA MAGNITUD QUE NECESITO
+	@Override
+	public boolean getEstado(){
+		sensor1.medir();
+		sensor2.medir();
+		return this.estado;
+	}
 }

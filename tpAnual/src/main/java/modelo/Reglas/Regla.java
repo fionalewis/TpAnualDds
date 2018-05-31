@@ -100,6 +100,8 @@ public class Regla {
 				act.execute(disp);
 			}
 			this.state = true; //para test 
+		}else{
+			System.out.println("No se cumplieron todas las condiciones para la regla de criterio AND");
 		}
 	}
 	
@@ -110,6 +112,8 @@ public class Regla {
 				act.execute(disp);
 			}
 			this.state = true; //para test
+		}else{
+			System.out.println("No se cumplio ninguna condicion");
 		}
 	}
 	

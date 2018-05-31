@@ -29,4 +29,13 @@ public class CondicionSensorYValor extends Condicion{
 	public String getExpresion(){
 		return sensor.getNombreMagnitud().concat(comparacion).concat(valorFijo.toString());
 	}
+	
+	//CUANDO ALGUIEN DESDE AFUERA DESEA AVALUAR LAS CONDICIONES, 
+	//Y NO SER DISPARADO AUTOMATICAMENTE POR SENSORES
+	//ESTO ESTA PARA CONSULTARLE AL SENSOR EL VALOR ACTUAL DE LA MAGNITUD QUE NECESITO
+	@Override
+	public boolean getEstado(){
+		sensor.medir();
+		return this.estado;
+	}
 }

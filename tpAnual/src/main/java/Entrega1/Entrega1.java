@@ -99,7 +99,7 @@ public class Entrega1 {
 	public static void convertirDispEstandar() throws CaracterInvalidoException{
 		
 		List<DispositivoEstandar> dispos = nico.getDispEstandar();
-		System.out.println("Elija un dispositivo: \n");
+		System.out.println("\nElija un dispositivo: \n");
 		imprimirDispoS();
 		
 		DispositivoEstandar dis = dispos.get(in.nextInt());
@@ -188,18 +188,18 @@ public class Entrega1 {
 			imprimirDispoI();
 			DispositivoInteligente dis = nico.getDispInteligente().get(in.nextInt());
 			nico.quitarDispInteligente(dis);
-			System.out.println("Tus dispositivos inteligentes son:\n");
+			System.out.println("\nTus dispositivos inteligentes son:\n");
 			imprimirDispoI();
-			System.out.println("Tus dispositivos estandares son:\n");
+			System.out.println("\nTus dispositivos estandares son:\n");
 			imprimirDispoS();
 		}else{
 			System.out.println("\nElija un dispositivo: ");
 			imprimirDispoS();
 			DispositivoEstandar dis = nico.getDispEstandar().get(in.nextInt());
 			nico.quitarDispEstandar(dis);
-			System.out.println("Tus dispositivos inteligentes son:\n");
+			System.out.println("\nTus dispositivos inteligentes son:\n");
 			imprimirDispoI();
-			System.out.println("Tus dispositivos estandares son:\n");
+			System.out.println("\nTus dispositivos estandares son:\n");
 			imprimirDispoS();
 		}
 		
@@ -224,7 +224,7 @@ public class Entrega1 {
 	}
 	
 	public static void SeleccionarDispo() throws CaracterInvalidoException{
-		System.out.println("Elija un dispositivo:\n");
+		System.out.println("\nElija un dispositivo:\n");
 		imprimirDispoI();
 		DispositivoInteligente dis = nico.getDispInteligente().get(in.nextInt());
 		imprimirEstado(dis);
@@ -289,7 +289,7 @@ public class Entrega1 {
 	}
 	
 	public static void consumoPeriodo(DispositivoInteligente dis) throws CaracterInvalidoException{
-		System.out.println("Fecha inicial:\n");
+		System.out.println("\nFecha inicial:\n");
 		//int year,int month,int day,int hour,int min,int sec
 		System.out.println("Ingrese anio inicial\n");
 		int yearI = in.nextInt();
@@ -389,7 +389,7 @@ public class Entrega1 {
 	
 	//sensores
 	public static void sensores(DispositivoInteligente dispo) throws CaracterInvalidoException{
-		System.out.println("Elija una opcion:"
+		System.out.println("\nElija una opcion:"
 			+ "\n1. Seleccionar un sensor para mas operaciones"
 			+ "\n2. Agregar un nuevo sensor"
 			+ "\n3. Quitar un sensor"
@@ -436,7 +436,7 @@ public class Entrega1 {
 	}
 	
 	public static void posSeleccionarSensor(Sensor sensor, DispositivoInteligente dispo) throws CaracterInvalidoException{
-		System.out.println("Elija una opcion: (tener en cuenta que movimiento es un sensor binario)"
+		System.out.println("\nElija una opcion: (tener en cuenta que movimiento es un sensor binario)"
 				+ "\n Aca se permitira subir y bajar pero no se debe hacerlo"
 				+ "\n1. Ver valor"
 				+ "\n2. Ver subscriptores"
@@ -652,7 +652,7 @@ public class Entrega1 {
 		System.out.println("\nElija una opcion:"
 				+ "\n1. Seleccionar una regla para mas opciones"
 				+ "\n2. Agregar una regla nueva"
-				+ "\n3. Quitar  una regla"
+				+ "\n3. Quitar una regla"
 				+ "\n4. Volver al menu principal");
 			
 		switch(in.nextInt()){
@@ -672,31 +672,31 @@ public class Entrega1 {
 	}
 	
 	public static void seleccionarRegla() throws CaracterInvalidoException{
-		System.out.println("Seleccione una regla: \n");
+		Regla reg = seleccionarUnaRegla();
+		operacConReglaSelected(reg);
+	}
+	
+	public static Regla seleccionarUnaRegla(){
+		System.out.println("\nSeleccione una regla: \n");
 		int i = 0;
 		for(Regla reg:reglasExistentes){
 			System.out.println(i + ". " + reg.getNombreRegla());
 			i++;
 		}
 		
-		Regla reg = reglasExistentes.get(in.nextInt());
-		List<Condicion> conds = reg.getCondiciones();
-		List<Actuador> acts = reg.getActuadores();
+		return reglasExistentes.get(in.nextInt());
+	}
+	
+	public static void operacConReglaSelected(Regla reg) throws CaracterInvalidoException{
+		imprimirCondiciones(reg);
+		imprimirActuadores(reg);
 		
-		
-		System.out.println("Las condiciones son: \n");
-		conds.stream().forEach(c -> System.out.println(conds.indexOf(c) + ". " 
-								+ c.getExpresion()));
-		
-		System.out.println("Los actuadores son: \n");
-		acts.stream().forEach(a -> System.out.println(acts.indexOf(a) + ". " +a.getOrden()));
-		
-		System.out.println("El criterio de comparacion es: ");
+		System.out.println("\nEl criterio de comparacion es: ");
 		System.out.println(reg.getComparacionCondiciones());
 		
 		System.out.println("\nElija una opcion:"
 				+ "\n1. Seleccionar Condicion"
-				+ "\n2.	Agregar Condicion"
+				+ "\n2. Agregar Condicion"
 				+ "\n3. Quitar Condicion"
 				+ "\n4. Seleccionar Actuador"
 				+ "\n5. Agregar Actuador"
@@ -705,7 +705,7 @@ public class Entrega1 {
 				+ "\n8. Aplicar regla"
 				+ "\n9. Volver al menu anterior"
 				+ "\n10. Volver al menu principal");
-			
+		
 		switch(in.nextInt()){
 		case 1:
 			seleccionarCondicion(reg);
@@ -717,10 +717,10 @@ public class Entrega1 {
 			quitarCondicion(reg);
 			break;
 		case 4:
-			agregarActuador(reg);
+			seleccionarActuador(reg);
 			break;
 		case 5:
-			seleccionarActuador(reg);
+			agregarActuador(reg);
 			break;
 		case 6:
 			quitarActuador(reg);
@@ -738,14 +738,24 @@ public class Entrega1 {
 			menuPrincipal();
 		default:seleccionarRegla();
 		}
-		
 	}
 	
 	//condiciones
+	public static void imprimirCondiciones(Regla reg){
+		System.out.println("\nLas condiciones son: \n");
+		List<Condicion> conds = reg.getCondiciones();
+		conds.stream().forEach(c -> System.out.println(conds.indexOf(c) + ". " 
+								+ c.getExpresion()));
+	}
+	
 	public static void seleccionarCondicion(Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nSeleccione una condicion: ");
+		imprimirCondiciones(reg);
 		Condicion con = reg.getCondiciones().get(in.nextInt());
-		
+		operacConCondSelected(con,reg);
+	}
+	
+	public static void operacConCondSelected(Condicion con,Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nElija una opcion: "
 				+ "\n1. Evaluar la condicion seleccionada"
 				+ "\n2. Volver al menu anterior"
@@ -756,7 +766,7 @@ public class Entrega1 {
 			evaluarCondicion(con,reg);
 			break;
 		case 2:
-			seleccionarRegla();
+			operacConReglaSelected(reg);
 			break;
 		case 3:
 			menuPrincipal();
@@ -773,7 +783,7 @@ public class Entrega1 {
 		
 		switch(in.nextInt()){
 		case 1:
-			seleccionarCondicion(reg);
+			operacConReglaSelected(reg);
 			break;
 		case 2:
 			menuPrincipal();
@@ -789,7 +799,8 @@ public class Entrega1 {
 
 		Sensor sen = seleccionarSen(dispo);
 		
-		System.out.println("\nIngrese criterio de comparacion: (MAYOR, MENOR, IGUAL o DISTINTO)");
+		System.out.println("\nIngrese criterio de comparacion: " 
+				+ "\n(MAYOR, MENOR, IGUAL o DISTINTO)");
 		in.nextLine();
 		String criterio = in.nextLine();
 		
@@ -809,7 +820,7 @@ public class Entrega1 {
 			agregarCondicion(reg);
 		}
 		
-		System.out.println("La lista de condiciones quedo asi: \n");
+		System.out.println("\nLa lista de condiciones quedo asi: \n");
 		List<Condicion> conds = reg.getCondiciones();
 		conds.stream().forEach(c -> System.out.println(c.getExpresion()));
 		
@@ -827,7 +838,7 @@ public class Entrega1 {
 			agregarCondicion(reg);
 			break;
 		case 2:
-			seleccionarCondicion(reg);
+			operacConReglaSelected(reg);
 			break;
 		case 3:
 			menuPrincipal();
@@ -837,26 +848,27 @@ public class Entrega1 {
 	}
 	
 	public static void quitarCondicion(Regla reg) throws CaracterInvalidoException{
+		imprimirCondiciones(reg);
 		System.out.println("\nSeleccione una condicion para quitar: ");
 		Condicion con = reg.getCondiciones().get(in.nextInt());
 		reg.quitarCondicion(con);
 		
 		List<Condicion> conds = reg.getCondiciones();
 		
-		System.out.println("La lista de condiciones quedo asi: \n");
+		System.out.println("\nLa lista de condiciones quedo asi: \n");
 		conds.stream().forEach(c -> System.out.println(c.getExpresion()));
 		
 		System.out.println("\nElija una opcion: "
 				+ "\n1. Quitar otra condicion"
-				+ "\n1. Volver al menu anterior"
-				+ "\n2. Volver al menu principal");
+				+ "\n2. Volver al menu anterior"
+				+ "\n3. Volver al menu principal");
 		
 		switch(in.nextInt()){
 		case 1:
 			quitarCondicion(reg);
 			break;
 		case 2:
-			seleccionarCondicion(reg);
+			operacConReglaSelected(reg);
 			break;
 		case 3:
 			menuPrincipal();
@@ -866,7 +878,14 @@ public class Entrega1 {
 	}
 
 	// actuadores
+	public static void imprimirActuadores(Regla reg){
+		List<Actuador> acts = reg.getActuadores();
+		System.out.println("\nLos actuadores son: \n");
+		acts.stream().forEach(a -> System.out.println(acts.indexOf(a) + ". " +a.getOrden()));
+	}
+	
 	public static void seleccionarActuador(Regla reg) throws CaracterInvalidoException{
+		imprimirActuadores(reg);
 		System.out.println("\nSeleccione un actuador: ");
 		Actuador act = reg.getActuadores().get(in.nextInt());
 		
@@ -880,7 +899,7 @@ public class Entrega1 {
 			evaluarActuador(act,reg);
 			break;
 		case 2:
-			seleccionarRegla();
+			operacConReglaSelected(reg);
 			break;
 		case 3:
 			menuPrincipal();
@@ -901,7 +920,7 @@ public class Entrega1 {
 		
 		switch(in.nextInt()){
 		case 1:
-			seleccionarActuador(reg);
+			operacConReglaSelected(reg);
 			break;
 		case 2:
 			menuPrincipal();
@@ -912,14 +931,14 @@ public class Entrega1 {
 
 	public static void agregarActuador(Regla reg) throws CaracterInvalidoException{
 		
-		System.out.println("Elija un dispositivo: ");
+		System.out.println("\nElija un dispositivo: ");
 		imprimirDispoI();
 		DispositivoInteligente dispo = nico.getDispInteligente().get(in.nextInt());
 		
-		System.out.println("Ingrese un ID de fabricante: (un numero entero)");
+		System.out.println("\nIngrese un ID de fabricante: (un numero entero)");
 		int id = in.nextInt();
 		
-		System.out.println("Ingrese una orden: ");
+		System.out.println("\nIngrese una orden: ");
 		in.nextLine();
 		String orden = in.nextLine();
 		
@@ -939,7 +958,7 @@ public class Entrega1 {
 			evaluarActuador(act,reg);
 			break;
 		case 3:
-			seleccionarRegla();
+			operacConReglaSelected(reg);
 			break;
 		case 4:
 			menuPrincipal();
@@ -951,11 +970,11 @@ public class Entrega1 {
 
 	public static void quitarActuador(Regla reg) throws CaracterInvalidoException{
 		List<Actuador> acts = reg.getActuadores();
-		System.out.println("Seleccione un actuador para quitar: \n");
+		System.out.println("\nSeleccione un actuador para quitar: \n");
 		acts.stream().forEach(a -> System.out.println(acts.indexOf(a) + ". " +a.getOrden()));
 		Actuador act = reg.getActuadores().get(in.nextInt());
 		reg.quitarActuador(act);
-		System.out.println("La lista de actuadores quedo asi: \n");
+		System.out.println("\nLa lista de actuadores quedo asi: \n");
 		reg.getActuadores().stream().forEach(a -> System.out.println(a.getOrden()));
 		
 		System.out.println("\nElija una opcion:"
@@ -968,7 +987,7 @@ public class Entrega1 {
 			quitarActuador(reg);
 			break;
 		case 2:
-			seleccionarRegla();
+			operacConReglaSelected(reg);
 			break;
 		case 3:
 			menuPrincipal();
@@ -979,7 +998,7 @@ public class Entrega1 {
 	}
 
 	public static void cambiarCriterioComp(Regla reg) throws CaracterInvalidoException{
-		System.out.println("Ingrese el nuevo criterio de comparacion (AND u OR)\n");
+		System.out.println("\nIngrese el nuevo criterio de comparacion (AND u OR)\n");
 		in.nextLine();
 		String criterio = in.nextLine();
 
@@ -995,7 +1014,7 @@ public class Entrega1 {
 		
 		switch(in.nextInt()){
 		case 1:
-			seleccionarRegla();
+			operacConReglaSelected(reg);
 			break;
 		case 2:
 			menuPrincipal();
@@ -1013,7 +1032,7 @@ public class Entrega1 {
 		
 		switch(in.nextInt()){
 		case 1:
-			seleccionarRegla();
+			operacConReglaSelected(reg);
 			break;
 		case 2:
 			menuPrincipal();
@@ -1024,21 +1043,21 @@ public class Entrega1 {
 	
 	public static void agregarRegla() throws CaracterInvalidoException{
 		
-		System.out.println("Ingrese un nombre para la regla\n");
+		System.out.println("\nIngrese un nombre para la regla\n");
 		in.nextLine();
 		String nombre = in.nextLine();
 		
-		System.out.println("Seleccione una condicion para agregarla a la regla\n");
-		int i = 0;
-		condicionesExistentes.stream().forEach(c -> System.out.println(i + ". " + c.getExpresion()));
+		System.out.println("\nSeleccione una condicion para agregarla a la regla\n");
+		condicionesExistentes.stream().forEach(c -> System.out.println(
+						condicionesExistentes.indexOf(c) + ". " + c.getExpresion()));
 		Condicion con = condicionesExistentes.get(in.nextInt());
 		
-		System.out.println("Seleccione un actuador para agregarlo a la regla\n");
-		int ii = 0;
-		actuadoresExistentes.stream().forEach(a -> System.out.println(ii + ". " + a.getOrden()));
+		System.out.println("\nSeleccione un actuador para agregarlo a la regla\n");
+		actuadoresExistentes.stream().forEach(a -> System.out.println(
+							actuadoresExistentes.indexOf(a) + ". " + a.getOrden()));
 		Actuador act = actuadoresExistentes.get(in.nextInt());
 		
-		System.out.println("Ingrese un criterio de comparacion (AND u OR)\n");
+		System.out.println("\nIngrese un criterio de comparacion (AND u OR)\n");
 		in.nextLine();
 		String criterio = in.nextLine();
 
@@ -1048,7 +1067,7 @@ public class Entrega1 {
 		regla.agregarActuador(act);
 		reglasExistentes.add(regla);
 		
-		System.out.println("La lista de reglas quedo asi: \n");
+		System.out.println("\nLa lista de reglas quedo asi: \n");
 		reglasExistentes.stream().forEach(r -> System.out.println(r.getNombreRegla()));
 		
 		posAgregarRegla();
@@ -1076,21 +1095,21 @@ public class Entrega1 {
 	
 	public static void quitarRegla() throws CaracterInvalidoException{
 		//mostrar lista reglas existentes
-		System.out.println("Seleccione una regla: \n");
+		System.out.println("\nSeleccione una regla: \n");
 		reglasExistentes.stream().forEach(r -> System.out.print(
 				reglasExistentes.indexOf(r) + ". " + r.getNombreRegla() + "\n" ));
 		
 		Regla reg = reglasExistentes.get(in.nextInt());
 		reglasExistentes.remove(reg);
 
-		System.out.println("La lista de reglas quedo asi: \n");
+		System.out.println("\nLa lista de reglas quedo asi: \n");
 		reglasExistentes.stream().forEach(r -> System.out.println(r.getNombreRegla()));
 		
 		posQuitarRegla();
 	}
 	public static void posQuitarRegla() throws CaracterInvalidoException{
 		System.out.println("\nElija una opcion:"
-				+ "\n1. Agregar otra regla"
+				+ "\n1. Quitar otra regla"
 				+ "\n2. Volver al menu anterior"
 				+ "\n3. Volver al menu principal");
 		

@@ -61,9 +61,7 @@ public abstract class Condicion {
 
 	public abstract void update();
 
-	public boolean getEstado(){
-		return this.estado;
-	}
+	public abstract boolean getEstado();
 	
 	public String getComparacion(){
 		return this.comparacion;
