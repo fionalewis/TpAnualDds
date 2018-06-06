@@ -2,7 +2,7 @@ package modelo.users;
 
 import java.util.List;
 
-import capaPresentacion.Programa;
+import Entrega1.Programa;
 import modelo.deviceState.AhorroEnergia;
 import modelo.deviceState.Encendido;
 import modelo.devices.Dispositivo;
