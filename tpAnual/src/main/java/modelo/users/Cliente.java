@@ -1,8 +1,12 @@
 package modelo.users;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import java.util.function.*;
 
 import Entrega1.Programa;
+import modelo.FilterPredicates;
 import modelo.deviceState.AhorroEnergia;
 import modelo.deviceState.Encendido;
 import modelo.devices.Dispositivo;
@@ -22,10 +26,12 @@ public class Cliente extends Usuario {
 	private String nroDoc;
 	private String telefono;
 	private String domicilio;
-	private List<DispositivoInteligente> dispInteligentes = new ArrayList<>();
-	private List<DispositivoEstandar> dispEstandares = new ArrayList<>();
+	private List<Dispositivo> dispositivos = new ArrayList<>();
 	private Categoria categ;
 	private int puntos = 0;
+	
+	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
+	private List<DispositivoEstandar> aux = new ArrayList<>(); 
 	
 	public Cliente() {
 		super();
@@ -36,7 +42,7 @@ public class Cliente extends Usuario {
 					TipoDocumento tDoc,String nDoc,String tel,String dom) {
 		setNombre(name);
 		setApellido(surname);
-		setUserName(userName);
+		setUserName(username);
 		setPassword(pass);
 		this.fechaAlta = LocalDate.now();
 		this.tipoDoc = tDoc;
@@ -48,17 +54,17 @@ public class Cliente extends Usuario {
 	
 	//Constructor para el json
 	public Cliente(String name,String surname,String username,String pass,int y,int m,int d,
-					TipoDocumento tDoc,String nDoc,String tel,String dom,List<DispositivoInteligente> disp) {
+					TipoDocumento tDoc,String nDoc,String tel,String dom,List<Dispositivo> disp) {
 		setNombre(name);
 		setApellido(surname);
-		setUserName(userName);
+		setUserName(username);
 		setPassword(pass);
 		this.fechaAlta = LocalDate.now();
 		this.tipoDoc = tDoc;
 		this.nroDoc = nDoc;
 		this.telefono = tel;
 		this.domicilio = dom;
-		this.dispInteligentes.addAll(disp);
+		this.dispositivos.addAll(disp);
 		setCateg();
 	}
 
@@ -97,7 +103,7 @@ public class Cliente extends Usuario {
 	public void setCateg() {
 		this.categ = Programa.categoria(this.calcularConsumo());
 	}
-	public int getPuntos() { //
+	public int getPuntos() {
 		return puntos;
 	}
 	public void setPuntos(int puntos) {
@@ -105,66 +111,77 @@ public class Cliente extends Usuario {
 	}
 	
 	//Dispositivos
-
-	public List<DispositivoEstandar> getDispEstandar() {
-		return dispEstandares;
-	}
-	public void setDispEstandar(List<DispositivoEstandar> dispEstandar) {
-		this.dispEstandares = dispEstandar;
-	}
-	public void agregarADispEstandar(DispositivoEstandar dispositivo) {
-		dispEstandares.add(dispositivo);
-	}
-	public void quitarDispEstandar(DispositivoEstandar dispositivo) {
-		dispEstandares.remove(dispositivo);
-	}
 	
-	//Para la lista de dispositivos inteligentes
-
-	public void setDispInteligente(List<DispositivoInteligente> dispositivos) {
-		this.dispInteligentes = dispositivos;
-	}
-	
-	public List<DispositivoInteligente> getDispInteligente() {
-		return dispInteligentes;
+	public List<Dispositivo> getDispositivos() {
+		return dispositivos;
 	}
 
-	public void agregarDispInteligente(Dispositivo dispositivo) {
-		if(dispositivo instanceof DispositivoInteligente){
-			dispInteligentes.add((DispositivoInteligente) dispositivo);
+	public void setDispositivos(List<Dispositivo> dispositivos) {
+		this.dispositivos = dispositivos;
+	}
+
+	public void agregarDispositivo(Dispositivo disp) {
+		if(disp instanceof DispositivoInteligente && !(disp instanceof DispositivoConvertido)) {
 			puntos+=15;
-		} else if(dispositivo instanceof DispositivoConvertido) {
-			dispInteligentes.add((DispositivoConvertido) dispositivo);
-			} else {
-			agregarADispEstandar((DispositivoEstandar) dispositivo);
-			}		
+		}
+		dispositivos.add(disp);		
 	}
-	public void quitarDispInteligente(DispositivoInteligente dispositivo) {
-		dispInteligentes.remove(dispositivo);
+	
+	public void quitarDispositivo(Dispositivo disp) {
+		dispositivos.remove(disp);
+	}
+	
+	public List<Dispositivo> obtenerLista(String opcion){
+		Predicate<Dispositivo> predicate = null;
+		switch(opcion) {
+		case"Inteligente":
+			predicate = FilterPredicates.filterDI();
+			break;
+		case"Estandar":
+			predicate = FilterPredicates.filterDE();
+			break;
+		case"Convertido":
+			predicate = FilterPredicates.filterDC();
+			break;
+		case"IyC":
+			predicate = FilterPredicates.filterAmbos();
+			break;
+		default: System.out.println("Opción no válida.");
+			break;
+		}
+		return dispositivos.stream().filter(predicate).collect(Collectors.toList());
+	}	
+	
+	/* La funcion recibe una lista porque la vamos a usar para probar lo que hacemos,
+	 * cuando no haga falta porque se muestre en web o donde sea vamos a borrar ese
+	 * argumento y poner 'dispositivos' en su lugar para que tome los disp del cliente */
+	
+	public void mostrarLista(List<Dispositivo> dispositivos) {
+		for(int i = 0;i<dispositivos.size();i++) {
+			System.out.println(dispositivos.get(i).getNombreDisp());
+		}
 	}
 	
 	//Conversion de dispositivos
 	
-	public void agregarModuloAdaptador(DispositivoEstandar disp,double kwhA) {
-		DispositivoConvertido dispConvertido = new DispositivoConvertido(disp,kwhA);
-		agregarDispInteligente(dispConvertido);
-		quitarDispEstandar(disp);
+	public void agregarModuloAdaptador(DispositivoEstandar disp) {
+		DispositivoConvertido dispConvertido = new DispositivoConvertido(disp);
+		agregarDispositivo(dispConvertido);
+		quitarDispositivo(disp);
+		aux.add(disp); //El DE que eliminamos de la lista gral lo persistimos en otra parte
 		puntos+=10;
 	}
 	
-	
 	//Consumo
-
+	
 	@Override public double calcularConsumo() {
-		double consumo = dispInteligentes.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
-		return consumo;
+		return obtenerLista("IyC").stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
 	}
 	
 	//Duplicado para poder pasarle una fechaFin en los tests
 	
 	public double calcularConsumo(LocalDateTime fechaFin) {
-		double consumo = dispInteligentes.stream().mapToDouble(unDisp -> unDisp.consumoTotal(fechaFin)).sum();
-		return consumo;
+		return obtenerLista("IyC").stream().mapToDouble(unDisp -> unDisp.consumoTotal(fechaFin)).sum();
 	}
 	
 	/* Para obtener la tarifa. El admin va a ser el unico que pueda usar este metodo
@@ -180,22 +197,33 @@ public class Cliente extends Usuario {
 	
 	//Funcionalidades
 	
-	public boolean algunoEncendido(List<DispositivoInteligente> dispositivos) {
-		return this.dispInteligentes.stream().anyMatch(unDisp -> unDisp.getEstadoDisp() instanceof Encendido);
+	public boolean algunoEncendido() { //Estos cout los vamos a borrar despues, estan para que los vean mientras prueben nada mas
+		boolean result = obtenerLista("IyC").stream().anyMatch(FilterPredicates.filterAnyOn());
+		if(result) {
+			System.out.println("Existe algún dispositivo encendido.");
+		} else {
+			System.out.print("Todos los dispositivos se encuentran apagados.");
+		}
+		return result;
 	}
 	
-	public int cantDispositivos() {
-		return dispInteligentes.size();
+	public int cantDispositivosTotal() {
+		return dispositivos.size();
+	}
+	
+	public int cantDispositivos() { //Solo para los que pueden interactuar con el sistema`
+		return obtenerLista("IyC").size();
+		
 	}
 	
 	public int cantDisp(boolean opcion) { //Prendidos = true	Apagados = false
 		int apagados = 0, prendidos = 0;
-		for (DispositivoInteligente unDisp: dispInteligentes) {
-			if(unDisp.getEstadoDisp() instanceof Encendido || unDisp.getEstadoDisp() instanceof AhorroEnergia) {
-				prendidos++;				
+		for (Dispositivo unDisp : obtenerLista("IyC")) {
+		if(unDisp.getEstadoDisp() instanceof Encendido || unDisp.getEstadoDisp() instanceof AhorroEnergia) {
+			prendidos++;				
 			}
 		}
-		apagados = this.cantDispositivos() - prendidos;
+		apagados = cantDispositivos() - prendidos;
 		if(opcion) {
 			return prendidos;
 		} else {return apagados;}

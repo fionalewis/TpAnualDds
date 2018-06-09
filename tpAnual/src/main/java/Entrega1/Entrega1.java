@@ -14,13 +14,13 @@ import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.Sensor;
 import modelo.users.Cliente;
+import modelo.devices.Dispositivo;
 
 public class Entrega1 {
 	
 	private static Scanner in = new Scanner(System.in);
-	private static int a = 0;
 	private static Cliente nico = new Cliente();
-	private static DispositivoInteligente aircon = new DispositivoInteligente("Aire Acondicionado",0.14,0.1);
+	private static DispositivoInteligente aircon = new DispositivoInteligente("Aire Acondicionado",0.14);
 	private static DispositivoEstandar tele = new DispositivoEstandar("Televisor",0.14,5);
 	private static DispositivoEstandar ventilador = new DispositivoEstandar("Ventilador",0.14,5);
 	private static Sensor sensorTempIN = new Sensor("temperaturaIN",aircon);
@@ -70,7 +70,7 @@ public class Entrega1 {
 	
 	//dispositivos estandares
 	public static void dispoEstandares() throws CaracterInvalidoException{
-		List<DispositivoEstandar> dispos = nico.getDispEstandar();
+		List<Dispositivo> dispos = nico.obtenerLista("Estandar");
 		dispos.stream().forEach(d -> System.out.print(d.getNombreDisp() + "\n"));
 		
 		System.out.print("\nPor favor elija una opcion:"
@@ -98,12 +98,12 @@ public class Entrega1 {
 	
 	public static void convertirDispEstandar() throws CaracterInvalidoException{
 		
-		List<DispositivoEstandar> dispos = nico.getDispEstandar();
+		List<Dispositivo> dispos = nico.obtenerLista("Estandar");
 		System.out.println("\nElija un dispositivo: \n");
 		imprimirDispoS();
 		
-		DispositivoEstandar dis = dispos.get(in.nextInt());
-		nico.agregarModuloAdaptador(dis, 0.05);
+		DispositivoEstandar dis = (DispositivoEstandar) dispos.get(in.nextInt());
+		nico.agregarModuloAdaptador(dis);
 		
 		System.out.println("\nTus dispositivos inteligentes son: \n");
 		imprimirDispoI();
@@ -135,7 +135,7 @@ public class Entrega1 {
 	//dispositivos inteligentes
 	public static void dispoInteligentes() throws CaracterInvalidoException{
 		
-		List<DispositivoInteligente> dispos = nico.getDispInteligente();
+		List<Dispositivo> dispos = nico.obtenerLista("Inteligente");
 		System.out.println("\nMENU DISPOSITICO INTELIGENTES \n" + 
 							"Tus dispositivos inteligentes son: \n");
 		imprimirDispoI();
@@ -152,14 +152,14 @@ public class Entrega1 {
 		case 1:
 			System.out.println("\nDispositivos encendidos: \n");
 			dispos.stream().forEach(d -> {
-				if(d.estaEncendido())
+				if(((DispositivoInteligente) d).estaEncendido())
 					System.out.println(d.getNombreDisp() + "\n");
 			});
 			break;
 		case 2:
 			System.out.println("\nDispositivos apagados: \n");
 			dispos.stream().forEach(d -> {
-				if(d.estaApagado())
+				if(((DispositivoInteligente) d).estaApagado())
 					System.out.println(d.getNombreDisp() + "\n");
 			});
 			break;
@@ -186,8 +186,8 @@ public class Entrega1 {
 		if(tipoDispo){
 			System.out.println("\nElija un dispositivo: ");
 			imprimirDispoI();
-			DispositivoInteligente dis = nico.getDispInteligente().get(in.nextInt());
-			nico.quitarDispInteligente(dis);
+			Dispositivo dis = nico.obtenerLista("Inteligente").get(in.nextInt());
+			nico.quitarDispositivo(dis);
 			System.out.println("\nTus dispositivos inteligentes son:\n");
 			imprimirDispoI();
 			System.out.println("\nTus dispositivos estandares son:\n");
@@ -195,8 +195,8 @@ public class Entrega1 {
 		}else{
 			System.out.println("\nElija un dispositivo: ");
 			imprimirDispoS();
-			DispositivoEstandar dis = nico.getDispEstandar().get(in.nextInt());
-			nico.quitarDispEstandar(dis);
+			Dispositivo dis = nico.obtenerLista("Estandar").get(in.nextInt());
+			nico.quitarDispositivo(dis);
 			System.out.println("\nTus dispositivos inteligentes son:\n");
 			imprimirDispoI();
 			System.out.println("\nTus dispositivos estandares son:\n");
@@ -226,14 +226,14 @@ public class Entrega1 {
 	public static void SeleccionarDispo() throws CaracterInvalidoException{
 		System.out.println("\nElija un dispositivo:\n");
 		imprimirDispoI();
-		DispositivoInteligente dis = nico.getDispInteligente().get(in.nextInt());
-		imprimirEstado(dis);
-		operarConDispoSelected(dis);
+		Dispositivo dis = nico.obtenerLista("Inteligente").get(in.nextInt());
+		imprimirEstado((DispositivoInteligente) dis);
+		operarConDispoSelected((DispositivoInteligente) dis);
 	}
 	
 	public static void imprimirEstado(DispositivoInteligente dis){
 		System.out.println("\nEl estado del dispositivo es: \n"
-				+ dis.estadoDispo() + "\n");
+				+ dis.stringEstado() + "\n");
 		
 	}
 	
@@ -250,15 +250,15 @@ public class Entrega1 {
 				
 			switch(in.nextInt()){
 			case 1:dis.encender();
-				 System.out.println(dis.estadoDispo());
+				 System.out.println(dis.stringEstado());
 				break;
 			case 2:
 				dis.apagar();
-				System.out.println(dis.estadoDispo());
+				System.out.println(dis.stringEstado());
 				break;
 			case 3:
 				dis.ahorroEnergia();
-				System.out.println(dis.estadoDispo());
+				System.out.println(dis.stringEstado());
 				break;
 			case 4:
 				sensores(dis);
@@ -342,13 +342,13 @@ public class Entrega1 {
 		if(tipoDispo){
 			System.out.println("\nIngrese un kwhAhorro:");
 			ahorroOConsumo = in.nextFloat();		
-			DispositivoInteligente dispo = new DispositivoInteligente(nombre,kwh,ahorroOConsumo);
-			nico.agregarDispInteligente(dispo);
+			DispositivoInteligente dispo = new DispositivoInteligente(nombre,kwh);
+			nico.agregarDispositivo(dispo);
 		} else{
-			System.out.println("\nIngrese horas consumidas:");
+			System.out.println("\nIngrese horas de uso diario aproximadas:");
 			ahorroOConsumo = in.nextFloat();
 			DispositivoEstandar dispo = new DispositivoEstandar(nombre,kwh,(int) ahorroOConsumo);
-			nico.agregarADispEstandar(dispo);
+			nico.agregarDispositivo(dispo);
 		}
 		
 		System.out.println("\nTus dispositivos inteligentes son: \n");
@@ -378,12 +378,12 @@ public class Entrega1 {
 	}
 
 	public static void imprimirDispoI(){
-		List<DispositivoInteligente> dispos = nico.getDispInteligente();
+		List<Dispositivo> dispos = nico.obtenerLista("Inteligente");
 		dispos.stream().forEach(d -> System.out.print(dispos.indexOf(d) + ". " + d.getNombreDisp() + "\n"));
 	}
 	
 	public static void imprimirDispoS(){
-		List<DispositivoEstandar> dispos = nico.getDispEstandar();
+		List<Dispositivo> dispos = nico.obtenerLista("Estandar");
 		dispos.stream().forEach(d -> System.out.print(dispos.indexOf(d) + ". " + d.getNombreDisp() + "\n"));
 	}
 	
@@ -795,9 +795,9 @@ public class Entrega1 {
 	public static void agregarCondicion(Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nSeleccione un dispositivo: ");
 		imprimirDispoI();
-		DispositivoInteligente dispo = nico.getDispInteligente().get(in.nextInt()); 
+		Dispositivo dispo = nico.obtenerLista("Inteligente").get(in.nextInt()); 
 
-		Sensor sen = seleccionarSen(dispo);
+		Sensor sen = seleccionarSen((DispositivoInteligente) dispo);
 		
 		System.out.println("\nIngrese criterio de comparacion: " 
 				+ "\n(MAYOR, MENOR, IGUAL o DISTINTO)");
@@ -809,7 +809,7 @@ public class Entrega1 {
 				+ "\n2. Un valor fijo");
 		int op = in.nextInt();
 		if(op == 1){
-			Sensor sen2 = seleccionarSen(dispo);
+			Sensor sen2 = seleccionarSen((DispositivoInteligente) dispo);
 			reg.crearCondicionDosSensores(sen, sen2, criterio);
 		} else if(op == 2){
 			System.out.println("\nIngrese el valor a comparar: ");
@@ -911,7 +911,7 @@ public class Entrega1 {
 	public static void evaluarActuador(Actuador act,Regla reg) throws CaracterInvalidoException{
 		System.out.println("\nElija un dispositivo: ");
 		imprimirDispoI();
-		DispositivoInteligente dispo = nico.getDispInteligente().get(in.nextInt());
+		Dispositivo dispo = nico.obtenerLista("Inteligente").get(in.nextInt());
 		act.execute(dispo);
 		
 		System.out.println("\nElija una opcion:"
@@ -933,7 +933,7 @@ public class Entrega1 {
 		
 		System.out.println("\nElija un dispositivo: ");
 		imprimirDispoI();
-		DispositivoInteligente dispo = nico.getDispInteligente().get(in.nextInt());
+		Dispositivo dispo = nico.obtenerLista("Inteligente").get(in.nextInt());
 		
 		System.out.println("\nIngrese un ID de fabricante: (un numero entero)");
 		int id = in.nextInt();
@@ -1130,9 +1130,9 @@ public class Entrega1 {
 	public static void init(){
 		nico.setNombre("Nicolas");
 		nico.setApellido("Contreras");
-		nico.agregarDispInteligente(aircon);
-		nico.agregarADispEstandar(tele);
-		nico.agregarADispEstandar(ventilador);
+		nico.agregarDispositivo(aircon);
+		nico.agregarDispositivo(tele);
+		nico.agregarDispositivo(ventilador);
 		aircon.agregarSensor(sensorTempIN);
 		aircon.agregarSensor(sensorTempOUT);
 		aircon.agregarSensor(sensorHumedad);

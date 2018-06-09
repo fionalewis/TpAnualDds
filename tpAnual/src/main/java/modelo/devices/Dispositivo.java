@@ -1,6 +1,7 @@
 package modelo.devices;
 
 import java.time.LocalDateTime;
+import modelo.deviceState.EstadoDispositivo;;
 
 public abstract class Dispositivo {
 
@@ -41,10 +42,39 @@ public abstract class Dispositivo {
 
 	//Funcionalidades
 	
-	public abstract double consumoTotal();
+	public double consumoTotal() { //Este calculo es gral, las horas se calculan distinto
+		horasDeUso = calculoDeHoras();
+		return horasDeUso*kWh;
+	}
+	
+	/* Los DI conocen la duracion exacta del tiempo que tienen funcionando, los DE solo
+	 * conocen un aproximado de horas de uso diarias y la fecha de registro, por lo que
+	 * calculan cuantos dias vienen funcionando aproximadamente y en base a eso sus horas */
+	
+	public abstract double calculoDeHoras();
 	
 	//Duplicado para los tests
 	
 	public abstract double consumoTotal(LocalDateTime fechaFin);
+	
+	public abstract EstadoDispositivo getEstadoDisp(); //Solo para que no llore el cantDisp de cliente
+	
+	//Para los predicates (puede llegar a ser util mas adelante tambien)
+	
+	public static boolean esInteligente(Dispositivo disp) {
+		return disp instanceof DispositivoInteligente;
+	}
+	
+	public static boolean esEstandar(Dispositivo undisp) {
+		return undisp instanceof DispositivoEstandar;
+	}
+	
+	public static boolean esConvertido(Dispositivo undisp) {
+		return undisp instanceof DispositivoConvertido;
+	}
+	
+	public static boolean esAmbos(Dispositivo undisp) {
+		return (esInteligente(undisp)||esConvertido(undisp));
+	}
 	
 }

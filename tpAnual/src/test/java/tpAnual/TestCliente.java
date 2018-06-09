@@ -8,14 +8,15 @@ import org.junit.*;
 import modelo.devices.DispositivoInteligente;
 import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
+import modelo.devices.Dispositivo;
 
 
 public class TestCliente {
 	
 	private Cliente clienteDePrueba;
-	private List<DispositivoInteligente> dispositivosPrueba = new ArrayList<>();
-	DispositivoInteligente tele = new DispositivoInteligente("Televisor",0.14,0.1);
-	DispositivoInteligente aire = new DispositivoInteligente("Aire acondicionado",1.013,1); //Por si llega a ser necesario agregar m�s tests
+	private List<Dispositivo> dispositivosPrueba = new ArrayList<>();
+	DispositivoInteligente tele = new DispositivoInteligente("Televisor",0.14);
+	DispositivoInteligente aire = new DispositivoInteligente("Aire acondicionado",1.013);
 	LocalDateTime fechaFinalParaTest = LocalDateTime.of(2018,4,18,7,50,0);
 	
 	@Before
@@ -36,19 +37,19 @@ public class TestCliente {
 
 	@Test
 	public void testAgregarDispositivo() {
-		clienteDePrueba.agregarDispInteligente(aire);
-		Assert.assertTrue(clienteDePrueba.getDispInteligente().contains(aire));
+		clienteDePrueba.agregarDispositivo(aire);
+		Assert.assertTrue(clienteDePrueba.getDispositivos().contains(aire));
 	}
 
 	@Test
 	public void testQuitarDispositivo() {
-		clienteDePrueba.quitarDispInteligente(tele);
-		Assert.assertFalse(clienteDePrueba.getDispInteligente().contains(tele));
+		clienteDePrueba.quitarDispositivo(tele);
+		Assert.assertFalse(clienteDePrueba.getDispositivos().contains(tele));
 	}
 
 	@Test
 	public void testAlgunoEncendido() {
-		Assert.assertTrue(clienteDePrueba.algunoEncendido(clienteDePrueba.getDispInteligente()));
+		Assert.assertTrue(clienteDePrueba.algunoEncendido());
 	}
 
 	@Test

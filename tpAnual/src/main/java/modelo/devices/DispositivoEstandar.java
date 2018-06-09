@@ -3,6 +3,7 @@ package modelo.devices;
 import java.time.Period;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import modelo.deviceState.EstadoDispositivo;
 
 public class DispositivoEstandar extends Dispositivo {
 	
@@ -17,10 +18,11 @@ public class DispositivoEstandar extends Dispositivo {
 		}
 		
 	//Constructor para los tests
-		public DispositivoEstandar(String nombDisp,double kWhAprox,int year,int month,int day,int hour,int min,int sec) {
+		public DispositivoEstandar(String nombDisp,double kWhAprox,int year,int month,int day,int hour,int min,int sec,int horasUso) {
 			setNombreDisp(nombDisp);
 			setkWh(kWhAprox);
 			setFechaRegistro(LocalDateTime.of(year,month,day,hour,min,sec));
+			setHorasUsoDiarias(horasUso);
 		}
 		
 	//Metodos basicos
@@ -31,13 +33,7 @@ public class DispositivoEstandar extends Dispositivo {
 
 		public void setHorasUsoDiarias(int horasUsoDiarias) {
 			this.horasUsoDiarias = horasUsoDiarias;
-		}
-		
-		@Override
-		public double consumoTotal() {
-			horasDeUso = calculoDeHoras();
-			return horasDeUso*kWh;
-		}
+		}		
 		
 		public double calculoDeHoras() {
 			LocalDate currentDate = LocalDate.now();
@@ -47,6 +43,8 @@ public class DispositivoEstandar extends Dispositivo {
 	        return horasDeUsoAprox;
 		}
 
+		//Todos estos repetidos son para testear
+		
 		@Override
 		public double consumoTotal(LocalDateTime fechaFin) {
 			horasDeUso = calculoDeHoras(fechaFin);
@@ -58,6 +56,11 @@ public class DispositivoEstandar extends Dispositivo {
 	        int periodDays = period.getDays();
 	        double horasDeUsoAprox = periodDays*horasUsoDiarias;
 	        return horasDeUsoAprox;
+		}
+		
+		//Tengo que ver como hacer con esto sorry
+		public EstadoDispositivo getEstadoDisp() {
+			return null;
 		}
 	
 }

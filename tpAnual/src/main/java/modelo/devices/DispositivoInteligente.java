@@ -11,27 +11,26 @@ import modelo.deviceState.EstadoDispositivo;
 public class DispositivoInteligente extends Dispositivo {
 	
 	public double kWhAhorro;
-	//private List<Sensor> sensores = new ArrayList<>();
-	Map<String, Sensor> sensores = new HashMap<String, Sensor>();
 	private EstadoDispositivo estadoDisp;
+	Map<String, Sensor> sensores = new HashMap<String, Sensor>();
+	//private List<Sensor> sensores = new ArrayList<>();
 	
 	//Constructor default
-	public DispositivoInteligente(String nombDisp,double kWh,double kWhAhorro) {
+	public DispositivoInteligente(String nombDisp,double kWh) {
 		setNombreDisp(nombDisp);
 		setkWh(kWh);
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.now());
-		setkWhAhorro(kWhAhorro);
+		setkWhAhorro(kWh);
 	}
 	
 	//Constructor para los tests
-	public DispositivoInteligente(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec,
-									double kWhAhorro) {
+	public DispositivoInteligente(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec) {
 		setNombreDisp(nombDisp);
 		setkWh(kWh);
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.of(year,month,day,hour,min,sec));
-		setkWhAhorro(kWhAhorro);
+		setkWhAhorro(kWh);
 	}
 	
 	//Constructor para la conversion
@@ -45,19 +44,18 @@ public class DispositivoInteligente extends Dispositivo {
 	public double getkWhAhorro() {
 		return kWhAhorro;
 	}
-	public void setkWhAhorro(double kWhAhorro) {
-		this.kWhAhorro = kWhAhorro;
+	public void setkWhAhorro(double kWh) {
+		this.kWhAhorro = kWh*0.8;
 	}
+	
+	@Override
 	public EstadoDispositivo getEstadoDisp() {
 		return estadoDisp;
 	}
 	public void setEstadoDisp(EstadoDispositivo estadoDisp) {
 		this.estadoDisp = estadoDisp;
 	}
-	public String estadoDispo(){ //SOLO PARA MOSTRAR EN ENTREGA 1 
-		return this.estadoDisp.darEstado();
-	}
-	
+
 	//Sensores	
 
 	public Map<String, Sensor> getSensores() {
@@ -92,13 +90,13 @@ public class DispositivoInteligente extends Dispositivo {
 		return this.sensores.get(nombreSensor);
 	}
 	
-	//Funcionalidades
-		
-	@Override public double consumoTotal() {
-		horasDeUso = calculoDeHoras();
-		return horasDeUso*kWh;
+	public String stringEstado() {
+		return estadoDisp.darEstado();	
 	}
 	
+	//Funcionalidades
+	
+	@Override
 	public double calculoDeHoras() {
 		LocalDateTime currentDate = LocalDateTime.now();
 	    Duration period = Duration.between(fechaRegistro,currentDate);
@@ -109,7 +107,8 @@ public class DispositivoInteligente extends Dispositivo {
 		
 	//Duplicado para los tests
 		
-	@Override public double consumoTotal(LocalDateTime fechaFin) {
+	@Override
+	public double consumoTotal(LocalDateTime fechaFin) {
 		horasDeUso = calculoDeHoras(fechaFin);
 		return horasDeUso*kWh;
 	}
@@ -153,6 +152,13 @@ public class DispositivoInteligente extends Dispositivo {
 	
 	public double consumoTotal(LocalDateTime fechaInicio,LocalDateTime fechaFin){ //Consumo entre dos fechas
 		return estadoDisp.consumoTotal(fechaInicio,fechaFin,this);		
+	}
+	
+	public static double calculoDeHoras(LocalDateTime fechaInicio,LocalDateTime fechaFin) {
+		Duration period = Duration.between(fechaInicio,fechaFin);
+        double periodSeconds = period.getSeconds();
+        double horasDeUso = periodSeconds/3600;
+        return horasDeUso;
 	}
 
 }

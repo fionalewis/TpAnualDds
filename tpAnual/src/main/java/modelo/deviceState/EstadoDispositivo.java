@@ -14,5 +14,6 @@ public interface EstadoDispositivo {
 	public boolean estaEnAhorro();
 	public double consumoEnUltimasHoras(int horas,DispositivoInteligente disp);
 	public double consumoTotal(LocalDateTime fechaInicio,LocalDateTime fechaFin,DispositivoInteligente disp);
+	public EstadoDispositivo getEstado();
 	public String darEstado();
 }
