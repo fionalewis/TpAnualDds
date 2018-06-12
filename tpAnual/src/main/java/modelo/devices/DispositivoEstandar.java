@@ -33,9 +33,15 @@ public class DispositivoEstandar extends Dispositivo {
 
 		public void setHorasUsoDiarias(int horasUsoDiarias) {
 			this.horasUsoDiarias = horasUsoDiarias;
-		}		
+		}
 		
-		public double calculoDeHoras() {
+		@Override
+		public double consumoTotal() {
+			horasDeUso = horasDeUsoTotales();
+			return horasDeUso*kWh;
+		}
+		
+		public double horasDeUsoTotales() {
 			LocalDate currentDate = LocalDate.now();
 	        Period period = Period.between(getFechaRegistro().toLocalDate(),currentDate);
 	        int periodDays = period.getDays();
@@ -45,7 +51,6 @@ public class DispositivoEstandar extends Dispositivo {
 
 		//Todos estos repetidos son para testear
 		
-		@Override
 		public double consumoTotal(LocalDateTime fechaFin) {
 			horasDeUso = calculoDeHoras(fechaFin);
 			return horasDeUso*kWh;	
@@ -59,6 +64,7 @@ public class DispositivoEstandar extends Dispositivo {
 		}
 		
 		//Tengo que ver como hacer con esto sorry
+		
 		public EstadoDispositivo getEstadoDisp() {
 			return null;
 		}

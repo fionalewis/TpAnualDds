@@ -1,7 +1,5 @@
 package modelo.deviceState;
 
-import java.time.LocalDateTime;
-
 import modelo.devices.DispositivoInteligente;
 
 public interface EstadoDispositivo {
@@ -13,7 +11,6 @@ public interface EstadoDispositivo {
 	public boolean estaApagado();
 	public boolean estaEnAhorro();
 	public double consumoEnUltimasHoras(int horas,DispositivoInteligente disp);
-	public double consumoTotal(LocalDateTime fechaInicio,LocalDateTime fechaFin,DispositivoInteligente disp);
 	public EstadoDispositivo getEstado();
 	public String darEstado();
 }

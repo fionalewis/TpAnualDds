@@ -51,19 +51,15 @@ public class AhorroEnergia implements EstadoDispositivo {
 		return true;
 	}
 	
-	/* Mari sin querer borre el metodo darEstado porque no lo habia visto implementado y crei
-	 * que quedo suelto y despues lo encontre lol asi que lo volvi a escribir con otro nombre
-	 * porque ya no me acordaba el anterior sorry */
-	
-	@Override
+	/*@Override
 	public double consumoEnUltimasHoras(int horas,DispositivoInteligente disp) {
 		return disp.getkWhAhorro()*horas;
 	}
-
-	@Override
+*/
+	/*@Override
 	public double consumoTotal(LocalDateTime fechaInicio, LocalDateTime fechaFin,DispositivoInteligente disp) {
 		double horasDeUso = DispositivoInteligente.calculoDeHoras(fechaInicio,fechaFin);
 		return horasDeUso*(disp.getkWhAhorro());	
-	}
+	}*/
 
 }

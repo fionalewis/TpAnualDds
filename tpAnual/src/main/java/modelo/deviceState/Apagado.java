@@ -57,10 +57,10 @@ public class Apagado implements EstadoDispositivo{
 		return 0;
 	}
 
-	@Override
+	/*@Override
 	public double consumoTotal(LocalDateTime fechaInicio, LocalDateTime fechaFin,DispositivoInteligente disp) {
 		System.out.println("El dispositivo está apagado. No es posible realizar la consulta.");
 		return 0;
-	}
+	}*/
 	
 }

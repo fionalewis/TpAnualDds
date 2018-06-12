@@ -1,12 +1,18 @@
 package Entrega1;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import Entrega1.VentanaPresentacion;
+import javax.swing.JFrame;
 
 import Exceptions.ExceptionsHandler;
 import modelo.DAOJson;
-import modelo.devices.DispositivoConvertido;
+//import modelo.devices.DispositivoConvertido;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
+import modelo.devices.IntervaloDispositivo;
+import modelo.devices.IntervaloDispositivo.modo;
 import modelo.users.Categoria;
 import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
@@ -34,7 +40,7 @@ public class Programa {
 	}
 	
 	public static void main(String[] args) {
-		Cliente cprueba = new Cliente("bart","simpson","elbarto","12345",TipoDocumento.DNI,"4444444","11111111","Avenida Siempreviva 742");
+		//Cliente cprueba = new Cliente("bart","simpson","elbarto","12345",TipoDocumento.DNI,"4444444","11111111","Avenida Siempreviva 742");
 		/*System.out.println(cprueba.getCateg().getClasif());
 		System.out.println(cprueba.obtenerTarifa());
 		Categoria c = categoria(1500);
@@ -44,8 +50,8 @@ public class Programa {
 		System.out.println(cprueba.getFechaAlta());
 		System.out.println(cprueba.calcularConsumo());*/
 		/*System.out.println("puntos iniciales:" + cprueba.getPuntos());
-		DispositivoInteligente dispI = new DispositivoInteligente("tele",0.8);cprueba.agregarDispositivo(dispI);
-		System.out.println("despues de reg un inteligente:" + cprueba.getPuntos());
+		*/DispositivoInteligente dispI = new DispositivoInteligente("tele",0.8,2018,6,12,10,0,0);//cprueba.agregarDispositivo(dispI);
+		/*System.out.println("despues de reg un inteligente:" + cprueba.getPuntos());
 		System.out.println("datos del disp:" + dispI.getNombreDisp());
 		dispI.darEstado();
 		DispositivoInteligente dispI2 = new DispositivoInteligente("cocina",1.2);cprueba.agregarDispositivo(dispI2);
@@ -85,7 +91,9 @@ public class Programa {
 		System.out.println("la cantidad de encend ahora es de:" + cprueba.cantDisp(true));	
 		System.out.println("la cantidad de apagados ahora es de:" + cprueba.cantDisp(false));
 		cprueba.algunoEncendido();*/
-		System.out.println("puntos inic: " + cprueba.getPuntos());
+		
+		
+		/*System.out.println("puntos inic: " + cprueba.getPuntos());
 		DispositivoInteligente di = new DispositivoInteligente("teleHD",0.6);cprueba.agregarDispositivo(di);
 		System.out.println("puntos con di: " + cprueba.getPuntos());
 		System.out.println("info di: " + di.getNombreDisp() + " " + di.getEstadoDisp());
@@ -105,6 +113,88 @@ public class Programa {
 		cprueba.mostrarLista(cprueba.obtenerLista("Estandar"));
 		cprueba.mostrarLista(cprueba.obtenerLista("Convertido"));
 		System.out.println("cant de: " + cprueba.obtenerLista("Estandar").size());
-		System.out.println("cant conv " + cprueba.obtenerLista("Convertido").size());
-	}
+		System.out.println("cant conv " + cprueba.obtenerLista("Convertido").size());*/
+		
+		//VentanaPresentacion vMenu = new VentanaPresentacion();
+		//vMenu.setVisible(true);
+		//remove(component);
+		
+		List<IntervaloDispositivo> l = dispI.getIntervalos();
+		//cprueba.mostrarLista(cprueba.getDispositivos());
+		System.out.println(dispI.getFechaRegistro());
+		System.out.println("Lo apagamos a las 12");
+		dispI.apagar(LocalDateTime.of(2018,6,12,12,0,0));
+		System.out.println("entonces, sus horas de uso fueron 2");
+		System.out.println("horas de uso totales: " + dispI.horasDeUsoTotales());
+		System.out.println("el consumo total del disp deberia ser entonces de 2*0.8 = 1.6");
+		System.out.println("el resultado da:" + dispI.consumoTotal());
+		
+		for(int i = 0;i<l.size();i++) {
+			System.out.println(l.get(i).getInicio());
+			System.out.println(l.get(i).getFin());
+			System.out.println(l.get(i).calculoDeHoras());
+			System.out.println(l.get(i).getModo()+"\n");			
+		}
+		
+		System.out.println("\nLo prendemos en ahorro a las 13");
+		dispI.ahorroEnergia(LocalDateTime.of(2018,6,12,13,0,0));
+		
+		System.out.println("Lo apagamos a las 16");
+		dispI.apagar(LocalDateTime.of(2018,6,12,16,0,0));
+		System.out.println("entonces, sus horas de uso fueron 3 + las anteriores 2 = 5");
+		System.out.println("horas de uso totales: " + dispI.horasDeUsoTotales());
+		System.out.println("el consumo total del disp deberia ser entonces de 3*0.64 = 1.92 esto mas lo anterior = 1.6+1.92 = 3.52");
+		System.out.println("el resultado da:" + dispI.consumoTotal() + "\n");
+		for(int i = 0;i<l.size();i++) {
+			System.out.println(l.get(i).getInicio());
+			System.out.println(l.get(i).getFin());
+			System.out.println(l.get(i).calculoDeHoras());
+			System.out.println(l.get(i).getModo()+"\n");			
+		}
+		
+		System.out.println("Lo encendemos en modo normal a las 18");
+		dispI.encender(LocalDateTime.of(2018,6,12,18,0,0));
+		System.out.println("Lo pasamos a ahorro de energia a las 20");
+		dispI.ahorroEnergia(LocalDateTime.of(2018,6,12,20,0,0));
+		System.out.println("entonces, sus horas de uso fueron 2 + las anteriores 5 = 7");
+		System.out.println("horas de uso totales: " + dispI.horasDeUsoTotales());
+		System.out.println("el consumo total del disp deberia ser entonces de 2*0.8 = 1.6,esto mas lo de antes 1.6+3.52 = 5.12");
+		System.out.println("el resultado da:" + dispI.consumoTotal() + "\n");
+		
+		for(int i = 0;i<l.size();i++) {
+			System.out.println(l.get(i).getInicio());
+			System.out.println(l.get(i).getFin());
+			System.out.println(l.get(i).calculoDeHoras());
+			System.out.println(l.get(i).getModo()+"\n");			
+		}
+		
+		
+		System.out.println("Lo apagamos a las 22 y calculamos las horas de uso");
+		dispI.apagar(LocalDateTime.of(2018,6,12,22,0,0));
+		System.out.println("entonces, sus horas de uso fueron 2 + las anteriores 7 = 9");
+		System.out.println("horas de uso totales: " + dispI.horasDeUsoTotales());
+		System.out.println("el consumo total del disp deberia ser entonces de 2*0.64 = 1.28,esto mas lo de antes 1.28+5.12 = 6.4");
+		System.out.println("el resultado da:" + dispI.consumoTotal());
+		
+		System.out.println("sabemos que el disp estuvo prendido entre las 10 y las 12 encendido,las 13 y las 16 ahorro,las 18 y 20 encendido,las 20 y 22 ahorro");
+		System.out.println("entonces, sus horas de uso fueron 2 + 3 +4 = 9");
+		System.out.println("horas de uso totales: " + dispI.horasDeUsoTotales());
+		System.out.println("el consumo total del disp deberia ser entonces de 6.4");
+		System.out.println("el resultado da:" + dispI.consumoTotal()+ "\n");
+		
+		for(int i = 0;i<l.size();i++) {
+			System.out.println(l.get(i).getInicio());
+			System.out.println(l.get(i).getFin());
+			System.out.println(l.get(i).calculoDeHoras());
+			System.out.println(l.get(i).getModo()+"\n");
+		}
+			
+		System.out.println("vamos a ver cuanto consume entre las 11 y las 19");
+		LocalDateTime fi = LocalDateTime.of(2018,6,12,11,0,0);
+		LocalDateTime ff = LocalDateTime.of(2018,6,12,19,0,0);
+		System.out.println("hay 5 horas de uso, 1 normal, 3 ahorro y otra de ahorro");
+		System.out.println("entonces el consumo deberia dar 0.8 + 4*0.64 = 3.36");
+		System.out.println("el consumo da"+dispI.consumoTotalEntre(fi,ff));
+
+}
 }

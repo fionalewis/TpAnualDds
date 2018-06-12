@@ -1,19 +1,28 @@
 package modelo.devices;
 
-import java.time.Duration;
+import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javassist.bytecode.Descriptor.Iterator;
+import modelo.deviceState.Apagado;
 import modelo.deviceState.Encendido;
 import modelo.deviceState.EstadoDispositivo;
+import modelo.devices.IntervaloDispositivo.modo;
 
 public class DispositivoInteligente extends Dispositivo {
 	
 	public double kWhAhorro;
 	private EstadoDispositivo estadoDisp;
 	Map<String, Sensor> sensores = new HashMap<String, Sensor>();
-	//private List<Sensor> sensores = new ArrayList<>();
+	private IntervaloDispositivo unIntervalo;
+	
+	private List<IntervaloDispositivo> intervalos = new ArrayList<>();
 	
 	//Constructor default
 	public DispositivoInteligente(String nombDisp,double kWh) {
@@ -22,6 +31,8 @@ public class DispositivoInteligente extends Dispositivo {
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.now());
 		setkWhAhorro(kWh);
+		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
+		
 	}
 	
 	//Constructor para los tests
@@ -31,12 +42,15 @@ public class DispositivoInteligente extends Dispositivo {
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.of(year,month,day,hour,min,sec));
 		setkWhAhorro(kWh);
+		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
+
 	}
 	
 	//Constructor para la conversion
 	public DispositivoInteligente() {
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.now());
+		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
 	}
 
 	//Getters y Setters
@@ -54,6 +68,21 @@ public class DispositivoInteligente extends Dispositivo {
 	}
 	public void setEstadoDisp(EstadoDispositivo estadoDisp) {
 		this.estadoDisp = estadoDisp;
+	}
+	
+	//Intervalos
+	
+	public IntervaloDispositivo getIntervalo() {
+		return unIntervalo;
+	}
+	public void setIntervalo(IntervaloDispositivo intervalo) {
+		this.unIntervalo = intervalo;
+	}
+	public List<IntervaloDispositivo> getIntervalos() {
+		return intervalos;
+	}
+	public void setIntervalos(List<IntervaloDispositivo> intervalos) {
+		this.intervalos = intervalos;
 	}
 
 	//Sensores	
@@ -96,43 +125,123 @@ public class DispositivoInteligente extends Dispositivo {
 	
 	//Funcionalidades
 	
-	@Override
+	/*@Override
 	public double calculoDeHoras() {
 		LocalDateTime currentDate = LocalDateTime.now();
 	    Duration period = Duration.between(fechaRegistro,currentDate);
 	    double periodSeconds = period.getSeconds();
 	    horasDeUso = periodSeconds/3600;
 	    return horasDeUso;
+	}*/
+	
+	// Funcionalidades Entrega1
+	
+	public double horasDeUsoTotales() {
+		horasDeUso = intervalos.stream().mapToDouble(unInt -> unInt.calculoDeHoras()).sum();
+		return horasDeUso;
 	}
-		
-	//Duplicado para los tests
-		
+	public double horasDeUsoTotales(List<IntervaloDispositivo> l) {
+		horasDeUso = l.stream().mapToDouble(unInt -> unInt.calculoDeHoras()).sum();
+		return horasDeUso;
+	}
+	
 	@Override
-	public double consumoTotal(LocalDateTime fechaFin) {
-		horasDeUso = calculoDeHoras(fechaFin);
-		return horasDeUso*kWh;
+	public double consumoTotal() {
+		return intervalos.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
 	}
 	
-	public double calculoDeHoras(LocalDateTime fechaFin) {
-	    Duration period = Duration.between(fechaRegistro,fechaFin);
-	    double periodSeconds = period.getSeconds();
-	    horasDeUso = periodSeconds/3600;
-	    return horasDeUso;
+	public double consumoTotalD(List<IntervaloDispositivo> l) {
+		return l.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
 	}
 	
-	//Funcionalidades Entrega1
+	public double consumoParcial(IntervaloDispositivo unInt) {
+		double consumoParcial = 0;
+		if(unInt.getModo() == modo.NORMAL) {
+			consumoParcial = unInt.calculoDeHoras()*kWh;
+		} else if(unInt.getModo()== modo.AHORRO) {
+			consumoParcial = unInt.calculoDeHoras()*getkWhAhorro();
+		}
+		return consumoParcial;
+	}
+	
+	// Ordenes basicas al dispositivo (habria que ver como combinar esto con los execute del actuador¿¿¿)
+	
+	public void guardarAuxiliar() { //Para que se guarden los intervalos en la lista
+		IntervaloDispositivo aux = new IntervaloDispositivo();
+		aux.setInicio(unIntervalo.getInicio());
+		aux.setFin(unIntervalo.getFin());
+		aux.setModo(unIntervalo.getModo());
+		intervalos.add(aux);		
+	}
 	
 	public void apagar() {
+		unIntervalo.setFin(LocalDateTime.now());
+		guardarAuxiliar();
 		estadoDisp.apagar(this);
 	}
 	
 	public void encender(){
-		estadoDisp.encender(this);
+		if(estadoDisp instanceof Apagado) {
+			unIntervalo.setInicio(LocalDateTime.now());
+			unIntervalo.setModo(modo.NORMAL);
+		} else {
+			unIntervalo.setFin(LocalDateTime.now());
+			guardarAuxiliar();
+			unIntervalo.setInicio(LocalDateTime.now().plusSeconds(1));
+			unIntervalo.setModo(modo.NORMAL);
+		}
+		estadoDisp.encender(this);		
 	}
 	
 	public void ahorroEnergia(){
+		if(estadoDisp instanceof Apagado) {
+			unIntervalo.setInicio(LocalDateTime.now());
+			unIntervalo.setModo(modo.AHORRO);
+		} else {
+			unIntervalo.setFin(LocalDateTime.now());
+			guardarAuxiliar();
+			unIntervalo.setInicio(LocalDateTime.now().plusSeconds(1));
+			unIntervalo.setModo(modo.AHORRO);
+		}
 		estadoDisp.ahorroEnergia(this);
 	}
+	
+	// Duplicados para poder hacer los tests con fechas especificas/mas faciles de calcular
+	
+	public void apagar(LocalDateTime unafecha) {
+		unIntervalo.setFin(unafecha);
+		guardarAuxiliar();
+		estadoDisp.apagar(this);
+	}
+	
+	public void encender(LocalDateTime unafecha){
+		if(estadoDisp instanceof Apagado) {
+			unIntervalo.setInicio(unafecha);
+			unIntervalo.setModo(modo.NORMAL);
+		} else {
+			unIntervalo.setFin(unafecha);
+			guardarAuxiliar();
+			unIntervalo.setInicio(unafecha.plusSeconds(1));
+			unIntervalo.setModo(modo.NORMAL);
+		}
+		estadoDisp.encender(this);		
+	}
+	
+	public void ahorroEnergia(LocalDateTime unafecha){
+		if(estadoDisp instanceof Apagado) {
+			unIntervalo.setInicio(unafecha);
+			unIntervalo.setModo(modo.AHORRO);
+		}
+		else {
+			unIntervalo.setFin(unafecha);
+			guardarAuxiliar();
+			unIntervalo.setInicio(unafecha.plusSeconds(1));
+			unIntervalo.setModo(modo.AHORRO);
+		}
+		estadoDisp.ahorroEnergia(this);
+	}
+	
+	// Metodos de consultas
 	
 	public boolean estaEncendido(){
 		return estadoDisp.estaEncendido();
@@ -150,15 +259,48 @@ public class DispositivoInteligente extends Dispositivo {
 		return estadoDisp.consumoEnUltimasHoras(horas, this);
 	}
 	
-	public double consumoTotal(LocalDateTime fechaInicio,LocalDateTime fechaFin){ //Consumo entre dos fechas
-		return estadoDisp.consumoTotal(fechaInicio,fechaFin,this);		
+	public double consumoTotalEntre(LocalDateTime fechaInicio,LocalDateTime fechaFin){
+		int inicial = posicionInicial(fechaInicio);
+		int fin = posicionInicial(fechaFin);
+		IntervaloDispositivo i = new IntervaloDispositivo();
+		i.setInicio(fechaInicio);i.setFin(intervalos.get(inicial).getFin());
+		i.setModo(intervalos.get(inicial).getModo());
+		IntervaloDispositivo f = new IntervaloDispositivo();
+		f.setFin(fechaFin);f.setInicio(intervalos.get(fin).getInicio());
+		f.setModo(intervalos.get(fin).getModo());
+		List<IntervaloDispositivo> ints = new ArrayList<>();
+		ints.add(i);
+		for(int x=inicial+1;x<=fin-1;x++) {
+			ints.add(intervalos.get(x));
+		}
+		ints.add(f);
+		return consumoTotalD(ints);	
 	}
 	
-	public static double calculoDeHoras(LocalDateTime fechaInicio,LocalDateTime fechaFin) {
+	public int posicionInicial(LocalDateTime unaFechaI) {
+		List<LocalDateTime> fInicios = new ArrayList<>();
+		intervalos.stream().forEach(unInt-> fInicios.add(unInt.getInicio()));
+ 		int i = 0, tam = intervalos.size();
+		LocalDateTime[] fechas = fInicios.toArray(new LocalDateTime[tam]);
+		while(!(unaFechaI.isBefore(fechas[i])||unaFechaI.isEqual(fechas[i])) && i<tam) {
+			i++;
+		}
+		if(unaFechaI.isEqual(fechas[i])) {
+			return i;
+		}else if(unaFechaI.isBefore(fechas[i])) {
+			return i-1;
+		}else if(unaFechaI.isBefore(intervalos.get(tam-1).getFin())) {
+			return tam-1;
+		}else{return -1;}
+	}
+	
+	
+	
+	/*public static double calculoDeHoras(LocalDateTime fechaInicio,LocalDateTime fechaFin) {
 		Duration period = Duration.between(fechaInicio,fechaFin);
         double periodSeconds = period.getSeconds();
         double horasDeUso = periodSeconds/3600;
         return horasDeUso;
-	}
+	}*/
 
 }

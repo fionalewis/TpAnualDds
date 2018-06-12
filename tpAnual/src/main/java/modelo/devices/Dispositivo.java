@@ -42,20 +42,13 @@ public abstract class Dispositivo {
 
 	//Funcionalidades
 	
-	public double consumoTotal() { //Este calculo es gral, las horas se calculan distinto
-		horasDeUso = calculoDeHoras();
-		return horasDeUso*kWh;
-	}
+	public abstract double consumoTotal();
 	
 	/* Los DI conocen la duracion exacta del tiempo que tienen funcionando, los DE solo
 	 * conocen un aproximado de horas de uso diarias y la fecha de registro, por lo que
 	 * calculan cuantos dias vienen funcionando aproximadamente y en base a eso sus horas */
 	
-	public abstract double calculoDeHoras();
-	
-	//Duplicado para los tests
-	
-	public abstract double consumoTotal(LocalDateTime fechaFin);
+	public abstract double horasDeUsoTotales();
 	
 	public abstract EstadoDispositivo getEstadoDisp(); //Solo para que no llore el cantDisp de cliente
 	

@@ -56,10 +56,10 @@ public class Encendido implements EstadoDispositivo {
 		return disp.getkWh()*horas;
 	}
 
-	@Override
+	/*@Override
 	public double consumoTotal(LocalDateTime fechaInicio, LocalDateTime fechaFin,DispositivoInteligente disp) {
 		double horasDeUso = DispositivoInteligente.calculoDeHoras(fechaInicio,fechaFin);
 		return horasDeUso*(disp.getkWh());	
-	}
+	}*/
 
 }
