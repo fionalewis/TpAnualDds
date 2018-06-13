@@ -125,15 +125,6 @@ public class DispositivoInteligente extends Dispositivo {
 	
 	//Funcionalidades
 	
-	/*@Override
-	public double calculoDeHoras() {
-		LocalDateTime currentDate = LocalDateTime.now();
-	    Duration period = Duration.between(fechaRegistro,currentDate);
-	    double periodSeconds = period.getSeconds();
-	    horasDeUso = periodSeconds/3600;
-	    return horasDeUso;
-	}*/
-	
 	// Funcionalidades Entrega1
 	
 	public double horasDeUsoTotales() {
@@ -255,13 +246,20 @@ public class DispositivoInteligente extends Dispositivo {
 		return estadoDisp.estaEncendido() && estadoDisp.estaEnAhorro();
 	}
 	
-	public double consumoEnUltimasHoras(int horas){
+	/*public double consumoEnUltimasHoras(int horas){
 		return estadoDisp.consumoEnUltimasHoras(horas, this);
-	}
+	}*/
 	
 	public double consumoTotalEntre(LocalDateTime fechaInicio,LocalDateTime fechaFin){
 		int inicial = posicionInicial(fechaInicio);
-		int fin = posicionInicial(fechaFin);
+		int fin = posicionFinal(fechaFin);
+		if(inicial == -1 || fin == -1) {
+			if(inicial == -1) {
+				System.out.println("Fecha inicial no válida.");
+			}
+			System.out.println("Fecha final no válida.");
+			return 0;
+		}
 		IntervaloDispositivo i = new IntervaloDispositivo();
 		i.setInicio(fechaInicio);i.setFin(intervalos.get(inicial).getFin());
 		i.setModo(intervalos.get(inicial).getModo());
@@ -282,25 +280,66 @@ public class DispositivoInteligente extends Dispositivo {
 		intervalos.stream().forEach(unInt-> fInicios.add(unInt.getInicio()));
  		int i = 0, tam = intervalos.size();
 		LocalDateTime[] fechas = fInicios.toArray(new LocalDateTime[tam]);
-		while(!(unaFechaI.isBefore(fechas[i])||unaFechaI.isEqual(fechas[i])) && i<tam) {
+		//Casos extremos: fechaI es antes que todas las fechasI o fechaI despues de todas
+		LocalDateTime primerFI = intervalos.get(0).getInicio();
+		LocalDateTime ultFI = intervalos.get(tam-1).getInicio();
+		LocalDateTime ultFF = intervalos.get(tam-1).getFin();
+		if(unaFechaI.isAfter(ultFI)){
+			if(unaFechaI.isAfter(ultFF)) {
+				return -1;
+			} else {
+				return tam-1;
+			}
+		}
+		if(unaFechaI.isBefore(primerFI)||unaFechaI.isEqual(primerFI)) {
+			return 0;
+		}		
+		while(i<tam &&  !(unaFechaI.isBefore(fechas[i])||unaFechaI.isEqual(fechas[i]))) {
 			i++;
 		}
-		if(unaFechaI.isEqual(fechas[i])) {
-			return i;
-		}else if(unaFechaI.isBefore(fechas[i])) {
+		if(unaFechaI.isBefore(fechas[i])) {
 			return i-1;
-		}else if(unaFechaI.isBefore(intervalos.get(tam-1).getFin())) {
-			return tam-1;
-		}else{return -1;}
+		}
+		if(unaFechaI.isEqual(fechas[i])) {
+					return i;
+		}
+		return -1; //Si llego hasta aca y no evaluo es porque tambien hubo algun error
 	}
 	
+	public int posicionFinal(LocalDateTime unaFechaF) {
+		List<LocalDateTime> fInicios = new ArrayList<>();
+		intervalos.stream().forEach(unInt-> fInicios.add(unInt.getInicio()));
+ 		int i = 0, tam = intervalos.size();
+		LocalDateTime[] fechas = fInicios.toArray(new LocalDateTime[tam]);
+		//Casos extremos: fechaF ocurre antes que cualquier fecha inicial
+		LocalDateTime primerFI = intervalos.get(0).getInicio();
+		LocalDateTime primerFF = intervalos.get(0).getFin();
+		LocalDateTime ultFF = intervalos.get(tam-1).getFin();
+		if(unaFechaF.isBefore(primerFF)||unaFechaF.isEqual(primerFF)){
+			if(unaFechaF.isBefore(primerFI)||unaFechaF.isEqual(primerFI)) { // no habria nada que calcular en estos casos
+				return -1;
+			}
+			return 0;
+		}
+		if(unaFechaF.isAfter(ultFF)) {
+			return tam-1;
+		}		
+		while(i<tam && !(unaFechaF.isBefore(fechas[i])||unaFechaF.isEqual(fechas[i]))) {
+			i++;
+		}
+		if(unaFechaF.isEqual(fechas[i])) {
+			return i;
+		}
+		if(unaFechaF.isBefore(fechas[i])) {
+			return i-1;
+		}
+		return -1; //Si llego hasta aca y no evaluo es porque tambien hubo algun error
+	}
 	
-	
-	/*public static double calculoDeHoras(LocalDateTime fechaInicio,LocalDateTime fechaFin) {
-		Duration period = Duration.between(fechaInicio,fechaFin);
-        double periodSeconds = period.getSeconds();
-        double horasDeUso = periodSeconds/3600;
-        return horasDeUso;
-	}*/
+		/*public double consumoEnUltimasHoras(int horas) {
+			LocalDateTime ahora = LocalDateTime.now();
+			LocalDateTime inicio
+			return calcularConsumoEntre(fechaI,fechaF);
+		}*/
 
 }

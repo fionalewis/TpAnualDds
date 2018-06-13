@@ -180,9 +180,9 @@ public class Cliente extends Usuario {
 	
 	//Duplicado para poder pasarle una fechaFin en los tests
 	
-	public double calcularConsumo(LocalDateTime fechaFin) {
+	/*public double calcularConsumo(LocalDateTime fechaFin) {
 		return obtenerLista("IyC").stream().mapToDouble(unDisp -> unDisp.consumoTotal(fechaFin)).sum();
-	}
+	}?????*/
 	
 	/* Para obtener la tarifa. El admin va a ser el unico que pueda usar este metodo
 	 * para hacer alguna cosulta del estilo clienteX.obtenerTarifa(), podemos pasarlo

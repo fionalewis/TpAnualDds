@@ -1,6 +1,6 @@
 package modelo.deviceState;
 
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 
 import modelo.devices.DispositivoInteligente;
 
@@ -56,10 +56,4 @@ public class AhorroEnergia implements EstadoDispositivo {
 		return disp.getkWhAhorro()*horas;
 	}
 */
-	/*@Override
-	public double consumoTotal(LocalDateTime fechaInicio, LocalDateTime fechaFin,DispositivoInteligente disp) {
-		double horasDeUso = DispositivoInteligente.calculoDeHoras(fechaInicio,fechaFin);
-		return horasDeUso*(disp.getkWhAhorro());	
-	}*/
-
 }
