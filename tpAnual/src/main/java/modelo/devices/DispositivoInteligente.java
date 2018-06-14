@@ -1,15 +1,11 @@
 package modelo.devices;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javassist.bytecode.Descriptor.Iterator;
 import modelo.deviceState.Apagado;
 import modelo.deviceState.Encendido;
 import modelo.deviceState.EstadoDispositivo;
@@ -123,26 +119,11 @@ public class DispositivoInteligente extends Dispositivo {
 		return estadoDisp.darEstado();	
 	}
 	
-	//Funcionalidades
-	
 	// Funcionalidades Entrega1
 	
 	public double horasDeUsoTotales() {
 		horasDeUso = intervalos.stream().mapToDouble(unInt -> unInt.calculoDeHoras()).sum();
 		return horasDeUso;
-	}
-	public double horasDeUsoTotales(List<IntervaloDispositivo> l) {
-		horasDeUso = l.stream().mapToDouble(unInt -> unInt.calculoDeHoras()).sum();
-		return horasDeUso;
-	}
-	
-	@Override
-	public double consumoTotal() {
-		return intervalos.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
-	}
-	
-	public double consumoTotalD(List<IntervaloDispositivo> l) {
-		return l.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
 	}
 	
 	public double consumoParcial(IntervaloDispositivo unInt) {
@@ -154,10 +135,26 @@ public class DispositivoInteligente extends Dispositivo {
 		}
 		return consumoParcial;
 	}
+		
+	@Override
+	public double consumoTotal() {
+		return intervalos.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
+	}
+	
+	// Duplicadas para evaluar en una lista especifica que nosotros creemos
+	
+	public double horasDeUsoTotales(List<IntervaloDispositivo> listaAEvaluar) {
+		horasDeUso = listaAEvaluar.stream().mapToDouble(unInt -> unInt.calculoDeHoras()).sum();
+		return horasDeUso;
+	}
+	
+	public double consumoTotal(List<IntervaloDispositivo> listaAEvaluar) { // Metodo que usa el calculo de consumo entre periodos
+		return listaAEvaluar.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
+	}
 	
 	// Ordenes basicas al dispositivo (habria que ver como combinar esto con los execute del actuador¿¿¿)
 	
-	public void guardarAuxiliar() { //Para que se guarden los intervalos en la lista
+	public void guardarAuxiliar() { //Para que se guarden los intervalos en la lista (esto es un metodo delegado nunca lo van a tocar en el main)
 		IntervaloDispositivo aux = new IntervaloDispositivo();
 		aux.setInicio(unIntervalo.getInicio());
 		aux.setFin(unIntervalo.getFin());
@@ -246,44 +243,119 @@ public class DispositivoInteligente extends Dispositivo {
 		return estadoDisp.estaEncendido() && estadoDisp.estaEnAhorro();
 	}
 	
-	/*public double consumoEnUltimasHoras(int horas){
-		return estadoDisp.consumoEnUltimasHoras(horas, this);
-	}*/
+	// Consultas de consumo en periodos especificos y sus metodos delegados
 	
 	public double consumoTotalEntre(LocalDateTime fechaInicio,LocalDateTime fechaFin){
-		int inicial = posicionInicial(fechaInicio);
-		int fin = posicionFinal(fechaFin);
-		if(inicial == -1 || fin == -1) {
-			if(inicial == -1) {
-				System.out.println("Fecha inicial no válida.");
-			}
-			System.out.println("Fecha final no válida.");
+		int posIntInicial = posicionInicial(fechaInicio);
+		int posIntFin = posicionFinal(fechaFin);
+		if(condicionDeError(posIntInicial,posIntFin)){
 			return 0;
 		}
-		IntervaloDispositivo i = new IntervaloDispositivo();
-		i.setInicio(fechaInicio);i.setFin(intervalos.get(inicial).getFin());
-		i.setModo(intervalos.get(inicial).getModo());
-		IntervaloDispositivo f = new IntervaloDispositivo();
-		f.setFin(fechaFin);f.setInicio(intervalos.get(fin).getInicio());
-		f.setModo(intervalos.get(fin).getModo());
-		List<IntervaloDispositivo> ints = new ArrayList<>();
-		ints.add(i);
-		for(int x=inicial+1;x<=fin-1;x++) {
-			ints.add(intervalos.get(x));
-		}
-		ints.add(f);
-		return consumoTotalD(ints);	
+		IntervaloDispositivo intInic = setearIntervAux(fechaInicio,posIntInicial,true);
+		IntervaloDispositivo intFin = setearIntervAux(fechaFin,posIntFin,false);
+		List<IntervaloDispositivo> intervalosAEvaluar = listaAEvaluar(intInic,intFin,posIntInicial,posIntFin);
+		return consumoTotal(intervalosAEvaluar);	
 	}
 	
+	public double consumoEnUltimasHoras(int horas) { // En tiempo real
+		LocalDateTime momentoActual = LocalDateTime.now();
+		LocalDateTime momentoInicial = momentoActual.minusHours(horas);		
+		boolean condicion = false;		
+		int posIntervI = posicionInicial(momentoInicial);
+		IntervaloDispositivo evaluado = intervalos.get(posIntervI);
+		if(momentoInicial.isAfter(evaluado.getFin())) {
+			posIntervI+=1;
+			condicion = true;
+		}		
+		int posIntervF = intervalos.size()-1;		
+		if(condicion) {
+			momentoInicial = intervalos.get(posIntervI).getInicio();
+		}		
+		IntervaloDispositivo inicial = setearIntervAux(momentoInicial,posIntervI,true);
+		IntervaloDispositivo fin = setearIntervAux(momentoActual,posIntervF,false);		
+		List<IntervaloDispositivo> intervalosAEvaluar = listaAEvaluar(inicial,fin,posIntervI,posIntervF);
+		return consumoTotal(intervalosAEvaluar);
+	}
+	
+	public double consumoEnUltimasHoras(int horas,LocalDateTime fechaLim) { // Para testear
+		
+		LocalDateTime momentoActual = fechaLim;
+		LocalDateTime momentoInicial = momentoActual.minusHours(horas);
+		
+		boolean condicion = false;
+		
+		int posIntervI = posicionInicial(momentoInicial);
+		IntervaloDispositivo evaluado = intervalos.get(posIntervI);
+		if(momentoInicial.isAfter(evaluado.getFin())) {
+			posIntervI+=1;
+			condicion = true;
+		}
+		
+		int posIntervF = intervalos.size()-1;
+		
+		if(condicion) {
+			momentoInicial = intervalos.get(posIntervI).getInicio();
+		}
+		
+		IntervaloDispositivo inicial = setearIntervAux(momentoInicial,posIntervI,true);
+		IntervaloDispositivo fin = setearIntervAux(momentoActual,posIntervF,false);
+		
+		List<IntervaloDispositivo> intervalosAEvaluar = listaAEvaluar(inicial,fin,posIntervI,posIntervF);
+		return consumoTotal(intervalosAEvaluar);
+	}
+
+	// Metodos para calculo de consumo entre (fechainic,fechafin) y en n horas
+
+	public boolean condicionDeError(int i,int f) {
+		if(i==-1||f==-1) {
+			if(i==-1) {
+				System.out.println("Fecha inicial no válida.");
+				return true;
+			}
+			System.out.println("Fecha final no válida.");
+			return true;
+		}
+		return false;
+	}
+	
+	public IntervaloDispositivo setearIntervAux(LocalDateTime fechaIoF,int posIoF,boolean opcion) { //true:inicial false:fin
+		IntervaloDispositivo interv = new IntervaloDispositivo();
+		if(opcion) {
+			interv.setInicio(fechaIoF);
+		} else {interv.setInicio(intervalos.get(posIoF).getInicio());}
+		if(opcion) {
+			interv.setFin(intervalos.get(posIoF).getFin());
+		} else {interv.setFin(fechaIoF);}
+		interv.setModo(intervalos.get(posIoF).getModo());
+		return interv;
+	}
+	
+	public List<IntervaloDispositivo> listaAEvaluar(IntervaloDispositivo i,IntervaloDispositivo f,int pI,int pF){
+		List<IntervaloDispositivo> listaAEvaluar = new ArrayList<>();
+		int z = 0;
+		int x = pI + 1;
+		int y = pF - 1;
+		listaAEvaluar.add(i);
+		for(z=x;z<=y;z++) {
+			listaAEvaluar.add(intervalos.get(x));
+		}
+		listaAEvaluar.add(f);
+		return listaAEvaluar;
+	}
+
 	public int posicionInicial(LocalDateTime unaFechaI) {
+		
 		List<LocalDateTime> fInicios = new ArrayList<>();
-		intervalos.stream().forEach(unInt-> fInicios.add(unInt.getInicio()));
+		intervalos.stream().forEach(unInt-> fInicios.add(unInt.getInicio())); // Una lista con todas las fechas iniciales
  		int i = 0, tam = intervalos.size();
-		LocalDateTime[] fechas = fInicios.toArray(new LocalDateTime[tam]);
-		//Casos extremos: fechaI es antes que todas las fechasI o fechaI despues de todas
+		LocalDateTime[] fechas = fInicios.toArray(new LocalDateTime[tam]); // Creo un array para usar los indices que es mas facil que el get (para mi)
+		
 		LocalDateTime primerFI = intervalos.get(0).getInicio();
 		LocalDateTime ultFI = intervalos.get(tam-1).getInicio();
 		LocalDateTime ultFF = intervalos.get(tam-1).getFin();
+		
+		//Casos extremos: fechaI es antes que todas las fechasI o fechaI despues de todas
+		
 		if(unaFechaI.isAfter(ultFI)){
 			if(unaFechaI.isAfter(ultFF)) {
 				return -1;
@@ -293,8 +365,9 @@ public class DispositivoInteligente extends Dispositivo {
 		}
 		if(unaFechaI.isBefore(primerFI)||unaFechaI.isEqual(primerFI)) {
 			return 0;
-		}		
-		while(i<tam &&  !(unaFechaI.isBefore(fechas[i])||unaFechaI.isEqual(fechas[i]))) {
+		}
+		
+		while(i<tam && !(unaFechaI.isBefore(fechas[i])||unaFechaI.isEqual(fechas[i]))) {
 			i++;
 		}
 		if(unaFechaI.isBefore(fechas[i])) {
@@ -307,14 +380,18 @@ public class DispositivoInteligente extends Dispositivo {
 	}
 	
 	public int posicionFinal(LocalDateTime unaFechaF) {
+		
 		List<LocalDateTime> fInicios = new ArrayList<>();
 		intervalos.stream().forEach(unInt-> fInicios.add(unInt.getInicio()));
  		int i = 0, tam = intervalos.size();
 		LocalDateTime[] fechas = fInicios.toArray(new LocalDateTime[tam]);
-		//Casos extremos: fechaF ocurre antes que cualquier fecha inicial
+		
 		LocalDateTime primerFI = intervalos.get(0).getInicio();
 		LocalDateTime primerFF = intervalos.get(0).getFin();
 		LocalDateTime ultFF = intervalos.get(tam-1).getFin();
+		
+		//Casos extremos: fechaF ocurre antes que cualquier fecha inicial
+		
 		if(unaFechaF.isBefore(primerFF)||unaFechaF.isEqual(primerFF)){
 			if(unaFechaF.isBefore(primerFI)||unaFechaF.isEqual(primerFI)) { // no habria nada que calcular en estos casos
 				return -1;
@@ -323,7 +400,8 @@ public class DispositivoInteligente extends Dispositivo {
 		}
 		if(unaFechaF.isAfter(ultFF)) {
 			return tam-1;
-		}		
+		}
+		
 		while(i<tam && !(unaFechaF.isBefore(fechas[i])||unaFechaF.isEqual(fechas[i]))) {
 			i++;
 		}
@@ -336,10 +414,4 @@ public class DispositivoInteligente extends Dispositivo {
 		return -1; //Si llego hasta aca y no evaluo es porque tambien hubo algun error
 	}
 	
-		/*public double consumoEnUltimasHoras(int horas) {
-			LocalDateTime ahora = LocalDateTime.now();
-			LocalDateTime inicio
-			return calcularConsumoEntre(fechaI,fechaF);
-		}*/
-
 }

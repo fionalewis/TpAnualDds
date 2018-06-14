@@ -29,11 +29,11 @@ public class TestCliente {
 	}
 	
 
-	@Test
+	/*@Test
 	public void testCalcularConsumoSoloConLaTeleEnLista() {
 		Assert.assertEquals(239.9012,clienteDePrueba.calcularConsumo(fechaFinalParaTest),5);
 		System.out.println("Test calcularConsumoSoloConLaTeleEnLista:\n El consumo del cliente sólo con la tele es aproximadamente de 239.9012 kWh: " + clienteDePrueba.calcularConsumo(fechaFinalParaTest));
-	}
+	}*/
 
 	@Test
 	public void testAgregarDispositivo() {

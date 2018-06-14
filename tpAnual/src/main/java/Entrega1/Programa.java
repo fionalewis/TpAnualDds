@@ -195,6 +195,26 @@ public class Programa {
 		System.out.println("hay 5 horas de uso, 1 normal, 3 ahorro y otra de ahorro");
 		System.out.println("entonces el consumo deberia dar 0.8 + 4*0.64 = 3.36");
 		System.out.println("el consumo da"+dispI.consumoTotalEntre(fi,ff));
+		
+		System.out.println("consumo en las ultimas 3 horas desde las 22:");
+		System.out.println("o sea calcular el consumo desde las 19");
+		System.out.println("a las 19 estaba en modo normal y de 20 a 22 en ahorro");
+		System.out.println("entonces el consumo deberia ser 0.8 + 2*0.64 = 2.08");
+		System.out.println("el consumo en esas horas da "+dispI.consumoEnUltimasHoras(3,LocalDateTime.of(2018,6,12,22,0,0)));
+		
+		System.out.println("consumo en las ultimas 7 horas desde las 22:");
+		System.out.println("o sea calcular el consumo desde las 15");
+		System.out.println("15-16 ahorro 18-20 normal 20-22 ahorro");
+		System.out.println("entonces el consumo deberia ser 0.64 + 2*0.8 + 2*0.64 = 3.52");
+		System.out.println("el consumo en esas horas da "+dispI.consumoEnUltimasHoras(7,LocalDateTime.of(2018,6,12,22,0,0)));
+		
+		
+		System.out.println("veamos que pasa si pido el consumo hace 5 horas, en el que a la hora inicial el disp estaria apagado:");
+		System.out.println("o sea calcular el consumo desde las 17, y recien se prende a las 18");
+		System.out.println("18 a 19 normal,20 a 22 ahorro");
+		System.out.println("entonces el consumo deberia ser 2*0.8 + 2*0.64 = 2.88");
+		System.out.println("el consumo en esas horas da "+dispI.consumoEnUltimasHoras(5,LocalDateTime.of(2018,6,12,22,0,0)));
+		
 
 }
 }

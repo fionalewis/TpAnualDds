@@ -48,19 +48,4 @@ public class IntervaloDispositivo {
         return horasDeUso;
 	}
 	
-	public double calculoDeHorasAhora() { // hasta la fecha
-		LocalDateTime currentDate = LocalDateTime.now();
-	    Duration period = Duration.between(inicio,currentDate);
-	    double periodSeconds = period.getSeconds();
-	    double horasDeUso = periodSeconds/3600;
-	    return horasDeUso;
-	}
-	
-	public double calculoDeHorasDesde(LocalDateTime fechaFin) { // desde un inicio
-	    Duration period = Duration.between(inicio,fechaFin);
-	    double periodSeconds = period.getSeconds();
-	    double horasDeUso = periodSeconds/3600;
-	    return horasDeUso;
-	}
-	
 }
