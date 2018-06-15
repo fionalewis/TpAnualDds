@@ -2,7 +2,7 @@ package modelo.Reglas;
 
 import org.apache.commons.lang3.EnumUtils;
 
-import Exceptions.CaracterInvalidoException;
+import exceptions.CaracterInvalidoException;
 
 public abstract class Condicion {
 	

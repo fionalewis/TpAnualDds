@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import Exceptions.CaracterInvalidoException;
+import exceptions.CaracterInvalidoException;
 import modelo.Actuador.Actuador;
 import modelo.Reglas.Condicion;
 import modelo.Reglas.Regla;

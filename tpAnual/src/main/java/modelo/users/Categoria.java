@@ -1,6 +1,6 @@
 package modelo.users;
 
-import Entrega1.Programa;
+import entregas.Programa;
 
 public class Categoria {
 	

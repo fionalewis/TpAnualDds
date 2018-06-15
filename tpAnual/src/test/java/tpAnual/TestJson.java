@@ -6,7 +6,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import Exceptions.ExceptionsHandler;
+import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
 import modelo.devices.Dispositivo;
 import modelo.users.Administrador;

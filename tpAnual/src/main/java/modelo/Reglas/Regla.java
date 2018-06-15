@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.EnumUtils;
 
-import Exceptions.CaracterInvalidoException;
+import exceptions.CaracterInvalidoException;
 import modelo.Actuador.Actuador;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.Sensor;

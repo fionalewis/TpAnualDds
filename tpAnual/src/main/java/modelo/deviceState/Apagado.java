@@ -1,7 +1,5 @@
 package modelo.deviceState;
 
-//import java.time.LocalDateTime;
-
 import modelo.devices.DispositivoInteligente;
 
 public class Apagado implements EstadoDispositivo{
@@ -51,10 +49,4 @@ public class Apagado implements EstadoDispositivo{
 		return false;
 	}
 
-	/*@Override
-	public double consumoEnUltimasHoras(int horas,DispositivoInteligente disp) {
-		System.out.println("El dispositivo está apagado. No es posible realizar la consulta.");
-		return 0;
-	}
-*/	
 }

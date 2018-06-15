@@ -3,9 +3,10 @@ package modelo.users;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import entregas.Programa;
+
 import java.util.function.*;
 
-import Entrega1.Programa;
 import modelo.FilterPredicates;
 import modelo.deviceState.AhorroEnergia;
 import modelo.deviceState.Encendido;
@@ -16,7 +17,6 @@ import modelo.devices.DispositivoInteligente;
 
 import java.util.ArrayList;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Cliente extends Usuario {
 

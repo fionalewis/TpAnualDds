@@ -1,23 +1,28 @@
-package Entrega1;
+package entregas;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import Entrega1.VentanaPresentacion;
-import javax.swing.JFrame;
-
-import Exceptions.ExceptionsHandler;
+import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
+import modelo.devices.Dispositivo;
 //import modelo.devices.DispositivoConvertido;
-import modelo.devices.DispositivoEstandar;
+//import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.IntervaloDispositivo;
-import modelo.devices.IntervaloDispositivo.modo;
+//import modelo.devices.IntervaloDispositivo.modo;
 import modelo.users.Categoria;
 import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
 
 public class Programa {
+	
+	//Para los frames
+	public static Cliente cprueba = new Cliente("bart","simpson","elbarto","12345",TipoDocumento.DNI,"4444444","11111111","Avenida Siempreviva 742");
+	static List<Dispositivo> disp = cprueba.getDispositivos();
+	
+	
+	//Metodos que usamos para categorias
 	
 	public static boolean isBetween(double n,double min,double max) {
 		return (n>=min)&&(n<=max);

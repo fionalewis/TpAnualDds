@@ -1,12 +1,13 @@
-package Entrega1;
+package entregas;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-import Exceptions.CaracterInvalidoException;
+import exceptions.CaracterInvalidoException;
 import modelo.Actuador.Actuador;
 import modelo.Reglas.Condicion;
 import modelo.Reglas.Regla;
@@ -21,8 +22,8 @@ public class Entrega1 {
 	private static Scanner in = new Scanner(System.in);
 	private static Cliente nico = new Cliente();
 	private static DispositivoInteligente aircon = new DispositivoInteligente("Aire Acondicionado",0.14);
-	private static DispositivoEstandar tele = new DispositivoEstandar("Televisor",0.14,5);
-	private static DispositivoEstandar ventilador = new DispositivoEstandar("Ventilador",0.14,5);
+	private static DispositivoEstandar tele = new DispositivoEstandar("Televisor",0.14,2018,1,1,10,10,10,5);
+	private static DispositivoEstandar ventilador = new DispositivoEstandar("Ventilador",0.14,2017,11,1,10,10,10,5);
 	private static Sensor sensorTempIN = new Sensor("temperaturaIN",aircon);
 	private static Sensor sensorTempOUT = new Sensor("temperaturaOUT",aircon);
 	private static Sensor sensorHumedad = new Sensor("humedad",aircon);
@@ -46,11 +47,12 @@ public class Entrega1 {
 	}
 	
 	public static void menuPrincipal() throws CaracterInvalidoException{
-		System.out.print("Bienvenido Nico! \nPor favor elija una opcion:"
+		System.out.print("\n Bienvenido Nico! \nPor favor elija una opcion:"
 			+ "\n1. Ver tus dispositivos estandares"
 			+ "\n2. Ver tus dispositivos inteligentes"
 			+ "\n3. Ver tus puntajes"
-			+ "\n4. Ver Reglas\n");
+			+ "\n4. Ver Reglas"
+			+ "\n5. Limpiar Pantalla\n");
 		
 		switch(in.nextInt()){
 		case 1:
@@ -60,18 +62,26 @@ public class Entrega1 {
 			dispoInteligentes();
 			break;
 		case 3:
-			System.out.print(nico.getPuntos());
+			mostrarPuntos();
 			break;
 		case 4:
 			reglas();
+			break;
+		case 5:
+			limpiarPantalla();
 		default: menuPrincipal();
 		}
+	}
+	
+	public static void mostrarPuntos() throws CaracterInvalidoException{
+		System.out.print(nico.getPuntos());
+		menuPrincipal();
 	}
 	
 	//dispositivos estandares
 	public static void dispoEstandares() throws CaracterInvalidoException{
 		List<Dispositivo> dispos = nico.obtenerLista("Estandar");
-		dispos.stream().forEach(d -> System.out.print(d.getNombreDisp() + "\n"));
+		dispos.stream().forEach(d -> System.out.print(d.getNombreDisp() + "  Consumo Aproximado: " +  d.consumoTotal() + "\n"));
 		
 		System.out.print("\nPor favor elija una opcion:"
 			+ "\n1. Convertir un dispositivo"
@@ -249,8 +259,8 @@ public class Entrega1 {
 				+ "\n8. Volver al menu principal");
 				
 			switch(in.nextInt()){
-			case 1:dis.encender();
-				 System.out.println(dis.stringEstado());
+			case 1:
+				 dis.encender();
 				break;
 			case 2:
 				dis.apagar();
@@ -320,7 +330,7 @@ public class Entrega1 {
 		
 		LocalDateTime fechaI = LocalDateTime.of(yearI,monI,dayI,hourI,minI,secI);
 		LocalDateTime fechaF = LocalDateTime.of(yearF,monF,dayF,hourF,minF,secF);
-		double consumo = dis.consumoTotal(fechaI,fechaF);
+		double consumo = dis.consumoTotalEntre(fechaI,fechaF);
 		System.out.println("\nEl consumo fue de: " + consumo + "\n");
 		operarConDispoSelected(dis);
 		
@@ -346,6 +356,7 @@ public class Entrega1 {
 			nico.agregarDispositivo(dispo);
 		} else{
 			System.out.println("\nIngrese horas de uso diario aproximadas:");
+			//System.out.println("\nIngrese promedio de consumo por dia:");
 			ahorroOConsumo = in.nextFloat();
 			DispositivoEstandar dispo = new DispositivoEstandar(nombre,kwh,(int) ahorroOConsumo);
 			nico.agregarDispositivo(dispo);
@@ -379,12 +390,14 @@ public class Entrega1 {
 
 	public static void imprimirDispoI(){
 		List<Dispositivo> dispos = nico.obtenerLista("Inteligente");
-		dispos.stream().forEach(d -> System.out.print(dispos.indexOf(d) + ". " + d.getNombreDisp() + "\n"));
+		dispos.stream().forEach(d -> System.out.print(dispos.indexOf(d) + ". " + d.getNombreDisp() 
+		+ "  Consumo: " + d.consumoTotal() + "\n"));
 	}
 	
 	public static void imprimirDispoS(){
 		List<Dispositivo> dispos = nico.obtenerLista("Estandar");
-		dispos.stream().forEach(d -> System.out.print(dispos.indexOf(d) + ". " + d.getNombreDisp() + "\n"));
+		dispos.stream().forEach(d -> System.out.print(dispos.indexOf(d) + ". " + d.getNombreDisp() 
+		+ "  Consumo Aproximado: " + d.consumoTotal() + "\n"));
 	}
 	
 	//sensores
@@ -470,9 +483,8 @@ public class Entrega1 {
 		
 	}
 	
-	public static void valorSensor(Sensor sensor, DispositivoInteligente dispo) throws CaracterInvalidoException{
-		System.out.println(sensor.getMagnitud());
-		
+	public static void valorSensor(Sensor sensor, DispositivoInteligente dispo) throws CaracterInvalidoException{		
+		System.out.println("Su valor es " + sensor.getMagnitud());		
 		System.out.println("\nElija una opcion:"
 				+ "\n1. Subir valor"
 				+ "\n2. Bajar valor"
@@ -565,7 +577,7 @@ public class Entrega1 {
 		sensor.setMagnitud(valor);
 		dispo.agregarSensor(sensor);
 		 
-		System.out.println("\nTus sensore son:");
+		System.out.println("\nTus sensores son:");
 		Set<String> sensoresSet = dispo.getSensores().keySet();
 	    int i = 0;
 		for(String sen:sensoresSet){
@@ -933,7 +945,7 @@ public class Entrega1 {
 		
 		System.out.println("\nElija un dispositivo: ");
 		imprimirDispoI();
-		Dispositivo dispo = nico.obtenerLista("Inteligente").get(in.nextInt());
+		//Dispositivo dispo = nico.obtenerLista("Inteligente").get(in.nextInt());
 		
 		System.out.println("\nIngrese un ID de fabricante: (un numero entero)");
 		int id = in.nextInt();
@@ -1126,6 +1138,20 @@ public class Entrega1 {
 		default:quitarRegla();
 		}
 	}
+	public static Process limpiarPantalla(){
+		Process exitCode = null;
+		try{
+	
+				exitCode = Runtime.getRuntime().exec("clear");
+			
+		}
+		catch (IOException e){
+			for(int i = 0;i < 1000; i++){
+				System.out.println();
+			}
+		}
+		return exitCode;
+	}
 	
 	public static void init(){
 		nico.setNombre("Nicolas");
@@ -1133,6 +1159,8 @@ public class Entrega1 {
 		nico.agregarDispositivo(aircon);
 		nico.agregarDispositivo(tele);
 		nico.agregarDispositivo(ventilador);
+		tele.setHorasUsoDiarias(10);
+		ventilador.setHorasUsoDiarias(15);
 		aircon.agregarSensor(sensorTempIN);
 		aircon.agregarSensor(sensorTempOUT);
 		aircon.agregarSensor(sensorHumedad);

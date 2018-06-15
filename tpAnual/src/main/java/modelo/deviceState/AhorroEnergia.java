@@ -1,7 +1,5 @@
 package modelo.deviceState;
 
-//import java.time.LocalDateTime;
-
 import modelo.devices.DispositivoInteligente;
 
 public class AhorroEnergia implements EstadoDispositivo {
@@ -50,10 +48,5 @@ public class AhorroEnergia implements EstadoDispositivo {
 		System.out.println("El dispositivo se encuentra encendido en modo ahorro de energía.");
 		return true;
 	}
-	
-	/*@Override
-	public double consumoEnUltimasHoras(int horas,DispositivoInteligente disp) {
-		return disp.getkWhAhorro()*horas;
-	}
-*/
+
 }
