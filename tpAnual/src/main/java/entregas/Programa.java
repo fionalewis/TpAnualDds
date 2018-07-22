@@ -44,6 +44,8 @@ public class Programa {
 		return categoria;
 	}
 	
+	//Ignoren las mil pruebas que hice aca abajo, las dejo por las dudas, mas adelante las borramos
+	
 	public static void main(String[] args) {
 		//Cliente cprueba = new Cliente("bart","simpson","elbarto","12345",TipoDocumento.DNI,"4444444","11111111","Avenida Siempreviva 742");
 		/*System.out.println(cprueba.getCateg().getClasif());

@@ -20,7 +20,7 @@ import modelo.devices.Dispositivo;
 public class Entrega1 {
 	
 	private static Scanner in = new Scanner(System.in);
-	private static Cliente nico = new Cliente();
+	public static Cliente nico = new Cliente();
 	private static DispositivoInteligente aircon = new DispositivoInteligente("Aire Acondicionado",0.14);
 	private static DispositivoEstandar tele = new DispositivoEstandar("Televisor",0.14,2018,1,1,10,10,10,5);
 	private static DispositivoEstandar ventilador = new DispositivoEstandar("Ventilador",0.14,2017,11,1,10,10,10,5);
