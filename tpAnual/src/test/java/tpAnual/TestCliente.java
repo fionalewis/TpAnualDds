@@ -27,13 +27,6 @@ public class TestCliente {
 		tele.setFechaRegistro(2018,2,5,22,15,0); //Instanciamos la fecha de registro de los dispositivos
 		aire.setFechaRegistro(2018,4,10,0,0,0);
 	}
-	
-
-	/*@Test
-	public void testCalcularConsumoSoloConLaTeleEnLista() {
-		Assert.assertEquals(239.9012,clienteDePrueba.calcularConsumo(fechaFinalParaTest),5);
-		System.out.println("Test calcularConsumoSoloConLaTeleEnLista:\n El consumo del cliente sólo con la tele es aproximadamente de 239.9012 kWh: " + clienteDePrueba.calcularConsumo(fechaFinalParaTest));
-	}*/
 
 	@Test
 	public void testAgregarDispositivo() {
