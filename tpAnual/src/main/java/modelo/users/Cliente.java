@@ -249,7 +249,7 @@ public class Cliente extends Usuario {
 	
 	public Dispositivo filtrarEInstanciarDispo(DispositivoInteligente disp){
 		if(!disp.getEsInteligente()){
-			DispositivoEstandar dispo = new DispositivoEstandar(disp.getNombreDisp(),disp.getkWh(),0,disp.getEquipoConcreto());
+			DispositivoEstandar dispo = new DispositivoEstandar(disp.getNombreDisp(),disp.getkWh(),0,disp.getEquipoConcreto(),disp.getHorasUsoMax(),disp.getHorasUsoMin());
 			return dispo;
 		} return disp;
 	}

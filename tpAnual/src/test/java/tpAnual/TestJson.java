@@ -84,25 +84,6 @@ public class TestJson {
 		System.out.println("Test JsonTraeCategorias:\n El valor de cargoVariable de R9 es 0.851: " + categorias.get(8).getCargoVariable());
     }
     
-	@Test
-	public void testJsonUsoDispoMensual() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-    	DispositivoInteligente disp = null;
-    	try {
-			disp = (DispositivoInteligente) DAOJson.buscarIndexEnLista(DispositivoInteligente.class, 0,
-					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json"
-					ruta.concat("\\jsonHorasUsoMensualDispo.json"));
-		} catch (Exception e) {
-			ExceptionsHandler.catchear(e);
-		}
-    	Assert.assertEquals("Aire Acondicionado", disp.getNombreDisp());
-    	System.out.println("Test JsonJsonUsoDispoMensual: El nombre del dispositivo del json es: " + disp.getNombreDisp());
-    	Assert.assertEquals(90.0, disp.getHorasUsoMin(),0.1);
-    	System.out.println("Test JsonJsonUsoDispoMensual: Las horas de uso mensual minimo del dispositivo del json es: " 
-    			+ disp.getHorasUsoMin());
-    	Assert.assertEquals(360.0, disp.getHorasUsoMax(),0.1);
-    	System.out.println("Test JsonJsonUsoDispoMensual: Las horas de uso mensual maximo del dispositivo del json es: " 
-    			+ disp.getHorasUsoMax());
-    }
     
 	@Test
     public void testJsonTablaDispositivos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
@@ -121,18 +102,29 @@ public class TestJson {
 		System.out.println("Test JsonJsonTablaDispositivos:\n "
 				+ "El tamaño de la lista de dispositivos del json es: " + disp.size());
 		
+		Assert.assertEquals(90.0, disp.get(0).getHorasUsoMin(),0.1);
+		System.out.println("Test JsonJsonTablaDispositivos:\n "
+				+ "El uso mensual minimo del equipo en la posicion cero es 90: " 
+				+ disp.get(0).getHorasUsoMin());
+		
 		Assert.assertEquals("Color de tubo fluorescente de 21' ", disp.get(2).getEquipoConcreto());
 		System.out.println("Test JsonJsonTablaDispositivos:\n "
-				+ "El equipo en la posicion dos es Color de tubo fluorescente de 21' \n: " 
+				+ "El equipo en la posicion dos es Color de tubo fluorescente de 21': \n " 
 				+ disp.get(2).getEquipoConcreto());
+		
+		Assert.assertEquals(360.0, disp.get(3).getHorasUsoMax(),0.1);
+		System.out.println("Test JsonJsonTablaDispositivos:\n "
+				+ "El uso mensual maximo del equipo en la posicion tres es 360: " 
+				+ disp.get(3).getHorasUsoMin());
 		
 		Assert.assertTrue(((DispositivoInteligente) disp.get(5)).getEsBajoConsumo());
 		System.out.println("Test JsonJsonTablaDispositivos:\n "
-				+ "El dispositivo en posicion 5 es de bajo consumo: " 
+				+ "El dispositivo en posicion cinco es de bajo consumo: " 
 				+ ((DispositivoInteligente) disp.get(5)).getEsBajoConsumo());
 		
 		Assert.assertEquals(0.09, disp.get(8).getkWh(),0.001);
-		System.out.println("Test JsonJsonTablaDispositivos:\n El valor de kWh del dispositivo en la posicion 8 es 0.09: " 
+		System.out.println("Test JsonJsonTablaDispositivos:\n "
+				+ "El valor de kWh del dispositivo en la posicion ocho es 0.09: " 
 				+ disp.get(8).getkWh());
 
     }
