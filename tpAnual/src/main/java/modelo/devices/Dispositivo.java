@@ -11,6 +11,7 @@ public abstract class Dispositivo {
 	protected double horasDeUso = 0;
 	protected double horasUsoMax = 0;
 	protected double horasUsoMin = 0;
+	public String equipoConcreto = null;
 	
 	//Getters y Setters
 	
@@ -52,6 +53,12 @@ public abstract class Dispositivo {
 	}
 	public void setHorasUsoMin(double horasDeUso) {
 		this.horasUsoMin = horasDeUso;
+	}
+	public String getEquipoConcreto(){
+		return equipoConcreto;
+	}
+	public void setEquipoConcreto(String descripcion){
+		this.equipoConcreto = descripcion;
 	}
 
 	//Funcionalidades

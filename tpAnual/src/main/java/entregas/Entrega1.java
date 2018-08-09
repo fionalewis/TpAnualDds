@@ -358,7 +358,7 @@ public class Entrega1 {
 			System.out.println("\nIngrese horas de uso diario aproximadas:");
 			//System.out.println("\nIngrese promedio de consumo por dia:");
 			ahorroOConsumo = in.nextFloat();
-			DispositivoEstandar dispo = new DispositivoEstandar(nombre,kwh,(int) ahorroOConsumo);
+			DispositivoEstandar dispo = new DispositivoEstandar(nombre,kwh,(int) ahorroOConsumo,null);
 			nico.agregarDispositivo(dispo);
 		}
 		

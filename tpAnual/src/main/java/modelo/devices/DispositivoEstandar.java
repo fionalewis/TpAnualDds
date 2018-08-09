@@ -10,11 +10,12 @@ public class DispositivoEstandar extends Dispositivo {
 	public int horasUsoDiarias = 0;
 	
 	//Constructor default
-		public DispositivoEstandar(String nombDisp,double kWhAprox,int horasUso) {
+		public DispositivoEstandar(String nombDisp,double kWhAprox,int horasUso,String descripcion) {
 			setNombreDisp(nombDisp);
 			setkWh(kWhAprox);
 			setFechaRegistro(LocalDateTime.now());
 			setHorasUsoDiarias(horasUso);
+			setEquipoConcreto(descripcion);
 		}
 		
 	//Constructor para los tests

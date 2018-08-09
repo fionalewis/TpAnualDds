@@ -60,5 +60,6 @@ public class DAOJson {
 		objeto = (deserializarLista(clase,rutaArch)).get(n);
 		
 		return objeto;
-	}	
+	}
+
 }

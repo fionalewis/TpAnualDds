@@ -17,6 +17,8 @@ public class DispositivoInteligente extends Dispositivo {
 	private EstadoDispositivo estadoDisp;
 	Map<String, Sensor> sensores = new HashMap<String, Sensor>();
 	private IntervaloDispositivo unIntervalo;
+	boolean esInteligente = true; //esto es para el json
+	boolean esBajoConsumo = false;
 	
 	private List<IntervaloDispositivo> intervalos = new ArrayList<>();
 	
@@ -64,6 +66,22 @@ public class DispositivoInteligente extends Dispositivo {
 	}
 	public void setEstadoDisp(EstadoDispositivo estadoDisp) {
 		this.estadoDisp = estadoDisp;
+	}
+	
+	public boolean getEsInteligente(){
+		return esInteligente;
+	}
+	
+	public void setEsInteligente(boolean ansSmart){
+		this.esInteligente = ansSmart;
+	}
+	
+	public boolean getEsBajoConsumo(){
+		return esBajoConsumo;
+	}
+	
+	public void setEsBajoConsumo(boolean ansBajoConsumo){
+		this.esBajoConsumo = ansBajoConsumo;
 	}
 	
 	//Intervalos
@@ -152,7 +170,7 @@ public class DispositivoInteligente extends Dispositivo {
 		return listaAEvaluar.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
 	}
 	
-	// Ordenes basicas al dispositivo (habria que ver como combinar esto con los execute del actuador¿¿¿)
+	// Ordenes basicas al dispositivo (habria que ver como combinar esto con los execute del actuador)
 	
 	public void guardarAuxiliar() { //Para que se guarden los intervalos en la lista (esto es un metodo delegado nunca lo van a tocar en el main)
 		IntervaloDispositivo aux = new IntervaloDispositivo();

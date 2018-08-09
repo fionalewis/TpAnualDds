@@ -51,20 +51,6 @@ public class TestJson {
     }
     
     @Test
-    public void testJsonTraeUnDispositivo() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-    	DispositivoInteligente disp = null;
-		try {
-			disp = (DispositivoInteligente) DAOJson.buscarIndexEnLista(DispositivoInteligente.class, 1,
-					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json"
-					ruta.concat("\\jsonDispositivos.json"));
-		} catch (Exception e) {
-			ExceptionsHandler.catchear(e);
-		}
-    	Assert.assertEquals("microondas", disp.getNombreDisp());
-    	System.out.println("Test JsonTraeUnDispositivo: El nombre del dispositivo del json es: " + disp.getNombreDisp());
-    }
-    
-    @Test
     public void testJsonTraeUnAdmin() throws FileNotFoundException, InstantiationException, IllegalAccessException {
     	Administrador admin = null;
     	try {
@@ -118,4 +104,36 @@ public class TestJson {
     			+ disp.getHorasUsoMax());
     }
     
+	@Test
+    public void testJsonTablaDispositivos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
+		List<Dispositivo> disp = null;
+		Cliente cliente = new Cliente();
+		
+		try {
+			cliente.traerDispoDeJson();
+			disp = cliente.getDispositivos();
+		} catch (Exception e) {
+			ExceptionsHandler.catchear(e);
+		}
+		
+		
+		Assert.assertEquals(24, disp.size());
+		System.out.println("Test JsonJsonTablaDispositivos:\n "
+				+ "El tamaño de la lista de dispositivos del json es: " + disp.size());
+		
+		Assert.assertEquals("Color de tubo fluorescente de 21' ", disp.get(2).getEquipoConcreto());
+		System.out.println("Test JsonJsonTablaDispositivos:\n "
+				+ "El equipo en la posicion dos es Color de tubo fluorescente de 21' \n: " 
+				+ disp.get(2).getEquipoConcreto());
+		
+		Assert.assertTrue(((DispositivoInteligente) disp.get(5)).getEsBajoConsumo());
+		System.out.println("Test JsonJsonTablaDispositivos:\n "
+				+ "El dispositivo en posicion 5 es de bajo consumo: " 
+				+ ((DispositivoInteligente) disp.get(5)).getEsBajoConsumo());
+		
+		Assert.assertEquals(0.09, disp.get(8).getkWh(),0.001);
+		System.out.println("Test JsonJsonTablaDispositivos:\n El valor de kWh del dispositivo en la posicion 8 es 0.09: " 
+				+ disp.get(8).getkWh());
+
+    }
 }
