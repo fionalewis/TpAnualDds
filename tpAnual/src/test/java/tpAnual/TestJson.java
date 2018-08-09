@@ -10,6 +10,7 @@ import org.junit.Test;
 import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
 import modelo.devices.Dispositivo;
+import modelo.devices.DispositivoInteligente;
 import modelo.users.Administrador;
 import modelo.users.Categoria;
 import modelo.users.Cliente;
@@ -51,9 +52,9 @@ public class TestJson {
     
     @Test
     public void testJsonTraeUnDispositivo() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-    	Dispositivo disp = null;
+    	DispositivoInteligente disp = null;
 		try {
-			disp = (Dispositivo) DAOJson.buscarIndexEnLista(Dispositivo.class, 1,
+			disp = (DispositivoInteligente) DAOJson.buscarIndexEnLista(DispositivoInteligente.class, 1,
 					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json"
 					ruta.concat("\\jsonDispositivos.json"));
 		} catch (Exception e) {
@@ -95,6 +96,26 @@ public class TestJson {
 		System.out.println("Test JsonTraeCategorias:\n El valor de cargoFijo de R5 es 110.38: " + categorias.get(4).getCargoFijo());
 		Assert.assertEquals(0.851, categorias.get(8).getCargoVariable(),0.1);
 		System.out.println("Test JsonTraeCategorias:\n El valor de cargoVariable de R9 es 0.851: " + categorias.get(8).getCargoVariable());
+    }
+    
+	@Test
+	public void testJsonUsoDispoMensual() throws FileNotFoundException, InstantiationException, IllegalAccessException{
+    	DispositivoInteligente disp = null;
+    	try {
+			disp = (DispositivoInteligente) DAOJson.buscarIndexEnLista(DispositivoInteligente.class, 0,
+					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json"
+					ruta.concat("\\jsonHorasUsoMensualDispo.json"));
+		} catch (Exception e) {
+			ExceptionsHandler.catchear(e);
+		}
+    	Assert.assertEquals("Aire Acondicionado", disp.getNombreDisp());
+    	System.out.println("Test JsonJsonUsoDispoMensual: El nombre del dispositivo del json es: " + disp.getNombreDisp());
+    	Assert.assertEquals(90.0, disp.getHorasUsoMin(),0.1);
+    	System.out.println("Test JsonJsonUsoDispoMensual: Las horas de uso mensual minimo del dispositivo del json es: " 
+    			+ disp.getHorasUsoMin());
+    	Assert.assertEquals(360.0, disp.getHorasUsoMax(),0.1);
+    	System.out.println("Test JsonJsonUsoDispoMensual: Las horas de uso mensual maximo del dispositivo del json es: " 
+    			+ disp.getHorasUsoMax());
     }
     
 }
