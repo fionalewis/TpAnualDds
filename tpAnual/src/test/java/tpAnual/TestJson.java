@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import exceptions.ExceptionsHandler;
@@ -17,11 +18,15 @@ import modelo.users.Cliente;
 
 public class TestJson {
 
+		String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
+	
 	@Test
 	public void testJsonTraeClientes() throws FileNotFoundException, InstantiationException, IllegalAccessException {
 		List<Cliente> clientes = null;
 		try {
-			clientes = DAOJson.deserializarLista(Cliente.class, "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json");
+			clientes = DAOJson.deserializarLista(Cliente.class, 
+					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json"
+					ruta.concat("\\jsonClientes.json"));
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -33,7 +38,9 @@ public class TestJson {
 	public void testJsonTraeUnCliente() throws FileNotFoundException, InstantiationException, IllegalAccessException{
     	Cliente cli = null;
 		try {
-			cli = (Cliente) DAOJson.buscarIndexEnLista(Cliente.class, 1,"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json");
+			cli = (Cliente) DAOJson.buscarIndexEnLista(Cliente.class, 1,
+					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json"
+					ruta.concat("\\jsonClientes.json"));
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -46,7 +53,9 @@ public class TestJson {
     public void testJsonTraeUnDispositivo() throws FileNotFoundException, InstantiationException, IllegalAccessException{
     	Dispositivo disp = null;
 		try {
-			disp = (Dispositivo) DAOJson.buscarIndexEnLista(Dispositivo.class, 1,"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json");
+			disp = (Dispositivo) DAOJson.buscarIndexEnLista(Dispositivo.class, 1,
+					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json"
+					ruta.concat("\\jsonDispositivos.json"));
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -58,7 +67,9 @@ public class TestJson {
     public void testJsonTraeUnAdmin() throws FileNotFoundException, InstantiationException, IllegalAccessException {
     	Administrador admin = null;
     	try {
-    		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class, 0,"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonAdministradores.json");
+    		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class, 0,
+    				//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonAdministradores.json"
+    				ruta.concat("\\jsonAdministradores.json"));
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -70,7 +81,9 @@ public class TestJson {
 	public void testJsonTraeCategoriasYDatos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		List<Categoria> categorias = null;
 		try {
-			categorias = DAOJson.deserializarLista(Categoria.class, "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json");
+			categorias = DAOJson.deserializarLista(Categoria.class, 
+					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json"
+					ruta.concat("\\jsonCategorias.json"));
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
