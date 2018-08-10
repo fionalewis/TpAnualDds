@@ -20,10 +20,12 @@ public class TestMetodoSimplex {
 	DispositivoInteligente dispSCD2 = new DispositivoInteligente("dispSCD2",  0.875);
 	DispositivoInteligente dispSCD3 = new DispositivoInteligente("dispSCD3",  0.06);
 	List<DispositivoInteligente> dispSCD = new ArrayList<DispositivoInteligente>();
+	
 	DispositivoInteligente dispSCI1 = new DispositivoInteligente("dispSCI1",  0.18);
 	DispositivoInteligente dispSCI2 = new DispositivoInteligente("dispSCI2",  0.875);
 	DispositivoInteligente dispSCI3 = new DispositivoInteligente("dispSCI3",  180);
 	List<DispositivoInteligente> dispSCI = new ArrayList<DispositivoInteligente>();
+	
 	/*DispositivoInteligente dispSI1 = new DispositivoInteligente("dispSI1",  2);
 	DispositivoInteligente dispSI2 = new DispositivoInteligente("dispSI2",  5);
 	List<DispositivoInteligente> dispSI = new ArrayList<DispositivoInteligente>();*/
@@ -86,7 +88,5 @@ public class TestMetodoSimplex {
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	
 	
 }
