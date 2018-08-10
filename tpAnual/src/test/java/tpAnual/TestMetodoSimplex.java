@@ -42,7 +42,7 @@ public class TestMetodoSimplex {
 				+ "la suma de los x dio 760: " + solucion.getValue());
 		Assert.assertEquals(360, solucion.getPoint()[0], 0.01); // <--- X2
 		System.out.println("Test testMetodoSimplex:\n "
-				+ "La cantidad de horas para el dispositivo x2 dio 370: " + solucion.getPoint()[0]);
+				+ "La cantidad de horas para el dispositivo x2 dio 360: " + solucion.getPoint()[0]);
 		Assert.assertEquals(30, solucion.getPoint()[1], 0.01); // <--- X1
 		System.out.println("Test testMetodoSimplex:\n "
 				+ "La cantidad de horas para el dispositivo x1 dio 30: " + solucion.getPoint()[1]);

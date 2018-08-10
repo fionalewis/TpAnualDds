@@ -1,4 +1,5 @@
 package modelo;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,6 +17,8 @@ import org.apache.commons.math3.optim.linear.Relationship;
 import org.apache.commons.math3.optim.linear.SimplexSolver;
 import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
 
+import com.google.common.collect.Lists;
+
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoInteligente;
 
@@ -25,6 +28,11 @@ public class MetodoSimplex {
 	private Collection<LinearConstraint> restricciones = new ArrayList<LinearConstraint>();
 	private GoalType objetivo = GoalType.MAXIMIZE;
 	private boolean variablesPositivas = true;
+	private List<Double> horasUsoMax = new ArrayList<Double>();
+	private List<Double> horasUsoMin = new ArrayList<Double>();
+	private List<DispositivoInteligente> dispositivos = new ArrayList<DispositivoInteligente>();
+	private double[] listaKWH = new double[this.dispositivos.size()];
+	private List<double[]> posicionCanonica = new ArrayList<double[]>();
 	
 	/*public MetodoSimplex(GoalType objetivo, boolean variablesPositivas) {
 		this.variablesPositivas = variablesPositivas;
@@ -55,29 +63,25 @@ public class MetodoSimplex {
 				);
 	}
 	
+	
 	// ------------- Metodos para armar la funcion economica con cantidad variable de argumentos -------------- 
 	public PointValuePair aplicarMetodoSimplex(List<DispositivoInteligente> disp){ 
 		
+		this.dispositivos = disp;
 		//los x (cant horas q pueden consumir) q paso la misma cant de unos que la cant de dispositivos q tengo
-		crearFuncionEconomica(generarListaCoeficiente(disp.size(),1));  
+		crearFuncionEconomica(generarListaCoeficiente(this.dispositivos.size(),1));  
 		
-		agregarRestricciones(disp);
+		agregarRestricciones();
 		return resolver();
 	}
 	
 	// restricciones = total kwh, los kwh individuales, relacion mayor o menor, y sus posiciones como versor canonico
 	// ver test para entender esto
-	public void agregarRestricciones(List<DispositivoInteligente> dispositivos){
-		
-		//inicializaciones
-		List<Double> horasUsoMax = new ArrayList<Double>();
-		List<Double> horasUsoMin = new ArrayList<Double>();
-		double[] listaKWH = new double[dispositivos.size()];
-		List<double[]> posicionCanonica = new ArrayList<double[]>();
+	public void agregarRestricciones(){
 		
 		//cargo datos a las listas
 		//generarArgumentos(dispositivos,horasUsoMax,horasUsoMin,listaKWH,posicionCanonica);
-		listaKWH = generarArgumentos(dispositivos,horasUsoMax,horasUsoMin,posicionCanonica);
+		generarArgumentos();
 		
 		//genero las restricciones
 		agregarRestriccion(Relationship.LEQ, 440640, listaKWH); // kwh2.x2 + kwh1.x1 + kwh0.x0 <= 44064
@@ -95,35 +99,34 @@ public class MetodoSimplex {
 	}
 	
 	//genera argumentos para las agregar restricciones de mayor y menor de kwh, y su versor posicion
-	public double[] generarArgumentos(List<DispositivoInteligente> dispositivos, List<Double> horasUsoMax, 
-			List<Double> horasUsoMin/*, double[] listaKWH*/, List<double[]> posicionCanonica){
+	public void generarArgumentos(){
 		
+		//llena la lista de horas uso maximo
 		dispositivos.stream().forEach(d -> horasUsoMax.add(d.getHorasUsoMax()));
 		
+		//llena la lista de horas uso maximo
 		dispositivos.stream().forEach(d -> horasUsoMin.add(d.getHorasUsoMin()));
 		
-		double[] lista = new double[dispositivos.size()];
-		//dispositivos.stream().forEach(d -> System.out.println(dispositivos.indexOf(d)));
-		
-		for(int i=0; i<dispositivos.size(); i++){
-			lista[i] = dispositivos.get(i).getkWh();
-		}
-		
-		//dispositivos.stream().forEach(d -> System.out.println(lista[dispositivos.indexOf(d)] = dispositivos.indexOf(d)));
-		//dispositivos.stream().forEach(d -> lista[dispositivos.indexOf(d)] = d.getkWh());
-		//listaKWH = revertirLista(lista);
-		
+		//llena la lista de versores canonicos
 		double[] versor = null;
 		for(int i=0; i<dispositivos.size(); i++){
 			versor = generarVersorCanonica(dispositivos.size(),i);
 			posicionCanonica.add(versor);
 		}
+		//al reves porque lo necesita en este orden: f(x0,x1,x2) = x2 + x1 + x0
+		List<double[]> reverseView = Lists.reverse(posicionCanonica); 
+		posicionCanonica = reverseView;
 		
-		return revertirLista(lista);
+		double[] listaKWHTemp = new double[dispositivos.size()];		
+		for(int i=0; i<dispositivos.size(); i++){
+			listaKWHTemp[i] = dispositivos.get(i).getkWh();
+		}
+		//dispositivos.stream().forEach(d -> lista[dispositivos.indexOf(d)] = d.getkWh());
+		listaKWH = revertirArray(listaKWHTemp);
 		
 	}
 	
-	public double[] revertirLista(double[] lista){
+	public double[] revertirArray(double[] lista){
 		
 		for(int i = 0; i < lista.length / 2; i++)
 		{
