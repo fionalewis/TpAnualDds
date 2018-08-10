@@ -151,7 +151,7 @@ public class Cliente extends Usuario {
 		case"IyC":
 			predicate = FilterPredicates.filterAmbos();
 			break;
-		default: System.out.println("Opción no válida.");
+		default: System.out.println("Opcion no valida.");
 			break;
 		}
 		return dispositivos.stream().filter(predicate).collect(Collectors.toList());
