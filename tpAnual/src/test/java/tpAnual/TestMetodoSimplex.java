@@ -38,9 +38,17 @@ public class TestMetodoSimplex {
     public void testMetodoSimplex(){
 		PointValuePair solucion = simplex.aplicarMetodoSimplex(disp);
 		Assert.assertEquals(760, solucion.getValue(), 0.01);
+		System.out.println("Test testMetodoSimplex:\n "
+				+ "la suma de los x dio 760: " + solucion.getValue());
 		Assert.assertEquals(360, solucion.getPoint()[0], 0.01); // <--- X2
+		System.out.println("Test testMetodoSimplex:\n "
+				+ "La cantidad de horas para el dispositivo x2 dio 370: " + solucion.getPoint()[0]);
 		Assert.assertEquals(30, solucion.getPoint()[1], 0.01); // <--- X1
-		Assert.assertEquals(370, solucion.getPoint()[2], 0.01); // <--- X0
+		System.out.println("Test testMetodoSimplex:\n "
+				+ "La cantidad de horas para el dispositivo x1 dio 30: " + solucion.getPoint()[1]);
+		Assert.assertEquals(370, solucion.getPoint()[2], 0.01); // <--- X0 
+		System.out.println("Test testMetodoSimplex:\n "
+				+ "La cantidad de horas para el dispositivo x0 dio 370: " + solucion.getPoint()[2]);
 
 	}
 	
