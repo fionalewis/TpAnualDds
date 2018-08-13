@@ -34,7 +34,6 @@ public class Cliente extends Usuario {
 	private List<Dispositivo> dispositivos = new ArrayList<>();
 	private Categoria categ;
 	private int puntos = 0;
-	String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
 	private List<DispositivoEstandar> aux = new ArrayList<>(); 
 	
@@ -232,26 +231,6 @@ public class Cliente extends Usuario {
 		if(opcion) {
 			return prendidos;
 		} else {return apagados;}
-	}
-	
-	public void traerDispoDeJson() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		List<DispositivoInteligente> disp = null;
-		
-		try {
-			disp = DAOJson.deserializarLista(DispositivoInteligente.class,
-					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json"
-					ruta.concat("\\jsonDispositivos.json"));
-		} catch (Exception e) {
-			ExceptionsHandler.catchear(e);
-		}
-		disp.stream().forEach(d-> agregarDispositivo(filtrarEInstanciarDispo(d)));
-	}
-	
-	public Dispositivo filtrarEInstanciarDispo(DispositivoInteligente disp){
-		if(!disp.getEsInteligente()){
-			DispositivoEstandar dispo = new DispositivoEstandar(disp.getNombreDisp(),disp.getkWh(),0,disp.getEquipoConcreto(),disp.getHorasUsoMax(),disp.getHorasUsoMin());
-			return dispo;
-		} return disp;
 	}
 	
 }

@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
+import modelo.DispositivosRepository;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoInteligente;
 import modelo.users.Administrador;
@@ -88,15 +89,14 @@ public class TestJson {
 	@Test
     public void testJsonTablaDispositivos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		List<Dispositivo> disp = null;
-		Cliente cliente = new Cliente();
+		DispositivosRepository repoDispo = new DispositivosRepository();
 		
-		try {
-			cliente.traerDispoDeJson();
-			disp = cliente.getDispositivos();
-		} catch (Exception e) {
+		try{
+			repoDispo.importarDispoDeJson();
+			disp = repoDispo.getDispositivosExistentes();
+		} catch(Exception e){
 			ExceptionsHandler.catchear(e);
 		}
-		
 		
 		Assert.assertEquals(24, disp.size());
 		System.out.println("Test JsonJsonTablaDispositivos:\n "
