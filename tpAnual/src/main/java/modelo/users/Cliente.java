@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import entregas.Programa;
+import exceptions.ExceptionsHandler;
 
 import java.util.function.*;
 
+import modelo.DAOJson;
 import modelo.FilterPredicates;
 import modelo.deviceState.AhorroEnergia;
 import modelo.deviceState.Encendido;
@@ -19,7 +21,10 @@ import modelo.devices.DispositivoInteligente;
 
 
 import java.util.ArrayList;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
+
+//OJO CON LA RUTA DE JSON
 
 public class Cliente extends Usuario {
 
@@ -32,10 +37,13 @@ public class Cliente extends Usuario {
 	private List<Dispositivo> dispositivos = new ArrayList<>();
 	private Categoria categ;
 	private int puntos = 0;
+<<<<<<< HEAD
 	
 	private double latDom;
 	private double longDom;
 	
+=======
+>>>>>>> b2b0f9e9a8618de9bc0c7cbf3077c50802e4d25e
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
 	private List<DispositivoEstandar> aux = new ArrayList<>(); 
 	
@@ -180,7 +188,7 @@ public class Cliente extends Usuario {
 		case"IyC":
 			predicate = FilterPredicates.filterAmbos();
 			break;
-		default: System.out.println("Opción no válida.");
+		default: System.out.println("Opcion no valida.");
 			break;
 		}
 		return dispositivos.stream().filter(predicate).collect(Collectors.toList());

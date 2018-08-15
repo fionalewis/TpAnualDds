@@ -9,6 +9,9 @@ public abstract class Dispositivo {
 	protected double kWh;
 	protected LocalDateTime fechaRegistro;
 	protected double horasDeUso = 0;
+	protected double horasUsoMax = 0;
+	protected double horasUsoMin = 0;
+	public String equipoConcreto = null;
 	
 	//Getters y Setters
 	
@@ -38,6 +41,24 @@ public abstract class Dispositivo {
 	}
 	public void setFechaRegistro(LocalDateTime fecha) {
 		this.fechaRegistro = fecha;
+	}
+	public double getHorasUsoMax() {
+		return horasUsoMax;
+	}
+	public void setHorasUsoMax(double horasDeUso) {
+		this.horasUsoMax = horasDeUso;
+	}
+	public double getHorasUsoMin() {
+		return horasUsoMin;
+	}
+	public void setHorasUsoMin(double horasDeUso) {
+		this.horasUsoMin = horasDeUso;
+	}
+	public String getEquipoConcreto(){
+		return equipoConcreto;
+	}
+	public void setEquipoConcreto(String descripcion){
+		this.equipoConcreto = descripcion;
 	}
 
 	//Funcionalidades

@@ -85,12 +85,19 @@
 			<version>2.5.0</version>
 		</dependency>
 		
+<<<<<<< HEAD
 		
 		
 		<dependency>
  		 	<groupId>com.dukescript.api</groupId>
   			<artifactId>leaflet4j</artifactId>
   			<version>0.7</version>
+=======
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.6.1</version>
+>>>>>>> b2b0f9e9a8618de9bc0c7cbf3077c50802e4d25e
 		</dependency>
 
 

@@ -15,12 +15,15 @@ import modelo.users.Categoria;
 import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
 
+//OJO CON LA RUTA DE JSON!!
+
+
 public class Programa {
 	
 	//Para los frames
 	public static Cliente cprueba = new Cliente("bart","simpson","elbarto","12345",TipoDocumento.DNI,"4444444","11111111","Avenida Siempreviva 742");
 	static List<Dispositivo> disp = cprueba.getDispositivos();
-	
+	static String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
 	
 	//Metodos que usamos para categorias
 	
@@ -32,7 +35,9 @@ public class Programa {
 		List<Categoria> categorias = null;
 		Categoria categoria = null;
 		try {
-			categorias = DAOJson.deserializarLista(Categoria.class,"\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonCategorias.json");
+			categorias = DAOJson.deserializarLista(Categoria.class,
+					//"\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonCategorias.json");
+					ruta.concat("\\jsonCategorias.json"));
 			} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
