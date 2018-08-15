@@ -1,5 +1,7 @@
 package modelo.users;
 
+
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,6 +17,7 @@ import modelo.devices.DispositivoConvertido;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
 
+
 import java.util.ArrayList;
 import java.time.LocalDate;
 
@@ -29,6 +32,9 @@ public class Cliente extends Usuario {
 	private List<Dispositivo> dispositivos = new ArrayList<>();
 	private Categoria categ;
 	private int puntos = 0;
+	
+	private double latDom;
+	private double longDom;
 	
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
 	private List<DispositivoEstandar> aux = new ArrayList<>(); 
@@ -68,6 +74,34 @@ public class Cliente extends Usuario {
 		setCateg();
 	}
 
+	
+	//geoloc
+	
+	
+
+	public double getLatDom() {
+		return latDom;
+	}
+
+	public void setLatDom(double latDom) {
+		this.latDom = latDom;
+	}
+
+	public double getLongDom() {
+		return longDom;
+	}
+
+	public void setLongDom(double longDom) {
+		this.longDom = longDom;
+	}
+
+	
+
+	
+	
+	
+	
+	
 	//Getters y Setters
 	
 	public TipoDocumento getTipoDoc() {
