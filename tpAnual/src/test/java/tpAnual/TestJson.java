@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
-import modelo.DispositivosRepository;
+//import modelo.DispositivosRepository; no se por que mi eclipse no me lo actualiza aunque lo tenga
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoInteligente;
 import modelo.users.Administrador;
@@ -26,13 +26,10 @@ public class TestJson {
 	public void testJsonTraeClientes() throws FileNotFoundException, InstantiationException, IllegalAccessException {
 		List<Cliente> clientes = null;
 		try {
-<<<<<<< HEAD
 			clientes = DAOJson.deserializarLista(Cliente.class, "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonClientes.json");
-=======
 			clientes = DAOJson.deserializarLista(Cliente.class, 
 					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json"
 					ruta.concat("\\jsonClientes.json"));
->>>>>>> b2b0f9e9a8618de9bc0c7cbf3077c50802e4d25e
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -44,13 +41,9 @@ public class TestJson {
 	public void testJsonTraeUnCliente() throws FileNotFoundException, InstantiationException, IllegalAccessException{
     	Cliente cli = null;
 		try {
-<<<<<<< HEAD
-			cli = (Cliente) DAOJson.buscarIndexEnLista(Cliente.class, 1,"\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonClientes.json");
-=======
 			cli = (Cliente) DAOJson.buscarIndexEnLista(Cliente.class, 1,
 					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json"
 					ruta.concat("\\jsonClientes.json"));
->>>>>>> b2b0f9e9a8618de9bc0c7cbf3077c50802e4d25e
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -60,7 +53,6 @@ public class TestJson {
     }
     
     @Test
-<<<<<<< HEAD
     public void testJsonTraeUnDispositivo() throws FileNotFoundException, InstantiationException, IllegalAccessException{
     	Dispositivo disp = null;
 		try {
@@ -76,15 +68,9 @@ public class TestJson {
     public void testJsonTraeUnAdmin() throws FileNotFoundException, InstantiationException, IllegalAccessException {
     	Administrador admin = null;
     	try {
-    		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class, 0,"\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonAdministradores.json");
-=======
-    public void testJsonTraeUnAdmin() throws FileNotFoundException, InstantiationException, IllegalAccessException {
-    	Administrador admin = null;
-    	try {
     		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class, 0,
     				//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonAdministradores.json"
     				ruta.concat("\\jsonAdministradores.json"));
->>>>>>> b2b0f9e9a8618de9bc0c7cbf3077c50802e4d25e
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -98,13 +84,10 @@ public class TestJson {
 		
 		
 		try {
-<<<<<<< HEAD
 			categorias = DAOJson.deserializarLista(Categoria.class, "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonCategorias.json");
-=======
 			categorias = DAOJson.deserializarLista(Categoria.class, 
 					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json"
 					ruta.concat("\\jsonCategorias.json"));
->>>>>>> b2b0f9e9a8618de9bc0c7cbf3077c50802e4d25e
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -127,7 +110,8 @@ public class TestJson {
     }
     
     
-	@Test
+	//@Test
+    /*
     public void testJsonTablaDispositivos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		List<Dispositivo> disp = null;
 		DispositivosRepository repoDispo = new DispositivosRepository();
@@ -168,5 +152,5 @@ public class TestJson {
 				+ "El valor de kWh del dispositivo en la posicion ocho es 0.09: " 
 				+ disp.get(8).getkWh());
 
-    }
+    }*/
 }

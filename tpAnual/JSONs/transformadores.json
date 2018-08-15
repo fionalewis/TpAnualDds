@@ -1,0 +1,42 @@
+[  
+	{
+		'idTransformador':1,
+		'zona':"Caballito",
+		'ubicacion': {
+			'latitude':-34.617015,
+			'longitude':-58.446179
+	  }
+	},
+	{  
+		'idTransformador':2,
+		'zona':"Almagro",
+		'ubicacion': {
+			'latitude':-34.602957,
+			'longitude':-58.419014
+	  }
+	},
+	{  
+		'idTransformador':3,
+		'zona':"Palermo",
+		'ubicacion': {
+			'latitude':-34.575435,
+			'longitude':-58.423005
+	  }
+	},
+	{  
+		'idTransformador':4,
+		'zona':"Caballito",
+		'ubicacion': {
+			'latitude':-34.619663,
+			'longitude':-58.433519
+	  }
+	},
+	{  
+		'idTransformador':5,
+		'zona':"Balvanera",
+		'ubicacion': {
+			'latitude':-34.610269,
+			'longitude':-58.398715
+	  }
+	}
+]

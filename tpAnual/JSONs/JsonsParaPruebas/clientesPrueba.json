@@ -1,0 +1,38 @@
+[  
+   {  
+      "tipoDoc":"DNI",
+      "nroDoc":"40505652",
+      "telefono":"45454545",
+      "domicilio":"Avenida Corrientes y Avenida Medrano",
+      "nombre":"juan",
+      "apellido":"perez",
+      "userName":"xd",
+      "password":"contrasena",
+      "dispositivos":[
+	  {
+			"nombreDisp":"tele",
+			"kWh":0.5
+	  },
+	  {
+			"nombreDisp":"heladera",
+			"kWh":1.5
+	  }
+	  ]
+   },
+   {  
+      "tipoDoc":"DNI",
+      "nroDoc":"20505652",
+      "telefono":"55454545",
+      "domicilio":"Medrano 951",
+      "nombre":"homero",
+      "apellido":"thompson",
+      "userName":"B0ssman69",
+      "password":"12345",
+      "dispositivos":[
+	  {
+			"nombreDisp":"tostadora",
+			"kWh":0.3
+	  }
+	  ]
+   }
+]

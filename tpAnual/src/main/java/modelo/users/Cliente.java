@@ -1,7 +1,5 @@
 package modelo.users;
 
-
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,16 +10,19 @@ import java.util.function.*;
 
 import modelo.DAOJson;
 import modelo.FilterPredicates;
+import modelo.JsonManager;
 import modelo.deviceState.AhorroEnergia;
 import modelo.deviceState.Encendido;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoConvertido;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
-
+import modelo.geoLocation.GeoLocation;
+import modelo.geoLocation.Transformador;
 
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 
 //OJO CON LA RUTA DE JSON
@@ -37,13 +38,9 @@ public class Cliente extends Usuario {
 	private List<Dispositivo> dispositivos = new ArrayList<>();
 	private Categoria categ;
 	private int puntos = 0;
-<<<<<<< HEAD
 	
-	private double latDom;
-	private double longDom;
+	private Transformador transformadorActual;
 	
-=======
->>>>>>> b2b0f9e9a8618de9bc0c7cbf3077c50802e4d25e
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
 	private List<DispositivoEstandar> aux = new ArrayList<>(); 
 	
@@ -62,7 +59,8 @@ public class Cliente extends Usuario {
 		this.tipoDoc = tDoc;
 		this.nroDoc = nDoc;
 		this.telefono = tel;
-		this.domicilio = dom;
+		this.domicilio = dom +  ", Buenos Aires, Argentina";
+		asignarTransformador();
 		setCateg();
 	}
 	
@@ -77,38 +75,11 @@ public class Cliente extends Usuario {
 		this.tipoDoc = tDoc;
 		this.nroDoc = nDoc;
 		this.telefono = tel;
-		this.domicilio = dom;
+		this.domicilio = dom +  ", Buenos Aires, Argentina";
 		this.dispositivos.addAll(disp);
+		asignarTransformador();
 		setCateg();
 	}
-
-	
-	//geoloc
-	
-	
-
-	public double getLatDom() {
-		return latDom;
-	}
-
-	public void setLatDom(double latDom) {
-		this.latDom = latDom;
-	}
-
-	public double getLongDom() {
-		return longDom;
-	}
-
-	public void setLongDom(double longDom) {
-		this.longDom = longDom;
-	}
-
-	
-
-	
-	
-	
-	
 	
 	//Getters y Setters
 	
@@ -135,6 +106,7 @@ public class Cliente extends Usuario {
 	}
 	public void setDomicilio(String domicilio) {
 		this.domicilio = domicilio;
+		asignarTransformador(); // Cada vez que cambie de domicilio debe reasignarse
 	}
 	public Categoria getCateg() {
 		return categ;
@@ -152,6 +124,15 @@ public class Cliente extends Usuario {
 		this.puntos = puntos;
 	}
 	
+	//Getters y Setters - Entrega 2
+	
+	public Transformador getTransformadorActual() {
+		return transformadorActual;
+	}
+	public void setTransformadorActual(Transformador transformadorActual) {
+		this.transformadorActual = transformadorActual;
+	}
+
 	//Dispositivos
 	
 	public List<Dispositivo> getDispositivos() {
@@ -271,4 +252,15 @@ public class Cliente extends Usuario {
 		} else {return apagados;}
 	}
 	
+	//Transformadores
+	
+	public void asignarTransformador()  {
+		GeoLocation coordDom = new GeoLocation(domicilio,0,0);
+		try {
+			coordDom = JsonManager.conseguirCoord(domicilio);
+		} catch (IOException e) {
+			e.printStackTrace(); //
+		}
+		transformadorActual = GeoLocation.transfMasCercanoA(coordDom);
+	}
 }
