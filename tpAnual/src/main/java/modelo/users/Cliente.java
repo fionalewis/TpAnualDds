@@ -10,6 +10,7 @@ import java.util.function.*;
 
 import modelo.DAOJson;
 import modelo.FilterPredicates;
+import modelo.MetodoSimplex;
 import modelo.deviceState.AhorroEnergia;
 import modelo.deviceState.Encendido;
 import modelo.devices.Dispositivo;
@@ -36,6 +37,7 @@ public class Cliente extends Usuario {
 	private int puntos = 0;
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
 	private List<DispositivoEstandar> aux = new ArrayList<>(); 
+	private MetodoSimplex simplex; 
 	
 	public Cliente() {
 		super();
@@ -231,6 +233,11 @@ public class Cliente extends Usuario {
 		if(opcion) {
 			return prendidos;
 		} else {return apagados;}
+	}
+
+	public void llamarSimplex() {
+		List<DispositivoInteligente> IyC = (List<DispositivoInteligente>)(List<?>)obtenerLista("IyC");		
+		simplex.aplicarMetodoSimplex(IyC);
 	}
 	
 }

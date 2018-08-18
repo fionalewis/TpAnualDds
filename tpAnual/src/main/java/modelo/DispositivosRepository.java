@@ -11,7 +11,7 @@ import modelo.devices.DispositivoInteligente;
 
 public class DispositivosRepository {
 	
-	String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
+	String ruta = "C:\\Users\\Giuli\\eclipse-workspace\\TpAnualDds\\tpAnual\\JSONs";
 	//String ruta = "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json"
 	List<Dispositivo> dispositivosExistentes = new ArrayList<Dispositivo>();
 	

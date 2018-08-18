@@ -20,7 +20,8 @@ import modelo.users.Cliente;
 
 public class TestJson {
 
-		String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
+//		String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
+	String ruta = "C:\\Users\\Giuli\\eclipse-workspace\\TpAnualDds\\tpAnual\\JSONs";
 	
 	@Test
 	public void testJsonTraeClientes() throws FileNotFoundException, InstantiationException, IllegalAccessException {
