@@ -18,7 +18,6 @@ public class DispositivoInteligente extends Dispositivo {
 	Map<String, Sensor> sensores = new HashMap<String, Sensor>();
 	private IntervaloDispositivo unIntervalo;
 	boolean esInteligente = true; //esto es para el json
-	boolean esBajoConsumo = false;
 	
 	private List<IntervaloDispositivo> intervalos = new ArrayList<>();
 	
@@ -74,14 +73,6 @@ public class DispositivoInteligente extends Dispositivo {
 	
 	public void setEsInteligente(boolean ansSmart){
 		this.esInteligente = ansSmart;
-	}
-	
-	public boolean getEsBajoConsumo(){
-		return esBajoConsumo;
-	}
-	
-	public void setEsBajoConsumo(boolean ansBajoConsumo){
-		this.esBajoConsumo = ansBajoConsumo;
 	}
 	
 	//Intervalos
@@ -429,7 +420,18 @@ public class DispositivoInteligente extends Dispositivo {
 		if(unaFechaF.isBefore(fechas[i])) {
 			return i-1;
 		}
+		
 		return -1; //Si llego hasta aca y no evaluo es porque tambien hubo algun error
 	}
 	
+	//MEJORAR ESTO --> LLEVARLO A DISPOSITIVO
+	@Override
+	public DispositivoInteligente crearDispositivo(){
+		DispositivoInteligente nuevo = new DispositivoInteligente();
+		nuevo.setNombreDisp(this.nombreDisp);
+		nuevo.setEquipoConcreto(this.equipoConcreto);
+		nuevo.setEsBajoConsumo(this.esBajoConsumo);
+		nuevo.setkWh(this.kWh);
+		return nuevo;
+	}
 }

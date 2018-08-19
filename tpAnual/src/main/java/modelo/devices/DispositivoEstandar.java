@@ -29,6 +29,8 @@ public class DispositivoEstandar extends Dispositivo {
 			setHorasUsoDiarias(horasUso);
 		}
 		
+		public DispositivoEstandar(){}
+		
 	//Metodos basicos
 
 		public int getHorasUsoDiarias() {
@@ -71,6 +73,17 @@ public class DispositivoEstandar extends Dispositivo {
 		
 		public EstadoDispositivo getEstadoDisp() {
 			return null;
+		}
+		
+		//MEJORAR ESTO --> LLEVARLO A DISPOSITIVO
+		@Override
+		public DispositivoEstandar crearDispositivo(){
+			DispositivoEstandar nuevo = new DispositivoEstandar();
+			nuevo.setNombreDisp(this.nombreDisp);
+			nuevo.setEquipoConcreto(this.equipoConcreto);
+			nuevo.setEsBajoConsumo(this.esBajoConsumo);
+			nuevo.setkWh(this.kWh);
+			return nuevo;
 		}
 	
 }

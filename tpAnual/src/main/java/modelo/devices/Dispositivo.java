@@ -12,6 +12,7 @@ public abstract class Dispositivo {
 	protected double horasUsoMax = 0;
 	protected double horasUsoMin = 0;
 	public String equipoConcreto = null;
+	boolean esBajoConsumo = false;
 	
 	//Getters y Setters
 	
@@ -60,6 +61,13 @@ public abstract class Dispositivo {
 	public void setEquipoConcreto(String descripcion){
 		this.equipoConcreto = descripcion;
 	}
+	public boolean getEsBajoConsumo(){
+		return esBajoConsumo;
+	}
+	
+	public void setEsBajoConsumo(boolean ansBajoConsumo){
+		this.esBajoConsumo = ansBajoConsumo;
+	}
 
 	//Funcionalidades
 	
@@ -89,6 +97,12 @@ public abstract class Dispositivo {
 	
 	public static boolean esAmbos(Dispositivo undisp) {
 		return (esInteligente(undisp)||esConvertido(undisp));
+	}
+	
+	//crear nuevos dispositivos del mismo tipo
+	//lo implemente en las subclases porque no me salio hacerlo aca
+	public Object crearDispositivo(){
+		return null;
 	}
 	
 }

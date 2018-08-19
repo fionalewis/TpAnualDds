@@ -20,8 +20,18 @@ import modelo.users.Cliente;
 
 public class TestJson {
 
-		String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
+	String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
+	DispositivosRepository repoDispo = new DispositivosRepository();
 	
+	@Before
+	public void init() {
+		try{
+			repoDispo.importarDispoDeJson();
+		} catch(Exception e){
+			ExceptionsHandler.catchear(e);
+		}
+	}
+		
 	@Test
 	public void testJsonTraeClientes() throws FileNotFoundException, InstantiationException, IllegalAccessException {
 		List<Cliente> clientes = null;
@@ -88,15 +98,8 @@ public class TestJson {
     
 	@Test
     public void testJsonTablaDispositivos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		List<Dispositivo> disp = null;
-		DispositivosRepository repoDispo = new DispositivosRepository();
 		
-		try{
-			repoDispo.importarDispoDeJson();
-			disp = repoDispo.getDispositivosExistentes();
-		} catch(Exception e){
-			ExceptionsHandler.catchear(e);
-		}
+		List<Dispositivo> disp = repoDispo.getDispositivosExistentes();
 		
 		Assert.assertEquals(24, disp.size());
 		System.out.println("Test JsonJsonTablaDispositivos:\n "
@@ -128,4 +131,5 @@ public class TestJson {
 				+ disp.get(8).getkWh());
 
     }
+	
 }
