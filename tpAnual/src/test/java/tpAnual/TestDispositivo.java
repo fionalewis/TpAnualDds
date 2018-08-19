@@ -135,5 +135,15 @@ public class TestDispositivo {
 				+ "\nCant tipos: " + repoDispo.filtrarCantTipos(dispositivos)
 				+ " y tamanio lista representantes: " + listaRepresentante.size());
 	}
+	
+	@Test
+	public void testListaDeCantPorTipo(){
+		List<Integer> listaDeCantPorTipo = new ArrayList<Integer>();
+		listaDeCantPorTipo = repoDispo.generarListaDeCantDeCadaTipo(dispositivos);
+		Assert.assertEquals(2,listaDeCantPorTipo.get(0),0.01);
+		System.out.println("TestListaDeCantPorTipo: la lista tiene 2 dispositivos de tipo 0 y 1 de tipo 4: "
+				+ "\nTipo 1: " + listaDeCantPorTipo.get(0)
+				+ "\nTipo 4: " + listaDeCantPorTipo.get(1));
+	}
 
 }

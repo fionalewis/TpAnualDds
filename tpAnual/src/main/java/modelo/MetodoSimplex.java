@@ -1,4 +1,5 @@
 package modelo;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,11 +66,26 @@ public class MetodoSimplex {
 	
 	
 	// ------------- Metodos para armar la funcion economica con cantidad variable de argumentos -------------- 
-	public PointValuePair aplicarMetodoSimplex(List<DispositivoInteligente> disp){ 
+
+	@SuppressWarnings("unchecked")
+	public PointValuePair aplicarMetodoSimplex(List<DispositivoInteligente> disp) throws FileNotFoundException, InstantiationException, IllegalAccessException{ 
 		
+		DispositivosRepository repoDispo = new DispositivosRepository();
+		repoDispo.importarDispoDeJson();
+		
+		//this.dispositivos = (List<DispositivoInteligente>) (List<?>) repoDispo.filtrarRepresentatesDeTipos((List<Dispositivo>) (List<?>) disp);
 		this.dispositivos = disp;
+		
+		List<Integer> listCantidadDeCadaTipo = new ArrayList<Integer>();
 		//los x (cant horas q pueden consumir) q paso la misma cant de unos que la cant de dispositivos q tengo
-		crearFuncionEconomica(generarListaCoeficiente(this.dispositivos.size(),1));  
+		listCantidadDeCadaTipo = repoDispo.generarListaDeCantDeCadaTipo((List<Dispositivo>) (List<?>) disp);
+		
+		double[] listaDeCantidades = new double[listCantidadDeCadaTipo.size()];
+		listaDeCantidades = convertirListToCoef(listCantidadDeCadaTipo);
+		listaDeCantidades = revertirArray(listaDeCantidades);
+		crearFuncionEconomica(listaDeCantidades);  
+		
+		
 		
 		agregarRestricciones();
 		return resolver();
@@ -156,4 +172,14 @@ public class MetodoSimplex {
 		}
 		return coeficientes;
 	}
+	
+	public double[] convertirListToCoef(List<Integer> list){
+		
+		double[] target = new double[list.size()];
+		 for (int i = 0; i < target.length; i++) {
+		    target[i] = list.get(i).doubleValue();
+		 }
+		 return target;
+	}
+	
 }

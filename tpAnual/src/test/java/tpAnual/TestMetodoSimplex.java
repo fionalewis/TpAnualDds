@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import exceptions.ExceptionsHandler;
+import modelo.DispositivosRepository;
 import modelo.MetodoSimplex;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoInteligente;
@@ -16,15 +17,18 @@ import modelo.users.Cliente;
 
 public class TestMetodoSimplex {
 	MetodoSimplex simplex = new MetodoSimplex();
-	DispositivoInteligente dispSCD1 = new DispositivoInteligente("dispSCD1",  0.18);
-	DispositivoInteligente dispSCD2 = new DispositivoInteligente("dispSCD2",  0.875);
-	DispositivoInteligente dispSCD3 = new DispositivoInteligente("dispSCD3",  0.06);
+	DispositivoInteligente dispSCD1 = new DispositivoInteligente();
+	DispositivoInteligente dispSCD2 = new DispositivoInteligente();
+	DispositivoInteligente dispSCD3 = new DispositivoInteligente();
+	DispositivoInteligente dispSCD4 = new DispositivoInteligente();
+	DispositivoInteligente dispSCD5 = new DispositivoInteligente();
 	List<DispositivoInteligente> dispSCD = new ArrayList<DispositivoInteligente>();
 	
-	DispositivoInteligente dispSCI1 = new DispositivoInteligente("dispSCI1",  0.18);
-	DispositivoInteligente dispSCI2 = new DispositivoInteligente("dispSCI2",  0.875);
-	DispositivoInteligente dispSCI3 = new DispositivoInteligente("dispSCI3",  180);
+	DispositivoInteligente dispSCI1 = new DispositivoInteligente();
+	DispositivoInteligente dispSCI2 = new DispositivoInteligente();
+	DispositivoInteligente dispSCI3 = new DispositivoInteligente();
 	List<DispositivoInteligente> dispSCI = new ArrayList<DispositivoInteligente>();
+	DispositivosRepository repoDispo = new DispositivosRepository();
 	
 	/*DispositivoInteligente dispSI1 = new DispositivoInteligente("dispSI1",  2);
 	DispositivoInteligente dispSI2 = new DispositivoInteligente("dispSI2",  5);
@@ -33,15 +37,24 @@ public class TestMetodoSimplex {
 	
 	@Before
 	public void init() {
-		dispSCD1.setHorasUsoMax(370);
-		dispSCD1.setHorasUsoMin(90);
-		dispSCD2.setHorasUsoMax(30);
-		dispSCD2.setHorasUsoMin(6);
-		dispSCD3.setHorasUsoMax(360);
-		dispSCD3.setHorasUsoMin(120);
+		
+		try{
+			repoDispo.importarDispoDeJson();
+		} catch(Exception e){
+			ExceptionsHandler.catchear(e);
+		}
+		
+		dispSCD1 = (DispositivoInteligente) repoDispo.crearDispositivoSegunTipo(0);
+		dispSCD2 = (DispositivoInteligente) repoDispo.crearDispositivoSegunTipo(0);
+		dispSCD3 = (DispositivoInteligente) repoDispo.crearDispositivoSegunTipo(6);
+		dispSCD4 = (DispositivoInteligente) repoDispo.crearDispositivoSegunTipo(11);
+		dispSCD5 = (DispositivoInteligente) repoDispo.crearDispositivoSegunTipo(16);
+		
 		dispSCD.add(dispSCD1);
 		dispSCD.add(dispSCD2);
 		dispSCD.add(dispSCD3);
+		dispSCD.add(dispSCD4);
+		dispSCD.add(dispSCD5);
 		
 		dispSCI1.setHorasUsoMax(370);
 		dispSCI1.setHorasUsoMin(90);
@@ -62,20 +75,19 @@ public class TestMetodoSimplex {
 	}
 	
 	@Test
-    public void testMetodoSimplexSCD(){
+    public void testMetodoSimplexSCD() throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		PointValuePair solucionSCD = simplex.aplicarMetodoSimplex(dispSCD);
-		Assert.assertEquals(760, solucionSCD.getValue(), 0.01);
+		Assert.assertEquals(1470, solucionSCD.getValue(), 0.01);
 		System.out.println("Test testMetodoSimplexSCD:\n "
-				+ "la suma de los x dio 760: " + solucionSCD.getValue());
-		Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); // <--- X2
-		System.out.println("Test testMetodoSimplexSCD:\n "
-				+ "La cantidad de horas para el dispositivo x2 dio 360: " + solucionSCD.getPoint()[0]);
-		Assert.assertEquals(30, solucionSCD.getPoint()[1], 0.01); // <--- X1
-		System.out.println("Test testMetodoSimplexSCD:\n "
-				+ "La cantidad de horas para el dispositivo x1 dio 30: " + solucionSCD.getPoint()[1]);
-		Assert.assertEquals(370, solucionSCD.getPoint()[2], 0.01); // <--- X0 
-		System.out.println("Test testMetodoSimplexSCD:\n "
-				+ "La cantidad de horas para el dispositivo x0 dio 370: " + solucionSCD.getPoint()[2]);
+				+ "la suma de los x dio 1080: " + solucionSCD.getValue());
+		Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x4 dio: " + solucionSCD.getPoint()[0]);
+		Assert.assertEquals(30, solucionSCD.getPoint()[1], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x3 dio: " + solucionSCD.getPoint()[1]);
+		Assert.assertEquals(360, solucionSCD.getPoint()[2], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x2 dio: " + solucionSCD.getPoint()[2]);
+		Assert.assertEquals(360, solucionSCD.getPoint()[3], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x1 dio: " + solucionSCD.getPoint()[3]);
 
 	}
 	
@@ -85,7 +97,7 @@ public class TestMetodoSimplex {
 			PointValuePair solucionSCI = simplex.aplicarMetodoSimplex(dispSCI);
 		}
 		catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("testMetodoSimplexSCI: un sistema compatible indeterminado no tiene solucion");
 		}
 	}
 	

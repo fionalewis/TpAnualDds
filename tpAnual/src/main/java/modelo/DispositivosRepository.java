@@ -26,8 +26,8 @@ public class DispositivosRepository {
 	 * 5- Televisor, LED 24¡±, DI
 	 * 6- Televisor, LED 32¡±, DI
 	 * 7- Televisor, LED 40¡±, DI
-	 * 8- Heladera, con freezer, DI
-	 * 9- Heladera, sin freezer, DI
+	 * 8- Heladera, con freezer, DI //NO TIENE CONSUMO MAX Y MIN PORQUE NUNCA SE PUEDE APAGAR
+	 * 9- Heladera, sin freezer, DI //NO TIENE CONSUMO MAX Y MIN PORQUE NUNCA SE PUEDE APAGAR
 	 * 10- Lavarropas, automatico de 5kg con calentamiento de agua, DE
 	 * 11- Lavarropas, automatico de 5kg, DI
 	 * 12- Lavarropas, semi-automatico de 5kg, DE
@@ -85,7 +85,7 @@ public class DispositivosRepository {
 		String tipo = dispositivosExistentes.get(unTipo).getEquipoConcreto();
 		
 		for(int i=0; i<dispositivos.size();i++){
-			if(dispositivos.get(i).getEquipoConcreto() == tipo) counter++;
+			if(dispositivos.get(i).getEquipoConcreto().equals(tipo)) counter++;
 		}
 		
 		return counter;
@@ -129,9 +129,55 @@ public class DispositivosRepository {
 				i++;
 			}else i++;
 		}
-			
-			
 		
 		return listaRepresentantes;
+	}
+	
+	/*public List<Integer> generarListaDeTipos(List<Dispositivo> dispositivos){
+		List<Integer> ListaDeTipos =  new ArrayList<Integer>();
+		int i = 1;
+		
+		
+		
+		return ListaDeTipos;
+	}*/
+	
+	public int getIndexPorDescripcion(String unaDescripcion){
+		int i = 0;
+		String descr = null;
+		while(i<dispositivosExistentes.size()){
+			descr = dispositivosExistentes.get(i).getEquipoConcreto();
+			if(descr.equals(unaDescripcion)){
+				return i;
+			}
+			else i++;
+		}
+		return -1;
+	}
+	
+	public List<Integer> generarListaDeCantDeCadaTipo(List<Dispositivo> dispositivos){
+		List<Integer> listaCantPorTipo = new ArrayList<Integer>();
+		List<Dispositivo> listaRepresentantes = new ArrayList<Dispositivo>();
+		listaRepresentantes = filtrarRepresentatesDeTipos(dispositivos);
+		int i = 1; 
+		int cant = 0;
+		String tipo = null;
+		List<String> tipos = new ArrayList<String>();
+		tipo = dispositivos.get(0).getEquipoConcreto();
+		tipos.add(dispositivos.get(0).getEquipoConcreto());
+		cant = filtrarCantSegunTipo(dispositivos,getIndexPorDescripcion(tipo));
+		listaCantPorTipo.add(cant);
+		
+		while(i<dispositivos.size()){
+			tipo = dispositivos.get(i).getEquipoConcreto();
+			if(!tipos.contains(tipo)){
+				cant = filtrarCantSegunTipo(dispositivos,getIndexPorDescripcion(tipo));
+				listaCantPorTipo.add(cant);
+				tipos.add(dispositivos.get(0).getEquipoConcreto());
+				i++;
+			}else i++;
+		}
+		
+		return listaCantPorTipo;
 	}
 }

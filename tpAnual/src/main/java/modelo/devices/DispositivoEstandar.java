@@ -82,6 +82,8 @@ public class DispositivoEstandar extends Dispositivo {
 			nuevo.setNombreDisp(this.nombreDisp);
 			nuevo.setEquipoConcreto(this.equipoConcreto);
 			nuevo.setEsBajoConsumo(this.esBajoConsumo);
+			nuevo.setHorasUsoMax(this.horasUsoMax);
+			nuevo.setHorasUsoMin(this.horasUsoMin);
 			nuevo.setkWh(this.kWh);
 			return nuevo;
 		}
