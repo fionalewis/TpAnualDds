@@ -3,12 +3,8 @@ package modelo.users;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import entregas.Programa;
-import exceptions.ExceptionsHandler;
-
 import java.util.function.*;
 
-import modelo.DAOJson;
 import modelo.FilterPredicates;
 import modelo.JsonManager;
 import modelo.deviceState.AhorroEnergia;
@@ -21,7 +17,6 @@ import modelo.geoLocation.GeoLocation;
 import modelo.geoLocation.Transformador;
 
 import java.util.ArrayList;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -64,14 +59,31 @@ public class Cliente extends Usuario {
 		setCateg();
 	}
 	
-	//Constructor para el json
-	public Cliente(String name,String surname,String username,String pass,int y,int m,int d,
-					TipoDocumento tDoc,String nDoc,String tel,String dom,List<Dispositivo> disp) {
+	//Constructor para el json (toma la fecha de registro como la del momento)
+	public Cliente(String name,String surname,String username,String pass,TipoDocumento tDoc,String nDoc,
+					String tel,String dom,List<Dispositivo> disp) {
 		setNombre(name);
 		setApellido(surname);
 		setUserName(username);
 		setPassword(pass);
 		this.fechaAlta = LocalDate.now();
+		this.tipoDoc = tDoc;
+		this.nroDoc = nDoc;
+		this.telefono = tel;
+		this.domicilio = dom +  ", Buenos Aires, Argentina";
+		this.dispositivos.addAll(disp);
+		asignarTransformador();
+		setCateg();
+	}
+	
+	//Constructor para los tests (le pueden asignar la fecha de registro que quieran)
+	public Cliente(String name,String surname,String username,String pass,int y,int m,int d,TipoDocumento tDoc,
+					String nDoc,String tel,String dom,List<Dispositivo> disp) {
+		setNombre(name);
+		setApellido(surname);
+		setUserName(username);
+		setPassword(pass);
+		this.fechaAlta = LocalDate.of(y,m,d);
 		this.tipoDoc = tDoc;
 		this.nroDoc = nDoc;
 		this.telefono = tel;
@@ -104,9 +116,9 @@ public class Cliente extends Usuario {
 	public String getDomicilio() {
 		return domicilio;
 	}
-	public void setDomicilio(String domicilio) {
+	public void setDomicilio(String domicilio) { // Cada vez que cambie de domicilio debe reasignarse
 		this.domicilio = domicilio;
-		asignarTransformador(); // Cada vez que cambie de domicilio debe reasignarse
+		asignarTransformador(); 
 	}
 	public Categoria getCateg() {
 		return categ;
@@ -115,7 +127,7 @@ public class Cliente extends Usuario {
 		this.categ = categoria;
 	}
 	public void setCateg() {
-		this.categ = Programa.categoria(this.calcularConsumo());
+		this.categ = JsonManager.categoria(this.calcularConsumo());
 	}
 	public int getPuntos() {
 		return puntos;
@@ -181,7 +193,7 @@ public class Cliente extends Usuario {
 	
 	public void mostrarLista(List<Dispositivo> dispositivos) {
 		for(int i = 0;i<dispositivos.size();i++) {
-			System.out.println(dispositivos.get(i).getNombreDisp());
+			System.out.println(dispositivos.get(i).getTipoDisp().toString());
 		}
 	}
 	
@@ -200,13 +212,7 @@ public class Cliente extends Usuario {
 	@Override public double calcularConsumo() {
 		return obtenerLista("IyC").stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
 	}
-	
-	//Duplicado para poder pasarle una fechaFin en los tests
-	
-	/*public double calcularConsumo(LocalDateTime fechaFin) {
-		return obtenerLista("IyC").stream().mapToDouble(unDisp -> unDisp.consumoTotal(fechaFin)).sum();
-	}?????*/
-	
+
 	/* Para obtener la tarifa. El admin va a ser el unico que pueda usar este metodo
 	 * para hacer alguna cosulta del estilo clienteX.obtenerTarifa(), podemos pasarlo
 	 * a su clase como obtenerTarifa(clienteX) tambien, pero para esta entrega seria
@@ -252,7 +258,7 @@ public class Cliente extends Usuario {
 		} else {return apagados;}
 	}
 	
-	//Transformadores
+	//Entrega 2
 	
 	public void asignarTransformador()  {
 		GeoLocation coordDom = new GeoLocation(domicilio,0,0);
@@ -262,5 +268,12 @@ public class Cliente extends Usuario {
 			e.printStackTrace(); //
 		}
 		transformadorActual = GeoLocation.transfMasCercanoA(coordDom);
+	}
+	
+	//Este metodo quizas deberia ir en el administrador mas adelante, pero por ahora lo consultamos directamente desde el cliente
+	
+	public boolean tieneHogarEficiente() {
+		//si en el mes no consume mas de 612kwh
+		return false;
 	}
 }

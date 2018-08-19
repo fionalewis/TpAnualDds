@@ -1,9 +1,11 @@
 package modelo.geoLocation;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
+import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
+
+//El metodo ubicacionDe usa la ruta del json de las zonas y transfMasCercanoA usa el json de los transformadores!
 
 public class GeoLocation {
 	
@@ -77,12 +79,13 @@ public class GeoLocation {
 	        return name + " (" + latitude + ", " + longitude + ")";
 	    }
 	    
-		public static Zona ubicacionDe(Object obj) { //Para ubicar la zona a la que pertenece el cliente o un transformador
+		public static Zona ubicacionDe(Object obj) { //Para ubicar la zona a la que pertenece un cliente o un transformador
 			List<Zona> zonas = null;
 			Zona unaZona = null;
 			try {
-				zonas = DAOJson.deserializarLista(Zona.class,"\\JSONs\\zonas.json");
-				} catch (Exception e) {
+				zonas = DAOJson.deserializarLista(Zona.class,"C:\\Users\\Salome\\git\\TpAnualDdS\\tpAnual\\JSONs\\zonas.json");
+			} catch (Exception e) {
+				ExceptionsHandler.catchear(e);
 			}
 			GeoLocation aEvaluar = (obj instanceof GeoLocation) ? (GeoLocation) obj : ((Transformador) obj).getUbicacion();
 			for(Zona z: zonas) {
@@ -96,9 +99,9 @@ public class GeoLocation {
 		public static Transformador transfMasCercanoA(GeoLocation unPunto)  {
 			List<Transformador> transformadores = null;
 			try {
-				transformadores = DAOJson.deserializarLista(Transformador.class,"\\JSONs\\transformadores.json");
-			} catch (FileNotFoundException | InstantiationException | IllegalAccessException e) {
-				e.printStackTrace();
+				transformadores = DAOJson.deserializarLista(Transformador.class,"C:\\Users\\Salome\\git\\TpAnualDdS\\tpAnual\\JSONs\\transformadores.json");
+			} catch (Exception e) {
+				ExceptionsHandler.catchear(e);
 			}
 			Transformador result = transformadores.get(0);	
 			for(int i = 0; i<transformadores.size();i++) {

@@ -1,6 +1,6 @@
 package modelo.users;
 
-import entregas.Programa;
+import modelo.JsonManager;
 
 public class Categoria {
 	
@@ -74,7 +74,7 @@ public class Categoria {
 	//o dependiendo de quien tenga la responsabilidad de hacerla
 	
 	public static boolean perteneceACateg(String categ,double consumo) {
-		Categoria c = Programa.categoria(consumo);
+		Categoria c = JsonManager.categoria(consumo);
 		return c.getClasif().equals(categ);
 	}
 	

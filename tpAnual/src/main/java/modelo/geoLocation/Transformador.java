@@ -1,13 +1,17 @@
 package modelo.geoLocation;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
 
+import exceptions.ExceptionsHandler;
 import modelo.users.Cliente;
+
+//Por ahora esta clase se maneja con un json de clientes como su "BDD" para poder modificar los atributos del cliente,
+//como registrar cambios de domicilio y reasignarle el transformador, o para obtener los clientes que tienen un X transformador
+//asignado y necesitamos conocer en el metodo suministroActual, pero esto a futuro no va a ser con un json creo
 
 public class Transformador {
 
@@ -46,27 +50,34 @@ public class Transformador {
 		return getZona().equals(nombreZona);
 	}
 
-	public double suministroActual() {
+	public double suministroActual() { //no funciona x ahora
 		
 		List<Cliente> clientesConEsteTransf = new ArrayList<>();		
 		Gson gson = new Gson();		
 		BufferedReader buffReader = null;
 		try {
-			buffReader = new BufferedReader(new FileReader("\\JSONs\\JsonsParaPruebas\\clientesPrueba.json"));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace(); //Falta manejar la excepcion
+			buffReader = new BufferedReader(new FileReader("C:\\Users\\Salome\\git\\TpAnualDdS\\tpAnual\\JSONs\\JsonsParaPruebas\\clientesPrueba.json"));
+		} catch (Exception e) {
+			ExceptionsHandler.catchear(e);
 		}
 	    Cliente[] arrayCli = gson.fromJson(buffReader, Cliente[].class);
 	
 		for(int i = 0;i<arrayCli.length;i++) {
 			Cliente c = new Cliente();
-			c.setDomicilio(arrayCli[i].getDomicilio());
+			c.setDomicilio(arrayCli[i].getDomicilio()); //muy basico por ahora, solo queremos obtener el consumo de quienes tengan este transf asignado
 			c.setNombre(arrayCli[i].getNombre());
+			c.setTelefono(arrayCli[i].getTelefono());
+			c.setDispositivos(arrayCli[i].getDispositivos());
+			c.setApellido(arrayCli[i].getApellido());
+			c.setUserName(arrayCli[i].getUserName());
+			c.setPassword(arrayCli[i].getPassword());
+			c.setDispositivos(arrayCli[i].getDispositivos());
 			int idAEvaluar = c.getTransformadorActual().getIdTransformador();
 			if(idAEvaluar == idTransformador) {
 					clientesConEsteTransf.add(c);
 				}
-			}		
+			}
+		
 		return clientesConEsteTransf.stream().mapToDouble(unCliente-> unCliente.calcularConsumo()).sum();
 	}
 

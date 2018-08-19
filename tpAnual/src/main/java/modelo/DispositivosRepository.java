@@ -13,6 +13,7 @@ public class DispositivosRepository {
 	
 	String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
 	//String ruta = "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json"
+	//String ruta = "C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs"
 	List<Dispositivo> dispositivosExistentes = new ArrayList<Dispositivo>();
 	
 	public List<Dispositivo> getDispositivosExistentes(){
@@ -33,8 +34,7 @@ public class DispositivosRepository {
 	
 	public Dispositivo filtrarEInstanciarDispo(DispositivoInteligente disp){
 		if(!disp.getEsInteligente()){
-			DispositivoEstandar dispo = new DispositivoEstandar(disp.getNombreDisp(),disp.getkWh(),0,
-					disp.getEquipoConcreto(),disp.getHorasUsoMax(),disp.getHorasUsoMin());
+			DispositivoEstandar dispo = new DispositivoEstandar(disp.getTipoDisp(),disp.getDescrip(),disp.getkWh(),0,disp.getHorasUsoMin(),disp.getHorasUsoMax(),disp.getEsBajoConsumo());
 			return dispo;
 		} return disp;
 	}

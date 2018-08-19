@@ -12,7 +12,7 @@ import modelo.devices.Dispositivo;
 
 
 public class TestCliente {
-	
+	/*
 	private Cliente clienteDePrueba;
 	private List<Dispositivo> dispositivosPrueba = new ArrayList<>();
 	DispositivoInteligente tele = new DispositivoInteligente("Televisor",0.14);
@@ -55,5 +55,5 @@ public class TestCliente {
 	public void testCantDispositivosEncendidos() {
 		Assert.assertEquals(clienteDePrueba.cantDisp(true),1);
 		System.out.println("Test cantDispositivosApagados:\n Al tener únicamente a la tele en la lista, la cantidad de dispositivos encendidos es uno: " + clienteDePrueba.cantDisp(true));
-	}
+	}*/
 }

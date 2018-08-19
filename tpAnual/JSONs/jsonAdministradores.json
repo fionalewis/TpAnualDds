@@ -1,7 +1,8 @@
 [  
-         {  
-            'codAdmin' : 20000
-         },
-         {  'codAdmin' : 1
-         }
+    {
+		'codAdmin' : 20000
+    },
+	{
+		'codAdmin' : 1
+    }
 ]

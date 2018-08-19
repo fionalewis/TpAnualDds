@@ -17,8 +17,11 @@ import modelo.devices.Sensor;
 import modelo.users.Cliente;
 import modelo.devices.Dispositivo;
 
+//La comento toda hasta que tengamos bien definido lo demas
+
+
 public class Entrega1 {
-	
+	/*
 	private static Scanner in = new Scanner(System.in);
 	public static Cliente nico = new Cliente();
 	private static DispositivoInteligente aircon = new DispositivoInteligente("Aire Acondicionado",0.14);
@@ -1184,5 +1187,5 @@ public class Entrega1 {
 		condicionesExistentes.add(hayGenteCasa);
 		actuadoresExistentes.add(prenderAire);
 		actuadoresExistentes.add(prenderLuz);
-	}
+	}*/
 }

@@ -1,38 +1,40 @@
 [  
    {  
-      "tipoDoc":"DNI",
-      "nroDoc":"40505652",
-      "telefono":"45454545",
-      "domicilio":"Avenida Corrientes y Avenida Medrano",
-      "nombre":"juan",
-      "apellido":"perez",
-      "userName":"xd",
-      "password":"contrasena",
+      "tipoDoc": "DNI",
+      "nroDoc": "40505652",
+      "telefono": "45454545",
+      "domicilio": "Avenida Corrientes y Avenida Medrano",
+      "nombre": "Juan",
+      "apellido": "López",
+      "userName": "juancitoperez",
+      "password": "contrasenia",
       "dispositivos":[
 	  {
-			"nombreDisp":"tele",
-			"kWh":0.5
-	  },
-	  {
-			"nombreDisp":"heladera",
-			"kWh":1.5
+		"nombreDisp": "Televisor",
+		"kWh": 0.5,
+		"equipoConcreto": "LED 40'",
+		"fechaRegistro":
+		{
+			"year":2018,
+			"month":8,
+			"day":18,
+			"hour":18,
+			"minute":0,
+			"second":0
+		}
 	  }
 	  ]
    },
    {  
-      "tipoDoc":"DNI",
-      "nroDoc":"20505652",
-      "telefono":"55454545",
-      "domicilio":"Medrano 951",
-      "nombre":"homero",
-      "apellido":"thompson",
-      "userName":"B0ssman69",
-      "password":"12345",
+      "tipoDoc": "DNI",
+      "nroDoc": "20505652",
+      "telefono": "55454545",
+      "domicilio": "Medrano 951",
+      "nombre": "Homero",
+      "apellido": "Thompson",
+      "userName": "B0ssman69",
+      "password": "12345",
       "dispositivos":[
-	  {
-			"nombreDisp":"tostadora",
-			"kWh":0.3
-	  }
 	  ]
    }
 ]

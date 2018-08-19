@@ -17,37 +17,53 @@ public class DispositivoInteligente extends Dispositivo {
 	private EstadoDispositivo estadoDisp;
 	Map<String, Sensor> sensores = new HashMap<String, Sensor>();
 	private IntervaloDispositivo unIntervalo;
-	boolean esInteligente = true; //esto es para el json
-	boolean esBajoConsumo = false;
+
 	
 	private List<IntervaloDispositivo> intervalos = new ArrayList<>();
 	
-	//Constructor default
-	public DispositivoInteligente(String nombDisp,double kWh) {
-		setNombreDisp(nombDisp);
+	//Constructor default (probablemente no lo usemos)
+	public DispositivoInteligente(tipoDispositivo tipoDisp,String descrip,double kWh,boolean bajoConsumo,int horasMin,int horasMax) {
+		setTipoDisp(tipoDisp);
 		setkWh(kWh);
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.now());
 		setkWhAhorro(kWh);
 		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
-		
+		setDescrip(descrip);
+		setEsInteligente(true);
+		setHorasUsoMin(horasMin);
+		setHorasUsoMax(horasMax);
+		setEsBajoConsumo(bajoConsumo);		
 	}
 	
 	//Constructor para los tests
-	public DispositivoInteligente(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec) {
-		setNombreDisp(nombDisp);
+	public DispositivoInteligente(tipoDispositivo tipoDisp,String descrip,double kWh,int year,int month,int day,int hour,int min,int sec,
+									int horasMin,int horasMax,boolean bajoConsumo) {
+		setTipoDisp(tipoDisp);
+		setDescrip(descrip);
 		setkWh(kWh);
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.of(year,month,day,hour,min,sec));
 		setkWhAhorro(kWh);
 		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
-
+		setHorasUsoMin(horasMin);
+		setHorasUsoMax(horasMax);
+		setEsInteligente(true);
+		setEsBajoConsumo(bajoConsumo);	
 	}
 	
 	//Constructor para la conversion
 	public DispositivoInteligente() {
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.now());
+		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
+		//los disp convertidos son considerados inteligentes para el simplex???
+	}
+	
+	//Conversion 2.0
+	public DispositivoInteligente(int y,int m,int d,int h,int min,int s) {
+		setEstadoDisp(new Encendido());
+		setFechaRegistro(LocalDateTime.of(y,m,d,h,min,s));
 		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
 	}
 
@@ -66,22 +82,6 @@ public class DispositivoInteligente extends Dispositivo {
 	}
 	public void setEstadoDisp(EstadoDispositivo estadoDisp) {
 		this.estadoDisp = estadoDisp;
-	}
-	
-	public boolean getEsInteligente(){
-		return esInteligente;
-	}
-	
-	public void setEsInteligente(boolean ansSmart){
-		this.esInteligente = ansSmart;
-	}
-	
-	public boolean getEsBajoConsumo(){
-		return esBajoConsumo;
-	}
-	
-	public void setEsBajoConsumo(boolean ansBajoConsumo){
-		this.esBajoConsumo = ansBajoConsumo;
 	}
 	
 	//Intervalos

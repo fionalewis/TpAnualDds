@@ -6,9 +6,28 @@ public class DispositivoConvertido extends DispositivoInteligente {
 
 	public DispositivoConvertido(DispositivoEstandar disp) {
 		super();
-		setNombreDisp(disp.getNombreDisp());
+		setTipoDisp(disp.getTipoDisp());
+		setDescrip(disp.getDescrip());
 		setkWh(disp.getkWh());
+		setkWhAhorro(disp.getkWh());
 		setDispOriginal(disp);
+		setHorasUsoMin(disp.getHorasUsoMin());
+		setHorasUsoMax(disp.getHorasUsoMax());
+		setEsInteligente(true); //no estoy segura de si esto corresponde
+		setEsBajoConsumo(disp.getEsBajoConsumo());	
+	}
+	
+	public DispositivoConvertido(DispositivoEstandar disp,int y,int m,int d,int h,int min,int s) {
+		super(y,m,d,h,min,s);
+		setTipoDisp(disp.getTipoDisp());
+		setDescrip(disp.getDescrip());
+		setkWh(disp.getkWh());
+		setkWhAhorro(disp.getkWh());
+		setDispOriginal(disp);
+		setHorasUsoMin(disp.getHorasUsoMin());
+		setHorasUsoMax(disp.getHorasUsoMax());
+		setEsInteligente(true);
+		setEsBajoConsumo(disp.getEsBajoConsumo());	
 	}
 
 	public DispositivoEstandar getDispOriginal() {

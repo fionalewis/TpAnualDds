@@ -10,23 +10,30 @@ public class DispositivoEstandar extends Dispositivo {
 	public int horasUsoDiarias = 0;
 	
 	//Constructor default
-		public DispositivoEstandar(String nombDisp,double kWhAprox,int horasUso,String descripcion, double horasUsoMax, double horasUsoMin) {
-			setNombreDisp(nombDisp);
+		public DispositivoEstandar(tipoDispositivo tipo,String descrip,double kWhAprox,int horasDiarias,double horasMin,double horasMax,boolean bajoConsumo) {
+			setTipoDisp(tipo);
+			setDescrip(descrip);
 			setkWh(kWhAprox);
 			setFechaRegistro(LocalDateTime.now());
-			setHorasUsoDiarias(horasUso);
-			setEquipoConcreto(descripcion);
-			setHorasUsoMax(horasUsoMax);
-			setHorasUsoMin(horasUsoMin);
-			
+			setHorasUsoDiarias(horasDiarias);
+			setHorasUsoMin(horasMin);
+			setHorasUsoMax(horasMax);
+			setEsInteligente(false);
+			setEsBajoConsumo(bajoConsumo);	
 		}
 		
-	//Constructor para los tests
-		public DispositivoEstandar(String nombDisp,double kWhAprox,int year,int month,int day,int hour,int min,int sec,int horasUso) {
-			setNombreDisp(nombDisp);
+	//Constructor para los tests (con fecha y hora especifica)
+		public DispositivoEstandar(tipoDispositivo tipo,String descrip,double kWhAprox,int y,int m,int d,int h,int min,int s,int horasUsoDiarias,
+									int horasMin,int horasMax,boolean bajoConsumo) {
+			setTipoDisp(tipo);
+			setDescrip(descrip);
 			setkWh(kWhAprox);
-			setFechaRegistro(LocalDateTime.of(year,month,day,hour,min,sec));
-			setHorasUsoDiarias(horasUso);
+			setFechaRegistro(LocalDateTime.of(y,m,d,h,min,s));
+			setHorasUsoDiarias(horasUsoDiarias);
+			setHorasUsoMin(horasMin);
+			setHorasUsoMax(horasMax);
+			setEsInteligente(false);
+			setEsBajoConsumo(bajoConsumo);	
 		}
 		
 	//Metodos basicos

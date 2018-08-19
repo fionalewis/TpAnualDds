@@ -9,9 +9,11 @@ import org.junit.Test;
 
 import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
+import modelo.JsonManager;
 //import modelo.DispositivosRepository; no se por que mi eclipse no me lo actualiza aunque lo tenga
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoInteligente;
+import modelo.devices.Dispositivo.tipoDispositivo;
 import modelo.users.Administrador;
 import modelo.users.Categoria;
 import modelo.users.Cliente;
@@ -19,17 +21,12 @@ import modelo.users.Cliente;
 /* Acuerdense de revisar si tienen los JSONs en la misma ubicacion antes de correr los tests !!! */
 
 public class TestJson {
-
-		String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
 	
-	@Test
+	//@Test
 	public void testJsonTraeClientes() throws FileNotFoundException, InstantiationException, IllegalAccessException {
 		List<Cliente> clientes = null;
 		try {
-			clientes = DAOJson.deserializarLista(Cliente.class, "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonClientes.json");
-			clientes = DAOJson.deserializarLista(Cliente.class, 
-					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json"
-					ruta.concat("\\jsonClientes.json"));
+			clientes = DAOJson.deserializarLista(Cliente.class,JsonManager.rutaJsonClientesSalo);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -37,13 +34,11 @@ public class TestJson {
 		System.out.println("Test JsonTraeClientes: El tamaño de la lista de clientes del json es dos: " + clientes.size());
     }
     
-   @Test
+   //@Test
 	public void testJsonTraeUnCliente() throws FileNotFoundException, InstantiationException, IllegalAccessException{
     	Cliente cli = null;
 		try {
-			cli = (Cliente) DAOJson.buscarIndexEnLista(Cliente.class, 1,
-					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json"
-					ruta.concat("\\jsonClientes.json"));
+			cli = (Cliente) DAOJson.buscarIndexEnLista(Cliente.class, 1,JsonManager.rutaJsonClientesSalo);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -52,53 +47,39 @@ public class TestJson {
     	Assert.assertEquals("homero",cli.getNombre());
     }
     
-    @Test
+    /*@Test
     public void testJsonTraeUnDispositivo() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-    	Dispositivo disp = null;
+    	DispositivoInteligente disp = null;
 		try {
-			disp = (Dispositivo) DAOJson.buscarIndexEnLista(Dispositivo.class, 1,"\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonDispositivos.json");
+			disp = (DispositivoInteligente) DAOJson.buscarIndexEnLista(DispositivoInteligente.class,1,JsonManager.rutaJsonDispSalo);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
-    	Assert.assertEquals("microondas", disp.getNombreDisp());
-    	System.out.println("Test JsonTraeUnDispositivo: El nombre del dispositivo del json es: " + disp.getNombreDisp());
-    }
+    	Assert.assertEquals(tipoDispositivo.AireAcondicionado, disp.getTipoDisp());
+    	System.out.println("Test JsonTraeUnDispositivo: El nombre del dispositivo del json es: " + disp.getTipoDisp().toString());
+    }*/
     
-    @Test
+    //@Test
     public void testJsonTraeUnAdmin() throws FileNotFoundException, InstantiationException, IllegalAccessException {
     	Administrador admin = null;
     	try {
-    		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class, 0,
-    				//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonAdministradores.json"
-    				ruta.concat("\\jsonAdministradores.json"));
+    		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class,0,JsonManager.rutaJsonAdminSalo);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
-    	Assert.assertEquals(20000, admin.getCodAdmin());	//C:\Users\Salome\git\TpAnualDds\tpAnual\JSONs Dejenme esto aca para poder hacer pruebas en windows
+    	Assert.assertEquals(20000,admin.getCodAdmin());
     	System.out.println("Test JsonTraeUnAdmin: El código del admin en la posición 0 es 20000: " + admin.getCodAdmin());
     }
     
-    @Test
+    //@Test
 	public void testJsonTraeCategoriasYDatos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		List<Categoria> categorias = null;
-		
-		
+		List<Categoria> categorias = null;		
 		try {
-			categorias = DAOJson.deserializarLista(Categoria.class, "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonCategorias.json");
-			categorias = DAOJson.deserializarLista(Categoria.class, 
-					//"//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json"
-					ruta.concat("\\jsonCategorias.json"));
+			categorias = DAOJson.deserializarLista(Categoria.class,JsonManager.rutaJsonCategSalo);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
-		}
+		}		
 		
-		
-		
-		/*try {
-			categorias = DAOJson.deserializarLista(Categoria.class, "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json");
-		} catch (Exception e) {
-			ExceptionsHandler.catchear(e);
-		}*/
 		Assert.assertEquals(9, categorias.size());
 		System.out.println("Test JsonTraeCategorias:\n El tamaño de la lista de categorias del json es nueve: " + categorias.size());
 		Assert.assertEquals("R3", categorias.get(2).getClasif());
