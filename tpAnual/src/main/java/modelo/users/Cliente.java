@@ -3,6 +3,8 @@ package modelo.users;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.math3.optim.PointValuePair;
+
 import entregas.Programa;
 import exceptions.ExceptionsHandler;
 
@@ -115,7 +117,13 @@ public class Cliente extends Usuario {
 	public void setPuntos(int puntos) {
 		this.puntos = puntos;
 	}
-	
+	public MetodoSimplex getSimplex(){
+		return simplex;
+	}
+	public void setSimplex(MetodoSimplex metodoSimplex)
+	{
+		this.simplex = metodoSimplex;
+	}
 	//Dispositivos
 	
 	public List<Dispositivo> getDispositivos() {
@@ -235,9 +243,9 @@ public class Cliente extends Usuario {
 		} else {return apagados;}
 	}
 
-	public void llamarSimplex() {
+	public PointValuePair llamarSimplex() {
 		List<DispositivoInteligente> IyC = (List<DispositivoInteligente>)(List<?>)obtenerLista("IyC");		
-		simplex.aplicarMetodoSimplex(IyC);
+		return simplex.aplicarMetodoSimplex(IyC);
 	}
-	
+		
 }

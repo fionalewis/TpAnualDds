@@ -27,7 +27,7 @@ public class Entrega2 {
 		List<Categoria> categorias = null;
 		Categoria categoria = null;
 		try {
-			categorias = DAOJson.deserializarLista(Categoria.class,"\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonCategorias.json");
+			categorias = DAOJson.deserializarLista(Categoria.class,"C:\\Users\\Giuli\\eclipse-workspace\\TpAnualDds\\tpAnual\\JSONs");
 			} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -40,18 +40,8 @@ public class Entrega2 {
 }
 	
 	public static void main(String[] args) {
-	
-		DispositivoInteligente dispSCD1 = new DispositivoInteligente("dispSCD1",  0.18);
-		DispositivoInteligente dispSCD2 = new DispositivoInteligente("dispSCD2",  0.875);
-		DispositivoInteligente dispSCD3 = new DispositivoInteligente("dispSCD3",  0.06);
-		List<DispositivoInteligente> dispSCD = new ArrayList<DispositivoInteligente>();
-		
-		DispositivoInteligente dispSCI1 = new DispositivoInteligente("dispSCI1",  0.18);
-		DispositivoInteligente dispSCI2 = new DispositivoInteligente("dispSCI2",  0.875);
-		DispositivoInteligente dispSCI3 = new DispositivoInteligente("dispSCI3",  180);
-		List<DispositivoInteligente> dispSCI = new ArrayList<DispositivoInteligente>();
-		
-		
+
+
 }
 
 }
