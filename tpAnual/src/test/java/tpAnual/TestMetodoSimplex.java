@@ -15,27 +15,12 @@ import modelo.devices.DispositivoInteligente;
 import modelo.users.Cliente;
 
 public class TestMetodoSimplex {
-	Cliente cliente = new Cliente();
+	Cliente pepe = new Cliente();
 	MetodoSimplex simplex = new MetodoSimplex();
-
-	/*DispositivoInteligente dispSCD1 = new DispositivoInteligente();
-	DispositivoInteligente dispSCD2 = new DispositivoInteligente();
-	DispositivoInteligente dispSCD3 = new DispositivoInteligente();
-	List<DispositivoInteligente> dispSCD = new ArrayList<DispositivoInteligente>();
 	
-	DispositivoInteligente dispSCI1 = new DispositivoInteligente();
-	DispositivoInteligente dispSCI2 = new DispositivoInteligente();
-	DispositivoInteligente dispSCI3 = new DispositivoInteligente();
-	List<DispositivoInteligente> dispSCI = new ArrayList<DispositivoInteligente>();*/
-	
-	List<DispositivoInteligente> dispPepe = new ArrayList<DispositivoInteligente>();
 	List<DispositivoInteligente> dispSCDSalo = new ArrayList<DispositivoInteligente>();
 	List<DispositivoInteligente> dispSCISalo = new ArrayList<DispositivoInteligente>();
 	List<DispositivoInteligente> dispDaniel = new ArrayList<DispositivoInteligente>();
-	
-	//DispositivoInteligente dispSI1 = new DispositivoInteligente("dispSI1",  2);
-	//DispositivoInteligente dispSI2 = new DispositivoInteligente("dispSI2",  5);
-	//List<DispositivoInteligente> dispSI = new ArrayList<DispositivoInteligente>();
 	
 	
 	@Before
@@ -77,7 +62,7 @@ public class TestMetodoSimplex {
 		
 		DispositivoInteligente aire = (DispositivoInteligente) f.crearDisp("Aire Acondicionado","3500 frigorias");
 		DispositivoInteligente aire1 =  (DispositivoInteligente) f.crearDisp("Aire Acondicionado","2200 frigorias");
-		dispPepe.add(aire);dispPepe.add(aire1);
+		pepe.agregarDispositivo(aire); pepe.agregarDispositivo(aire1);
 		
 	}
 	
@@ -100,16 +85,6 @@ public class TestMetodoSimplex {
 		System.out.println("La cantidad de horas para el dispositivo x1 dio: " + solucionSCD.getPoint()[4]);
 	}
 	
-	@Test
-	public void testMetodoSimplexEjemploPepe() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		PointValuePair solucionSCD = simplex.aplicarMetodoSimplex(dispPepe);
-		Assert.assertEquals(720, solucionSCD.getValue(), 0.01);
-		System.out.println("Test testMetodoSimplexEjemploPepe:\n " + "La suma de los x dio: " + solucionSCD.getValue());
-		Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
-		System.out.println("La cantidad de horas para el dispositivo x5 dio: " + solucionSCD.getPoint()[0]);
-		Assert.assertEquals(360, solucionSCD.getPoint()[1], 0.01); 
-		System.out.println("La cantidad de horas para el dispositivo x4 dio: " + solucionSCD.getPoint()[1]);
-	}
 	
 	
 	@Test
@@ -125,4 +100,16 @@ public class TestMetodoSimplex {
 		System.out.println("La cantidad de horas para el dispositivo x3 dio: " + solucionSCD.getPoint()[2]);
 	}
 
+	//Este test es diferente ya que llama al simplex desde el cliente pepe
+	@Test
+	public void testMetodoSimplexEjemploPepe() throws FileNotFoundException, InstantiationException, IllegalAccessException{
+		PointValuePair solucionSCD = pepe.llamarSimplex();
+		Assert.assertEquals(720, solucionSCD.getValue(), 0.01);
+		System.out.println("Test testMetodoSimplexEjemploPepe:\n " + "La suma de los x dio: " + solucionSCD.getValue());
+		Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x5 dio: " + solucionSCD.getPoint()[0]);
+		Assert.assertEquals(360, solucionSCD.getPoint()[1], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x4 dio: " + solucionSCD.getPoint()[1]);
+		
+	}
 }
