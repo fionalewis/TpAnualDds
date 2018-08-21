@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.*;
 
 import exceptions.ExceptionsHandler;
+import modelo.devices.DeviceFactory;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
@@ -22,12 +23,17 @@ public class TestDispositivo {
 	DispositivoInteligente disp1 = new DispositivoInteligente();
 	DispositivoEstandar disp2 = new DispositivoEstandar();
 	DispositivoInteligente disp3 = new DispositivoInteligente();
+	DeviceFactory f = new DeviceFactory();
 	
 	@Before
 	public void init() {
 		tele.setFechaRegistro(2018,2,5,22,15,0);
 		tele.agregarSensor(sensorVolumen);
 		tele.setMagnitudSensor("volumen", 20);
+		
+		disp1 = (DispositivoInteligente) f.crearDisp("Televisor","LED 40' ");
+		disp2 = (DispositivoEstandar) f.crearDisp("Plancha","A vapor");
+		disp3 = (DispositivoInteligente) f.crearDisp("Televisor","LED 40' ");
 		
 	}
 	
@@ -48,7 +54,7 @@ public class TestDispositivo {
 	}
 	
 
-	//@Test
+	@Test
     public void testInstanciarDosDisposIguales() 
     		throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		
@@ -62,7 +68,7 @@ public class TestDispositivo {
 				+ result);
 	}
 	
-	//@Test
+	@Test
     public void testInstanciarDosDisposDistintos() 
     		throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		
