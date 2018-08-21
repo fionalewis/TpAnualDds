@@ -15,8 +15,6 @@ import modelo.devices.DispositivosRepository;
 import modelo.devices.Sensor;
 
 public class TestDispositivo {
-	
-	String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
 
 	DispositivoInteligente tele = new DispositivoInteligente("Televisor",0.14);
 	LocalDateTime fechaFinalParaTest = LocalDateTime.of(2018,4,18,7,50,0);

@@ -55,6 +55,7 @@ public class TestMetodoSimplex {
 			ExceptionsHandler.catchear(e);
 		}
 		
+		//con repositorio
 		dispSCD1 = (DispositivoInteligente) repoDispo.crearDispositivoSegunTipo(0);
 		dispSCD2 = (DispositivoInteligente) repoDispo.crearDispositivoSegunTipo(0);
 		dispSCD3 = (DispositivoInteligente) repoDispo.crearDispositivoSegunTipo(6);
@@ -66,9 +67,7 @@ public class TestMetodoSimplex {
 		dispSCD2.setHorasUsoMax(30);
 		dispSCD2.setHorasUsoMin(6);
 		dispSCD3.setHorasUsoMax(360);
-		dispSCD3.setHorasUsoMin(120);
-		dispEstandar.setHorasUsoMin(100);
-		dispEstandar.setHorasUsoMax(200);*/
+		dispSCD3.setHorasUsoMin(120);*/
 
 		dispSCD.add(dispSCD1);
 		dispSCD.add(dispSCD2);
@@ -86,19 +85,14 @@ public class TestMetodoSimplex {
 		dispSCI.add(dispSCI2);
 		dispSCI.add(dispSCI3);
 		
-		/*dispSI1.setHorasUsoMax(370);
+		/*//dispSI1.setHorasUsoMax(370);
 
-	
+		//cliente
 		cliente.setSimplex(simplex);
 		cliente.agregarDispositivo(dispSCD1);
 		cliente.agregarDispositivo(dispSCD2);
 		cliente.agregarDispositivo(dispSCD3);
-		cliente.agregarDispositivo(dispEstandar);
-				
-		dispSI1.setHorasUsoMax(370);
-		dispSI1.setHorasUsoMin(90);
-		dispSI2.setHorasUsoMax(30);
-		dispSI2.setHorasUsoMin(6);
+	
 		dispSI.add(dispSI1);
 		dispSI.add(dispSI2);*/
 		

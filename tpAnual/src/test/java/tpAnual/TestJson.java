@@ -18,8 +18,7 @@ import modelo.users.Administrador;
 import modelo.users.Categoria;
 import modelo.users.Cliente;
 
-/* Acuerdense de revisar si tienen los JSONs en la misma ubicacion antes de correr los tests !!!
- * En la clase JsonManager agregue un monton de rutas para que las puedan usar mas facil, agreguen las suyas y las usan donde sea */
+ //En la clase JsonManager agregue un monton de rutas para que las puedan usar mas facil, agreguen las suyas y las usan donde sea 
 
 public class TestJson {
 
@@ -75,7 +74,7 @@ public class TestJson {
     public void testJsonTraeUnAdmin() throws FileNotFoundException, InstantiationException, IllegalAccessException {
     	Administrador admin = null;
     	try {
-    		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class,0,JsonManager.rutaJsonAdminSalo);
+    		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class,0,JsonManager.rutaJsonAdmin);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -87,7 +86,7 @@ public class TestJson {
 	public void testJsonTraeCategoriasYDatos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		List<Categoria> categorias = null;		
 		try {
-			categorias = DAOJson.deserializarLista(Categoria.class,JsonManager.rutaJsonCategSalo);
+			categorias = DAOJson.deserializarLista(Categoria.class,JsonManager.rutaJsonCateg);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}		
