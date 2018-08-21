@@ -9,11 +9,11 @@ import org.junit.Test;
 
 import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
-import modelo.DispositivosRepository;
 import modelo.JsonManager;
 //import modelo.DispositivosRepository; no se por que mi eclipse no me lo actualiza aunque lo tenga
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoInteligente;
+import modelo.devices.DispositivosRepository;
 import modelo.users.Administrador;
 import modelo.users.Categoria;
 import modelo.users.Cliente;

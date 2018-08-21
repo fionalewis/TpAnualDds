@@ -8,10 +8,10 @@ import java.util.List;
 import org.junit.*;
 
 import exceptions.ExceptionsHandler;
-import modelo.DispositivosRepository;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
+import modelo.devices.DispositivosRepository;
 import modelo.devices.Sensor;
 
 public class TestDispositivo {

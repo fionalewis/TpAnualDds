@@ -285,8 +285,8 @@ public class Cliente extends Usuario {
 	
 	//Este metodo quizas deberia ir en el administrador mas adelante, pero por ahora lo consultamos directamente desde el cliente
 	
-	public PointValuePair llamarSimplex() throws FileNotFoundException, InstantiationException, IllegalAccessException {
-		return simplex.aplicarMetodoSimplexSalo(getDispositivos());
-	}
+	/*public PointValuePair llamarSimplex() {throws FileNotFoundException, InstantiationException, IllegalAccessException {
+		//return simplex.aplicarMetodoSimplex(getDispositivos());
+	}*/
 	
 }

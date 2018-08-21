@@ -10,11 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import exceptions.ExceptionsHandler;
-import modelo.DispositivosRepository;
 import modelo.MetodoSimplex;
 import modelo.devices.DeviceFactory;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoInteligente;
+import modelo.devices.DispositivosRepository;
 
 public class TestMetodoSimplex {
 	MetodoSimplex simplex = new MetodoSimplex();
@@ -163,9 +163,9 @@ public class TestMetodoSimplex {
     //Deje los assert de mis tests como comentarios porque no tengo idea del valor que tiene que devolver, si alguno tiene idea de como calcularlos agreguelos obvio
     //Deje comentados los valores que me dieron a mi en las pruebas
     
-	@Test
+	/*@Test
     public void testMetodoSimplexDaniel() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		PointValuePair solucionSCD = simplex.aplicarMetodoSimplexSalo(dispDaniel);
+		PointValuePair solucionSCD = simplex.aplicarMetodoSimplex(dispDaniel);
 		//Assert.assertEquals(1875, solucionSCD.getValue(), 0.01);
 		System.out.println("Test testMetodoSimplexDaniel:\n " + "la suma de los x dio: " + solucionSCD.getValue());
 		//Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
@@ -184,11 +184,11 @@ public class TestMetodoSimplex {
 		System.out.println("La cantidad de horas para el dispositivo x2 dio: " + solucionSCD.getPoint()[6]);
 		//Assert.assertEquals(360, solucionSCD.getPoint()[7], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x1 dio: " + solucionSCD.getPoint()[7]);
-	}
+	}*/
 	
-	@Test
+	/*@Test
 	public void testMetodoSimplexEjemploPepe() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		PointValuePair solucionSCD = simplex.aplicarMetodoSimplexSalo(dispPepe);
+		PointValuePair solucionSCD = simplex.aplicarMetodoSimplex(dispPepe);
 		//Assert.assertEquals(1189.78, solucionSCD.getValue(), 0.01);
 		System.out.println("Test testMetodoSimplexEjemploPepe:\n " + "La suma de los x dio: " + solucionSCD.getValue());
 		//Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
@@ -201,12 +201,12 @@ public class TestMetodoSimplex {
 		System.out.println("La cantidad de horas para el dispositivo x2 dio: " + solucionSCD.getPoint()[3]);
 		//Assert.assertEquals(89.99, solucionSCD.getPoint()[4], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x1 dio: " + solucionSCD.getPoint()[4]);
-	}
+	}*/
 	
 	
-	@Test
+	/*@Test
     public void testMetodoSimplexSCDSalo() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		PointValuePair solucionSCD = simplex.aplicarMetodoSimplexSalo(dispSCDSalo);
+		PointValuePair solucionSCD = simplex.aplicarMetodoSimplex(dispSCDSalo);
 		//Assert.assertEquals(1186.229, solucionSCD.getValue(), 0.01);
 		System.out.println("Test testMetodoSimplexSCD:\n " + "la suma de los x dio: " + solucionSCD.getValue());
 		//Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
@@ -219,6 +219,6 @@ public class TestMetodoSimplex {
 		System.out.println("La cantidad de horas para el dispositivo x2 dio: " + solucionSCD.getPoint()[3]);
 		//Assert.assertEquals(360, solucionSCD.getPoint()[4], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x1 dio: " + solucionSCD.getPoint()[4]);
-	}
+	}*/
 	
 }

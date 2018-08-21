@@ -1,13 +1,12 @@
-package modelo;
+package modelo.devices;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import exceptions.ExceptionsHandler;
-import modelo.devices.Dispositivo;
-import modelo.devices.DispositivoEstandar;
-import modelo.devices.DispositivoInteligente;
+import modelo.DAOJson;
+import modelo.JsonManager;
 
 public class DispositivosRepository {
 	
@@ -133,13 +132,6 @@ public class DispositivosRepository {
 		return listaRepresentantes;
 	}
 	
-	/*public List<Integer> generarListaDeTipos(List<Dispositivo> dispositivos){
-		List<Integer> ListaDeTipos =  new ArrayList<Integer>();
-		int i = 1;
-		
-		return ListaDeTipos;
-	}*/
-	
 	public int getIndexPorDescripcion(String unaDescripcion){
 		int i = 0;
 		String descr = null;
@@ -155,8 +147,6 @@ public class DispositivosRepository {
 	
 	public List<Integer> generarListaDeCantDeCadaTipo(List<Dispositivo> dispositivos){
 		List<Integer> listaCantPorTipo = new ArrayList<Integer>();
-		List<Dispositivo> listaRepresentantes = new ArrayList<Dispositivo>();
-		listaRepresentantes = filtrarRepresentatesDeTipos(dispositivos);
 		int i = 1; 
 		int cant = 0;
 		String tipo = null;
