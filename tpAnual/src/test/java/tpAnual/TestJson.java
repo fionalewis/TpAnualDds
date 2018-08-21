@@ -22,7 +22,7 @@ import modelo.users.Cliente;
  * En la clase JsonManager agregue un monton de rutas para que las puedan usar mas facil, agreguen las suyas y las usan donde sea */
 
 public class TestJson {
-	
+
 	DispositivosRepository repoDispo = new DispositivosRepository();
 	
 	@Before

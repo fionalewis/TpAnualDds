@@ -15,14 +15,18 @@ import modelo.devices.DeviceFactory;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.DispositivosRepository;
+import modelo.users.Cliente;
 
 public class TestMetodoSimplex {
+	Cliente cliente = new Cliente();
 	MetodoSimplex simplex = new MetodoSimplex();
+
 	DispositivoInteligente dispSCD1 = new DispositivoInteligente();
 	DispositivoInteligente dispSCD2 = new DispositivoInteligente();
 	DispositivoInteligente dispSCD3 = new DispositivoInteligente();
 	DispositivoInteligente dispSCD4 = new DispositivoInteligente();
 	DispositivoInteligente dispSCD5 = new DispositivoInteligente();
+
 	List<DispositivoInteligente> dispSCD = new ArrayList<DispositivoInteligente>();
 	
 	DispositivoInteligente dispSCI1 = new DispositivoInteligente();
@@ -37,9 +41,9 @@ public class TestMetodoSimplex {
 	List<Dispositivo> dispSCISalo = new ArrayList<Dispositivo>();
 	List<Dispositivo> dispDaniel = new ArrayList<Dispositivo>();
 	
-	/*DispositivoInteligente dispSI1 = new DispositivoInteligente("dispSI1",  2);
+	DispositivoInteligente dispSI1 = new DispositivoInteligente("dispSI1",  2);
 	DispositivoInteligente dispSI2 = new DispositivoInteligente("dispSI2",  5);
-	List<DispositivoInteligente> dispSI = new ArrayList<DispositivoInteligente>();*/
+	List<DispositivoInteligente> dispSI = new ArrayList<DispositivoInteligente>();
 	
 	
 	@Before
@@ -56,14 +60,23 @@ public class TestMetodoSimplex {
 		dispSCD3 = (DispositivoInteligente) repoDispo.crearDispositivoSegunTipo(6);
 		dispSCD4 = (DispositivoInteligente) repoDispo.crearDispositivoSegunTipo(11);
 		dispSCD5 = (DispositivoInteligente) repoDispo.crearDispositivoSegunTipo(16);
-		
+
+		/*dispSCD1.setHorasUsoMax(370);
+		dispSCD1.setHorasUsoMin(90);
+		dispSCD2.setHorasUsoMax(30);
+		dispSCD2.setHorasUsoMin(6);
+		dispSCD3.setHorasUsoMax(360);
+		dispSCD3.setHorasUsoMin(120);
+		dispEstandar.setHorasUsoMin(100);
+		dispEstandar.setHorasUsoMax(200);*/
+
 		dispSCD.add(dispSCD1);
 		dispSCD.add(dispSCD2);
 		dispSCD.add(dispSCD3);
 		dispSCD.add(dispSCD4);
 		dispSCD.add(dispSCD5);
 		
-		/*dispSCI1.setHorasUsoMax(370);
+		dispSCI1.setHorasUsoMax(370);
 		dispSCI1.setHorasUsoMin(90);
 		dispSCI2.setHorasUsoMax(30);
 		dispSCI2.setHorasUsoMin(6);
@@ -71,9 +84,18 @@ public class TestMetodoSimplex {
 		dispSCI3.setHorasUsoMin(120);
 		dispSCI.add(dispSCI1);
 		dispSCI.add(dispSCI2);
-		dispSCI.add(dispSCI3);*/
+		dispSCI.add(dispSCI3);
 		
 		/*dispSI1.setHorasUsoMax(370);
+
+	
+		cliente.setSimplex(simplex);
+		cliente.agregarDispositivo(dispSCD1);
+		cliente.agregarDispositivo(dispSCD2);
+		cliente.agregarDispositivo(dispSCD3);
+		cliente.agregarDispositivo(dispEstandar);
+				
+		dispSI1.setHorasUsoMax(370);
 		dispSI1.setHorasUsoMin(90);
 		dispSI2.setHorasUsoMax(30);
 		dispSI2.setHorasUsoMin(6);
@@ -131,6 +153,8 @@ public class TestMetodoSimplex {
 		Dispositivo tele1 =  f.crearDisp("Televisor","Color de tubo fluorescente de 21' ");
 		dispPepe.add(aire);dispPepe.add(aire1);dispPepe.add(plancha);dispPepe.add(tele);dispPepe.add(tele1);
 		
+
+		//dispSI.add(dispSI2);
 	}
 	
 
@@ -150,7 +174,7 @@ public class TestMetodoSimplex {
 	}
 	
 	//Este metodo no me funciona, lo comente para que no me tire error, diganme si a ustedes les anda a ver que onda
-	//@Test
+	@Test
     public void testMetodoSimplexSCI(){
 		try{
 			PointValuePair solucionSCI = simplex.aplicarMetodoSimplex(dispSCI);
@@ -160,6 +184,7 @@ public class TestMetodoSimplex {
 		}
 	}
 	
+
     //Deje los assert de mis tests como comentarios porque no tengo idea del valor que tiene que devolver, si alguno tiene idea de como calcularlos agreguelos obvio
     //Deje comentados los valores que me dieron a mi en las pruebas
     
@@ -220,5 +245,6 @@ public class TestMetodoSimplex {
 		//Assert.assertEquals(360, solucionSCD.getPoint()[4], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x1 dio: " + solucionSCD.getPoint()[4]);
 	}*/
+
 	
 }

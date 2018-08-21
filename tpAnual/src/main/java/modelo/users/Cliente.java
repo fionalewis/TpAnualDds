@@ -1,12 +1,5 @@
 package modelo.users;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.commons.math3.optim.PointValuePair;
-
-import java.util.function.*;
-
 import modelo.FilterPredicates;
 import modelo.JsonManager;
 import modelo.MetodoSimplex;
@@ -19,10 +12,14 @@ import modelo.devices.DispositivoInteligente;
 import modelo.geoLocation.GeoLocation;
 import modelo.geoLocation.Transformador;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.function.*;
 import java.util.ArrayList;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+import org.apache.commons.math3.optim.PointValuePair;
 
 //Ojo las rutas de json!!! (ver JsonManager)
 
@@ -149,6 +146,7 @@ public class Cliente extends Usuario {
 	public void setTransformadorActual(Transformador transformadorActual) {
 		this.transformadorActual = transformadorActual;
 	}
+
 	public MetodoSimplex getSimplex(){
 		return simplex;
 	}
@@ -284,9 +282,12 @@ public class Cliente extends Usuario {
 	}
 	
 	//Este metodo quizas deberia ir en el administrador mas adelante, pero por ahora lo consultamos directamente desde el cliente
-	
-	/*public PointValuePair llamarSimplex() {throws FileNotFoundException, InstantiationException, IllegalAccessException {
-		//return simplex.aplicarMetodoSimplex(getDispositivos());
-	}*/
-	
+	@SuppressWarnings("unchecked")
+	public PointValuePair llamarSimplex() throws FileNotFoundException, InstantiationException, IllegalAccessException {
+		
+		List<DispositivoInteligente> IyC = (List<DispositivoInteligente>)(List<?>)obtenerLista("IyC");		
+		return simplex.aplicarMetodoSimplex(IyC);
+	}
+		
 }
+
