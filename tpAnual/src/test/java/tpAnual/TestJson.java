@@ -9,18 +9,30 @@ import org.junit.Test;
 
 import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
+import modelo.DispositivosRepository;
 import modelo.JsonManager;
 //import modelo.DispositivosRepository; no se por que mi eclipse no me lo actualiza aunque lo tenga
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoInteligente;
-import modelo.devices.Dispositivo.tipoDispositivo;
 import modelo.users.Administrador;
 import modelo.users.Categoria;
 import modelo.users.Cliente;
 
-/* Acuerdense de revisar si tienen los JSONs en la misma ubicacion antes de correr los tests !!! */
+/* Acuerdense de revisar si tienen los JSONs en la misma ubicacion antes de correr los tests !!!
+ * En la clase JsonManager agregue un monton de rutas para que las puedan usar mas facil, agreguen las suyas y las usan donde sea */
 
 public class TestJson {
+	
+	DispositivosRepository repoDispo = new DispositivosRepository();
+	
+	@Before
+	public void init() {
+		try{
+			repoDispo.importarDispoDeJson();
+		} catch(Exception e){
+			ExceptionsHandler.catchear(e);
+		}
+	}
 	
 	//@Test
 	public void testJsonTraeClientes() throws FileNotFoundException, InstantiationException, IllegalAccessException {
@@ -34,7 +46,7 @@ public class TestJson {
 		System.out.println("Test JsonTraeClientes: El tamaño de la lista de clientes del json es dos: " + clientes.size());
     }
     
-   //@Test
+   @Test
 	public void testJsonTraeUnCliente() throws FileNotFoundException, InstantiationException, IllegalAccessException{
     	Cliente cli = null;
 		try {
@@ -92,17 +104,9 @@ public class TestJson {
     
     
 	//@Test
-    /*
     public void testJsonTablaDispositivos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		List<Dispositivo> disp = null;
-		DispositivosRepository repoDispo = new DispositivosRepository();
 		
-		try{
-			repoDispo.importarDispoDeJson();
-			disp = repoDispo.getDispositivosExistentes();
-		} catch(Exception e){
-			ExceptionsHandler.catchear(e);
-		}
+		List<Dispositivo> disp = repoDispo.getDispositivosExistentes();
 		
 		Assert.assertEquals(24, disp.size());
 		System.out.println("Test JsonJsonTablaDispositivos:\n "
@@ -132,6 +136,5 @@ public class TestJson {
 		System.out.println("Test JsonJsonTablaDispositivos:\n "
 				+ "El valor de kWh del dispositivo en la posicion ocho es 0.09: " 
 				+ disp.get(8).getkWh());
-
-    }*/
+    }
 }

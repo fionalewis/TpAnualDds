@@ -11,7 +11,7 @@
    },
    {  
       'nombreZona':"Almagro",
-      'radius':1250,
+      'radius':1500,
 	  'center': {
 		'latitude':-34.6110583,
 		'longitude':-58.4201892

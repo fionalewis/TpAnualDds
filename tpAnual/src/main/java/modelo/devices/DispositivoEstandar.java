@@ -7,12 +7,12 @@ import modelo.deviceState.EstadoDispositivo;
 
 public class DispositivoEstandar extends Dispositivo {
 	
-	public int horasUsoDiarias = 0;
+	public double horasUsoDiarias = 0;
 	
 	//Constructor default
-		public DispositivoEstandar(tipoDispositivo tipo,String descrip,double kWhAprox,int horasDiarias,double horasMin,double horasMax,boolean bajoConsumo) {
-			setTipoDisp(tipo);
-			setDescrip(descrip);
+		public DispositivoEstandar(String nombDisp,double kWhAprox,double horasDiarias,String descrip,double horasMin,double horasMax,boolean bajoConsumo) {
+			setNombreDisp(nombDisp);
+			setEquipoConcreto(descrip);
 			setkWh(kWhAprox);
 			setFechaRegistro(LocalDateTime.now());
 			setHorasUsoDiarias(horasDiarias);
@@ -23,10 +23,10 @@ public class DispositivoEstandar extends Dispositivo {
 		}
 		
 	//Constructor para los tests (con fecha y hora especifica)
-		public DispositivoEstandar(tipoDispositivo tipo,String descrip,double kWhAprox,int y,int m,int d,int h,int min,int s,int horasUsoDiarias,
+		public DispositivoEstandar(	String nomb,String descrip,double kWhAprox,int y,int m,int d,int h,int min,int s,int horasUsoDiarias,
 									int horasMin,int horasMax,boolean bajoConsumo) {
-			setTipoDisp(tipo);
-			setDescrip(descrip);
+			setNombreDisp(nomb);
+			setEquipoConcreto(descrip);
 			setkWh(kWhAprox);
 			setFechaRegistro(LocalDateTime.of(y,m,d,h,min,s));
 			setHorasUsoDiarias(horasUsoDiarias);
@@ -36,19 +36,44 @@ public class DispositivoEstandar extends Dispositivo {
 			setEsBajoConsumo(bajoConsumo);	
 		}
 		
+		//Constructor del repository de Mari
+		public DispositivoEstandar(String nombreDisp, double getkWh, int i, String equipoConcreto, double horasUsoMax,double horasUsoMin) {
+			setNombreDisp(nombreDisp);
+			setkWh(getkWh);
+			setEquipoConcreto(equipoConcreto);
+			setHorasUsoMax(horasUsoMax);
+			setHorasUsoMin(horasUsoMin);
+			setEsInteligente(false);
+			setHorasUsoDiarias(0); //no olvidarse de setearlo despues si se usa, el bajo consumo tmb
+		}
+		
+		//Otro
+		
+		public DispositivoEstandar(String tipo,String descrip,double kWhAprox,boolean esBajoCons) {
+			setNombreDisp(tipo);
+			setEquipoConcreto(descrip);
+			setkWh(kWhAprox);
+			setEsBajoConsumo(esBajoCons);
+			setFechaRegistro(LocalDateTime.now());
+			setHorasUsoDiarias(0); //hay que setearlo aparte despues
+			setEsInteligente(false);
+		}
+		
+		public DispositivoEstandar(){}
+		
 	//Metodos basicos
 
-		public int getHorasUsoDiarias() {
+		public double getHorasUsoDiarias() {
 			return horasUsoDiarias;
 		}
 
-		public void setHorasUsoDiarias(int horasUsoDiarias) {
+		public void setHorasUsoDiarias(double horasUsoDiarias) {
 			this.horasUsoDiarias = horasUsoDiarias;
 		}
 		
 		@Override
 		public double consumoTotal() {
-			horasDeUso = horasDeUsoTotales();
+			this.horasDeUso = horasDeUsoTotales();
 			return horasDeUso*kWh;
 		}
 		
@@ -79,5 +104,18 @@ public class DispositivoEstandar extends Dispositivo {
 		public EstadoDispositivo getEstadoDisp() {
 			return null;
 		}
-	
+		
+		//MEJORAR ESTO --> LLEVARLO A DISPOSITIVO
+				@Override
+				public DispositivoEstandar crearDispositivo(){
+					DispositivoEstandar nuevo = new DispositivoEstandar();
+					nuevo.setNombreDisp(this.nombreDisp);
+					nuevo.setEquipoConcreto(this.equipoConcreto);
+					nuevo.setEsBajoConsumo(this.esBajoConsumo);
+					nuevo.setHorasUsoMax(this.horasUsoMax);
+					nuevo.setHorasUsoMin(this.horasUsoMin);
+					nuevo.setkWh(this.kWh);
+					return nuevo;
+				}
+		
 }

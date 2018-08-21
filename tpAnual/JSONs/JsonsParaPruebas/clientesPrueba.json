@@ -9,20 +9,6 @@
       "userName": "juancitoperez",
       "password": "contrasenia",
       "dispositivos":[
-	  {
-		"nombreDisp": "Televisor",
-		"kWh": 0.5,
-		"equipoConcreto": "LED 40'",
-		"fechaRegistro":
-		{
-			"year":2018,
-			"month":8,
-			"day":18,
-			"hour":18,
-			"minute":0,
-			"second":0
-		}
-	  }
 	  ]
    },
    {  

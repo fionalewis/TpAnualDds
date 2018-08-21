@@ -5,27 +5,42 @@ import modelo.deviceState.EstadoDispositivo;;
 
 public abstract class Dispositivo {
 
-	public enum tipoDispositivo {AireAcondicionado,Televisor,Heladera,
-									Lavarropas,Ventilador,Lámpara,PC,Microondas,
-									Plancha,TermotanqueEléctrico,HornoEléctrico}
-	protected tipoDispositivo tipoDisp;
-	public String descripcion = "";
+	protected String nombreDisp;
+	public String equipoConcreto = "";
+	
+	boolean esInteligente = false; //esto es para el json
+	
 	protected double kWh;
 	protected LocalDateTime fechaRegistro;
 	protected double horasDeUso = 0;
 	protected double horasUsoMax = 0;
 	protected double horasUsoMin = 0;
-	boolean esInteligente;
-	boolean esBajoConsumo;
+	boolean esBajoConsumo = false;
 	
 	//Getters y Setters
 	
-	public tipoDispositivo getTipoDisp() {
-		return tipoDisp;
+	public String getNombreDisp() {
+		return nombreDisp;
 	}
-	public void setTipoDisp(tipoDispositivo tipoDisp) {
-		this.tipoDisp = tipoDisp;
+	public void setNombreDisp(String nombreDisp) {
+		this.nombreDisp = nombreDisp;
 	}
+	public String getEquipoConcreto(){
+		return equipoConcreto;
+	}
+	public void setEquipoConcreto(String descripcion){
+		this.equipoConcreto = descripcion;
+	}
+	
+		
+	public boolean getEsInteligente(){
+		return esInteligente;
+	}
+	
+	public void setEsInteligente(boolean ansSmart){
+		this.esInteligente = ansSmart;
+	}
+	
 	public double getkWh() {
 		return kWh;
 	}
@@ -51,31 +66,19 @@ public abstract class Dispositivo {
 		return horasUsoMax;
 	}
 	public void setHorasUsoMax(double horasDeUsoMax) {
-		if(getTipoDisp().equals(tipoDispositivo.Heladera)) {
+		if(getNombreDisp().equals("Heladera")) {
 			this.horasUsoMax = -1; // estos disp no cuentan a la hora de analizar el simplex, porque no se pueden apagar
 		} else { this.horasUsoMax = horasDeUsoMax; }
+		this.horasUsoMax = horasDeUsoMax;
 	}
 	public double getHorasUsoMin() {
 		return horasUsoMin;
 	}
 	public void setHorasUsoMin(double horasDeUsoMin) {
-		if(getTipoDisp().equals(tipoDispositivo.Heladera)) {
+		if(getNombreDisp().equals("Heladera")) {
 			this.horasUsoMin = -1; // estos disp no cuentan a la hora de analizar el simplex, porque no se pueden apagar
 		} else { this.horasUsoMin = horasDeUsoMin; }
-	}
-	public String getDescrip(){
-		return descripcion;
-	}
-	public void setDescrip(String descripcion){
-		this.descripcion = descripcion;
-	}
-
-	public boolean getEsInteligente(){
-		return esInteligente;
-	}
-	
-	public void setEsInteligente(boolean ansSmart){
-		this.esInteligente = ansSmart;
+		this.horasUsoMin = horasDeUsoMin;
 	}
 	
 	public boolean getEsBajoConsumo(){
@@ -115,5 +118,11 @@ public abstract class Dispositivo {
 	public static boolean esAmbos(Dispositivo undisp) {
 		return (esInteligente(undisp)||esConvertido(undisp));
 	}
+	
+	
+	public Object crearDispositivo(){
+		return null;
+	}
+	
 	
 }

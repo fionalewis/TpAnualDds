@@ -3,10 +3,13 @@ package modelo.users;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.commons.math3.optim.PointValuePair;
+
 import java.util.function.*;
 
 import modelo.FilterPredicates;
 import modelo.JsonManager;
+import modelo.MetodoSimplex;
 import modelo.deviceState.AhorroEnergia;
 import modelo.deviceState.Encendido;
 import modelo.devices.Dispositivo;
@@ -17,10 +20,11 @@ import modelo.geoLocation.GeoLocation;
 import modelo.geoLocation.Transformador;
 
 import java.util.ArrayList;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 
-//OJO CON LA RUTA DE JSON
+//Ojo las rutas de json!!! (ver JsonManager)
 
 public class Cliente extends Usuario {
 
@@ -35,6 +39,7 @@ public class Cliente extends Usuario {
 	private int puntos = 0;
 	
 	private Transformador transformadorActual;
+	private MetodoSimplex simplex = new MetodoSimplex();
 	
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
 	private List<DispositivoEstandar> aux = new ArrayList<>(); 
@@ -144,6 +149,13 @@ public class Cliente extends Usuario {
 	public void setTransformadorActual(Transformador transformadorActual) {
 		this.transformadorActual = transformadorActual;
 	}
+	public MetodoSimplex getSimplex(){
+		return simplex;
+	}
+	public void setSimplex(MetodoSimplex metodoSimplex)
+	{
+		this.simplex = metodoSimplex;
+	}
 
 	//Dispositivos
 	
@@ -193,7 +205,8 @@ public class Cliente extends Usuario {
 	
 	public void mostrarLista(List<Dispositivo> dispositivos) {
 		for(int i = 0;i<dispositivos.size();i++) {
-			System.out.println(dispositivos.get(i).getTipoDisp().toString());
+			System.out.println(dispositivos.get(i).//getTipoDisp().toString());
+					getNombreDisp());
 		}
 	}
 	
@@ -272,8 +285,8 @@ public class Cliente extends Usuario {
 	
 	//Este metodo quizas deberia ir en el administrador mas adelante, pero por ahora lo consultamos directamente desde el cliente
 	
-	public boolean tieneHogarEficiente() {
-		//si en el mes no consume mas de 612kwh
-		return false;
+	public PointValuePair llamarSimplex() throws FileNotFoundException, InstantiationException, IllegalAccessException {
+		return simplex.aplicarMetodoSimplexSalo(getDispositivos());
 	}
+	
 }

@@ -17,42 +17,54 @@ public class DispositivoInteligente extends Dispositivo {
 	private EstadoDispositivo estadoDisp;
 	Map<String, Sensor> sensores = new HashMap<String, Sensor>();
 	private IntervaloDispositivo unIntervalo;
-
 	
 	private List<IntervaloDispositivo> intervalos = new ArrayList<>();
 	
-	//Constructor default (probablemente no lo usemos)
-	public DispositivoInteligente(tipoDispositivo tipoDisp,String descrip,double kWh,boolean bajoConsumo,int horasMin,int horasMax) {
-		setTipoDisp(tipoDisp);
+	//Constructor default
+	public DispositivoInteligente(String nombDisp,double kWh) {
+		setNombreDisp(nombDisp);
 		setkWh(kWh);
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.now());
 		setkWhAhorro(kWh);
 		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
-		setDescrip(descrip);
-		setEsInteligente(true);
-		setHorasUsoMin(horasMin);
-		setHorasUsoMax(horasMax);
-		setEsBajoConsumo(bajoConsumo);		
 	}
 	
-	//Constructor para los tests
-	public DispositivoInteligente(tipoDispositivo tipoDisp,String descrip,double kWh,int year,int month,int day,int hour,int min,int sec,
-									int horasMin,int horasMax,boolean bajoConsumo) {
-		setTipoDisp(tipoDisp);
-		setDescrip(descrip);
+	//Constructor default (probablemente no lo usemos)
+	public DispositivoInteligente(String nomb,String descrip,double kWh,boolean bajoConsumo,int horasMin,int horasMax) {
+		setkWh(kWh);
+		setEstadoDisp(new Encendido());
+		setFechaRegistro(LocalDateTime.now());
+		setkWhAhorro(kWh);
+		setHorasUsoMin(horasMin);
+		setHorasUsoMax(horasMax);
+		setEsBajoConsumo(bajoConsumo);
+		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
+	}
+	
+	//Constructor para los tests (Mari)
+	public DispositivoInteligente(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec) {
+		setNombreDisp(nombDisp);
 		setkWh(kWh);
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.of(year,month,day,hour,min,sec));
 		setkWhAhorro(kWh);
 		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
-		setHorasUsoMin(horasMin);
-		setHorasUsoMax(horasMax);
-		setEsInteligente(true);
-		setEsBajoConsumo(bajoConsumo);	
+
+	}
+		
+	public DispositivoInteligente(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec,boolean esBajoC) {
+		setNombreDisp(nombDisp);
+		setkWh(kWh);
+		setEstadoDisp(new Encendido());
+		setFechaRegistro(LocalDateTime.of(year,month,day,hour,min,sec));
+		setkWhAhorro(kWh);
+		setEsBajoConsumo(esBajoC);
+		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
+
 	}
 	
-	//Constructor para la conversion
+	//Constructor para la conversion actualizado (falta revisar)
 	public DispositivoInteligente() {
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.now());
@@ -75,14 +87,13 @@ public class DispositivoInteligente extends Dispositivo {
 	public void setkWhAhorro(double kWh) {
 		this.kWhAhorro = kWh*0.8;
 	}
-	
 	@Override
 	public EstadoDispositivo getEstadoDisp() {
 		return estadoDisp;
 	}
 	public void setEstadoDisp(EstadoDispositivo estadoDisp) {
 		this.estadoDisp = estadoDisp;
-	}
+	}	
 	
 	//Intervalos
 	
@@ -431,5 +442,20 @@ public class DispositivoInteligente extends Dispositivo {
 		}
 		return -1; //Si llego hasta aca y no evaluo es porque tambien hubo algun error
 	}
+	
+	
+	//MEJORAR ESTO --> LLEVARLO A DISPOSITIVO
+		@Override
+		public DispositivoInteligente crearDispositivo(){
+			DispositivoInteligente nuevo = new DispositivoInteligente();
+			nuevo.setNombreDisp(this.nombreDisp);
+			nuevo.setEquipoConcreto(this.equipoConcreto);
+			nuevo.setEsBajoConsumo(this.esBajoConsumo);
+			nuevo.setHorasUsoMax(this.horasUsoMax);
+			nuevo.setHorasUsoMin(this.horasUsoMin);
+			nuevo.setkWh(this.kWh);
+			return nuevo;
+		}
+	
 	
 }
