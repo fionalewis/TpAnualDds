@@ -31,7 +31,6 @@ import modelo.devices.DeviceFactory;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
-import modelo.devices.DispositivosRepository;
 import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
 
