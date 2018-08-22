@@ -136,7 +136,7 @@ public class DeviceFactory {
 		Cliente pepe = new Cliente("Pepe","Argento","pepe123","wtf",2018,8,20,TipoDocumento.DNI,"40111222","4789456","Avenida Medrano 953",list);
 		System.out.println("\n" +pepe.getNombre() + " " + pepe.getApellido());
 		Transformador t = pepe.getTransformadorActual();
-		System.out.println(t.getZona());
+		System.out.println("Zona del transformador asignado a Pepe: " + t.getZona());
 		
 		System.out.println("Sus dispositivos:");
 		for(int e=0;e<2;e++) {

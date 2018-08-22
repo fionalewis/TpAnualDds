@@ -15,10 +15,6 @@ public abstract class Dispositivo {
 	protected double horasDeUso = 0;
 	protected double horasUsoMax = 0;
 	protected double horasUsoMin = 0;
-<<<<<<< HEAD
-=======
-	public String equipoConcreto = null;
->>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 	boolean esBajoConsumo = false;
 	
 	//Getters y Setters
@@ -36,15 +32,12 @@ public abstract class Dispositivo {
 		this.equipoConcreto = descripcion;
 	}
 	
-		
 	public boolean getEsInteligente(){
 		return esInteligente;
 	}
-	
 	public void setEsInteligente(boolean ansSmart){
 		this.esInteligente = ansSmart;
-	}
-	
+	}	
 	public double getkWh() {
 		return kWh;
 	}
@@ -84,26 +77,13 @@ public abstract class Dispositivo {
 		} else { this.horasUsoMin = horasDeUsoMin; }
 		this.horasUsoMin = horasDeUsoMin;
 	}
-	
 	public boolean getEsBajoConsumo(){
 		return esBajoConsumo;
 	}
-	
 	public void setEsBajoConsumo(boolean ansBajoConsumo){
 		this.esBajoConsumo = ansBajoConsumo;
 	}
-<<<<<<< HEAD
-		
-=======
-	public boolean getEsBajoConsumo(){
-		return esBajoConsumo;
-	}
 	
-	public void setEsBajoConsumo(boolean ansBajoConsumo){
-		this.esBajoConsumo = ansBajoConsumo;
-	}
-
->>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 	//Funcionalidades
 	
 	public abstract double consumoTotal();
@@ -134,18 +114,4 @@ public abstract class Dispositivo {
 		return (esInteligente(undisp)||esConvertido(undisp));
 	}
 	
-<<<<<<< HEAD
-	
-=======
-	//crear nuevos dispositivos del mismo tipo
-	//lo implemente en las subclases porque no me salio hacerlo aca
->>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
-	public Object crearDispositivo(){
-		return null;
-	}
-	
-<<<<<<< HEAD
-	
-=======
->>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 }

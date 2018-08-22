@@ -17,11 +17,9 @@ public class DispositivoInteligente extends Dispositivo {
 	private EstadoDispositivo estadoDisp;
 	Map<String, Sensor> sensores = new HashMap<String, Sensor>();
 	private IntervaloDispositivo unIntervalo;
-<<<<<<< HEAD
-=======
-	boolean esInteligente = true; //esto es para el json
->>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
-	
+
+	boolean esInteligente = true; //Ya no se si hace falta este atributo, pero lo vemos despues
+
 	private List<IntervaloDispositivo> intervalos = new ArrayList<>();
 	
 	//Constructor default
@@ -73,7 +71,6 @@ public class DispositivoInteligente extends Dispositivo {
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.now());
 		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
-		//los disp convertidos son considerados inteligentes para el simplex???
 	}
 	
 	//Conversion 2.0
@@ -97,19 +94,14 @@ public class DispositivoInteligente extends Dispositivo {
 	}
 	public void setEstadoDisp(EstadoDispositivo estadoDisp) {
 		this.estadoDisp = estadoDisp;
-<<<<<<< HEAD
 	}	
-=======
-	}
 	
 	public boolean getEsInteligente(){
 		return esInteligente;
 	}
-	
 	public void setEsInteligente(boolean ansSmart){
 		this.esInteligente = ansSmart;
 	}
->>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 	
 	//Intervalos
 	
@@ -460,34 +452,4 @@ public class DispositivoInteligente extends Dispositivo {
 		return -1; //Si llego hasta aca y no evaluo es porque tambien hubo algun error
 	}
 	
-<<<<<<< HEAD
-	
-	//MEJORAR ESTO --> LLEVARLO A DISPOSITIVO
-		@Override
-		public DispositivoInteligente crearDispositivo(){
-			DispositivoInteligente nuevo = new DispositivoInteligente();
-			nuevo.setNombreDisp(this.nombreDisp);
-			nuevo.setEquipoConcreto(this.equipoConcreto);
-			nuevo.setEsBajoConsumo(this.esBajoConsumo);
-			nuevo.setHorasUsoMax(this.horasUsoMax);
-			nuevo.setHorasUsoMin(this.horasUsoMin);
-			nuevo.setkWh(this.kWh);
-			return nuevo;
-		}
-	
-	
-=======
-	//MEJORAR ESTO --> LLEVARLO A DISPOSITIVO
-	@Override
-	public DispositivoInteligente crearDispositivo(){
-		DispositivoInteligente nuevo = new DispositivoInteligente();
-		nuevo.setNombreDisp(this.nombreDisp);
-		nuevo.setEquipoConcreto(this.equipoConcreto);
-		nuevo.setEsBajoConsumo(this.esBajoConsumo);
-		nuevo.setHorasUsoMax(this.horasUsoMax);
-		nuevo.setHorasUsoMin(this.horasUsoMin);
-		nuevo.setkWh(this.kWh);
-		return nuevo;
-	}
->>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 }

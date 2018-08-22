@@ -105,32 +105,4 @@ public class DispositivoEstandar extends Dispositivo {
 			return null;
 		}
 		
-		//MEJORAR ESTO --> LLEVARLO A DISPOSITIVO
-<<<<<<< HEAD
-				@Override
-				public DispositivoEstandar crearDispositivo(){
-					DispositivoEstandar nuevo = new DispositivoEstandar();
-					nuevo.setNombreDisp(this.nombreDisp);
-					nuevo.setEquipoConcreto(this.equipoConcreto);
-					nuevo.setEsBajoConsumo(this.esBajoConsumo);
-					nuevo.setHorasUsoMax(this.horasUsoMax);
-					nuevo.setHorasUsoMin(this.horasUsoMin);
-					nuevo.setkWh(this.kWh);
-					return nuevo;
-				}
-		
-=======
-		@Override
-		public DispositivoEstandar crearDispositivo(){
-			DispositivoEstandar nuevo = new DispositivoEstandar();
-			nuevo.setNombreDisp(this.nombreDisp);
-			nuevo.setEquipoConcreto(this.equipoConcreto);
-			nuevo.setEsBajoConsumo(this.esBajoConsumo);
-			nuevo.setHorasUsoMax(this.horasUsoMax);
-			nuevo.setHorasUsoMin(this.horasUsoMin);
-			nuevo.setkWh(this.kWh);
-			return nuevo;
-		}
-	
->>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 }

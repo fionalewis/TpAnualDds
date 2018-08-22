@@ -16,39 +16,17 @@ import modelo.users.Cliente;
  //En la clase JsonManager agregue un monton de rutas para que las puedan usar mas facil, agreguen las suyas y las usan donde sea 
 
 public class TestJson {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
-	DispositivosRepository repoDispo = new DispositivosRepository();
-	
-=======
 
 	String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
-	DispositivosRepository repoDispo = new DispositivosRepository();
-	
->>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
-	@Before
-	public void init() {
-		try{
-			repoDispo.importarDispoDeJson();
-		} catch(Exception e){
-			ExceptionsHandler.catchear(e);
-		}
-	}
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> origin/Entrega2
+	//Por alguna razon el deserializarlista y buscarindex no me esta funcionando para algunas clases pero para otras si, para mi no consigue instanciar los 
+	//objetos pero no se por que, me trajo problemas con los dispositivos y ahora con la clase cliente
+	
 	//@Test
-=======
-		
-	@Test
->>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 	public void testJsonTraeClientes() throws FileNotFoundException, InstantiationException, IllegalAccessException {
 		List<Cliente> clientes = null;
 		try {
-			clientes = DAOJson.deserializarLista(Cliente.class,JsonManager.rutaJsonClientes);
+			clientes = DAOJson.deserializarLista(Cliente.class,JsonManager.rutaJsonClientesSalo);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -60,7 +38,7 @@ public class TestJson {
 	public void testJsonTraeUnCliente() throws FileNotFoundException, InstantiationException, IllegalAccessException{
     	Cliente cli = null;
 		try {
-			cli = (Cliente) DAOJson.buscarIndexEnLista(Cliente.class, 1,JsonManager.rutaJsonClientes);
+			cli = (Cliente) DAOJson.buscarIndexEnLista(Cliente.class, 1,JsonManager.rutaJsonClientesSalo);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -69,11 +47,11 @@ public class TestJson {
     	Assert.assertEquals("homero",cli.getNombre());
     }
     
-    //@Test
+   @Test
     public void testJsonTraeUnAdmin() throws FileNotFoundException, InstantiationException, IllegalAccessException {
     	Administrador admin = null;
     	try {
-    		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class,0,JsonManager.rutaJsonAdmin);
+    		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class,0,JsonManager.rutaJsonAdminSalo);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -81,11 +59,11 @@ public class TestJson {
     	System.out.println("Test JsonTraeUnAdmin: El código del admin en la posición 0 es 20000: " + admin.getCodAdmin());
     }
     
-    //@Test
+    @Test
 	public void testJsonTraeCategoriasYDatos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		List<Categoria> categorias = null;		
 		try {
-			categorias = DAOJson.deserializarLista(Categoria.class,JsonManager.rutaJsonCateg);
+			categorias = DAOJson.deserializarLista(Categoria.class,JsonManager.rutaJsonCategSalo);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}		
@@ -99,45 +77,5 @@ public class TestJson {
 		Assert.assertEquals(0.851, categorias.get(8).getCargoVariable(),0.1);
 		System.out.println("Test JsonTraeCategorias:\n El valor de cargoVariable de R9 es 0.851: " + categorias.get(8).getCargoVariable());
     }
-<<<<<<< HEAD
-    
-    
-	//@Test
-    public void testJsonTablaDispositivos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		
-		List<Dispositivo> disp = repoDispo.getDispositivosExistentes();
-		
-		Assert.assertEquals(24, disp.size());
-		System.out.println("Test JsonJsonTablaDispositivos:\n "
-				+ "El tamaño de la lista de dispositivos del json es: " + disp.size());
-		
-		Assert.assertEquals(90.0, disp.get(0).getHorasUsoMin(),0.1);
-		System.out.println("Test JsonJsonTablaDispositivos:\n "
-				+ "El uso mensual minimo del equipo en la posicion cero es 90: " 
-				+ disp.get(0).getHorasUsoMin());
-		
-		Assert.assertEquals("Color de tubo fluorescente de 21' ", disp.get(2).getEquipoConcreto());
-		System.out.println("Test JsonJsonTablaDispositivos:\n "
-				+ "El equipo en la posicion dos es Color de tubo fluorescente de 21': \n " 
-				+ disp.get(2).getEquipoConcreto());
-		
-		Assert.assertEquals(360.0, disp.get(3).getHorasUsoMax(),0.1);
-		System.out.println("Test JsonJsonTablaDispositivos:\n "
-				+ "El uso mensual maximo del equipo en la posicion tres es 360: " 
-				+ disp.get(3).getHorasUsoMin());
-		
-		Assert.assertTrue(((DispositivoInteligente) disp.get(5)).getEsBajoConsumo());
-		System.out.println("Test JsonJsonTablaDispositivos:\n "
-				+ "El dispositivo en posicion cinco es de bajo consumo: " 
-				+ ((DispositivoInteligente) disp.get(5)).getEsBajoConsumo());
-		
-		Assert.assertEquals(0.09, disp.get(8).getkWh(),0.001);
-		System.out.println("Test JsonJsonTablaDispositivos:\n "
-				+ "El valor de kWh del dispositivo en la posicion ocho es 0.09: " 
-				+ disp.get(8).getkWh());
-    }
-	
-=======
 
->>>>>>> origin/Entrega2
 }

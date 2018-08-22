@@ -83,7 +83,7 @@ public class JsonManager {
 			List<Categoria> categorias = null;
 			Categoria categoria = null;
 			try {
-				categorias = DAOJson.deserializarLista(Categoria.class,rutaJsonCateg);
+				categorias = DAOJson.deserializarLista(Categoria.class,rutaJsonCategSalo);
 				} catch (Exception e) {
 				ExceptionsHandler.catchear(e);
 			}
@@ -155,11 +155,11 @@ public class JsonManager {
 		
 		resetTransf();
 
-		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransf);
+		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransfSalo);
 
 		Gson gson = new Gson();
 
-		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonas)); //Tiene que coincidir con linea 156
+		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonasSalo)); //Tiene que coincidir con linea 174
 	    Zona[] zonas = gson.fromJson(buffReader, Zona[].class);
 	
 		for(int i = 0;i<zonas.length;i++) {
@@ -171,7 +171,7 @@ public class JsonManager {
 					gson = new GsonBuilder().setPrettyPrinting().create();
 					FileWriter writer = null;
 					try {
-						writer = new FileWriter(rutaZonas); // Tiene que coincidir con linea 144
+						writer = new FileWriter(rutaZonasSalo); // Tiene que coincidir con linea 162
 						writer.write(newJson);
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -193,9 +193,9 @@ public class JsonManager {
 	}	
 
 	public static void resetTransf() throws FileNotFoundException, InstantiationException, IllegalAccessException {
-		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransf);
+		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransfSalo);
 		Gson gson = new Gson();
-		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonas));//Tiene que coincidir con linea 191
+		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonasSalo));//Tiene que coincidir con linea 206
 	    Zona[] zonas = gson.fromJson(buffReader, Zona[].class);
 		for(int i = 0;i<zonas.length;i++) {
 			zonas[i].getTransformadores().clear();
@@ -203,7 +203,7 @@ public class JsonManager {
 			gson = new GsonBuilder().setPrettyPrinting().create();
 			FileWriter writer = null;
 			try {
-				writer = new FileWriter(rutaZonas);//Tiene que coincidir con linea 183
+				writer = new FileWriter(rutaZonasSalo);//Tiene que coincidir con linea 198
 				writer.write(newJson);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -227,48 +227,74 @@ public class JsonManager {
 		JsonParser parserFactory = new JsonParser();
 		JsonReader readerFactory = null;
 		try {
-			readerFactory = new JsonReader(new FileReader(JsonManager.rutaJsonDisp));
+			readerFactory = new JsonReader(new FileReader(JsonManager.rutaJsonDispSalo));
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
 		JsonElement jsonTree = parserFactory.parse(readerFactory);
 		JsonArray arrayDisp = jsonTree.getAsJsonArray();
+	
 		for(int i = 0;i<arrayDisp.size();i++) {
 			String tipo = arrayDisp.get(i).getAsJsonObject().get("nombreDisp").getAsString();
 			String descrip = arrayDisp.get(i).getAsJsonObject().get("equipoConcreto").getAsString();
 			if (DeviceFactory.cumpleCondInteligente(tipo,descrip)) {
-					//arrayDisp.get(i).getAsJsonObject().get("esInteligente").getAsBoolean()){
+				JsonObject precargado = arrayDisp.get(i).getAsJsonObject();
 				DispositivoInteligente dAAgregar = new DispositivoInteligente();
-				DispositivoInteligente dActual = null;
-				try {
-					dActual = (DispositivoInteligente) DAOJson.buscarIndexEnLista(DispositivoInteligente.class,i,JsonManager.rutaJsonDisp);
-				} catch (Exception e) {
-					ExceptionsHandler.catchear(e);
+				DispositivoInteligente dActual = new DispositivoInteligente();
+				//Inicializando el disp que corresponde al de la posicion actual en base al precargado
+				dActual.setNombreDisp(precargado.get("nombreDisp").getAsString());
+				dActual.setEquipoConcreto(precargado.get("equipoConcreto").getAsString());
+				dActual.setEsInteligente(true);
+				dActual.setkWh(precargado.get("kWh").getAsDouble());
+				dActual.setkWhAhorro(precargado.get("kWh").getAsDouble());
+				dActual.setEsBajoConsumo(precargado.get("esBajoConsumo").getAsBoolean());
+				if(dActual.getNombreDisp().equalsIgnoreCase("Heladera")) { //Las heladeras no pueden ser apagadas
+					dActual.setHorasUsoMax(-1);dActual.setHorasUsoMin(-1);
+				} else {
+					dActual.setHorasUsoMin(precargado.get("horasUsoMin").getAsDouble());
+					dActual.setHorasUsoMax(precargado.get("horasUsoMax").getAsDouble());
 				}
+				//Inicializando el disp a agregar en la tabla
 				LocalDateTime fechaactual = LocalDateTime.now();
-				dAAgregar.setNombreDisp(dActual.getNombreDisp());dAAgregar.setEquipoConcreto(dActual.getEquipoConcreto());
-				dAAgregar.setFechaRegistro(fechaactual);dAAgregar.setEsBajoConsumo(dActual.getEsBajoConsumo());
-				dAAgregar.setEsInteligente(true);dAAgregar.setkWhAhorro(dActual.getkWh());dAAgregar.setkWh(dActual.getkWh());
+				dAAgregar.setNombreDisp(dActual.getNombreDisp());
+				dAAgregar.setEquipoConcreto(dActual.getEquipoConcreto());
+				dAAgregar.setFechaRegistro(fechaactual);
+				dAAgregar.setEsInteligente(true);dAAgregar.setEsBajoConsumo(dActual.getEsBajoConsumo());
+				dAAgregar.setkWh(dActual.getkWh());dAAgregar.setkWhAhorro(dActual.getkWh());
 				dAAgregar.setIntervalo(new IntervaloDispositivo(fechaactual,modo.NORMAL));dAAgregar.setEstadoDisp(new Encendido());
+				dAAgregar.setHorasUsoMin(dActual.getHorasUsoMin());dAAgregar.setHorasUsoMax(dActual.getHorasUsoMax());
 				
-				if(dAAgregar.getNombreDisp().equalsIgnoreCase("Heladera")) {
-					dAAgregar.setHorasUsoMax(-1);dAAgregar.setHorasUsoMin(-1);
-				} else {dAAgregar.setHorasUsoMax(dActual.getHorasUsoMax());dAAgregar.setHorasUsoMin(dActual.getHorasUsoMin());}
+				DeviceFactory.tablaDI.add(dAAgregar); //Lo agregamos a la lista de precargados
 				
-				DeviceFactory.tablaDI.add(dAAgregar);
-			} else {
+				} else {
+				JsonObject precargado = arrayDisp.get(i).getAsJsonObject();
 				DispositivoEstandar dAAgregar = new DispositivoEstandar();
-				DispositivoEstandar dActual = null;
-				try {
-					dActual = (DispositivoEstandar) DAOJson.buscarIndexEnLista(DispositivoEstandar.class,i,JsonManager.rutaJsonDisp);
-				} catch (Exception e) {
-					ExceptionsHandler.catchear(e);
+				DispositivoEstandar dActual = new DispositivoEstandar();
+
+				//Inicializando el disp que corresponde al de la posicion actual en base al precargado
+				dActual.setNombreDisp(precargado.get("nombreDisp").getAsString());
+				dActual.setEquipoConcreto(precargado.get("equipoConcreto").getAsString());
+				dActual.setEsInteligente(true);
+				dActual.setkWh(precargado.get("kWh").getAsDouble());
+				dActual.setEsBajoConsumo(precargado.get("esBajoConsumo").getAsBoolean());
+				if(dActual.getNombreDisp().equalsIgnoreCase("Heladera")) { //Las heladeras no pueden ser apagadas
+					dActual.setHorasUsoMax(-1);dActual.setHorasUsoMin(-1);
+				} else {
+					dActual.setHorasUsoMin(precargado.get("horasUsoMin").getAsDouble());
+					dActual.setHorasUsoMax(precargado.get("horasUsoMax").getAsDouble());
 				}
-				dAAgregar.setNombreDisp(dActual.getNombreDisp());dAAgregar.setEquipoConcreto(dActual.getEquipoConcreto());
-				dAAgregar.setFechaRegistro(LocalDateTime.now());dAAgregar.setEsBajoConsumo(dActual.getEsBajoConsumo());
-				dAAgregar.setEsInteligente(false);dAAgregar.setHorasUsoMax(dActual.getHorasUsoMax());dAAgregar.setHorasUsoDiarias(0);
-				dAAgregar.setHorasUsoMin(dActual.getHorasUsoMin());dAAgregar.setkWh(dActual.getkWh());
+				//Inicializando el disp a agregar en la tabla
+				LocalDateTime fechaactual = LocalDateTime.now();
+				dAAgregar.setNombreDisp(dActual.getNombreDisp());
+				dAAgregar.setEquipoConcreto(dActual.getEquipoConcreto());
+				dAAgregar.setFechaRegistro(fechaactual);
+				dAAgregar.setEsInteligente(true);dAAgregar.setEsBajoConsumo(dActual.getEsBajoConsumo());
+				dAAgregar.setkWh(dActual.getkWh());
+				dAAgregar.setHorasUsoMin(dActual.getHorasUsoMin());dAAgregar.setHorasUsoMax(dActual.getHorasUsoMax());
+				dAAgregar.setHorasUsoDiarias(1); //por default
+				
 				DeviceFactory.tablaDE.add(dAAgregar);
+				
 			}
 		}
 	}

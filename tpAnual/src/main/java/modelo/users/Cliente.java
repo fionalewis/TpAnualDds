@@ -281,13 +281,22 @@ public class Cliente extends Usuario {
 		transformadorActual = GeoLocation.transfMasCercanoA(coordDom);
 	}
 	
+	public double cantHorasEstandarXMes() {
+		/*double totalHorasUsoXMes = 0;
+		List<Dispositivo> estandar = obtenerLista("Estandar");
+		for(Dispositivo unEstandar : estandar) {
+			totalHorasUsoXMes += ((DispositivoEstandar) unEstandar).getHorasUsoDiarias()*720;
+		}
+		return totalHorasUsoXMes;*/
+		return obtenerLista("Estandar").stream().mapToDouble(unDisp -> ((DispositivoEstandar) unDisp).getHorasUsoDiarias()*720).sum();
+	}
+	
 	//Este metodo quizas deberia ir en el administrador mas adelante, pero por ahora lo consultamos directamente desde el cliente
-	@SuppressWarnings("unchecked")
+	
 	public PointValuePair llamarSimplex() throws FileNotFoundException, InstantiationException, IllegalAccessException {
-		
-		List<DispositivoInteligente> IyC = (List<DispositivoInteligente>)(List<?>)obtenerLista("IyC");		
-		return simplex.aplicarMetodoSimplex(IyC);
+		List<Dispositivo> IyC = obtenerLista("IyC");
+		double horasMesEstandar = cantHorasEstandarXMes();
+		return simplex.aplicarMetodoSimplex(IyC,horasMesEstandar);
 	}
 		
 }
-
