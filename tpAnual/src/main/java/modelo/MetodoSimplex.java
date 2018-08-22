@@ -54,20 +54,10 @@ public class MetodoSimplex {
 	private boolean variablesPositivas = true;
 	private List<Double> horasUsoMax = new ArrayList<Double>();
 	private List<Double> horasUsoMin = new ArrayList<Double>();
-	private List<DispositivoInteligente> dispositivos = new ArrayList<DispositivoInteligente>();
+	private static List<DispositivoInteligente> dispositivos = new ArrayList<DispositivoInteligente>();
 	private double[] listaKWH = new double[this.dispositivos.size()];
 	private List<double[]> posicionCanonica = new ArrayList<double[]>();
-	
-	//Variable de Salo, use esta en vez de la que estaba para poder tomar cualquier clase de dispositivo
-	private static List<Dispositivo> dispo = new ArrayList<>();	
-	
-	/*public MetodoSimplex(GoalType objetivo, boolean variablesPositivas) {
-		this.variablesPositivas = variablesPositivas;
-		this.objetivo = objetivo;
-		this.restricciones = new ArrayList<LinearConstraint>();
-		this.simplex = new SimplexSolver();
-	}*/
-	
+
 	public MetodoSimplex(){}
 	
 	// --------------------- METODOS DADOS --------------------------------------
@@ -92,6 +82,7 @@ public class MetodoSimplex {
 	
 <<<<<<< HEAD
 // ----------------------Metodos para armar la funcion economica con cantidad variable de argumentos -------------------------------
+<<<<<<< HEAD
 =======
 	
 	// ------------- Metodos para armar la funcion economica con cantidad variable de argumentos -------------- 
@@ -124,12 +115,20 @@ public class MetodoSimplex {
 		
 >>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 		
+=======
+	public PointValuePair aplicarMetodoSimplex(List<DispositivoInteligente> disp) throws FileNotFoundException, InstantiationException, IllegalAccessException{ 
+		
+		dispositivos = disp;
+		List<String> tipos = listaDeDescrip();
+		Map<String,Integer> cantPorTipoDescrip = countFrequencies(tipos); 
+		double[] listaCantidades = arrayCantidades(cantPorTipoDescrip);    
+		listaCantidades = revertirArray(listaCantidades);
+        crearFuncionEconomica(listaCantidades);
+>>>>>>> origin/Entrega2
 		agregarRestricciones();
-		return resolver();
+        return resolver();
 	}
-	
-//--------------------------------------------------------Metodos de Mari sin cambios
-	
+
 	// restricciones = total kwh, los kwh individuales, relacion mayor o menor, y sus posiciones como versor canonico
 	// ver test para entender esto
 	
@@ -140,6 +139,7 @@ public class MetodoSimplex {
 			generarArgumentos();
 			
 			//genero las restricciones
+			//2. Donde decia 44064 puse 612 porque es el limite que corresponde al mes (sino los valores de los Xi nunca van a dar menores al horasMax)
 			agregarRestriccion(Relationship.LEQ, 440640, listaKWH); // kwh2.x2 + kwh1.x1 + kwh0.x0 <= 44064
 			
 			int j =0; int k = 0; int tam = dispositivos.size()*2;
@@ -223,6 +223,7 @@ public class MetodoSimplex {
 		 }
 		 return target;
 	}
+<<<<<<< HEAD
 	
 <<<<<<< HEAD
 // ---------------------------------------------------- Duplicados de Mari para probar otra forma (tienen explicado que cambie, son pocas cosas igual)
@@ -279,6 +280,8 @@ public class MetodoSimplex {
 	}
 
 //---------------------------------------------------- Otros metodos que use
+=======
+>>>>>>> origin/Entrega2
 
 	public Map<String,Integer> countFrequencies(List<String> tipos) {
  		Map<String,Integer> cantportipo = new HashMap<String,Integer>();
@@ -293,10 +296,12 @@ public class MetodoSimplex {
 	
 	public static List<String> listaDeDescrip(){
 		List<String> tiposDescrip = new ArrayList<>();
-		for(int i =0;i<dispo.size();i++) {
-			String unaDescrip = dispo.get(i).getEquipoConcreto();
+		
+		for(int i =0;i<dispositivos.size();i++) {
+			String unaDescrip = dispositivos.get(i).getEquipoConcreto();
 			tiposDescrip.add(unaDescrip);
 		}
+		
 		return tiposDescrip;
 	}
 		
@@ -308,19 +313,6 @@ public class MetodoSimplex {
 			i++;
 		}
 		return arrayCantidades;
-	}
-	
-	//------------------------------------------------ El Simplex que me quedo
-	
-	public PointValuePair aplicarMetodoSimplexSalo(List<Dispositivo> disp) throws FileNotFoundException, InstantiationException, IllegalAccessException{ 
-		dispo = disp;
-		List<String> tipos = listaDeDescrip();    
-		Map<String,Integer> cantPorTipoDescrip = countFrequencies(tipos); 
-		double[] listaCantidades = arrayCantidades(cantPorTipoDescrip);    
-		listaCantidades = revertirArray(listaCantidades);
-        crearFuncionEconomica(listaCantidades);
-		agregarRestriccionesSALO();
-        return resolver();
 	}
 
 }

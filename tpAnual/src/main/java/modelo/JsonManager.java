@@ -46,22 +46,32 @@ public class JsonManager {
 	
 	//public static List<Dispositivo> dispositivosEnGral = new ArrayList<>();
 	
-	public static String rutaJsonClientesMari = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonClientes.json";
+	public static String rutaJsonClientesMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonClientes.json";
 	public static String rutaJsonClientesSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonClientes.json";
-	public static String rutaJsonDispMari = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonDispositivos.json";
+	public static String rutaJsonDispMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonDispositivos.json";
 	public static String rutaJsonDispSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonDispositivos.json";
-	public static String rutaJsonAdminMari = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonAdministradores.json";
+	public static String rutaJsonAdminMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonAdministradores.json";
 	public static String rutaJsonAdminSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonAdministradores.json";
-	public static String rutaJsonCategMari = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonCategorias.json";
+	public static String rutaJsonCategMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonCategorias.json";
 	public static String rutaJsonCategSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonCategorias.json";
 	
 	public static String rutaTransfSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\transformadores.json";
+	public static String rutaTransfMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\transformadores.json";
 	public static String rutaZonasSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\zonas.json";
+	public static String rutaZonasMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\zonas.json";
 	
 	public static String rutaClientesLinux = "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json";
 	public static String rutaDispLinux = "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json";
 	public static String rutaAdminLinux = "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonAdministradores.json";
 	public static String rutaCategLinux = "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json";
+	
+	//RUTAS PRINCIPALES
+	public static String rutaJsonClientes = rutaJsonClientesMaru;
+	public static String rutaJsonDisp = rutaJsonDispMaru;
+	public static String rutaJsonAdmin = rutaJsonAdminMaru;
+	public static String rutaJsonCateg = rutaJsonCategMaru;
+	public static String rutaTransf = rutaTransfMaru;
+	public static String rutaZonas = rutaZonasMaru;
 	
 	//Metodos que usamos para categorias
 	
@@ -73,7 +83,7 @@ public class JsonManager {
 			List<Categoria> categorias = null;
 			Categoria categoria = null;
 			try {
-				categorias = DAOJson.deserializarLista(Categoria.class,rutaJsonCategSalo);
+				categorias = DAOJson.deserializarLista(Categoria.class,rutaJsonCateg);
 				} catch (Exception e) {
 				ExceptionsHandler.catchear(e);
 			}
@@ -145,11 +155,11 @@ public class JsonManager {
 		
 		resetTransf();
 
-		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransfSalo);
+		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransf);
 
 		Gson gson = new Gson();
 
-		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonasSalo)); //Tiene que coincidir con linea 156
+		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonas)); //Tiene que coincidir con linea 156
 	    Zona[] zonas = gson.fromJson(buffReader, Zona[].class);
 	
 		for(int i = 0;i<zonas.length;i++) {
@@ -161,7 +171,7 @@ public class JsonManager {
 					gson = new GsonBuilder().setPrettyPrinting().create();
 					FileWriter writer = null;
 					try {
-						writer = new FileWriter(rutaZonasSalo); // Tiene que coincidir con linea 144
+						writer = new FileWriter(rutaZonas); // Tiene que coincidir con linea 144
 						writer.write(newJson);
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -183,9 +193,9 @@ public class JsonManager {
 	}	
 
 	public static void resetTransf() throws FileNotFoundException, InstantiationException, IllegalAccessException {
-		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransfSalo);
+		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransf);
 		Gson gson = new Gson();
-		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonasSalo));//Tiene que coincidir con linea 191
+		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonas));//Tiene que coincidir con linea 191
 	    Zona[] zonas = gson.fromJson(buffReader, Zona[].class);
 		for(int i = 0;i<zonas.length;i++) {
 			zonas[i].getTransformadores().clear();
@@ -193,7 +203,7 @@ public class JsonManager {
 			gson = new GsonBuilder().setPrettyPrinting().create();
 			FileWriter writer = null;
 			try {
-				writer = new FileWriter(rutaZonasSalo);//Tiene que coincidir con linea 183
+				writer = new FileWriter(rutaZonas);//Tiene que coincidir con linea 183
 				writer.write(newJson);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -217,7 +227,7 @@ public class JsonManager {
 		JsonParser parserFactory = new JsonParser();
 		JsonReader readerFactory = null;
 		try {
-			readerFactory = new JsonReader(new FileReader(JsonManager.rutaJsonDispSalo));
+			readerFactory = new JsonReader(new FileReader(JsonManager.rutaJsonDisp));
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -231,7 +241,7 @@ public class JsonManager {
 				DispositivoInteligente dAAgregar = new DispositivoInteligente();
 				DispositivoInteligente dActual = null;
 				try {
-					dActual = (DispositivoInteligente) DAOJson.buscarIndexEnLista(DispositivoInteligente.class,i,JsonManager.rutaJsonDispSalo);
+					dActual = (DispositivoInteligente) DAOJson.buscarIndexEnLista(DispositivoInteligente.class,i,JsonManager.rutaJsonDisp);
 				} catch (Exception e) {
 					ExceptionsHandler.catchear(e);
 				}
@@ -250,7 +260,7 @@ public class JsonManager {
 				DispositivoEstandar dAAgregar = new DispositivoEstandar();
 				DispositivoEstandar dActual = null;
 				try {
-					dActual = (DispositivoEstandar) DAOJson.buscarIndexEnLista(DispositivoEstandar.class,i,JsonManager.rutaJsonDispSalo);
+					dActual = (DispositivoEstandar) DAOJson.buscarIndexEnLista(DispositivoEstandar.class,i,JsonManager.rutaJsonDisp);
 				} catch (Exception e) {
 					ExceptionsHandler.catchear(e);
 				}

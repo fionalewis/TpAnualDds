@@ -4,6 +4,7 @@ import java.util.List;
 
 import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
+import modelo.JsonManager;
 
 //El metodo ubicacionDe usa la ruta del json de las zonas y transfMasCercanoA usa el json de los transformadores!
 
@@ -83,7 +84,7 @@ public class GeoLocation {
 			List<Zona> zonas = null;
 			Zona unaZona = null;
 			try {
-				zonas = DAOJson.deserializarLista(Zona.class,"C:\\Users\\Salome\\git\\TpAnualDdS\\tpAnual\\JSONs\\zonas.json");
+				zonas = DAOJson.deserializarLista(Zona.class,JsonManager.rutaZonas);
 			} catch (Exception e) {
 				ExceptionsHandler.catchear(e);
 			}
@@ -99,7 +100,7 @@ public class GeoLocation {
 		public static Transformador transfMasCercanoA(GeoLocation unPunto)  {
 			List<Transformador> transformadores = null;
 			try {
-				transformadores = DAOJson.deserializarLista(Transformador.class,"C:\\Users\\Salome\\git\\TpAnualDdS\\tpAnual\\JSONs\\transformadores.json");
+				transformadores = DAOJson.deserializarLista(Transformador.class,JsonManager.rutaTransf);
 			} catch (Exception e) {
 				ExceptionsHandler.catchear(e);
 			}

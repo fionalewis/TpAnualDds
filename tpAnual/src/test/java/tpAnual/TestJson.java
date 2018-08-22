@@ -4,24 +4,19 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
-import modelo.DispositivosRepository;
 import modelo.JsonManager;
-//import modelo.DispositivosRepository; no se por que mi eclipse no me lo actualiza aunque lo tenga
-import modelo.devices.Dispositivo;
-import modelo.devices.DispositivoInteligente;
 import modelo.users.Administrador;
 import modelo.users.Categoria;
 import modelo.users.Cliente;
 
-/* Acuerdense de revisar si tienen los JSONs en la misma ubicacion antes de correr los tests !!!
- * En la clase JsonManager agregue un monton de rutas para que las puedan usar mas facil, agreguen las suyas y las usan donde sea */
+ //En la clase JsonManager agregue un monton de rutas para que las puedan usar mas facil, agreguen las suyas y las usan donde sea 
 
 public class TestJson {
+<<<<<<< HEAD
 <<<<<<< HEAD
 	
 	DispositivosRepository repoDispo = new DispositivosRepository();
@@ -42,6 +37,9 @@ public class TestJson {
 	}
 <<<<<<< HEAD
 	
+=======
+
+>>>>>>> origin/Entrega2
 	//@Test
 =======
 		
@@ -50,7 +48,7 @@ public class TestJson {
 	public void testJsonTraeClientes() throws FileNotFoundException, InstantiationException, IllegalAccessException {
 		List<Cliente> clientes = null;
 		try {
-			clientes = DAOJson.deserializarLista(Cliente.class,JsonManager.rutaJsonClientesSalo);
+			clientes = DAOJson.deserializarLista(Cliente.class,JsonManager.rutaJsonClientes);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -58,11 +56,11 @@ public class TestJson {
 		System.out.println("Test JsonTraeClientes: El tamaño de la lista de clientes del json es dos: " + clientes.size());
     }
     
-   @Test
+   //@Test
 	public void testJsonTraeUnCliente() throws FileNotFoundException, InstantiationException, IllegalAccessException{
     	Cliente cli = null;
 		try {
-			cli = (Cliente) DAOJson.buscarIndexEnLista(Cliente.class, 1,JsonManager.rutaJsonClientesSalo);
+			cli = (Cliente) DAOJson.buscarIndexEnLista(Cliente.class, 1,JsonManager.rutaJsonClientes);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -71,23 +69,11 @@ public class TestJson {
     	Assert.assertEquals("homero",cli.getNombre());
     }
     
-    /*@Test
-    public void testJsonTraeUnDispositivo() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-    	DispositivoInteligente disp = null;
-		try {
-			disp = (DispositivoInteligente) DAOJson.buscarIndexEnLista(DispositivoInteligente.class,1,JsonManager.rutaJsonDispSalo);
-		} catch (Exception e) {
-			ExceptionsHandler.catchear(e);
-		}
-    	Assert.assertEquals(tipoDispositivo.AireAcondicionado, disp.getTipoDisp());
-    	System.out.println("Test JsonTraeUnDispositivo: El nombre del dispositivo del json es: " + disp.getTipoDisp().toString());
-    }*/
-    
     //@Test
     public void testJsonTraeUnAdmin() throws FileNotFoundException, InstantiationException, IllegalAccessException {
     	Administrador admin = null;
     	try {
-    		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class,0,JsonManager.rutaJsonAdminSalo);
+    		admin = (Administrador) DAOJson.buscarIndexEnLista(Administrador.class,0,JsonManager.rutaJsonAdmin);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -99,7 +85,7 @@ public class TestJson {
 	public void testJsonTraeCategoriasYDatos() throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		List<Categoria> categorias = null;		
 		try {
-			categorias = DAOJson.deserializarLista(Categoria.class,JsonManager.rutaJsonCategSalo);
+			categorias = DAOJson.deserializarLista(Categoria.class,JsonManager.rutaJsonCateg);
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}		
@@ -113,6 +99,7 @@ public class TestJson {
 		Assert.assertEquals(0.851, categorias.get(8).getCargoVariable(),0.1);
 		System.out.println("Test JsonTraeCategorias:\n El valor de cargoVariable de R9 es 0.851: " + categorias.get(8).getCargoVariable());
     }
+<<<<<<< HEAD
     
     
 	//@Test
@@ -150,4 +137,7 @@ public class TestJson {
 				+ disp.get(8).getkWh());
     }
 	
+=======
+
+>>>>>>> origin/Entrega2
 }
