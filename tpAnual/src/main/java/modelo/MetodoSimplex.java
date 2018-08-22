@@ -56,8 +56,9 @@ public class MetodoSimplex {
 	//mari
 	//private List<DispositivoInteligente> dispositivos = new ArrayList<DispositivoInteligente>();
 	//private List<Dispositivo> dispositivos = new ArrayList<Dispositivo>();
+	
 	//salo
-	private static List<Dispositivo> dispositivos = new ArrayList<>();
+	private List<Dispositivo> dispositivos = new ArrayList<>();
 	
 	private double[] listaKWH = new double[dispositivos.size()];
 	private List<double[]> posicionCanonica = new ArrayList<double[]>();	
@@ -86,16 +87,14 @@ public class MetodoSimplex {
 	
 // ----------------------Metodos para armar la funcion economica con cantidad variable de argumentos -------------------------------
 
-	public PointValuePair aplicarMetodoSimplex(List<Dispositivo> disp,double horasMesEstandar) throws FileNotFoundException, InstantiationException, IllegalAccessException{ 
-		//List<Dispositivo> iyc = disp.stream().filter(FilterPredicates.filterAmbos()).collect(Collectors.toList());
-		//List<Dispositivo> estandar = disp.stream().filter(FilterPredicates.filterDE()).collect(Collectors.toList());
+	public PointValuePair aplicarMetodoSimplex(List<Dispositivo> disp,double consEstandarMes) throws FileNotFoundException, InstantiationException, IllegalAccessException{ 
 		dispositivos = disp;
 		List<String> tipos = listaDeDescrip();
 		Map<String,Integer> cantPorTipoDescrip = countFrequencies(tipos); 
 		double[] listaCantidades = arrayCantidades(cantPorTipoDescrip);    
 		listaCantidades = revertirArray(listaCantidades);
         crearFuncionEconomica(listaCantidades);
-		agregarRestricciones(horasMesEstandar);
+		agregarRestricciones(consEstandarMes);
         return resolver();
 	}
 
@@ -106,18 +105,16 @@ public class MetodoSimplex {
 			//cargo datos a las listas
 			generarArgumentos();
 			//genero las restricciones
-			if(horasARestarEstandar!=0) {
-			agregarRestriccion(Relationship.LEQ, 44064 - horasARestarEstandar*612, listaKWH); // kwh2.x2 + kwh1.x1 + kwh0.x0 <= 44064
-			} else { agregarRestriccion(Relationship.LEQ, 44064, listaKWH); }
+			agregarRestriccion(Relationship.LEQ, 440640 - horasARestarEstandar, listaKWH); // kwh2.x2 + kwh1.x1 + kwh0.x0 <= 44064
 			
 			int j =0; int k = 0; int tam = dispositivos.size()*2;
 			for(int i=1; i<=tam; i++){
 				if(i%2==0){ //par --> lim superior, <=
-					agregarRestriccion(Relationship.LEQ,horasUsoMax.get(k),posicionCanonica.get(k));//j j 
-					k++;//j++
+					agregarRestriccion(Relationship.LEQ,horasUsoMax.get(j),posicionCanonica.get(j));//j j 
+					j++;//j++
 				} else { //impar --> lim inferior, >=
-					agregarRestriccion(Relationship.GEQ,horasUsoMin.get(j),posicionCanonica.get(j));//k k
-					j++;//k++
+					agregarRestriccion(Relationship.GEQ,horasUsoMin.get(k),posicionCanonica.get(k));//k k
+					k++;//k++
 				}
 			}
 	}

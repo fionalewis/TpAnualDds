@@ -5,6 +5,7 @@ import modelo.JsonManager;
 import modelo.MetodoSimplex;
 import modelo.deviceState.AhorroEnergia;
 import modelo.deviceState.Encendido;
+import modelo.devices.DeviceFactory;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoConvertido;
 import modelo.devices.DispositivoEstandar;
@@ -282,21 +283,46 @@ public class Cliente extends Usuario {
 	}
 	
 	public double cantHorasEstandarXMes() {
-		/*double totalHorasUsoXMes = 0;
-		List<Dispositivo> estandar = obtenerLista("Estandar");
-		for(Dispositivo unEstandar : estandar) {
-			totalHorasUsoXMes += ((DispositivoEstandar) unEstandar).getHorasUsoDiarias()*720;
-		}
-		return totalHorasUsoXMes;*/
-		return obtenerLista("Estandar").stream().mapToDouble(unDisp -> ((DispositivoEstandar) unDisp).getHorasUsoDiarias()*720).sum();
+		return obtenerLista("Estandar").stream().mapToDouble(unDisp ->((DispositivoEstandar) unDisp).getHorasUsoDiarias()*720).sum();
+	}
+	
+	public double consumoXMesEstandar() {
+		return obtenerLista("Estandar").stream().mapToDouble(unDisp ->((DispositivoEstandar) unDisp).getHorasUsoDiarias()*720*(unDisp.getkWh())).sum();
+		
 	}
 	
 	//Este metodo quizas deberia ir en el administrador mas adelante, pero por ahora lo consultamos directamente desde el cliente
 	
 	public PointValuePair llamarSimplex() throws FileNotFoundException, InstantiationException, IllegalAccessException {
 		List<Dispositivo> IyC = obtenerLista("IyC");
-		double horasMesEstandar = cantHorasEstandarXMes();
-		return simplex.aplicarMetodoSimplex(IyC,horasMesEstandar);
+		double consumoEstandarXMes = cantHorasEstandarXMes();
+		return simplex.aplicarMetodoSimplex(IyC,consumoEstandarXMes);
 	}
+	
+	public static void main(String[] args) {
+		Cliente pepe = new Cliente();
+		DeviceFactory f = new DeviceFactory();
+		Dispositivo estandar = f.crearDisp("Microondas","Convencional");	
+		Dispositivo aire = f.crearDisp("Aire Acondicionado","3500 frigorias");
+		Dispositivo aire1 = f.crearDisp("Aire Acondicionado","2200 frigorias");
+		pepe.agregarDispositivo(aire); pepe.agregarDispositivo(aire1);pepe.agregarDispositivo(estandar);
+		System.out.println("\t Main para probar que el segundo argumento del simplex, la suma de las horas de uso de los disp. estándar por mes, es correcto:\n");
+		System.out.println("Sin setear horas base se asume que todo disp estandar se usa 1h por dia:");
+		System.out.println("Entonces este disp. usaría 720hs al mes:" + pepe.cantHorasEstandarXMes());
+		System.out.println("Obteniendo el consumo mensual de ese disp., que por el json tiene precargado 0.64kWh:");
+		System.out.println("Entonces este disp. usaría 720hs*0.64kWh al mes = 460.8:" + pepe.consumoXMesEstandar()+"\n");
+		pepe.quitarDispositivo(estandar);((DispositivoEstandar) estandar).setHorasUsoDiarias(0.5);pepe.agregarDispositivo(estandar);
+		System.out.println("Seteando 0.5hs al disp.:");
+		System.out.println("Entonces este disp usaria 360hs al mes:" + pepe.cantHorasEstandarXMes());
+		System.out.println("Entonces este disp ahora usa 360*0.64, 230.4 al mes:" + pepe.consumoXMesEstandar() + "\n");
+		Dispositivo estandar2 = f.crearDisp("Plancha","A vapor");
+		pepe.agregarDispositivo(estandar2);
+		System.out.println("Agregando otro disp estandar que tiene 1h de uso diaria seteada y 0.75kWh");
 		
+		
+		
+		
+		
+	}
+	
 }

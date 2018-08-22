@@ -49,21 +49,21 @@ public class TestMetodoSimplex {
 		Dispositivo dani3 = f.crearDisp("Lavarropas","Semi-automatico de 5 kg");
 		Dispositivo dani4 = f.crearDisp("PC","De escritorio");
 		Dispositivo dani5 = f.crearDisp("Aire Acondicionado","2200 frigorias");
-		Dispositivo dani6 = f.crearDisp("Microondas","Convencional");
-		Dispositivo dani7 = f.crearDisp("Plancha","A vapor");
+		Dispositivo dani6 = f.crearDisp("Microondas","Convencional"); //Estandar
+		Dispositivo dani7 = f.crearDisp("Plancha","A vapor"); //Estandar
 		Dispositivo dani8 = f.crearDisp("Ventilador","De techo");
 		
 		//Estos son los unicos que todavia no me fije como ignorar en las listas
 		//Dispositivo dani9 = f.crearDisp("Termotanque","Eléctrico");
 		//Dispositivo dani10 = f.crearDisp("Horno","Eléctrico");
 		 
-		
+		/*
 		//Convertimos el microondas y la plancha a inteligentes
 		DispositivoConvertido dani6conv = new DispositivoConvertido(dani6);
 		DispositivoConvertido dani7conv = new DispositivoConvertido(dani7);
 	
 		dispDaniel.add(dani6conv);
-		dispDaniel.add(dani7conv);
+		dispDaniel.add(dani7conv);*/
 		
 		dispDaniel.add(dani1);
 		dispDaniel.add(dani2);
@@ -113,7 +113,7 @@ public class TestMetodoSimplex {
 	//@Test
     public void testMetodoSimplexSCI(){
 		try{
-			PointValuePair solucionSCI = simplex.aplicarMetodoSimplex(dispSCI);
+			PointValuePair solucionSCI = simplex.aplicarMetodoSimplex(dispSCI,0);
 		}
 		catch (Exception e) {
 			System.out.println("testMetodoSimplexSCI: un sistema compatible indeterminado no tiene solucion");
@@ -125,20 +125,20 @@ public class TestMetodoSimplex {
    
 	@Test
     public void testMetodoSimplexDaniel() throws FileNotFoundException, InstantiationException, IllegalAccessException{		
-		PointValuePair solucionSCD = simplex.aplicarMetodoSimplex(dispDaniel);
-		//Assert.assertEquals(1875, solucionSCD.getValue(), 0.01);
+		PointValuePair solucionSCD = simplex.aplicarMetodoSimplex(dispDaniel,0);
+		Assert.assertEquals(1875, solucionSCD.getValue(), 0.01);
 		System.out.println("Test testMetodoSimplexDaniel:\n " + "La suma de los x dio: " + solucionSCD.getValue());
-		//Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
+		Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x8 dio: " + solucionSCD.getPoint()[0]);
-		//Assert.assertEquals(30, solucionSCD.getPoint()[1], 0.01); 
+		Assert.assertEquals(360, solucionSCD.getPoint()[1], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x7 dio: " + solucionSCD.getPoint()[1]);
-		//Assert.assertEquals(15, solucionSCD.getPoint()[2], 0.01); 
+		Assert.assertEquals(360, solucionSCD.getPoint()[2], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x6 dio: " + solucionSCD.getPoint()[2]);
-		//Assert.assertEquals(360, solucionSCD.getPoint()[3], 0.01); 
+		Assert.assertEquals(30, solucionSCD.getPoint()[3], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x5 dio: " + solucionSCD.getPoint()[3]);
-		//Assert.assertEquals(360, solucionSCD.getPoint()[4], 0.01); 
+		Assert.assertEquals(360, solucionSCD.getPoint()[4], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x4 dio: " + solucionSCD.getPoint()[4]);
-		//Assert.assertEquals(30, solucionSCD.getPoint()[5], 0.01); 
+		Assert.assertEquals(360, solucionSCD.getPoint()[5], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x3 dio: " + solucionSCD.getPoint()[5]);
 		//Assert.assertEquals(360, solucionSCD.getPoint()[6], 0.01); 
 		//System.out.println("La cantidad de horas para el dispositivo x2 dio: " + solucionSCD.getPoint()[6]);
@@ -146,30 +146,70 @@ public class TestMetodoSimplex {
 		//System.out.println("La cantidad de horas para el dispositivo x1 dio: " + solucionSCD.getPoint()[7]);	
 	}
 	
-	
+	@Test
+    public void testMetodoSimplexDanielEstandar() throws FileNotFoundException, InstantiationException, IllegalAccessException{	
+		DeviceFactory f = new DeviceFactory();
+		Dispositivo dani6 = f.crearDisp("Microondas","Convencional"); //Estandar
+		Dispositivo dani7 = f.crearDisp("Plancha","A vapor"); //Estandar
+		dispDaniel.add(dani6); dispDaniel.add(dani7);
+		
+		PointValuePair solucionSCD = simplex.aplicarMetodoSimplex(dispDaniel,0);
+		Assert.assertEquals(1830, solucionSCD.getValue(), 0.01);
+		System.out.println("Test testMetodoSimplexDaniel:\n " + "La suma de los x dio: " + solucionSCD.getValue());
+		Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x8 dio: " + solucionSCD.getPoint()[0]);
+		Assert.assertEquals(360, solucionSCD.getPoint()[1], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x7 dio: " + solucionSCD.getPoint()[1]);
+		Assert.assertEquals(360, solucionSCD.getPoint()[2], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x6 dio: " + solucionSCD.getPoint()[2]);
+		Assert.assertEquals(30, solucionSCD.getPoint()[3], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x5 dio: " + solucionSCD.getPoint()[3]);
+		Assert.assertEquals(360, solucionSCD.getPoint()[4], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x4 dio: " + solucionSCD.getPoint()[4]);
+		Assert.assertEquals(360, solucionSCD.getPoint()[5], 0.01); 
+		System.out.println("La cantidad de horas para el dispositivo x3 dio: " + solucionSCD.getPoint()[5]);
+		//Assert.assertEquals(360, solucionSCD.getPoint()[6], 0.01); 
+		//System.out.println("La cantidad de horas para el dispositivo x2 dio: " + solucionSCD.getPoint()[6]);
+		//Assert.assertEquals(360, solucionSCD.getPoint()[7], 0.01); 
+		//System.out.println("La cantidad de horas para el dispositivo x1 dio: " + solucionSCD.getPoint()[7]);	
+	}	
 	
 	//@Test
     public void testMetodoSimplexSCDSalo() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		PointValuePair solucionSCD = simplex.aplicarMetodoSimplex(dispSCDSalo);
-		//Assert.assertEquals(1080, solucionSCD.getValue(), 0.01);
+		PointValuePair solucionSCD = simplex.aplicarMetodoSimplex(dispSCDSalo,0);
+		Assert.assertEquals(1080, solucionSCD.getValue(), 0.01);
 		System.out.println("Test testMetodoSimplexSCD:\n " + "La suma de los x dio: " + solucionSCD.getValue());
-		//Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
+		Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x3 dio: " + solucionSCD.getPoint()[0]);
-		//Assert.assertEquals(360, solucionSCD.getPoint()[1], 0.01); 
+		Assert.assertEquals(360, solucionSCD.getPoint()[1], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x2 dio: " + solucionSCD.getPoint()[1]);
-		//Assert.assertEquals(360, solucionSCD.getPoint()[2], 0.01); 
+		Assert.assertEquals(360, solucionSCD.getPoint()[2], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x1 dio: " + solucionSCD.getPoint()[2]);
 	}
 
 	//Este test es diferente ya que llama al simplex desde el cliente pepe
 	//@Test
-	public void testMetodoSimplexEjemploPepe() throws FileNotFoundException, InstantiationException, IllegalAccessException{
+	public void testMetodoSimplexPepe() throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		PointValuePair solucionSCD = pepe.llamarSimplex();
 		Assert.assertEquals(720, solucionSCD.getValue(), 0.01);
-		System.out.println("Test testMetodoSimplexEjemploPepe:\n " + "La suma de los x dio 720: " + solucionSCD.getValue());
+		System.out.println("Test testMetodoSimplexPepe:\n " + "La suma de los x dio 720: " + solucionSCD.getValue());
 		Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x2 dio 360: " + solucionSCD.getPoint()[0]);
 		Assert.assertEquals(360, solucionSCD.getPoint()[1], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x1 dio 360: " + solucionSCD.getPoint()[1]);
 	}
+	
+	//@Test
+		public void testSimplexPepeConDispEstandar() throws FileNotFoundException, InstantiationException, IllegalAccessException{
+			DeviceFactory f = new DeviceFactory();
+			Dispositivo estandar = f.crearDisp("Microondas","Convencional");	
+			pepe.agregarDispositivo(estandar);
+			PointValuePair solucionSCD = pepe.llamarSimplex();
+			Assert.assertEquals(720, solucionSCD.getValue(), 0.01);
+			System.out.println("Test testSimplexPepeConDispEstandar:\n " + "La suma de los x dio 720: " + solucionSCD.getValue());
+			Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
+			System.out.println("La cantidad de horas para el dispositivo x2 dio 360: " + solucionSCD.getPoint()[0]);
+			Assert.assertEquals(360, solucionSCD.getPoint()[1], 0.01); 
+			System.out.println("La cantidad de horas para el dispositivo x1 dio 360: " + solucionSCD.getPoint()[1]);
+		}
 }
