@@ -30,12 +30,15 @@ public class TestMetodoSimplex {
 	DispositivoInteligente dispSCI3 = new DispositivoInteligente();
 	List<DispositivoInteligente> dispSCI = new ArrayList<DispositivoInteligente>();
 	DispositivosRepository repoDispo = new DispositivosRepository();
+<<<<<<< HEAD
 	
 	//Variables tests de Salo
 	List<Dispositivo> dispPepe = new ArrayList<Dispositivo>();
 	List<Dispositivo> dispSCDSalo = new ArrayList<Dispositivo>();
 	List<Dispositivo> dispSCISalo = new ArrayList<Dispositivo>();
 	List<Dispositivo> dispDaniel = new ArrayList<Dispositivo>();
+=======
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 	
 	/*DispositivoInteligente dispSI1 = new DispositivoInteligente("dispSI1",  2);
 	DispositivoInteligente dispSI2 = new DispositivoInteligente("dispSI2",  5);
@@ -138,7 +141,12 @@ public class TestMetodoSimplex {
     public void testMetodoSimplexSCD() throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		PointValuePair solucionSCD = simplex.aplicarMetodoSimplex(dispSCD);
 		Assert.assertEquals(1470, solucionSCD.getValue(), 0.01);
+<<<<<<< HEAD
 		System.out.println("Test testMetodoSimplexSCD:\n " + "la suma de los x dio 1470: " + solucionSCD.getValue());
+=======
+		System.out.println("Test testMetodoSimplexSCD:\n "
+				+ "la suma de los x dio 1080: " + solucionSCD.getValue());
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 		Assert.assertEquals(360, solucionSCD.getPoint()[0], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x4 dio: " + solucionSCD.getPoint()[0]);
 		Assert.assertEquals(30, solucionSCD.getPoint()[1], 0.01); 
@@ -147,6 +155,10 @@ public class TestMetodoSimplex {
 		System.out.println("La cantidad de horas para el dispositivo x2 dio: " + solucionSCD.getPoint()[2]);
 		Assert.assertEquals(360, solucionSCD.getPoint()[3], 0.01); 
 		System.out.println("La cantidad de horas para el dispositivo x1 dio: " + solucionSCD.getPoint()[3]);
+<<<<<<< HEAD
+=======
+
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 	}
 	
 	//Este metodo no me funciona, lo comente para que no me tire error, diganme si a ustedes les anda a ver que onda

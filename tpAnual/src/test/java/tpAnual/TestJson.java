@@ -22,9 +22,16 @@ import modelo.users.Cliente;
  * En la clase JsonManager agregue un monton de rutas para que las puedan usar mas facil, agreguen las suyas y las usan donde sea */
 
 public class TestJson {
+<<<<<<< HEAD
 	
 	DispositivosRepository repoDispo = new DispositivosRepository();
 	
+=======
+
+	String ruta = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs";
+	DispositivosRepository repoDispo = new DispositivosRepository();
+	
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 	@Before
 	public void init() {
 		try{
@@ -33,8 +40,13 @@ public class TestJson {
 			ExceptionsHandler.catchear(e);
 		}
 	}
+<<<<<<< HEAD
 	
 	//@Test
+=======
+		
+	@Test
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 	public void testJsonTraeClientes() throws FileNotFoundException, InstantiationException, IllegalAccessException {
 		List<Cliente> clientes = null;
 		try {
@@ -137,4 +149,5 @@ public class TestJson {
 				+ "El valor de kWh del dispositivo en la posicion ocho es 0.09: " 
 				+ disp.get(8).getkWh());
     }
+	
 }

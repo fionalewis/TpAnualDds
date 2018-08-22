@@ -96,7 +96,11 @@ public class DispositivosRepository {
 		int counter = 1;
 		int i = 1;
 		String tipo;
+<<<<<<< HEAD
 		List<String> tipos = new ArrayList<>();
+=======
+		List<String> tipos = new ArrayList();
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 		tipos.add(dispositivos.get(0).getEquipoConcreto());
 		
 		while(i<dispositivos.size()){
@@ -115,7 +119,11 @@ public class DispositivosRepository {
 	public List<Dispositivo> filtrarRepresentatesDeTipos(List<Dispositivo> dispositivos){
 		int i = 1;
 		String tipo = null;
+<<<<<<< HEAD
 		List<String> tipos = new ArrayList<>();
+=======
+		List<String> tipos = new ArrayList();
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 		List<Dispositivo> listaRepresentantes = new ArrayList<Dispositivo>();
 		
 		tipos.add(dispositivos.get(0).getEquipoConcreto());
@@ -137,6 +145,11 @@ public class DispositivosRepository {
 		List<Integer> ListaDeTipos =  new ArrayList<Integer>();
 		int i = 1;
 		
+<<<<<<< HEAD
+=======
+		
+		
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 		return ListaDeTipos;
 	}*/
 	
@@ -178,5 +191,9 @@ public class DispositivosRepository {
 		
 		return listaCantPorTipo;
 	}
+<<<<<<< HEAD
 
 }
+=======
+}
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726

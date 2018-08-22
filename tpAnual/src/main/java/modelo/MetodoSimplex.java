@@ -1,7 +1,11 @@
 package modelo;
+<<<<<<< HEAD
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+=======
+import java.io.FileNotFoundException;
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -86,7 +90,12 @@ public class MetodoSimplex {
 				);
 	}
 	
+<<<<<<< HEAD
 // ----------------------Metodos para armar la funcion economica con cantidad variable de argumentos -------------------------------
+=======
+	
+	// ------------- Metodos para armar la funcion economica con cantidad variable de argumentos -------------- 
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 
 	@SuppressWarnings("unchecked")
 	public PointValuePair aplicarMetodoSimplex(List<DispositivoInteligente> disp) throws FileNotFoundException, InstantiationException, IllegalAccessException{ 
@@ -95,7 +104,11 @@ public class MetodoSimplex {
 		repoDispo.importarDispoDeJson();
 		
 		//this.dispositivos = (List<DispositivoInteligente>) (List<?>) repoDispo.filtrarRepresentatesDeTipos((List<Dispositivo>) (List<?>) disp);
+<<<<<<< HEAD
 		this.dispositivos = disp;		
+=======
+		this.dispositivos = disp;
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 		
 		List<Integer> listCantidadDeCadaTipo = new ArrayList<Integer>();
 		//los x (cant horas q pueden consumir) q paso la misma cant de unos que la cant de dispositivos q tengo
@@ -105,6 +118,11 @@ public class MetodoSimplex {
 		listaDeCantidades = convertirListToCoef(listCantidadDeCadaTipo);
 		listaDeCantidades = revertirArray(listaDeCantidades);
 		crearFuncionEconomica(listaDeCantidades);  
+<<<<<<< HEAD
+=======
+		
+		
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
 		
 		agregarRestricciones();
 		return resolver();
@@ -206,6 +224,7 @@ public class MetodoSimplex {
 		 return target;
 	}
 	
+<<<<<<< HEAD
 // ---------------------------------------------------- Duplicados de Mari para probar otra forma (tienen explicado que cambie, son pocas cosas igual)
 
 	public void agregarRestriccionesSALO(){
@@ -305,3 +324,6 @@ public class MetodoSimplex {
 	}
 
 }
+=======
+}
+>>>>>>> af51f5c11f174cf8936e2b42b0e0a51995997726
