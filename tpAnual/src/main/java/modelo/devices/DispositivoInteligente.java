@@ -22,37 +22,11 @@ public class DispositivoInteligente extends Dispositivo {
 
 	private List<IntervaloDispositivo> intervalos = new ArrayList<>();
 	
-	//Constructor default
-	public DispositivoInteligente(String nombDisp,double kWh) {
+	//Constructor para los dispositivos que no cuentan para evaluar ya que no estan en la lista de precargados
+	public DispositivoInteligente(String nombDisp,String descrip) {
 		setNombreDisp(nombDisp);
-		setkWh(kWh);
-		setEstadoDisp(new Encendido());
-		setFechaRegistro(LocalDateTime.now());
-		setkWhAhorro(kWh);
-		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
-	}
-	
-	//Constructor default (probablemente no lo usemos)
-	public DispositivoInteligente(String nomb,String descrip,double kWh,boolean bajoConsumo,int horasMin,int horasMax) {
-		setkWh(kWh);
-		setEstadoDisp(new Encendido());
-		setFechaRegistro(LocalDateTime.now());
-		setkWhAhorro(kWh);
-		setHorasUsoMin(horasMin);
-		setHorasUsoMax(horasMax);
-		setEsBajoConsumo(bajoConsumo);
-		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
-	}
-	
-	//Constructor para los tests (Mari)
-	public DispositivoInteligente(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec) {
-		setNombreDisp(nombDisp);
-		setkWh(kWh);
-		setEstadoDisp(new Encendido());
-		setFechaRegistro(LocalDateTime.of(year,month,day,hour,min,sec));
-		setkWhAhorro(kWh);
-		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
-
+		setEquipoConcreto(descrip);
+		setkWh(0);setHorasUsoMin(-1);setHorasUsoMax(-1);
 	}
 		
 	public DispositivoInteligente(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec,boolean esBajoC) {

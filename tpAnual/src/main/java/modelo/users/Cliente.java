@@ -14,9 +14,12 @@ import modelo.geoLocation.GeoLocation;
 import modelo.geoLocation.Transformador;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.function.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -288,41 +291,79 @@ public class Cliente extends Usuario {
 	
 	public double consumoXMesEstandar() {
 		return obtenerLista("Estandar").stream().mapToDouble(unDisp ->((DispositivoEstandar) unDisp).getHorasUsoDiarias()*720*(unDisp.getkWh())).sum();
-		
 	}
 	
 	//Este metodo quizas deberia ir en el administrador mas adelante, pero por ahora lo consultamos directamente desde el cliente
 	
-	public PointValuePair llamarSimplex() throws FileNotFoundException, InstantiationException, IllegalAccessException {
-		List<Dispositivo> IyC = obtenerLista("IyC");
-		double consumoEstandarXMes = cantHorasEstandarXMes();
-		return simplex.aplicarMetodoSimplex(IyC,consumoEstandarXMes);
+	public List<Dispositivo> dispDescartadosSimplex(){
+		List<Dispositivo> aNoTenerEnCuenta = new ArrayList<>();
+		aNoTenerEnCuenta = obtenerLista("Inteligente").stream().filter(FilterPredicates.filterDescartados()).collect(Collectors.toList());
+		return aNoTenerEnCuenta;
 	}
 	
-	public static void main(String[] args) {
+	public List<Dispositivo> listaSimplex() {
+		List<Dispositivo> aAnalizar = dispositivos;
+		List<Dispositivo> toRemove = new ArrayList<>();
+		for(Dispositivo unDisp: dispositivos){
+		    if(unDisp.getHorasUsoMax()==-1){
+		        toRemove.add(unDisp);
+		    }
+		}
+		aAnalizar.removeAll(toRemove);
+		return aAnalizar;
+	}
+	
+	public boolean hogarEficiente() throws FileNotFoundException, InstantiationException, IllegalAccessException {
+		PointValuePair simplex = llamarSimplex();
+		return simplex.getValue() <= 612;
+	}
+	
+	public void obtenerRecomendacion() throws FileNotFoundException, InstantiationException, IllegalAccessException {
+		Map<String,Double> horasXDisp = simplex.horasMaxXDisp();
+		List<Dispositivo> descartados = new ArrayList<>();
+		if(descartados.size()!=0) {
+			System.out.println("Se han descartado del cálculo de horas máximas los siguientes dispositivos:");
+			for(Dispositivo unDisp : descartados) {
+				System.out.println(unDisp.getNombreDisp() + ", " + unDisp.getEquipoConcreto());
+			}
+		}
+		for(Entry<String, Double> unValor : horasXDisp.entrySet()) {
+			System.out.println("La recomendación de horas máximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.");
+		}		
+	}
+	
+	public PointValuePair llamarSimplex() throws FileNotFoundException, InstantiationException, IllegalAccessException {
+		//obtener lista de descartados para nombrarlos
+		//enviar al simplex solo los convertidos,inteligentes y estandar analizables (no heladeras, ni descartados)
+		//conseguir recomendacion hogareficiente
+		List<Dispositivo> listaSimplex = listaSimplex();
+		return simplex.aplicarMetodoSimplex(listaSimplex);
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException, InstantiationException, IllegalAccessException {
 		Cliente pepe = new Cliente();
 		DeviceFactory f = new DeviceFactory();
 		Dispositivo estandar = f.crearDisp("Microondas","Convencional");	
 		Dispositivo aire = f.crearDisp("Aire Acondicionado","3500 frigorias");
 		Dispositivo aire1 = f.crearDisp("Aire Acondicionado","2200 frigorias");
-		pepe.agregarDispositivo(aire); pepe.agregarDispositivo(aire1);pepe.agregarDispositivo(estandar);
-		System.out.println("\t Main para probar que el segundo argumento del simplex, la suma de las horas de uso de los disp. estándar por mes, es correcto:\n");
-		System.out.println("Sin setear horas base se asume que todo disp estandar se usa 1h por dia:");
+		pepe.agregarDispositivo(estandar);pepe.agregarDispositivo(aire1);pepe.agregarDispositivo(aire);
+		System.out.println("\t Main para probar que el simplex desde un cliente:\n");
+		System.out.println("Creamos un disp estándar. Sin setear horas base se asume que todo disp estandar se usa 1h por dia:");
 		System.out.println("Entonces este disp. usaría 720hs al mes:" + pepe.cantHorasEstandarXMes());
 		System.out.println("Obteniendo el consumo mensual de ese disp., que por el json tiene precargado 0.64kWh:");
 		System.out.println("Entonces este disp. usaría 720hs*0.64kWh al mes = 460.8:" + pepe.consumoXMesEstandar()+"\n");
 		pepe.quitarDispositivo(estandar);((DispositivoEstandar) estandar).setHorasUsoDiarias(0.5);pepe.agregarDispositivo(estandar);
 		System.out.println("Seteando 0.5hs al disp.:");
 		System.out.println("Entonces este disp usaria 360hs al mes:" + pepe.cantHorasEstandarXMes());
-		System.out.println("Entonces este disp ahora usa 360*0.64, 230.4 al mes:" + pepe.consumoXMesEstandar() + "\n");
+		System.out.println("Entonces este disp ahora usa 360*0.64, 230.4kWh al mes:" + pepe.consumoXMesEstandar() + "\n");
 		Dispositivo estandar2 = f.crearDisp("Plancha","A vapor");
 		pepe.agregarDispositivo(estandar2);
 		System.out.println("Agregando otro disp estandar que tiene 1h de uso diaria seteada y 0.75kWh");
 		
-		
-		
-		
-		
+		System.out.println("\n Llamando al simplex de pepe");
+		System.out.println("Valor de Z Máx: " + pepe.llamarSimplex().getValue());		
+		pepe.obtenerRecomendacion();
+		System.out.println("\n¿Tiene un hogar eficiente?: " + pepe.hogarEficiente());		
 	}
 	
 }

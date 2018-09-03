@@ -50,18 +50,8 @@ public class MetodoSimplex {
 	private Collection<LinearConstraint> restricciones = new ArrayList<LinearConstraint>();
 	private GoalType objetivo = GoalType.MAXIMIZE;
 	private boolean variablesPositivas = true;
-	private List<Double> horasUsoMax = new ArrayList<Double>();
-	private List<Double> horasUsoMin = new ArrayList<Double>();
 	
-	//mari
-	//private List<DispositivoInteligente> dispositivos = new ArrayList<DispositivoInteligente>();
-	//private List<Dispositivo> dispositivos = new ArrayList<Dispositivo>();
-	
-	//salo
 	private List<Dispositivo> dispositivos = new ArrayList<>();
-	
-	private double[] listaKWH = new double[dispositivos.size()];
-	private List<double[]> posicionCanonica = new ArrayList<double[]>();	
 	
 	public MetodoSimplex(){}
 	
@@ -87,139 +77,74 @@ public class MetodoSimplex {
 	
 // ----------------------Metodos para armar la funcion economica con cantidad variable de argumentos -------------------------------
 
-	public PointValuePair aplicarMetodoSimplex(List<Dispositivo> disp,double consEstandarMes) throws FileNotFoundException, InstantiationException, IllegalAccessException{ 
+	public PointValuePair aplicarMetodoSimplex(List<Dispositivo> disp) throws FileNotFoundException, InstantiationException, IllegalAccessException{ 
 		dispositivos = disp;
-		List<String> tipos = listaDeDescrip();
+		/*List<String> tipos = listaDeDescrip();
 		Map<String,Integer> cantPorTipoDescrip = countFrequencies(tipos); 
 		double[] listaCantidades = arrayCantidades(cantPorTipoDescrip);    
 		listaCantidades = revertirArray(listaCantidades);
-        crearFuncionEconomica(listaCantidades);
-		agregarRestricciones(consEstandarMes);
+        crearFuncionEconomica(listaCantidades);*/
+		//double[] posicionesMatriz = inicializarPos(disp.size());
+		double[] arraykWhs = conseguirkWhs(disp);
+		double[] coefFuncEcon = new double[disp.size()];
+		for(int i = 0;i<coefFuncEcon.length;i++) {
+			coefFuncEcon[i] = 1;
+		}
+		crearFuncionEconomica(coefFuncEcon);
+		agregarRestricciones(arraykWhs);
         return resolver();
 	}
-
-	// restricciones = total kwh, los kwh individuales, relacion mayor o menor, y sus posiciones como versor canonico
-	// ver test para entender esto
 	
-	public void agregarRestricciones(double horasARestarEstandar){
-			//cargo datos a las listas
-			generarArgumentos();
-			//genero las restricciones
-			agregarRestriccion(Relationship.LEQ, 440640 - horasARestarEstandar, listaKWH); // kwh2.x2 + kwh1.x1 + kwh0.x0 <= 44064
-			
-			int j =0; int k = 0; int tam = dispositivos.size()*2;
-			for(int i=1; i<=tam; i++){
-				if(i%2==0){ //par --> lim superior, <=
-					agregarRestriccion(Relationship.LEQ,horasUsoMax.get(j),posicionCanonica.get(j));//j j 
-					j++;//j++
-				} else { //impar --> lim inferior, >=
-					agregarRestriccion(Relationship.GEQ,horasUsoMin.get(k),posicionCanonica.get(k));//k k
-					k++;//k++
-				}
+	public void agregarRestricciones(double[] arraykWhs){
+		agregarRestriccion(Relationship.LEQ,612,arraykWhs); // kWh0.x0 + kWh1.x1 + kWh2.x2 + kwh2.x2 + ... + kWhn.xn <= 612
+		int contMax = 0; int contMin = 0; int tam = dispositivos.size()*2;
+		for(int i=1; i<=tam; i++){
+			if(i%2==0){ //par --> lim superior, <=
+				agregarRestriccion(Relationship.LEQ,dispositivos.get(contMax).getHorasUsoMax(),posActual(contMax));
+				contMax++;
+			} else { //impar --> lim inferior, >=
+				agregarRestriccion(Relationship.GEQ,dispositivos.get(contMin).getHorasUsoMin(),posActual(contMin));
+				contMin++;
 			}
-	}
-	
-	/*
-	 * if(i%2==0){  //par --> lim inferior, >=
-				agregarRestriccion(Relationship.LEQ,horasUsoMax.get(k),posicionCanonica.get(k)); //GEQ
-				k++;
-			} else {//impar --> lim superior, <=
-				agregarRestriccion(Relationship.GEQ,horasUsoMin.get(j),posicionCanonica.get(j)); //LEQ
-				j++;
-	 */
-	
-	//genera argumentos para las agregar restricciones de mayor y menor de kwh, y su versor posicion
-	
-	public void generarArgumentos(){
-		
-		//llena la lista de horas uso maximo
-		dispositivos.stream().forEach(d -> horasUsoMax.add(d.getHorasUsoMax()));
-		
-		//llena la lista de horas uso minimo
-		dispositivos.stream().forEach(d -> horasUsoMin.add(d.getHorasUsoMin()));
-		
-		//llena la lista de versores canonicos
-		double[] versor = null;
-		for(int i=0; i<dispositivos.size(); i++){
-			versor = generarVersorCanonica(dispositivos.size(),i);
-			posicionCanonica.add(versor);
 		}
-		//al reves porque lo necesita en este orden: f(x0,x1,x2) = x2 + x1 + x0
-		List<double[]> reverseView = Lists.reverse(posicionCanonica); 
-		posicionCanonica = reverseView;
-		
-		double[] listaKWHTemp = new double[dispositivos.size()];		
-		for(int i=0; i<dispositivos.size(); i++){
-			listaKWHTemp[i] = dispositivos.get(i).getkWh();
+	}
+	
+	//Para conseguir el array con la posicion actual:
+	
+	public double[] inicializarPos(int tam) {
+		double[] p = new double[tam];
+		for(int i = 0;i<p.length;i++) {
+			p[i] = 0;
 		}
-		listaKWH = revertirArray(listaKWHTemp);
-		
-	}
-
-//--------------------------------------------------------
-	
-	public double[] revertirArray(double[] lista){
-		for(int i = 0; i < lista.length / 2; i++) {
-		    double temp = lista[i];
-		    lista[i] = lista[lista.length - i - 1];
-		    lista[lista.length - i - 1] = temp;
-		}
-		return lista;
+		return p;
 	}
 	
-	public double[] generarVersorCanonica(int cantDisp, int posicion){
-		double[] versor = null;
-		versor = generarListaCoeficiente(cantDisp,0);
-		versor[posicion] = 1;
-		return versor;
-	}
-	
-	public double[] generarListaCoeficiente(int cantCoef,int numero){
-		double[] coeficientes = new double[cantCoef];
-		for(int i=0; i<cantCoef; i++){
-			coeficientes[i] = numero;
-		}
-		return coeficientes;
-	}
-	
-	public double[] convertirListToCoef(List<Integer> list){
-		double[] target = new double[list.size()];
-		 for (int i = 0; i < target.length; i++) {
-		    target[i] = list.get(i).doubleValue();
-		 }
-		 return target;
+	public double[] posActual(int posicion) {
+		double[] posicionActual = inicializarPos(dispositivos.size());
+		posicionActual[posicion] = 1;
+		return posicionActual;
 	}
 
 //---------------------------------------------------- Otros metodos que use
-
-	public Map<String,Integer> countFrequencies(List<String> tipos) {
- 		Map<String,Integer> cantportipo = new HashMap<String,Integer>();
-        Set<String> st = new HashSet<String>(tipos);
-        for(String tipo : tipos) {
-        	if(!cantportipo.containsKey(tipo)) {
-        	cantportipo.put(tipo,Collections.frequency(tipos,tipo));
-        	}
-        }
-        return cantportipo;
-    }
 	
-	public List<String> listaDeDescrip(){
-		List<String> tiposDescrip = new ArrayList<>();
-		for(int i =0;i<dispositivos.size();i++) {
-			String unaDescrip = dispositivos.get(i).getEquipoConcreto();
-			tiposDescrip.add(unaDescrip);
-		}
-		return tiposDescrip;
+	public double[] conseguirkWhs(List<Dispositivo> disps) {
+		double[] kWhs = new double[disps.size()];
+		for(int i = 0;i<kWhs.length;i++) {
+			kWhs[i] = disps.get(i).getkWh();			
+		}		
+		return kWhs;
 	}
 	
-	public double[] arrayCantidades(Map<String,Integer> cantPorTipoDesc) {
-		double[] arrayCantidades = new double[cantPorTipoDesc.size()];
-		int i = 0;
-		for(Entry<String,Integer> unValor : cantPorTipoDesc.entrySet()) {
-			arrayCantidades[i] = unValor.getValue().doubleValue();
-			i++;
+	//Para obtener el Map de horas maximas por dispositivo
+	
+	public Map<String,Double> horasMaxXDisp() throws FileNotFoundException, InstantiationException, IllegalAccessException{
+		Map<String,Double> horasXDisp = new HashMap<>();
+		PointValuePair simplex = aplicarMetodoSimplex(dispositivos);
+		for(int i = 0;i<dispositivos.size();i++) {
+			horasXDisp.put(dispositivos.get(i).getNombreDisp() + ", " + dispositivos.get(i).getEquipoConcreto(),
+					simplex.getPoint()[i]);
 		}
-		return arrayCantidades;
+		return horasXDisp;
 	}
 
 }

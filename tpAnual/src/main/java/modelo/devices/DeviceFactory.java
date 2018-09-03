@@ -26,8 +26,11 @@ public class DeviceFactory {
 	public Dispositivo crearDisp(String tipo,String descrip){
 		if (cumpleCondInteligente(tipo,descrip))
 			return crearDispInteligente(tipo,descrip);
-		else{
+		else if(cumpleCondEstandar(tipo,descrip)){
 			return crearDispEstandar(tipo,descrip);
+		} else {
+			DispositivoInteligente dispDescarte = new DispositivoInteligente(tipo,descrip);
+			return dispDescarte;
 		}
     }
 	
@@ -100,6 +103,32 @@ public class DeviceFactory {
 			break;
 		case("Plancha"):
 			result = false;
+			break;
+		default:
+			result = false;
+			break;
+		}
+		return result;
+	}
+	
+	public static boolean cumpleCondEstandar(String tipo,String descrip) {
+		boolean result = false;
+		switch(tipo) {
+		case("Televisor"):
+			result = (descrip.contains("Color de tubo") || descrip.contains("LCD")) ? true : false;
+			break;
+		case("Lavarropas"):
+			result = (descrip.equals("Automatico de 5 kg con calentamiento de agua")
+					|| descrip.equals("Semi-automatico de 5 kg")) ? true : false;
+			break;
+		case("Ventilador"):
+			result = (descrip.equals("De pie")) ? true : false;
+			break;
+		case("Microondas"):
+			result = true;
+			break;
+		case("Plancha"):
+			result = true;
 			break;
 		default:
 			result = false;

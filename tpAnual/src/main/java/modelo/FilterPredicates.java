@@ -29,4 +29,8 @@ public class FilterPredicates {
 		return unDisp -> unDisp.getEstadoDisp() instanceof Encendido;
 	}
 	
+	public static Predicate<Dispositivo> filterDescartados(){
+		return unDisp -> unDisp.getHorasUsoMax() == -1;
+	}
+	
 }
