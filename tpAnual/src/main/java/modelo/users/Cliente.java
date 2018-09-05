@@ -35,12 +35,12 @@ public class Cliente extends Usuario {
 	private String nroDoc;
 	private String telefono;
 	private String domicilio;
-	private List<Dispositivo> dispositivos = new ArrayList<>();
+	private static List<Dispositivo> dispositivos = new ArrayList<>();
 	private Categoria categ;
 	private int puntos = 0;
 	
 	private Transformador transformadorActual;
-	private MetodoSimplex simplex = new MetodoSimplex();
+	private transient MetodoSimplex simplex = new MetodoSimplex();
 	
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
 	private List<DispositivoEstandar> aux = new ArrayList<>(); 
@@ -77,7 +77,7 @@ public class Cliente extends Usuario {
 		this.nroDoc = nDoc;
 		this.telefono = tel;
 		this.domicilio = dom +  ", Buenos Aires, Argentina";
-		this.dispositivos.addAll(disp);
+		dispositivos.addAll(disp);
 		asignarTransformador();
 		setCateg();
 	}
@@ -94,7 +94,7 @@ public class Cliente extends Usuario {
 		this.nroDoc = nDoc;
 		this.telefono = tel;
 		this.domicilio = dom +  ", Buenos Aires, Argentina";
-		this.dispositivos.addAll(disp);
+		dispositivos.addAll(disp);
 		asignarTransformador();
 		setCateg();
 	}
@@ -165,8 +165,8 @@ public class Cliente extends Usuario {
 		return dispositivos;
 	}
 
-	public void setDispositivos(List<Dispositivo> dispositivos) {
-		this.dispositivos = dispositivos;
+	public void setDispositivos(List<Dispositivo> _dispositivos) {
+		dispositivos = _dispositivos;
 	}
 
 	public void agregarDispositivo(Dispositivo disp) {

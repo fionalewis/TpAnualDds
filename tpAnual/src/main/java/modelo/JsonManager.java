@@ -369,5 +369,13 @@ public class JsonManager {
     	System.out.println("Coordenadas del transformador: " + c.getTransformadorActual().getUbicacion().toString()); //El primer valor es null ya que no le asignamos un nombre a esta ubicacion
     	
     	resetTransf();
+		
+		//para suministro Actual
+		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransf);
+		for(Transformador t : transformadores) {
+			double sumact = t.suministroActual(); 
+			System.out.println( sumact != 0.0?  "transf"+t.getIdTransformador()+": " + sumact : "" );
+			//imprime transf2: 3735.6421358333328
+		}
     }
 }

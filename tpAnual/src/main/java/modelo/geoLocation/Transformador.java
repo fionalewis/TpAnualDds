@@ -1,12 +1,13 @@
 package modelo.geoLocation;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.Gson;
 
 import exceptions.ExceptionsHandler;
+import modelo.DAOJson;
+import modelo.devices.Dispositivo;
+import modelo.devices.DispositivoInteligente;
 import modelo.users.Cliente;
 
 //Por ahora esta clase se maneja con un json de clientes como su "BDD" para poder modificar los atributos del cliente,
@@ -50,35 +51,30 @@ public class Transformador {
 		return getZona().equals(nombreZona);
 	}
 
-	public double suministroActual() { //no funciona x ahora
+	public double suministroActual() {
+		List<Cliente> listaClientes = new ArrayList<>();
+		List<Double> consumo = new ArrayList<>();
 		
-		List<Cliente> clientesConEsteTransf = new ArrayList<>();		
-		Gson gson = new Gson();		
-		BufferedReader buffReader = null;
 		try {
-			buffReader = new BufferedReader(new FileReader("C:\\Users\\Salome\\git\\TpAnualDdS\\tpAnual\\JSONs\\JsonsParaPruebas\\clientesPrueba.json"));
+			listaClientes = DAOJson.deserializarListaTransf(Cliente.class, "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\JsonsParaPruebas\\clientesPruebaParaTransformador.json");
+			
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
-	    Cliente[] arrayCli = gson.fromJson(buffReader, Cliente[].class);
-	
-		for(int i = 0;i<arrayCli.length;i++) {
-			Cliente c = new Cliente();
-			c.setDomicilio(arrayCli[i].getDomicilio()); //muy basico por ahora, solo queremos obtener el consumo de quienes tengan este transf asignado
-			c.setNombre(arrayCli[i].getNombre());
-			c.setTelefono(arrayCli[i].getTelefono());
-			c.setDispositivos(arrayCli[i].getDispositivos());
-			c.setApellido(arrayCli[i].getApellido());
-			c.setUserName(arrayCli[i].getUserName());
-			c.setPassword(arrayCli[i].getPassword());
-			c.setDispositivos(arrayCli[i].getDispositivos());
-			int idAEvaluar = c.getTransformadorActual().getIdTransformador();
-			if(idAEvaluar == idTransformador) {
-					clientesConEsteTransf.add(c);
-				}
-			}
 		
-		return clientesConEsteTransf.stream().mapToDouble(unCliente-> unCliente.calcularConsumo()).sum();
+		for (Cliente c : listaClientes){
+			if (c.getTransformadorActual().getIdTransformador() == idTransformador) {	
+				for (Dispositivo d : c.getDispositivos()){				
+					if (d.getClass() == DispositivoInteligente.class) {
+						consumo.add( ((DispositivoInteligente) d).consumoTotalEntre(d.getFechaRegistro(), LocalDateTime.now().plusHours(3)) );
+					} else {
+						consumo.add( d.consumoTotal() );
+					}
+					//ver que hacer con los convertidos
+				}
+			}			
+		}
+		return consumo.stream().mapToDouble( d -> d ).sum();
 	}
 
 }
