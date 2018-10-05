@@ -372,8 +372,8 @@ public class JsonManager {
 		
 		//para suministro Actual
 		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransf);
-		for(Transformador t : transformadores) {
-			double sumact = t.suministroActual(); 
+		for(Transformador t1 : transformadores) {
+			double sumact = t1.suministroActual(); 
 			System.out.println( sumact != 0.0?  "transf"+t.getIdTransformador()+": " + sumact : "" );
 			//imprime transf2: 3735.6421358333328
 		}
