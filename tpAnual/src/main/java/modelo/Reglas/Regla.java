@@ -123,11 +123,11 @@ public class Regla {
 	//signo comparacion
 
 	public void crearCondicionDosSensores(Sensor sen1, Sensor sen2, String comparacion){ 
-		Condicion comp = new CondicionDosSensores(this,sen1,sen2,comparacion); //sen1 comparacion sen2
+		Condicion comp = new CondicionDosSensores(sen1,sen2,comparacion); //sen1 comparacion sen2
 		condiciones.add(comp);
 	}
 	public void crearCondicionSensoresYValor(Sensor sen1, double valorFijo, String comparacion){
-		Condicion comp = new CondicionSensorYValor(this,sen1,valorFijo,comparacion); //sen1 comparacion valor
+		Condicion comp = new CondicionSensorYValor(sen1,valorFijo,comparacion); //sen1 comparacion valor
 		condiciones.add(comp);
 	}
 	

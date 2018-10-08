@@ -7,13 +7,13 @@ public class CondicionDosSensores extends Condicion{
 	private Sensor sensor1;
 	private Sensor sensor2;
 	
-	public CondicionDosSensores(Regla reg, Sensor s1, Sensor s2, String comp){
+	public CondicionDosSensores(Sensor s1, Sensor s2, String comp){
 		//this.regla = reg;
 		this.sensor1 = s1;
 		this.sensor2 = s2;
 		this.comparacion = comp;
-		//s1.subscribir(this);
-		//s2.subscribir(this);
+		s1.subscribir(this);
+		s2.subscribir(this);
 	}
 	
 	//llamado por sensor

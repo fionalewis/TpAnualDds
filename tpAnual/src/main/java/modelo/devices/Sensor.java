@@ -27,26 +27,26 @@ public class Sensor {
 	
 	private double magnitud = 0;
 	private int intervalo = 10; //segundos
-	/*@OneToMany
+	@OneToMany
 	private List<Condicion> subscribers = new ArrayList<>();
-	*/
+	
 	public Sensor(String nomMag){
 		this.nombreMagnitud = nomMag;
 	}
 	
 	//funcionalidades
-	/*public void notificar(){
+	public void notificar(){
 		for(Condicion subs:subscribers){
 			subs.update();
 		}
 	}
 	public void subscribir(Condicion cond){
 		subscribers.add(cond);
-	}*/
+	}
 	
 	//para disparar evaluar las condiciones
 	public void medir(){
-		//notificar();
+		notificar();
 	}
 	
 	//magnitud

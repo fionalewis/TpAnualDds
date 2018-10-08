@@ -9,6 +9,7 @@
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	
     	<class>modelo.devices.Sensor</class>
+    	<class>modelo.Reglas.Condicion</class>
     	 
         <properties> 
 	    <property name="hibernate.archive.autodetection" value="class"/>        

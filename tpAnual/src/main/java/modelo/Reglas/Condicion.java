@@ -10,7 +10,6 @@ import exceptions.CaracterInvalidoException;
 @Entity
 public abstract class Condicion {
 	
-	//protected Regla regla;
 	@Id @GeneratedValue
 	protected String comparacion; //Mayor, Menor, Igual o distinto
 	protected enum CriterioComparacion {MAYOR,MENOR,IGUAL,DISTINTO}

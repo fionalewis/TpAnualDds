@@ -6,6 +6,7 @@ import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
+import modelo.Reglas.CondicionSensorYValor;
 import modelo.devices.Sensor;
 import modelo.repositorios.SensorRepository;
 
@@ -31,6 +32,8 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 		sensor.setMagnitud(24);
 		sensor.setMagnitud(22.9);
 		sensor.setMagnitud(20.8);
+		CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,25,"MENOR");
+		
 		SensorRepository.addSensor(sensor);
 	}
 

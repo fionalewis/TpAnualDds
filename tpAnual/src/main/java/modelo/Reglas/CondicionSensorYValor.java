@@ -7,12 +7,12 @@ public class CondicionSensorYValor extends Condicion{
 	private Sensor sensor;
 	private Double valorFijo;
 	
-	public CondicionSensorYValor(Regla reg, Sensor sen,  double valor, String comp){
+	public CondicionSensorYValor(Sensor sen,  double valor, String comp){
 		//this.regla = reg;
 		this.sensor = sen;
 		this.valorFijo = valor;
 		this.comparacion = comp;
-		//this.sensor.subscribir(this);
+		this.sensor.subscribir(this);
 	}
 	
 	//llamado por sensor
