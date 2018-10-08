@@ -11,6 +11,7 @@ import exceptions.CaracterInvalidoException;
 public abstract class Condicion {
 	
 	@Id @GeneratedValue
+	protected String nombreCondicion;
 	protected String comparacion; //Mayor, Menor, Igual o distinto
 	protected enum CriterioComparacion {MAYOR,MENOR,IGUAL,DISTINTO}
 	protected boolean estado = false;
@@ -61,6 +62,10 @@ public abstract class Condicion {
 	public void setComparacion(String comparacion) throws CaracterInvalidoException{
 		this.comparacion = comparacion;
 		EnumUtils.isValidEnum(CriterioComparacion.class, comparacion);	
+	}
+	
+	public void setNombreCondicion(String nombre){
+		nombreCondicion = nombre;
 	}
 
 	public abstract void update();

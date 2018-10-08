@@ -18,8 +18,7 @@ import modelo.devices.Sensor;
 @Entity
 public class Regla {
 	
-	@Id @GeneratedValue
-	private Long id;
+	@Id
 	private String nombreRegla; //solo para mostrar en el main
 	@OneToMany
 	private List<Condicion> condiciones = new ArrayList<>(); // condiciones q c/u es una comparacion binaria
@@ -130,11 +129,6 @@ public class Regla {
 			System.out.println("No se cumplio ninguna condicion");
 		}
 	}
-	
-	//sensor --> variables
-	//valor --> fijo
-	//1 variable con 1 fijo o 2 variables
-	//signo comparacion
 
 	public void crearCondicionDosSensores(Sensor sen1, Sensor sen2, String comparacion){ 
 		Condicion comp = new CondicionDosSensores(sen1,sen2,comparacion); //sen1 comparacion sen2

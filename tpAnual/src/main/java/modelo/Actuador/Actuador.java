@@ -5,22 +5,25 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import modelo.devices.Dispositivo;
+import modelo.devices.DispositivoInteligente;
 @Entity
 public class Actuador {
 	@Id
 	private int idFabricante; 
-	private String orden;
+	private String orden;//orden: PRENDER,APAGAR,AHORRO
 	@Transient
 	private ActuadorAdapter adapter = new ActuadorAdapter();
 	
-	public Actuador(int unIDFab, String unaOrden){
+	public Actuador(int unIDFab, String unaOrden){ 
 		idFabricante = unIDFab;
 		orden = unaOrden;
+		ActuadorAdapter adapter = new ActuadorAdapter();
+		this.adapter = adapter;
 		
 	}
 	
 	public void execute(Dispositivo dispo){
-		adapter.execute(idFabricante,dispo, orden);
+		adapter.execute(idFabricante,(DispositivoInteligente) dispo, orden);
 	}
 	
 	// getters y setters

@@ -8,7 +8,6 @@ public class CondicionSensorYValor extends Condicion{
 	private Double valorFijo;
 	
 	public CondicionSensorYValor(Sensor sen,  double valor, String comp){
-		//this.regla = reg;
 		this.sensor = sen;
 		this.valorFijo = valor;
 		this.comparacion = comp;

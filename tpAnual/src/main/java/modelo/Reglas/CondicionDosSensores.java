@@ -8,7 +8,6 @@ public class CondicionDosSensores extends Condicion{
 	private Sensor sensor2;
 	
 	public CondicionDosSensores(Sensor s1, Sensor s2, String comp){
-		//this.regla = reg;
 		this.sensor1 = s1;
 		this.sensor2 = s2;
 		this.comparacion = comp;
