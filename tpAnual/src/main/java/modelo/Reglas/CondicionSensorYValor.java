@@ -1,9 +1,12 @@
 package modelo.Reglas;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+
 import modelo.devices.Sensor;
 
 public class CondicionSensorYValor extends Condicion{
-
+	
 	private Sensor sensor;
 	private Double valorFijo;
 	

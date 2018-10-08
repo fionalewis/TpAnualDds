@@ -26,6 +26,7 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 
 	public void init() {
 		condicion.setNombreCondicion("TemperaturaMayorA25");
+		
 		withTransaction(() -> {
 			setSensor();
 			setRegla();

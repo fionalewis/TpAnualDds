@@ -1,8 +1,9 @@
 package modelo.Reglas;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 import org.apache.commons.lang3.EnumUtils;
 
@@ -10,7 +11,7 @@ import exceptions.CaracterInvalidoException;
 @Entity
 public abstract class Condicion {
 	
-	@Id @GeneratedValue
+	@Id
 	protected String nombreCondicion;
 	protected String comparacion; //Mayor, Menor, Igual o distinto
 	protected enum CriterioComparacion {MAYOR,MENOR,IGUAL,DISTINTO}
