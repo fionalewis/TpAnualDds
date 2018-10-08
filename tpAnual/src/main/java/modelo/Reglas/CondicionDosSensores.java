@@ -12,8 +12,8 @@ public class CondicionDosSensores extends Condicion{
 		this.sensor1 = s1;
 		this.sensor2 = s2;
 		this.comparacion = comp;
-		s1.subscribir(this);
-		s2.subscribir(this);
+		//s1.subscribir(this);
+		//s2.subscribir(this);
 	}
 	
 	//llamado por sensor

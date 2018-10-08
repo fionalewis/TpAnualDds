@@ -1,41 +1,56 @@
 package modelo.devices;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import modelo.Reglas.Condicion;
 
+@Entity
 public class Sensor {
 	
+	@Id @GeneratedValue
+	private Long id;
 	private String nombreMagnitud;
+	//@ElementCollection
+	//Map<LocalDateTime, Double> mediciones = new HashMap<LocalDateTime, Double>();
 	private double magnitud = 0;
 	private int intervalo = 10; //segundos
-	private List<Condicion> subscribers = new ArrayList<>(); 
-	
-	public Sensor(String nomMag, DispositivoInteligente dispo){
+	/*@OneToMany
+	private List<Condicion> subscribers = new ArrayList<>();
+	*/
+	public Sensor(String nomMag){
 		this.nombreMagnitud = nomMag;
 	}
 	
 	//funcionalidades
-	public void notificar(){
+	/*public void notificar(){
 		for(Condicion subs:subscribers){
 			subs.update();
 		}
 	}
 	public void subscribir(Condicion cond){
 		subscribers.add(cond);
-	}
+	}*/
 	
 	//para disparar evaluar las condiciones
 	public void medir(){
-		notificar();
-		//evaluar intervalo
+		//notificar();
 	}
 	
 	//magnitud
 	public void setMagnitud(double unaMagnitud){
 		this.magnitud = unaMagnitud;
-		notificar();
+		//mediciones.put(LocalDateTime.now(),magnitud);
 	}
 	public double getMagnitud(){
 		return this.magnitud;
@@ -53,7 +68,7 @@ public class Sensor {
 		this.magnitud -= valor;
 	}
 	public List<Condicion> getSubscribers(){
-		return subscribers;
+		return null;//subscribers;
 	}
 	//intervalo
 	public void setIntervalo(int unIntervalo){ //en segundos

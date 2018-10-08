@@ -12,7 +12,7 @@ public class CondicionSensorYValor extends Condicion{
 		this.sensor = sen;
 		this.valorFijo = valor;
 		this.comparacion = comp;
-		this.sensor.subscribir(this);
+		//this.sensor.subscribir(this);
 	}
 	
 	//llamado por sensor

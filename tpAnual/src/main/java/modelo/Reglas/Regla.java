@@ -17,11 +17,11 @@ public class Regla {
 	private DispositivoInteligente disp;
 	private String criterioCondiciones; // AND , OR
 	private enum criterios{AND,OR}
-	private boolean state; //para test NO AGREGAR AL DIAGRAMA DE CLASES
-	private String nombreRegla; //solo para mostrar en el main
+	//private boolean state; //para test NO AGREGAR AL DIAGRAMA DE CLASES
+	//private String nombreRegla; //solo para mostrar en el main
 	
-	public Regla(String unNombreRegla,DispositivoInteligente unDispo,String critCond){
-		this.nombreRegla = unNombreRegla;
+	public Regla(/*String unNombreRegla,*/DispositivoInteligente unDispo,String critCond){
+		//this.nombreRegla = unNombreRegla;
 		this.disp = unDispo;
 		this.criterioCondiciones = critCond;
 	}
@@ -64,7 +64,7 @@ public class Regla {
 	public Condicion getCondicion(Condicion con){
 		return getCondicionConIndice(condiciones.indexOf(con));
 	}
-	public boolean getState(){
+	/*public boolean getState(){
 		return this.state;
 	}
 	public void setNombreRegla(String unNombreRegla){
@@ -72,7 +72,7 @@ public class Regla {
 	}
 	public String getNombreRegla(){
 		return this.nombreRegla;
-	}
+	}*/
 	// ============================
 	public void aplicarRegla(){
 			
@@ -99,7 +99,7 @@ public class Regla {
 			for(Actuador act:actuadores){
 				act.execute(disp);
 			}
-			this.state = true; //para test 
+			//his.state = true; //para test 
 		}else{
 			System.out.println("No se cumplieron todas las condiciones para la regla de criterio AND");
 		}
@@ -111,7 +111,7 @@ public class Regla {
 			for(Actuador act:actuadores){
 				act.execute(disp);
 			}
-			this.state = true; //para test
+			//this.state = true; //para test
 		}else{
 			System.out.println("No se cumplio ninguna condicion");
 		}
