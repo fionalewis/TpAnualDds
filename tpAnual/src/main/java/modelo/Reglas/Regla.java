@@ -35,7 +35,7 @@ public class Regla {
 	//private boolean state; //para test NO AGREGAR AL DIAGRAMA DE CLASES
 	
 	public Regla(String unNombreRegla,DispositivoInteligente unDispo,String critCond){
-		//this.nombreRegla = unNombreRegla;
+		this.nombreRegla = unNombreRegla;
 		this.disp = unDispo;
 		this.criterioCondiciones = critCond;
 	}

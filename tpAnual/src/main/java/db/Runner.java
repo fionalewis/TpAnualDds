@@ -41,6 +41,7 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	public void setRegla(){
 		DispositivoInteligente dispositivo = new DispositivoInteligente("Televisor","LED 24'");
 		Regla regla = new Regla("TemperaturaMayorA25", dispositivo,"OR");
+		regla.agregarCondicion(condicion);
 		ReglaFactory.addRegla(regla);
 	}
 
