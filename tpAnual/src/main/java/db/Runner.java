@@ -26,7 +26,11 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	
 	public void setSensor() {
 		Sensor sensor = new Sensor("Temperatura");
-		sensor.setMagnitud(23);
+		sensor.setMagnitud(23.6);
+		sensor.setMagnitud(22.4);
+		sensor.setMagnitud(24);
+		sensor.setMagnitud(22.9);
+		sensor.setMagnitud(20.8);
 		SensorRepository.addSensor(sensor);
 	}
 

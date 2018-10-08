@@ -21,8 +21,10 @@ public class Sensor {
 	@Id @GeneratedValue
 	private Long id;
 	private String nombreMagnitud;
-	//@ElementCollection
-	//Map<LocalDateTime, Double> mediciones = new HashMap<LocalDateTime, Double>();
+	
+	@ElementCollection
+	private List<Double> mediciones = new ArrayList<Double>();
+	
 	private double magnitud = 0;
 	private int intervalo = 10; //segundos
 	/*@OneToMany
@@ -50,7 +52,7 @@ public class Sensor {
 	//magnitud
 	public void setMagnitud(double unaMagnitud){
 		this.magnitud = unaMagnitud;
-		//mediciones.put(LocalDateTime.now(),magnitud);
+		mediciones.add(magnitud);
 	}
 	public double getMagnitud(){
 		return this.magnitud;
