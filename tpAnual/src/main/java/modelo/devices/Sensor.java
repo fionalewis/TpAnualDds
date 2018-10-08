@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import modelo.Reglas.Condicion;
 
@@ -29,6 +30,9 @@ public class Sensor {
 	private int intervalo = 10; //segundos
 	@OneToMany
 	private List<Condicion> subscribers = new ArrayList<>();
+	
+	@Transient
+	int jaja;
 	
 	public Sensor(String nomMag){
 		this.nombreMagnitud = nomMag;

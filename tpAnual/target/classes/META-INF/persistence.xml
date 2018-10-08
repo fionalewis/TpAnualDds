@@ -10,6 +10,7 @@
     	
     	<class>modelo.devices.Sensor</class>
     	<class>modelo.Reglas.Condicion</class>
+    	<class>modelo.Reglas.Regla</class>
     	 
         <properties> 
 	    <property name="hibernate.archive.autodetection" value="class"/>        

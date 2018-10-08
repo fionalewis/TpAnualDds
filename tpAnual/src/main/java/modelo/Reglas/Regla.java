@@ -2,25 +2,39 @@ package modelo.Reglas;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang3.EnumUtils;
 
 import exceptions.CaracterInvalidoException;
 import modelo.Actuador.Actuador;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.Sensor;
-
+@Entity
 public class Regla {
 	
+	@Id @GeneratedValue
+	private Long id;
+	private String nombreRegla; //solo para mostrar en el main
+	@OneToMany
 	private List<Condicion> condiciones = new ArrayList<>(); // condiciones q c/u es una comparacion binaria
+	@OneToMany
 	private List<Actuador> actuadores = new ArrayList<>(); //acciones
+	@Transient
 	private int contador;
+	@Transient
 	private DispositivoInteligente disp;
 	private String criterioCondiciones; // AND , OR
+	
 	private enum criterios{AND,OR}
 	//private boolean state; //para test NO AGREGAR AL DIAGRAMA DE CLASES
-	//private String nombreRegla; //solo para mostrar en el main
 	
-	public Regla(/*String unNombreRegla,*/DispositivoInteligente unDispo,String critCond){
+	public Regla(String unNombreRegla,DispositivoInteligente unDispo,String critCond){
 		//this.nombreRegla = unNombreRegla;
 		this.disp = unDispo;
 		this.criterioCondiciones = critCond;

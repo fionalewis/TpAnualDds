@@ -1,11 +1,16 @@
 package modelo.Actuador;
 
-import modelo.devices.Dispositivo;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 
+import modelo.devices.Dispositivo;
+@Entity
 public class Actuador {
-	
+	@Id
 	private int idFabricante; 
 	private String orden;
+	@Transient
 	private ActuadorAdapter adapter = new ActuadorAdapter();
 	
 	public Actuador(int unIDFab, String unaOrden){

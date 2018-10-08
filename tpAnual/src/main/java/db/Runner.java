@@ -1,18 +1,21 @@
 package db;
 
-import java.util.ArrayList;
-
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import modelo.Reglas.CondicionSensorYValor;
+import modelo.Reglas.Regla;
+import modelo.devices.DispositivoInteligente;
 import modelo.devices.Sensor;
-import modelo.repositorios.SensorRepository;
+import modelo.factories.ReglaFactory;
+import modelo.factories.SensorFactory;
 
 
 public class Runner implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
 	
+	Sensor sensor = new Sensor("Temperatura");
+	CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,25,"MENOR");
 	
 	public static void main(String[] args) {
 		//new EmpresasService().run(); //se usa para probar la actulizacion
@@ -22,19 +25,23 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	public void init() {
 		withTransaction(() -> {
 			setSensor();
+			setRegla();
 		});
 	}
 	
 	public void setSensor() {
-		Sensor sensor = new Sensor("Temperatura");
 		sensor.setMagnitud(23.6);
 		sensor.setMagnitud(22.4);
 		sensor.setMagnitud(24);
 		sensor.setMagnitud(22.9);
 		sensor.setMagnitud(20.8);
-		CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,25,"MENOR");
-		
-		SensorRepository.addSensor(sensor);
+		SensorFactory.addSensor(sensor);
+	}
+	
+	public void setRegla(){
+		DispositivoInteligente dispositivo = new DispositivoInteligente("Televisor","LED 24'");
+		Regla regla = new Regla("TemperaturaMayorA25", dispositivo,"OR");
+		ReglaFactory.addRegla(regla);
 	}
 
 }
