@@ -2,6 +2,9 @@ package modelo.users;
 
 import java.time.LocalDate;
 
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public abstract class Usuario {
 	
 	protected String nombre;

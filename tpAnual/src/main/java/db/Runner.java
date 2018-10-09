@@ -1,6 +1,8 @@
 package db;
 
 import org.uqbarproject.jpa.java8.extras.EntityManagerOps;
+import modelo.users.Cliente.TipoDocumento;
+
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
@@ -10,8 +12,12 @@ import modelo.Reglas.Regla;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.Sensor;
 import modelo.factories.ActuadorFactory;
+import modelo.factories.AdministradorFactory;
+import modelo.factories.ClienteFactory;
 import modelo.factories.ReglaFactory;
 import modelo.factories.SensorFactory;
+import modelo.users.Administrador;
+import modelo.users.Cliente;
 
 
 public class Runner implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
@@ -19,6 +25,8 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	Sensor sensor = new Sensor("Temperatura");
 	CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,25,"MAYOR");
 	Actuador actuador = new Actuador(152,"APAGAR");
+	Cliente cliente = new Cliente("Lucas","Ramirez","lramirez","1234",TipoDocumento.DNI,"39769099","45424625","Villa Urquiza"); 
+	Administrador admin = new Administrador("Lucia","Gomez", "lgomez","1111");
 	
 	public static void main(String[] args) {
 		new Runner().init();
@@ -30,6 +38,8 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 			setSensor();
 			setRegla();
 			setActuador();
+			setCliente();
+			setAdministrador();
 		});
 	}
 	
@@ -54,6 +64,14 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	public void setActuador(){
 		Actuador actuador1 = new Actuador(122,"AHORRO");
 		ActuadorFactory.addActuador(actuador1);
+	}
+	
+	public void setCliente() {
+		ClienteFactory.addCliente(cliente);
+	}
+	
+	public void setAdministrador() {
+		AdministradorFactory.addAdministrador(admin);
 	}
 
 }

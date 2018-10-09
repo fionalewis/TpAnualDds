@@ -46,6 +46,13 @@ public class JsonManager {
 	
 	//public static List<Dispositivo> dispositivosEnGral = new ArrayList<>();
 	
+	public static String rutaJsonClientesGiuli = "\\C:\\Users\\Giuli\\eclipse-workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonClientes.json";
+	public static String rutaJsonDispGiuli = "\\C:\\Users\\Giuli\\eclipse-workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonDispositivos.json";
+	public static String rutaJsonAdminGiuli = "\\C:\\Users\\Giuli\\eclipse-workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonAdministradores.json";
+	public static String rutaJsonCategGiuli = "\\C:\\Users\\Giuli\\eclipse-workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonCategorias.json";
+	public static String rutaTransfGiuli = "\\C:\\Users\\Giuli\\eclipse-workspace\\TpAnualDds\\tpAnual\\JSONs\\transformadores.json";
+	public static String rutaZonasGiuli= "\\C:\\Users\\Giuli\\eclipse-workspace\\TpAnualDds\\tpAnual\\JSONs\\zonas.json";
+	
 	public static String rutaJsonClientesMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonClientes.json";
 	public static String rutaJsonClientesSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonClientes.json";
 	public static String rutaJsonDispMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonDispositivos.json";
@@ -83,7 +90,7 @@ public class JsonManager {
 			List<Categoria> categorias = null;
 			Categoria categoria = null;
 			try {
-				categorias = DAOJson.deserializarLista(Categoria.class,rutaJsonCategSalo);
+				categorias = DAOJson.deserializarLista(Categoria.class,rutaJsonCategGiuli);
 				} catch (Exception e) {
 				ExceptionsHandler.catchear(e);
 			}
@@ -155,11 +162,11 @@ public class JsonManager {
 		
 		resetTransf();
 
-		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransfSalo);
+		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransfGiuli);
 
 		Gson gson = new Gson();
 
-		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonasSalo)); //Tiene que coincidir con linea 174
+		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonasGiuli)); //Tiene que coincidir con linea 174
 	    Zona[] zonas = gson.fromJson(buffReader, Zona[].class);
 	
 		for(int i = 0;i<zonas.length;i++) {
@@ -171,7 +178,7 @@ public class JsonManager {
 					gson = new GsonBuilder().setPrettyPrinting().create();
 					FileWriter writer = null;
 					try {
-						writer = new FileWriter(rutaZonasSalo); // Tiene que coincidir con linea 162
+						writer = new FileWriter(rutaZonasGiuli); // Tiene que coincidir con linea 162
 						writer.write(newJson);
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -193,9 +200,9 @@ public class JsonManager {
 	}	
 
 	public static void resetTransf() throws FileNotFoundException, InstantiationException, IllegalAccessException {
-		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransfSalo);
+		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransfGiuli);
 		Gson gson = new Gson();
-		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonasSalo));//Tiene que coincidir con linea 206
+		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonasGiuli));//Tiene que coincidir con linea 206
 	    Zona[] zonas = gson.fromJson(buffReader, Zona[].class);
 		for(int i = 0;i<zonas.length;i++) {
 			zonas[i].getTransformadores().clear();
@@ -203,7 +210,7 @@ public class JsonManager {
 			gson = new GsonBuilder().setPrettyPrinting().create();
 			FileWriter writer = null;
 			try {
-				writer = new FileWriter(rutaZonasSalo);//Tiene que coincidir con linea 198
+				writer = new FileWriter(rutaZonasGiuli);//Tiene que coincidir con linea 198
 				writer.write(newJson);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -227,7 +234,7 @@ public class JsonManager {
 		JsonParser parserFactory = new JsonParser();
 		JsonReader readerFactory = null;
 		try {
-			readerFactory = new JsonReader(new FileReader(JsonManager.rutaJsonDispSalo));
+			readerFactory = new JsonReader(new FileReader(JsonManager.rutaJsonDispGiuli));
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -359,7 +366,7 @@ public class JsonManager {
     	System.out.println("\nDisp Estandar:\n" +d2.getNombreDisp()+ " " + d2.getEquipoConcreto());
     	System.out.println("Consumo entre la creacion de d2 y la fecha: " + d2.consumoTotal());
     	System.out.println("Sus horas de uso diarias aproximadas: " + d2.getHorasDeUso());
-    	
+    /*
     	List<Dispositivo> disp = new ArrayList<>(); disp.add(d1);disp.add(d2);
     	Cliente c = new Cliente("pepe","argento","pepe123","12345",2018,8,21,TipoDocumento.DNI,"40123456","12345678","Avenida Medrano 986",disp);
     	Transformador t = c.getTransformadorActual();
@@ -376,6 +383,6 @@ public class JsonManager {
 			double sumact = t1.suministroActual(); 
 			System.out.println( sumact != 0.0?  "transf"+t.getIdTransformador()+": " + sumact : "" );
 			//imprime transf2: 3735.6421358333328
-		}
+		}*/
     }
 }

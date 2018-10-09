@@ -2,12 +2,23 @@ package modelo.users;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
 import java.time.LocalDate;
 import java.time.Period;
 
+@Entity
 public class Administrador extends Usuario {
-
+	
+	@Id
+	@GeneratedValue
 	private int codAdmin;
+	
+	@Transient
 	private List<Integer> codigosAdmins = new ArrayList<>(); //Temporal hasta que tengamos una BDD para los usuarios o mueva esto a la clase Programa
 
 	public Administrador() {
@@ -21,7 +32,7 @@ public class Administrador extends Usuario {
 		setUserName(userName);
 		setPassword(pass);
 		this.fechaAlta = LocalDate.now();
-		this.codAdmin = this.asignarCod();		
+//		this.codAdmin = this.asignarCod();		
 	}
 	
 	//Constructor del json
