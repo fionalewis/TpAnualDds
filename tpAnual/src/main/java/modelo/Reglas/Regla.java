@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.apache.commons.lang3.EnumUtils;
@@ -32,12 +33,13 @@ public class Regla {
     @JoinColumn(name = "Regla")
 	private List<Actuador> actuadores = new ArrayList<>(); //acciones
 	
-	@Transient
-	private int contador;
+	private String criterioCondiciones; // AND , OR
+	
+	//@OneToOne
 	@Transient
 	private DispositivoInteligente disp;
 	@Transient
-	private String criterioCondiciones; // AND , OR
+	private int contador;
 	
 	private enum criterios{AND,OR}
 	//private boolean state; //para test NO AGREGAR AL DIAGRAMA DE CLASES
@@ -47,6 +49,8 @@ public class Regla {
 		this.disp = unDispo;
 		this.criterioCondiciones = critCond;
 	}
+	
+	public Regla(){}
 	
 	//getters y setters
 	
@@ -88,6 +92,9 @@ public class Regla {
 	public Condicion getCondicion(Condicion con){
 		return getCondicionConIndice(condiciones.indexOf(con));
 	}
+	public void setDisp(DispositivoInteligente dispositivo){
+		this.disp = dispositivo;
+	}
 	/*public boolean getState(){
 		return this.state;
 	}
@@ -101,6 +108,7 @@ public class Regla {
 	public void aplicarRegla(){
 			
 		for(Condicion con:this.condiciones){
+			con.update();
 			if(con.getEstado()){
 				contador++;
 			}

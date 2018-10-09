@@ -1,12 +1,19 @@
 package modelo.Reglas;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import modelo.devices.Sensor;
-
+@Entity
 public class CondicionSensorYValor extends Condicion{
 	
+	@Transient
 	private Sensor sensor;
 	private Double valorFijo;
 	
@@ -17,7 +24,6 @@ public class CondicionSensorYValor extends Condicion{
 		this.sensor.subscribir(this);
 	}
 	
-	//llamado por sensor
 	@Override
 	public void update(){
 		this.estado = evaluar(sensor.getMagnitud(), valorFijo); //evalua la condicion y le avisa regla
@@ -39,5 +45,9 @@ public class CondicionSensorYValor extends Condicion{
 	public boolean getEstado(){
 		sensor.medir();
 		return this.estado;
+	}
+	
+	public void setValorFijo(double unValor){
+		valorFijo = unValor;
 	}
 }

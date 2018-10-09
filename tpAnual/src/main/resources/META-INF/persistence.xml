@@ -9,7 +9,10 @@
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	
     	<class>modelo.devices.Sensor</class>
+    	<class>modelo.Reglas.Regla.condiciones</class>
     	<class>modelo.Reglas.Condicion</class>
+    	<class>modelo.Reglas.CondicionDosSensores</class>
+    	<class>modelo.Reglas.CondicionSensorYValor</class>
     	<class>modelo.Reglas.Regla</class>
     	<class>modelo.Actuador.Actuador</class>
     	 

@@ -2,7 +2,6 @@ package modelo.factories;
 
 import db.EntityManagerHelper;
 import modelo.Reglas.Regla;
-import modelo.devices.Sensor;
 
 public class ReglaFactory {
 	public static void addRegla(Regla regla) {
@@ -11,4 +10,9 @@ public class ReglaFactory {
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 	}
+	
+	public static Regla getRegla(String unNombre) {
+		Regla regla = EntityManagerHelper.getEntityManager().find(Regla.class,unNombre);
+	    return regla;
+	  }
 }

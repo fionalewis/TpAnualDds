@@ -1,13 +1,20 @@
 package modelo.Reglas;
 
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import modelo.devices.Sensor;
-
+@Entity
 public class CondicionDosSensores extends Condicion{
-	
+	@Transient
 	private Sensor sensor1;
+	@Transient
 	private Sensor sensor2;
 	
 	public CondicionDosSensores(Sensor s1, Sensor s2, String comp){

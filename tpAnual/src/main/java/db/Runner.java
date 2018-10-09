@@ -16,7 +16,7 @@ import modelo.factories.SensorFactory;
 
 public class Runner implements WithGlobalEntityManager, EntityManagerOps, TransactionalOps {
 	
-	Sensor sensor = new Sensor("Temperatura");
+	Sensor sensor = new Sensor("Temperatura",24.0,15);
 	CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,25,"MAYOR");
 	Actuador actuador = new Actuador(152,"APAGAR");
 	
