@@ -3,9 +3,12 @@ package modelo.Reglas;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -20,14 +23,20 @@ public class Regla {
 	
 	@Id
 	private String nombreRegla; //solo para mostrar en el main
-	@OneToMany
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinColumn(name = "Regla")
 	private List<Condicion> condiciones = new ArrayList<>(); // condiciones q c/u es una comparacion binaria
-	@OneToMany
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinColumn(name = "Regla")
 	private List<Actuador> actuadores = new ArrayList<>(); //acciones
+	
 	@Transient
 	private int contador;
 	@Transient
 	private DispositivoInteligente disp;
+	@Transient
 	private String criterioCondiciones; // AND , OR
 	
 	private enum criterios{AND,OR}
@@ -40,6 +49,7 @@ public class Regla {
 	}
 	
 	//getters y setters
+	
 	public void setCondiciones(List<Condicion> comparaciones){
 		this.condiciones = comparaciones;
 	}
@@ -52,6 +62,7 @@ public class Regla {
 	public void quitarCondicion(Condicion unaCondicion){
 		condiciones.remove(unaCondicion);
 	}
+	
 	public void setActuadores(List<Actuador> acts){
 		this.actuadores = acts;
 	}

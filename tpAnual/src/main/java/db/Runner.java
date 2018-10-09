@@ -18,14 +18,13 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	
 	Sensor sensor = new Sensor("Temperatura");
 	CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,25,"MAYOR");
+	Actuador actuador = new Actuador(152,"APAGAR");
 	
 	public static void main(String[] args) {
-		//new EmpresasService().run(); //se usa para probar la actulizacion
 		new Runner().init();
 	}
 
 	public void init() {
-		condicion.setNombreCondicion("TemperaturaMayorA25");
 		
 		withTransaction(() -> {
 			setSensor();
@@ -45,14 +44,16 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	
 	public void setRegla(){
 		DispositivoInteligente dispositivo = new DispositivoInteligente("Televisor","LED 24'");
+		condicion.setNombreCondicion("TemperaturaMayorA25");
 		Regla regla = new Regla("Super Regla", dispositivo,"OR");
 		regla.agregarCondicion(condicion);
+		regla.agregarActuador(actuador);
 		ReglaFactory.addRegla(regla);
 	}
 	
 	public void setActuador(){
-		Actuador actuador = new Actuador(1,"APAGAR");
-		ActuadorFactory.addActuador(actuador);
+		Actuador actuador1 = new Actuador(122,"AHORRO");
+		ActuadorFactory.addActuador(actuador1);
 	}
 
 }

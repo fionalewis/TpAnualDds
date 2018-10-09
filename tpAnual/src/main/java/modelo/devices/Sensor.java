@@ -1,16 +1,16 @@
 package modelo.devices;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -19,16 +19,16 @@ import modelo.Reglas.Condicion;
 @Entity
 public class Sensor {
 	
-	@Id @GeneratedValue
-	private Long id;
+	@Id
 	private String nombreMagnitud;
 	
 	@ElementCollection
+	@CollectionTable(name = "registroMediciones")
 	private List<Double> mediciones = new ArrayList<Double>();
 	
 	private double magnitud = 0;
 	private int intervalo = 10; //segundos
-	@OneToMany
+	@Transient
 	private List<Condicion> subscribers = new ArrayList<>();
 	
 	@Transient
