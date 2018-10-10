@@ -46,7 +46,7 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 		DispositivoInteligente dispositivo = new DispositivoInteligente("Televisor","LED 24'");
 		condicion.setNombreCondicion("TemperaturaMayorA25");
 		Regla regla = new Regla("Super Regla", dispositivo,"OR");
-		regla.agregarCondicion(condicion);
+		regla.agregarCondicionSYV(condicion);
 		regla.agregarActuador(actuador);
 		ReglaFactory.addRegla(regla);
 	}

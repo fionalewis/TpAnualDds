@@ -6,10 +6,24 @@ import db.EntityManagerHelper;
 import modelo.Reglas.Condicion;
 
 public class CondicionFactory {
-	public static void updateCondicion(String comparacion, String nombreCondicion) {
+	public static void updateCondicionSYV(String comparacion, String nombreCondicion) {
 		EntityManagerHelper.beginTransaction();
-		EntityManagerHelper.getEntityManager().createQuery("UPDATE Condicion SET comparacion = " + comparacion + " WHERE nombreCondicion = '"
-				+ nombreCondicion).executeUpdate();
+		EntityManagerHelper.getEntityManager()
+				.createQuery("UPDATE CondicionSensorYValor as c SET c.comparacion = :comp WHERE c.nombreCondicion = '" 
+						+ nombreCondicion + "'")
+				.setParameter("comp",comparacion)
+				.executeUpdate();
+		EntityManagerHelper.commit();
+		EntityManagerHelper.closeEntityManager();
+	}
+	
+	public static void updateCondicionDS(String comparacion, String nombreCondicion) {
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager()
+				.createQuery("UPDATE CondicionDosSensores as c SET c.comparacion = :comp WHERE c.nombreCondicion = '" 
+						+ nombreCondicion + "'")
+				.setParameter("comp",comparacion)
+				.executeUpdate();
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 	}

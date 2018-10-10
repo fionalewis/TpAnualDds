@@ -27,7 +27,11 @@ public class Regla {
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "Regla")
-	private List<Condicion> condiciones = new ArrayList<>(); // condiciones q c/u es una comparacion binaria
+	private List<CondicionSensorYValor> condicionesSYV = new ArrayList<>(); // condiciones q c/u es una comparacion binaria
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinColumn(name = "Regla")
+	private List<CondicionDosSensores> condicionesDS = new ArrayList<>();
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "Regla")
@@ -53,18 +57,36 @@ public class Regla {
 	public Regla(){}
 	
 	//getters y setters
+	public String getNombreRegla(){
+		return nombreRegla;
+	}
+	public void setNombreRegla(String nombre){
+		nombreRegla = nombre;
+	}
 	
-	public void setCondiciones(List<Condicion> comparaciones){
-		this.condiciones = comparaciones;
+	public void setCondicionesSYV(List<CondicionSensorYValor> comparaciones){
+		this.condicionesSYV = comparaciones;
 	}
-	public List<Condicion> getCondiciones(){
-		return this.condiciones;
+	public List<CondicionSensorYValor> getCondicionesSYV(){
+		return this.condicionesSYV;
 	}
-	public void agregarCondicion(Condicion unaCondicion){
-		condiciones.add(unaCondicion);
+	public void setCondiciones(List<CondicionDosSensores> comparaciones){
+		this.condicionesDS = comparaciones;
 	}
-	public void quitarCondicion(Condicion unaCondicion){
-		condiciones.remove(unaCondicion);
+	public List<CondicionDosSensores> getCondiciones(){
+		return this.condicionesDS;
+	}
+	public void agregarCondicionSYV(CondicionSensorYValor unaCondicion){
+		condicionesSYV.add(unaCondicion);
+	}
+	public void quitarCondicionSYV(CondicionSensorYValor unaCondicion){
+		condicionesSYV.remove(unaCondicion);
+	}
+	public void agregarCondicionDS(CondicionDosSensores unaCondicion){
+		condicionesDS.add(unaCondicion);
+	}
+	public void quitarCondicionDS(CondicionDosSensores unaCondicion){
+		condicionesDS.remove(unaCondicion);
 	}
 	
 	public void setActuadores(List<Actuador> acts){
@@ -86,11 +108,17 @@ public class Regla {
 	public String getComparacionCondiciones(){
 		return this.criterioCondiciones;
 	}
-	public Condicion getCondicionConIndice(int indice){
-		return condiciones.get(indice);
+	public CondicionSensorYValor getCondicionConIndiceSYV(int indice){
+		return condicionesSYV.get(indice);
 	}
-	public Condicion getCondicion(Condicion con){
-		return getCondicionConIndice(condiciones.indexOf(con));
+	public CondicionDosSensores getCondicionConIndiceDS(int indice){
+		return condicionesDS.get(indice);
+	}
+	public CondicionSensorYValor getCondicionSYV(CondicionSensorYValor con){
+		return getCondicionConIndiceSYV(condicionesSYV.indexOf(con));
+	}
+	public CondicionDosSensores getCondicionDS(Condicion con){
+		return getCondicionConIndiceDS(condicionesDS.indexOf(con));
 	}
 	public void setDisp(DispositivoInteligente dispositivo){
 		this.disp = dispositivo;
@@ -106,14 +134,23 @@ public class Regla {
 	}*/
 	// ============================
 	public void aplicarRegla(){
-			
-		for(Condicion con:this.condiciones){
-			con.update();
-			if(con.getEstado()){
-				contador++;
+		if(condicionesSYV!=null){
+			for(CondicionSensorYValor con:this.condicionesSYV){
+				con.update();
+				if(con.getEstado()){
+					contador++;
+				}
 			}
 		}
 		
+		if(condicionesDS!=null){
+			for(CondicionDosSensores con:this.condicionesDS){
+				con.update();
+				if(con.getEstado()){
+					contador++;
+				}
+			}
+		}
 		switch (criterioCondiciones){
 			case "AND":
 				evaluarCondicionesAND(contador);
@@ -126,7 +163,7 @@ public class Regla {
 	}
 	
 	public void evaluarCondicionesAND(int cont){
-		if(contador == condiciones.size()){
+		if(contador == condicionesSYV.size()+condicionesDS.size()){
 			System.out.println("La regla cumplio todas las condiciones");
 			for(Actuador act:actuadores){
 				act.execute(disp);
@@ -150,12 +187,12 @@ public class Regla {
 	}
 
 	public void crearCondicionDosSensores(Sensor sen1, Sensor sen2, String comparacion){ 
-		Condicion comp = new CondicionDosSensores(sen1,sen2,comparacion); //sen1 comparacion sen2
-		condiciones.add(comp);
+		CondicionDosSensores comp = new CondicionDosSensores(sen1,sen2,comparacion); //sen1 comparacion sen2
+		condicionesDS.add(comp);
 	}
 	public void crearCondicionSensoresYValor(Sensor sen1, double valorFijo, String comparacion){
-		Condicion comp = new CondicionSensorYValor(sen1,valorFijo,comparacion); //sen1 comparacion valor
-		condiciones.add(comp);
+		CondicionSensorYValor comp = new CondicionSensorYValor(sen1,valorFijo,comparacion); //sen1 comparacion valor
+		condicionesSYV.add(comp);
 	}
 	
 }

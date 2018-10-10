@@ -22,8 +22,7 @@ public class EntregaPersistencia {
 		System.out.println("\n Por favor elija una opcion:"
 				
 				+ "\n1. Prueba 3 paso 1: crear nueva regla"
-				+ "\n2. Prueba 3 paso 2: modificar una condicion"
-				+ "\n3. Prueba 3 paso 3: verificar modificacion de condicion");
+				+ "\n2. Prueba 3 paso 2: modificar una condicion");
 			
 		Scanner in = new Scanner(System.in);
 			switch(in.nextInt()){
@@ -33,9 +32,6 @@ public class EntregaPersistencia {
 				break;
 			case 2:
 				p3_modificarCondicion();
-				break;
-			case 3:
-				p3_verCondicionMdificada();
 				break;
 			
 			default: menuPrincipal();
@@ -70,7 +66,7 @@ public class EntregaPersistencia {
 		dispositivo.agregarSensor(sensor);
 		
 		CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,50,"MENOR");
-		condicion.setNombreCondicion("Humedad_menor_a_50");
+		condicion.setNombreCondicion("Humedad50");
 		Actuador actuador = new Actuador(2,"APAGAR");
 		
 		System.out.println("Se asociara un dispositivo sobre la cual actuar: "
@@ -79,14 +75,14 @@ public class EntregaPersistencia {
 				+ "Se agregara un actuador con id fabricante 2, con la accion de apagar el dispositivo");
 		//persistir la regla
 		Regla regla = new Regla(nombreRegla,dispositivo,criterio);
-		regla.agregarCondicion(condicion);
+		regla.agregarCondicionSYV(condicion);
 		regla.agregarActuador(actuador);
 		ReglaFactory.addRegla(regla);
 	}
 	
 	public static void p3_modificarCondicion() throws CaracterInvalidoException{
 		//**2 modificar condicion --> (factory) update
-				//recuperar y ejecutar
+		//recuperar y ejecutar
 		Scanner in = new Scanner(System.in);
 		System.out.println("Ingrese el nombre de la regla");
 		String nombreRegla = in.nextLine();
@@ -100,15 +96,10 @@ public class EntregaPersistencia {
 				//modificar condicion
 		System.out.println("Se modificara la condicion 'Humedad menor a 50%' a 'Humedad mayor a 50%'\n");
 		//Esto no estoy segura 
-		//( (CondicionSensorYValor) unaRegla.getCondiciones().get(0)).setComparacion("MENOR");
-		//( (CondicionSensorYValor) unaRegla.getCondiciones().get(0)).setNombreCondicion("Humedad_menor_a_50");
-		CondicionFactory.updateCondicion("MENOR", "Humedad_menor_a_50");
-	}
-	
-	public static void p3_verCondicionMdificada(){
-		//**3 
-		//recuperar la condicion y ver si se guardaron los cambios
-		
+		//unaRegla.getCondicionesSYV().get(0)).setComparacion("MENOR");
+		//unaRegla.getCondicionesSYV().get(0)).setNombreCondicion("Humedad_menor_a_50");
+		//ReglaFactory.updateRegla()
+		CondicionFactory.updateCondicionSYV("MAYOR", "Humedad50");
 	}
 	
 	

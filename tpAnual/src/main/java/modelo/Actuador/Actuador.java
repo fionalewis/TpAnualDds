@@ -22,6 +22,8 @@ public class Actuador {
 		
 	}
 	
+	public Actuador(){}
+	
 	public void execute(Dispositivo dispo){
 		adapter.execute(idFabricante,(DispositivoInteligente) dispo, orden);
 	}

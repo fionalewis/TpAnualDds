@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
@@ -38,10 +39,14 @@ public class Sensor {
 		this.nombreMagnitud = nomMag;
 		this.magnitud = valor;
 		this.intervalo = unIntervalo;
+		mediciones.add(magnitud);
 	}
 	
+	public Sensor(){}
+	
 	//funcionalidades
-	public void notificar(){
+	
+	/*public void notificar(){
 		for(Condicion subs:subscribers){
 			subs.update();
 		}
@@ -49,11 +54,11 @@ public class Sensor {
 	public void subscribir(Condicion cond){
 		subscribers.add(cond);
 	}
-	
+	*/
 	//para disparar evaluar las condiciones
-	public void medir(){
+	/*public void medir(){
 		notificar();
-	}
+	}*/
 	
 	//magnitud
 	public void setMagnitud(double unaMagnitud){
