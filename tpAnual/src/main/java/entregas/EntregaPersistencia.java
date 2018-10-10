@@ -66,7 +66,10 @@ public class EntregaPersistencia {
 		dispositivo.agregarSensor(sensor);
 		
 		CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,50,"MENOR");
-		condicion.setNombreCondicion("Humedad50");
+		System.out.println("Ingrese un nombre para la condicion");
+		in.nextLine();
+		String nombreCond = in.nextLine();
+		condicion.setNombreCondicion(nombreCond);
 		Actuador actuador = new Actuador(2,"APAGAR");
 		
 		System.out.println("Se asociara un dispositivo sobre la cual actuar: "

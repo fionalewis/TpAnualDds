@@ -1,6 +1,7 @@
 package modelo.Actuador;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
@@ -8,7 +9,8 @@ import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoInteligente;
 @Entity
 public class Actuador {
-	@Id
+	@Id @GeneratedValue
+	private Long id;
 	private int idFabricante; 
 	private String orden;//orden: PRENDER,APAGAR,AHORRO
 	@Transient
