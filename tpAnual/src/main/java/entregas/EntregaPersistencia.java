@@ -126,7 +126,7 @@ public class EntregaPersistencia {
 		System.out.println("\nIngrese una contraseña:");
 		password = s.nextLine();
 
-		System.out.println("\nIngrese tipo de documento:");
+		System.out.println("\nIngrese tipo de documento: (con formato: DNI, CI, LE, LI)");
 		tipoDoc = TipoDocumento.valueOf(s.nextLine());
 		
 		System.out.println("\nIngrese numero de documento:");
@@ -247,12 +247,14 @@ public class EntregaPersistencia {
 		System.out.println("Se ejecutara la regla creada");
 		unaRegla.aplicarRegla();
 		
+		System.out.println("Ingrese el nombre de la condicion a modificar");
+		String nombreCond = in.nextLine();
 		System.out.println("Se modificara la condicion 'Humedad menor a 50%' a 'Humedad mayor a 50%'\n");
 		//Esto no estoy segura 
 		//unaRegla.getCondicionesSYV().get(0)).setComparacion("MENOR");
 		//unaRegla.getCondicionesSYV().get(0)).setNombreCondicion("Humedad_menor_a_50");
 		//ReglaFactory.updateRegla()
-		CondicionFactory.updateCondicionSYV("MAYOR", "Humedad50");
+		CondicionFactory.updateCondicionSYV("MAYOR", nombreCond);
 	}
 	
 	

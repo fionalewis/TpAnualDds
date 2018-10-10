@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import javax.persistence.Query;
 import javax.swing.JOptionPane;
 
-import com.mysql.cj.xdevapi.Result;
 
 import db.EntityManagerHelper;
 import modelo.users.Administrador;
