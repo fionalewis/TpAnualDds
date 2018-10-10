@@ -3,6 +3,7 @@ package modelo.factories;
 import java.time.LocalDate;
 
 import db.EntityManagerHelper;
+import modelo.users.Administrador;
 import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
 
@@ -15,6 +16,11 @@ public class ClienteFactory {
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 	}
+	
+	public static Cliente getCliente(String dni) {
+		Cliente cliente = EntityManagerHelper.getEntityManager().find(Cliente.class,dni);
+	    return cliente;
+	  }
 	
 	public static void updateNombre(String nroDoc, String nombre) {
 		EntityManagerHelper.beginTransaction();
@@ -90,11 +96,12 @@ public class ClienteFactory {
 
 	public static void deleteCliente(String nroDoc){
 		EntityManagerHelper.beginTransaction();
-		EntityManagerHelper.getEntityManager().createQuery("DELETE FROM Sensor WHERE nroDoc = '"
+		EntityManagerHelper.getEntityManager().createQuery("DELETE FROM Cliente WHERE nroDoc = '"
 				+ nroDoc).executeUpdate();
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 	}
+	
 	
 	
 

@@ -1,6 +1,10 @@
 package entregas;
 
+import java.awt.HeadlessException;
+import java.sql.SQLException;
 import java.util.Scanner;
+
+import javax.persistence.Query;
 
 import modelo.factories.ActuadorFactory;
 import modelo.factories.AdministradorFactory;
@@ -10,12 +14,12 @@ import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
 
 public class EntregaPersistencia {
-	public static void main(String[] args){
+	public static void main(String[] args) throws HeadlessException, SQLException{
 		menuPrincipal();
 	}
 	
 	@SuppressWarnings("resource")
-	public static void menuPrincipal(){
+	public static void menuPrincipal() throws HeadlessException, SQLException{
 		System.out.println("\n Por favor elija una opcion:"
 				+ "\n1. Prueba 1"
 				+ "\n2. Prueba 2"
@@ -38,7 +42,7 @@ public class EntregaPersistencia {
 			}
 	}
 	
-	public static void prueba1(){
+	public static void prueba1() throws HeadlessException, SQLException{
 		System.out.println("Elija una de las siguientes opciones:"
 				+ "\n1. Agregar usuario"
 				+ "\n2. Consultar usuario"
@@ -50,9 +54,9 @@ public class EntregaPersistencia {
 		break;
 		
 		case 2:
-//			consultarUsuario();
+			consultarUsuario();
 		break;
-		
+		//falta la parte de geolocalizacion
 		case 3:
 //			modificarUsuario();
 		break;}
@@ -130,27 +134,54 @@ public class EntregaPersistencia {
 		ClienteFactory.addCliente(cliente);
 	}
 	
-	public static void consultarUsuario() {
-		String nombre, apellido, user, password;
-		System.out.println("Ingrese el n del usuario: ");
-
-		Scanner s = new Scanner(System.in);
-			System.out.println("\nIngrese un nombre:");
-			nombre = s.nextLine();
-
-			System.out.println("\nIngrese un apellido:");
-			apellido = s.nextLine();
-					
-			System.out.println("\nIngrese un nombre de usuario:");
-			user = s.nextLine();
-					
-			System.out.println("\nIngrese una contraseña:");
-			password = s.nextLine();
-					
-			Administrador admin = new Administrador(nombre,apellido,user,password);
-			AdministradorFactory.addAdministrador(admin);
-}
+	public static void consultarUsuario() throws HeadlessException, SQLException {
+		System.out.println("Ingrese el tipo de usuario que quiere consultar:"
+				+ "\n1. Administrador"
+				+ "\n2. Cliente");
+	Scanner in = new Scanner(System.in);
+	switch(in.nextInt()){
+	case 1:
+		consultarAdministrador();
+	break;
 	
+	case 2:
+		consultarCliente();
+	break;}
+}
+
+	public static void consultarAdministrador() throws HeadlessException, SQLException {
+
+		Scanner in = new Scanner(System.in);
+		System.out.println("Ingrese el codigo del administrador");
+		int codigo = in.nextInt();
+		Administrador admin = AdministradorFactory.getAdministrador(codigo);
+		String nombre = admin.getNombre();
+		String apellido = admin.getApellido();
+		String user = admin.getUserName();
+		String password = admin.getPassword();
+		
+		System.out.println("Nombre: "+ nombre + "\nApellido: " + apellido + "\nUsuario: " + user + "\nContraseña: " + password);
+	}
+	
+	public static void consultarCliente() throws HeadlessException, SQLException {
+
+		Scanner in = new Scanner(System.in);
+		System.out.println("Ingrese el numero del documento del cliente");
+		String dni = in.nextLine();
+		Cliente cliente = ClienteFactory.getCliente(dni);
+		String nombre = cliente.getNombre();
+		String apellido = cliente.getApellido();
+		String user = cliente.getUserName();
+		String password = cliente.getPassword();
+		String domicilio = cliente.getDomicilio();
+		int puntos = cliente.getPuntos();
+		String telefono = cliente.getTelefono();
+		
+		System.out.println("Nombre: "+ nombre + "\nApellido: " + apellido + "\nUsuario: " + user + "\nContraseña: " + password +
+				"\nDomicilio: " + domicilio + "\nPuntos: " + puntos + "\nTelefono: " +telefono);
+	}
+	
+
 	public static void prueba3(){
 		System.out.println("Ingrese un nombre para la regla");
 		//crear una regla

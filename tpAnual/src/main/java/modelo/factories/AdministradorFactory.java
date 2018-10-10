@@ -1,5 +1,16 @@
 package modelo.factories;
+import java.awt.HeadlessException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+
+import javax.persistence.Query;
+import javax.swing.JOptionPane;
+
+import com.mysql.cj.xdevapi.Result;
 
 import db.EntityManagerHelper;
 import modelo.users.Administrador;
@@ -15,6 +26,11 @@ public class AdministradorFactory {
 		EntityManagerHelper.closeEntityManager();
 	}
 	
+	public static Administrador getAdministrador(int unCodigo) {
+		Administrador administrador = EntityManagerHelper.getEntityManager().find(Administrador.class,unCodigo);
+	    return administrador;
+	  }
+
 	public static void updateNombre(int codAdmin, String nombre) {
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().createQuery("UPDATE Administrador SET nombre = " + nombre + " WHERE codAdmin = '"
