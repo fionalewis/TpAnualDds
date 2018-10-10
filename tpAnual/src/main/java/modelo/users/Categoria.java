@@ -1,11 +1,18 @@
 package modelo.users;
 
-import modelo.JsonManager;
+import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import modelo.JsonManager;
+import modelo.users.Cliente.TipoDocumento;
+
+@Entity
 public class Categoria {
 	
 	/* Fijamos un maximo muy grande en R9 asi quedaba mas simple el codigo */
-	
+	@Id
 	private String clasif;
 	private double consumo;
 	private int min;
@@ -16,7 +23,15 @@ public class Categoria {
 	//Constructores
 	
 	public Categoria() {}
-	
+	public Categoria(String clasif, int min, int max, double cargoFijo, double cargoVariable) {
+		setClasif(clasif);
+		setMin(min);
+		setMax(max);
+		setCargoFijo(cargoFijo);
+		setCargoVariable(cargoVariable);
+		this.consumo = 0;
+	}
+
 	public Categoria(double cons) {
 		consumo = cons;
 	}

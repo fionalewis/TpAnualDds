@@ -100,7 +100,7 @@ public class GeoLocation {
 		public static Transformador transfMasCercanoA(GeoLocation unPunto)  {
 			List<Transformador> transformadores = null;
 			try {
-				transformadores = DAOJson.deserializarLista(Transformador.class,JsonManager.rutaTransfSalo);
+				transformadores = DAOJson.deserializarLista(Transformador.class,JsonManager.rutaTransfGiuli);
 			} catch (Exception e) {
 				ExceptionsHandler.catchear(e);
 			}

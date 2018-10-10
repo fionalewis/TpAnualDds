@@ -15,7 +15,11 @@
     	<class>modelo.Reglas.CondicionSensorYValor</class>
     	<class>modelo.Reglas.Regla</class>
     	<class>modelo.Actuador.Actuador</class>
-    	 
+		<class>modelo.users.Usuario</class>
+    	<class>modelo.users.Administrador</class>
+    	<class>modelo.users.Cliente</class>    	 
+		<class>modelo.users.Categoria</class> 
+		
         <properties> 
 	    <property name="hibernate.archive.autodetection" value="class"/>        
         
@@ -26,11 +30,10 @@
             <property name="hibernate.connection.password" value="mysql" /> 
 
 <!-- 
-            <property name="hibernate.connection.driver_class" value="org.hsqldb.jdbcDriver" /> 
-            <property name="hibernate.connection.url" value="jdbc:hsqldb:mem:app-db" /> 
-            <property name="hibernate.connection.username" value="sa" /> 
-            <property name="hibernate.connection.password" value="" /> 
-            <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> 
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp_anual_dds" /> 
+            <property name="hibernate.connection.username" value="root" /> 
+            <property name="hibernate.connection.password" value="Gordis24" /> 
  -->
                             
             <property name="hibernate.show_sql" value="true" /> 

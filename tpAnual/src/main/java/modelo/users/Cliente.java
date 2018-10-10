@@ -17,9 +17,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
 import java.util.function.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,22 +35,30 @@ import org.apache.commons.math3.optim.PointValuePair;
 
 //Ojo las rutas de json!!! (ver JsonManager)
 
+@Entity
 public class Cliente extends Usuario {
 
 	public enum TipoDocumento { DNI, CI, LE, LI }
 
-	private TipoDocumento tipoDoc;
+	@Id
 	private String nroDoc;
+	
+	@Enumerated(EnumType.STRING)
+	private TipoDocumento tipoDoc;
 	private String telefono;
 	private String domicilio;
+	@Transient
 	private static List<Dispositivo> dispositivos = new ArrayList<>();
+	@Transient
 	private Categoria categ;
 	private int puntos = 0;
-	
+	@Transient
 	private Transformador transformadorActual;
+	@Transient
 	private transient MetodoSimplex simplex = new MetodoSimplex();
 	
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
+	@Transient
 	private List<DispositivoEstandar> aux = new ArrayList<>(); 
 	
 	public Cliente() {
