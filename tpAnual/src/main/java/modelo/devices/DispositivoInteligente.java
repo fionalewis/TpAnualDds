@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Entity;
+
 import modelo.deviceState.Apagado;
 import modelo.deviceState.Encendido;
 import modelo.deviceState.EstadoDispositivo;
 import modelo.devices.IntervaloDispositivo.modo;
-
+@Entity
 public class DispositivoInteligente extends Dispositivo {
 	
 	public double kWhAhorro;

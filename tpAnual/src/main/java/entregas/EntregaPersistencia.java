@@ -1,5 +1,5 @@
 package entregas;
-
+import java.time.LocalDateTime;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -9,6 +9,7 @@ import modelo.Actuador.Actuador;
 import modelo.Reglas.Condicion;
 import modelo.Reglas.CondicionSensorYValor;
 import modelo.Reglas.Regla;
+import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.Sensor;
 import modelo.factories.CondicionFactory;
@@ -31,7 +32,8 @@ public class EntregaPersistencia {
 		System.out.println("\n Por favor elija una opcion:"
 				+ "\n1. Prueba 1"
 				+ "\n3. Prueba 3 paso 1: crear nueva regla"
-				+ "\n4. Prueba 3 paso 2: modificar una condicion");
+				+ "\n4. Prueba 3 paso 2: modificar una condicion"
+				+ "\n5. Prueba 5");
 			
 		Scanner in = new Scanner(System.in);
 			switch(in.nextInt()){
@@ -44,6 +46,9 @@ public class EntregaPersistencia {
 				break;
 			case 4:
 				p3_modificarCondicion();
+				break;
+			case 5:
+				prueba5();
 
 			
 			default: menuPrincipal();
@@ -66,7 +71,7 @@ public class EntregaPersistencia {
 		break;
 		//falta la parte de geolocalizacion
 		case 3:
-//			modificarUsuario();
+			modificarCliente();
 		break;}
 	}
 				
@@ -189,6 +194,31 @@ public class EntregaPersistencia {
 				"\nDomicilio: " + domicilio + "\nPuntos: " + puntos + "\nTelefono: " +telefono);
 	}
 	
+	public static void modificarCliente() throws HeadlessException, SQLException {
+
+		Scanner in = new Scanner(System.in);
+		System.out.println("Ingrese el numero del documento del cliente que quiere modificar");
+		String dni = in.nextLine();
+		Cliente cliente = ClienteFactory.getCliente(dni);
+		String nombre = cliente.getNombre();
+		String apellido = cliente.getApellido();
+		String user = cliente.getUserName();
+		String password = cliente.getPassword();
+		String domicilio = cliente.getDomicilio();
+		int puntos = cliente.getPuntos();
+		String telefono = cliente.getTelefono();
+		System.out.println("Nombre: "+ nombre + "\nApellido: " + apellido + "\nUsuario: " + user + "\nContraseña: " + password +
+				"\nDomicilio: " + domicilio + "\nPuntos: " + puntos + "\nTelefono: " +telefono);
+		System.out.println("Ingrese el nuevo apellido del cliente: ");
+		String nuevoApellido = in.nextLine();
+		ClienteFactory.updateApellido(dni, nuevoApellido);
+		Cliente clienteModificado = ClienteFactory.getCliente(dni);
+		String apellidoModificado = clienteModificado.getApellido();
+		System.out.println("Cliente modificado: \nNombre: "+ nombre + "\nApellido: " + apellidoModificado + "\nUsuario: " + user + "\nContraseña: " + password +
+				"\nDomicilio: " + domicilio + "\nPuntos: " + puntos + "\nTelefono: " +telefono);
+		
+	}
+		
 
 	public static void p3_crearRegla(){
 		//**1 nueva regla
@@ -256,6 +286,49 @@ public class EntregaPersistencia {
 		//ReglaFactory.updateRegla()
 		CondicionFactory.updateCondicionSYV("MAYOR", nombreCond);
 	}
+	
+	public static void prueba5(){
+		Scanner in = new Scanner(System.in);
+		System.out.println("Ingrese nro de documento de cliente: ");
+		String nroDoc = in.nextLine();
+		Cliente cliente = ClienteFactory.getCliente(nroDoc);
+		String nombre = cliente.getNombre();
+		String apellido = cliente.getApellido();
+		String user = cliente.getUserName();
+		String password = cliente.getPassword();
+		String domicilio = cliente.getDomicilio();
+		int puntos = cliente.getPuntos();
+		String telefono = cliente.getTelefono();
+		System.out.println("Nombre: "+ nombre + "\nApellido: " + apellido + "\nUsuario: " + user + "\nContraseña: " + password +
+				"\nDomicilio: " + domicilio + "\nPuntos: " + puntos + "\nTelefono: " +telefono);
+		
+		//Cliente cliente = new Cliente("Nico","Alvarez","nalvarez","1234",TipoDocumento.DNI,"39656545","45654565","Pueyrredon");
+		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
+		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
+		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
+		cliente.agregarDispositivo(disp1);
+		cliente.agregarDispositivo(disp2);
+		cliente.agregarDispositivo(disp3);
+		
+		System.out.println("Ingrese año, mes y dia de inicio: ");
+		int anioInicio = in.nextInt();
+		int mesInicio = in.nextInt();
+		int diaInicio = in.nextInt();
+		LocalDateTime fechaInicio = LocalDateTime.of(anioInicio, mesInicio, diaInicio, 0, 0);
+		
+		System.out.println("Ingrese año, mes y dia de fin: ");
+		int anioFin = in.nextInt();
+		int mesFin = in.nextInt();
+		int diaFin = in.nextInt();
+		LocalDateTime fechaFin= LocalDateTime.of(anioFin, mesFin, diaFin, 0, 0);
+		
+		double horasDeConsumo = cliente.consumoXPeriodo(fechaInicio, fechaFin);
+		System.out.println("Horas de consumo: " + horasDeConsumo);
+		
+//		System.out.println("Ingrese id Dispositivo: ");
+//		String nroDisp = in.nextLine();
+	}
+
 	
 	
 }

@@ -1,10 +1,13 @@
 package modelo.devices;
 
 import java.time.Period;
+
+import javax.persistence.Entity;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import modelo.deviceState.EstadoDispositivo;
-
+@Entity
 public class DispositivoEstandar extends Dispositivo {
 	
 	public double horasUsoDiarias = 0;
@@ -98,6 +101,8 @@ public class DispositivoEstandar extends Dispositivo {
 	        double horasDeUsoAprox = periodDays*horasUsoDiarias;
 	        return horasDeUsoAprox;
 		}
+		
+		
 		
 		//Tengo que ver como hacer con esto sorry
 		

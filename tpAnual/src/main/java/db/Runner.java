@@ -9,12 +9,14 @@ import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 import modelo.Actuador.Actuador;
 import modelo.Reglas.CondicionSensorYValor;
 import modelo.Reglas.Regla;
+import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.Sensor;
 import modelo.factories.ActuadorFactory;
 import modelo.factories.AdministradorFactory;
 import modelo.factories.CategoriaFactory;
 import modelo.factories.ClienteFactory;
+import modelo.factories.DispositivoFactory;
 import modelo.factories.ReglaFactory;
 import modelo.factories.SensorFactory;
 import modelo.users.Administrador;
@@ -30,6 +32,8 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	Cliente cliente = new Cliente("Lucas","Ramirez","lramirez","1234",TipoDocumento.DNI,"39769099","45424625","Villa Urquiza"); 
 	Administrador admin = new Administrador("Lucia","Gomez", "lgomez","1111");
 	Categoria cat1 = new Categoria("R1", 0, 150, 18.76, 0.644);
+	DispositivoInteligente dispInteligente = new DispositivoInteligente("Televisor","LED 20'");
+	DispositivoEstandar dispEstandar = new DispositivoEstandar("Ventilador",0.46,3,"Ventilador",1,4,true);
 	
 	public static void main(String[] args) {
 		new Runner().init();
@@ -43,6 +47,8 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 			setActuador();
 			setCliente();
 			setAdministrador();
+		//	setDispositivoEstandar();
+		//	setDispositivoInteligente();
 		});
 	}
 	
@@ -75,6 +81,14 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	
 	public void setAdministrador() {
 		AdministradorFactory.addAdministrador(admin);
+	}
+
+	public void setDispositivoEstandar() {
+		DispositivoFactory.addDispositivoEstandar(dispEstandar);
+	}
+	
+	public void setDispositivoInteligente() {
+		DispositivoFactory.addDispositivoEstandar(dispInteligente);
 	}
 
 	public void setCategoria() {

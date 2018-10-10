@@ -1,10 +1,18 @@
 package modelo.devices;
 
 import java.time.LocalDateTime;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
 import modelo.deviceState.EstadoDispositivo;;
 
+@MappedSuperclass
 public abstract class Dispositivo {
-
+	@Id
+	@GeneratedValue
+	long id;
 	protected String nombreDisp;
 	public String equipoConcreto = "";
 	
