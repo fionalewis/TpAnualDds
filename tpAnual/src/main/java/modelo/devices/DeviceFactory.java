@@ -23,6 +23,7 @@ public class DeviceFactory {
 		return JsonManager.buscarPrimerMatch(tipo);
 	}
 	
+	//CONSTRUCTOR PRINCIPAL
 	public Dispositivo crearDisp(String tipo,String descrip){
 		if (cumpleCondInteligente(tipo,descrip))
 			return crearDispInteligente(tipo,descrip);
@@ -37,7 +38,7 @@ public class DeviceFactory {
 	public DispositivoInteligente crearDispInteligente(String t,String d) {
 		int pos = encontrarPosEnTablaDI(t,d);
 		if(pos==-1) {
-			System.out.println("No se encontró el dispositivo buscado.");
+			System.out.println("No se encontro el dispositivo buscado.");
 		}
 		DispositivoInteligente dispIntel = tablaDI.get(pos);
 		return dispIntel;
@@ -57,7 +58,7 @@ public class DeviceFactory {
 	public DispositivoEstandar crearDispEstandar(String t,String d) {
 		int pos = encontrarPosEnTablaDE(t,d);
 		if(pos==-1) {
-			System.out.println("No se encontró el dispositivo buscado.");
+			System.out.println("No se encontrï¿½ el dispositivo buscado.");
 		}
 		DispositivoEstandar dispEstandar = tablaDE.get(pos);
 		return dispEstandar;
@@ -156,8 +157,8 @@ public class DeviceFactory {
 		
 		DispositivoInteligente aire = (DispositivoInteligente) factory.crearDisp("Aire Acondicionado","3500 frigorias");
 		DispositivoEstandar plancha = (DispositivoEstandar) factory.crearDisp("Plancha","A vapor");
-		System.out.println("\n" + aire.getNombreDisp() + " " + aire.getEquipoConcreto() + ". ¿Es de bajo consumo?: " + aire.getEsBajoConsumo());
-		System.out.println(plancha.getNombreDisp() + " " + plancha.getEquipoConcreto() + ". ¿Es de bajo consumo?: " + plancha.getEsBajoConsumo());
+		System.out.println("\n" + aire.getNombreDisp() + " " + aire.getEquipoConcreto() + ". ç¸€s de bajo consumo?: " + aire.getEsBajoConsumo());
+		System.out.println(plancha.getNombreDisp() + " " + plancha.getEquipoConcreto() + ". ç¸€s de bajo consumo?: " + plancha.getEsBajoConsumo());
 		
 		List<Dispositivo> list = new ArrayList<>();
 		list.add(aire);list.add(plancha);

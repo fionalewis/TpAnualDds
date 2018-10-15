@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.*;
+
 import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
 import modelo.devices.Dispositivo;
@@ -13,11 +15,20 @@ import modelo.users.Cliente;
 //Por ahora esta clase se maneja con un json de clientes como su "BDD" para poder modificar los atributos del cliente,
 //como registrar cambios de domicilio y reasignarle el transformador, o para obtener los clientes que tienen un X transformador
 //asignado y necesitamos conocer en el metodo suministroActual, pero esto a futuro no va a ser con un json creo
-
+@Entity
 public class Transformador {
-
+	@Id
 	private int idTransformador;
 	private String zona; //dada por el ENRE
+
+	@OneToMany(mappedBy="transformadorActual",cascade=CascadeType.ALL)
+	private List<Cliente> cli;
+
+	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name="longitude", column=@Column(name="longitud")),
+		@AttributeOverride(name="latitude", column=@Column(name="latitud"))
+	})
 	private GeoLocation ubicacion;
 	
 	public Transformador(String zona,double lat,double lng) {

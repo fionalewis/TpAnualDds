@@ -1,10 +1,15 @@
 package modelo.devices;
 
 import java.time.Period;
+
+import javax.persistence.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import modelo.deviceState.EstadoDispositivo;
 
+@Entity
+@DiscriminatorValue("E")
 public class DispositivoEstandar extends Dispositivo {
 	
 	public double horasUsoDiarias = 0;

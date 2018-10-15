@@ -1,14 +1,17 @@
 package modelo.Reglas;
 
-import org.apache.commons.lang3.EnumUtils;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 import exceptions.CaracterInvalidoException;
-
+@Entity
 public abstract class Condicion {
 	
-	//protected Regla regla;
+	@Id
+	protected String nombreCondicion;
 	protected String comparacion; //Mayor, Menor, Igual o distinto
-	protected enum CriterioComparacion {MAYOR,MENOR,IGUAL,DISTINTO}
+	//protected enum CriterioComparacion {MAYOR,MENOR,IGUAL,DISTINTO}
 	protected boolean estado = false;
 	
 	public boolean evaluar(double x, double y){
@@ -56,7 +59,11 @@ public abstract class Condicion {
 	
 	public void setComparacion(String comparacion) throws CaracterInvalidoException{
 		this.comparacion = comparacion;
-		EnumUtils.isValidEnum(CriterioComparacion.class, comparacion);	
+		//EnumUtils.isValidEnum(CriterioComparacion.class, comparacion);	
+	}
+	
+	public void setNombreCondicion(String nombre){
+		nombreCondicion = nombre;
 	}
 
 	public abstract void update();

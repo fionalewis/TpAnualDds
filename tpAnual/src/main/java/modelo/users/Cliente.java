@@ -10,6 +10,7 @@ import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoConvertido;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
+import modelo.repositories.*;
 import modelo.geoLocation.GeoLocation;
 import modelo.geoLocation.Transformador;
 
@@ -17,9 +18,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+
+import javax.persistence.*;
+
 import java.util.function.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -27,22 +32,39 @@ import org.apache.commons.math3.optim.PointValuePair;
 
 //Ojo las rutas de json!!! (ver JsonManager)
 
+@Entity
 public class Cliente extends Usuario {
 
 	public enum TipoDocumento { DNI, CI, LE, LI }
 
-	private TipoDocumento tipoDoc;
+	@Id
+	@Column(name="cliente_id")
 	private String nroDoc;
+	
+	@Enumerated(EnumType.STRING)
+	private TipoDocumento tipoDoc;
 	private String telefono;
 	private String domicilio;
+
+	@OneToMany(cascade=CascadeType.ALL)
+	@JoinColumn(name="cliente_id", referencedColumnName="cliente_id",nullable=true,unique=false)
 	private static List<Dispositivo> dispositivos = new ArrayList<>();
-	private Categoria categ;
-	private int puntos = 0;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+  	@JoinColumn(name="idCategoria")
+	private Categoria categ;
+
+	private int puntos = 0;
+
+	@ManyToOne(fetch=FetchType.LAZY)
+  	@JoinColumn(name="idTransformador")
 	private Transformador transformadorActual;
+
+	@Transient
 	private transient MetodoSimplex simplex = new MetodoSimplex();
 	
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
+	@Transient
 	private List<DispositivoEstandar> aux = new ArrayList<>(); 
 	
 	public Cliente() {
@@ -166,7 +188,7 @@ public class Cliente extends Usuario {
 	}
 
 	public void setDispositivos(List<Dispositivo> _dispositivos) {
-		dispositivos = _dispositivos;
+		dispositivos = _dispositivos;		
 	}
 
 	public void agregarDispositivo(Dispositivo disp) {
@@ -244,7 +266,7 @@ public class Cliente extends Usuario {
 	public boolean algunoEncendido() { //Estos cout los vamos a borrar despues, estan para que los vean mientras prueben nada mas
 		boolean result = obtenerLista("IyC").stream().anyMatch(FilterPredicates.filterAnyOn());
 		if(result) {
-			System.out.println("Existe algún dispositivo encendido.");
+			System.out.println("Existe algï¿½n dispositivo encendido.");
 		} else {
 			System.out.print("Todos los dispositivos se encuentran apagados.");
 		}
@@ -322,13 +344,13 @@ public class Cliente extends Usuario {
 		Map<String,Double> horasXDisp = simplex.horasMaxXDisp();
 		List<Dispositivo> descartados = new ArrayList<>();
 		if(descartados.size()!=0) {
-			System.out.println("Se han descartado del cálculo de horas máximas los siguientes dispositivos:");
+			System.out.println("Se han descartado del cï¿½lculo de horas mï¿½ximas los siguientes dispositivos:");
 			for(Dispositivo unDisp : descartados) {
 				System.out.println(unDisp.getNombreDisp() + ", " + unDisp.getEquipoConcreto());
 			}
 		}
 		for(Entry<String, Double> unValor : horasXDisp.entrySet()) {
-			System.out.println("La recomendación de horas máximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.");
+			System.out.println("La recomendaciï¿½n de horas mï¿½ximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.");
 		}		
 	}
 	
@@ -348,10 +370,10 @@ public class Cliente extends Usuario {
 		Dispositivo aire1 = f.crearDisp("Aire Acondicionado","2200 frigorias");
 		pepe.agregarDispositivo(estandar);pepe.agregarDispositivo(aire1);pepe.agregarDispositivo(aire);
 		System.out.println("\t Main para probar que el simplex desde un cliente:\n");
-		System.out.println("Creamos un disp estándar. Sin setear horas base se asume que todo disp estandar se usa 1h por dia:");
-		System.out.println("Entonces este disp. usaría 720hs al mes:" + pepe.cantHorasEstandarXMes());
+		System.out.println("Creamos un disp estï¿½ndar. Sin setear horas base se asume que todo disp estandar se usa 1h por dia:");
+		System.out.println("Entonces este disp. usarï¿½a 720hs al mes:" + pepe.cantHorasEstandarXMes());
 		System.out.println("Obteniendo el consumo mensual de ese disp., que por el json tiene precargado 0.64kWh:");
-		System.out.println("Entonces este disp. usaría 720hs*0.64kWh al mes = 460.8:" + pepe.consumoXMesEstandar()+"\n");
+		System.out.println("Entonces este disp. usarï¿½a 720hs*0.64kWh al mes = 460.8:" + pepe.consumoXMesEstandar()+"\n");
 		pepe.quitarDispositivo(estandar);((DispositivoEstandar) estandar).setHorasUsoDiarias(0.5);pepe.agregarDispositivo(estandar);
 		System.out.println("Seteando 0.5hs al disp.:");
 		System.out.println("Entonces este disp usaria 360hs al mes:" + pepe.cantHorasEstandarXMes());
@@ -361,9 +383,9 @@ public class Cliente extends Usuario {
 		System.out.println("Agregando otro disp estandar que tiene 1h de uso diaria seteada y 0.75kWh");
 		
 		System.out.println("\n Llamando al simplex de pepe");
-		System.out.println("Valor de Z Máx: " + pepe.llamarSimplex().getValue());		
+		System.out.println("Valor de Z Mï¿½x: " + pepe.llamarSimplex().getValue());		
 		pepe.obtenerRecomendacion();
-		System.out.println("\n¿Tiene un hogar eficiente?: " + pepe.hogarEficiente());		
+		System.out.println("\nï¿½Tiene un hogar eficiente?: " + pepe.hogarEficiente());		
 	}
 	
 }

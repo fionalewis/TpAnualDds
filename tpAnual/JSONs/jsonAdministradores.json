@@ -1,8 +1,18 @@
 [  
     {
-		'codAdmin' : 20000
+		'codAdmin' : 123421224,
+		'nombre':"nombre",
+		'apellido':"perez",
+		'userName':"nombreeee",
+		'password':"contrasena",
+		'fechaRegistro':""
     },
 	{
-		'codAdmin' : 1
+		'codAdmin' : 123432,
+		'nombre':"dexter",
+		'apellido':"perez",
+		'userName':"dperez",
+		'password':"contrasena",
+		'fechaRegistro':""
     }
 ]

@@ -38,7 +38,7 @@ import modelo.users.Categoria;
 import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
 
-/* ¡¡¡Agreguen las rutas de sus jsons en comentarios asi los pueden usar siempre!!!
+/* ï¿½ï¿½ï¿½Agreguen las rutas de sus jsons en comentarios asi los pueden usar siempre!!!
  *  sino les va a tirar error cuando cualquier otro metodo llame a los de aca */
 
 @SuppressWarnings("unused")
@@ -46,32 +46,30 @@ public class JsonManager {
 	
 	//public static List<Dispositivo> dispositivosEnGral = new ArrayList<>();
 	
-	public static String rutaJsonClientesMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonClientes.json";
-	public static String rutaJsonClientesSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonClientes.json";
-	public static String rutaJsonDispMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonDispositivos.json";
-	public static String rutaJsonDispSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonDispositivos.json";
-	public static String rutaJsonAdminMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonAdministradores.json";
-	public static String rutaJsonAdminSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonAdministradores.json";
-	public static String rutaJsonCategMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\jsonCategorias.json";
-	public static String rutaJsonCategSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\jsonCategorias.json";
-	
-	public static String rutaTransfSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\transformadores.json";
-	public static String rutaTransfMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\transformadores.json";
-	public static String rutaZonasSalo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\zonas.json";
-	public static String rutaZonasMaru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\zonas.json";
-	
-	public static String rutaClientesLinux = "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonClientes.json";
-	public static String rutaDispLinux = "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonDispositivos.json";
-	public static String rutaAdminLinux = "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonAdministradores.json";
-	public static String rutaCategLinux = "//home//dds//git//TpAnualDds//tpAnual//JSONs//jsonCategorias.json";
-	
+	public static String giuli = "\\C:\\Users\\Giuli\\eclipse-workspace\\TpAnualDds\\tpAnual\\JSONs\\";
+	public static String fiona = "\\C:\\Users\\flewis\\.vscode\\TpAnualDds\\tpAnual\\JSONs\\";
+	public static String maru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\";
+	public static String salo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\";
+	public static String linux = "//home//dds//git//TpAnualDds//tpAnual//JSONs//";
+
+	public static String jsonClientes = "jsonClientes.json";
+	public static String jsonDisps = "jsonDispositivos.json";
+	public static String jsonAdmin = "jsonAdministradores.json";
+	public static String jsonCateg = "jsonCategorias.json";
+	public static String jsonTransf = "transformadores.json";
+	public static String jsonZonas = "zonas.json";
+	//public static String jsonClientesCompletos = "jsonClienteCompleto.json";
+	public static String jsonClientesCompletos = "JsonsParaPruebas\\clientesPruebaParaTransformador.json";
+
 	//RUTAS PRINCIPALES
-	public static String rutaJsonClientes = rutaJsonClientesMaru;
-	public static String rutaJsonDisp = rutaJsonDispMaru;
-	public static String rutaJsonAdmin = rutaJsonAdminMaru;
-	public static String rutaJsonCateg = rutaJsonCategMaru;
-	public static String rutaTransf = rutaTransfMaru;
-	public static String rutaZonas = rutaZonasMaru;
+	public static String actual = fiona;
+	public static String rutaJsonClientes = actual + jsonClientes;
+	public static String rutaJsonDisp = actual + jsonDisps;
+	public static String rutaJsonAdmin = actual + jsonAdmin;
+	public static String rutaJsonCateg = actual + jsonCateg;
+	public static String rutaJsonTransf = actual + jsonTransf;
+	public static String rutaJsonZonas = actual + jsonZonas;
+	public static String rutaJsonClientesCompletos = actual + jsonClientesCompletos;
 	
 	//Metodos que usamos para categorias
 	
@@ -83,7 +81,7 @@ public class JsonManager {
 			List<Categoria> categorias = null;
 			Categoria categoria = null;
 			try {
-				categorias = DAOJson.deserializarLista(Categoria.class,rutaJsonCategSalo);
+				categorias = DAOJson.deserializarLista(Categoria.class,rutaJsonCateg);
 				} catch (Exception e) {
 				ExceptionsHandler.catchear(e);
 			}
@@ -155,11 +153,11 @@ public class JsonManager {
 		
 		resetTransf();
 
-		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransfSalo);
+		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaJsonTransf);
 
 		Gson gson = new Gson();
 
-		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonasSalo)); //Tiene que coincidir con linea 174
+		BufferedReader buffReader = new BufferedReader(new FileReader(rutaJsonZonas)); //Tiene que coincidir con linea 174
 	    Zona[] zonas = gson.fromJson(buffReader, Zona[].class);
 	
 		for(int i = 0;i<zonas.length;i++) {
@@ -171,7 +169,7 @@ public class JsonManager {
 					gson = new GsonBuilder().setPrettyPrinting().create();
 					FileWriter writer = null;
 					try {
-						writer = new FileWriter(rutaZonasSalo); // Tiene que coincidir con linea 162
+						writer = new FileWriter(rutaJsonZonas); // Tiene que coincidir con linea 162
 						writer.write(newJson);
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -193,9 +191,9 @@ public class JsonManager {
 	}	
 
 	public static void resetTransf() throws FileNotFoundException, InstantiationException, IllegalAccessException {
-		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaTransfSalo);
+		List<Transformador> transformadores = DAOJson.deserializarLista(Transformador.class,rutaJsonTransf);
 		Gson gson = new Gson();
-		BufferedReader buffReader = new BufferedReader(new FileReader(rutaZonasSalo));//Tiene que coincidir con linea 206
+		BufferedReader buffReader = new BufferedReader(new FileReader(rutaJsonZonas));//Tiene que coincidir con linea 206
 	    Zona[] zonas = gson.fromJson(buffReader, Zona[].class);
 		for(int i = 0;i<zonas.length;i++) {
 			zonas[i].getTransformadores().clear();
@@ -203,7 +201,7 @@ public class JsonManager {
 			gson = new GsonBuilder().setPrettyPrinting().create();
 			FileWriter writer = null;
 			try {
-				writer = new FileWriter(rutaZonasSalo);//Tiene que coincidir con linea 198
+				writer = new FileWriter(rutaJsonZonas);//Tiene que coincidir con linea 198
 				writer.write(newJson);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -227,7 +225,7 @@ public class JsonManager {
 		JsonParser parserFactory = new JsonParser();
 		JsonReader readerFactory = null;
 		try {
-			readerFactory = new JsonReader(new FileReader(JsonManager.rutaJsonDispSalo));
+			readerFactory = new JsonReader(new FileReader(JsonManager.rutaJsonDisp));
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
@@ -310,19 +308,19 @@ public class JsonManager {
 
 	public static void main( String[] args ) throws IOException, InstantiationException, IllegalAccessException {
 		/* 
-    	Cómo probar este código:
+    	Cï¿½mo probar este cï¿½digo:
     	
     	1. Ver el contenido del archivo zonas.json en la carpeta del proyecto \\JSONs\\zonas.json
     	Ese json tiene cargadas 13 zonas dentro las cuales vamos a hacer las pruebas, ninguna de las zonas de este json tiene
-    	transformadores asignados, ya que éstos se asignan a principio de mes y cambian todos los meses, es decir
-    	ningún transformador "es parte de" una zona para siempre.
-    	Al ejecutar esta línea, se van a asignar los transformadores precargados en transformadores.json, también en la carpeta
-    	del proyecto \\JSONs\\transformadores.json, en este archivo hay 5 transformadores modelados, esto sería un ejemplo de lo
-    	que asumimos que el ENRE nos enviaría una vez al mes, un archivo .json con una lista de transformadores activos.
+    	transformadores asignados, ya que ï¿½stos se asignan a principio de mes y cambian todos los meses, es decir
+    	ningï¿½n transformador "es parte de" una zona para siempre.
+    	Al ejecutar esta lï¿½nea, se van a asignar los transformadores precargados en transformadores.json, tambiï¿½n en la carpeta
+    	del proyecto \\JSONs\\transformadores.json, en este archivo hay 5 transformadores modelados, esto serï¿½a un ejemplo de lo
+    	que asumimos que el ENRE nos enviarï¿½a una vez al mes, un archivo .json con una lista de transformadores activos.
     	*/
     	asignarTransfAZonas();
     	/*
-    	2. Una vez ejecutada la línea anterior, recargar el archivo y ver cómo se asignaron los transformadores a su zona correspondiente
+    	2. Una vez ejecutada la lï¿½nea anterior, recargar el archivo y ver cï¿½mo se asignaron los transformadores a su zona correspondiente
     	en jsonZonasParaPruebas.json en la carpeta \JsonsParaPruebas\jsonZonasParaPruebas.json
     	*/
     	/*
@@ -359,7 +357,7 @@ public class JsonManager {
     	System.out.println("\nDisp Estandar:\n" +d2.getNombreDisp()+ " " + d2.getEquipoConcreto());
     	System.out.println("Consumo entre la creacion de d2 y la fecha: " + d2.consumoTotal());
     	System.out.println("Sus horas de uso diarias aproximadas: " + d2.getHorasDeUso());
-    	
+    /*
     	List<Dispositivo> disp = new ArrayList<>(); disp.add(d1);disp.add(d2);
     	Cliente c = new Cliente("pepe","argento","pepe123","12345",2018,8,21,TipoDocumento.DNI,"40123456","12345678","Avenida Medrano 986",disp);
     	Transformador t = c.getTransformadorActual();
@@ -376,6 +374,6 @@ public class JsonManager {
 			double sumact = t1.suministroActual(); 
 			System.out.println( sumact != 0.0?  "transf"+t.getIdTransformador()+": " + sumact : "" );
 			//imprime transf2: 3735.6421358333328
-		}
+		}*/
     }
 }

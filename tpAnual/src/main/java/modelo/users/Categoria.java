@@ -1,17 +1,25 @@
 package modelo.users;
 
+import java.util.List;
+
+import javax.persistence.*;
+
 import modelo.JsonManager;
 
+@Entity
 public class Categoria {
 	
 	/* Fijamos un maximo muy grande en R9 asi quedaba mas simple el codigo */
-	
+	@Id
 	private String clasif;
 	private double consumo;
 	private int min;
 	private int max;
 	private double cargoFijo;
 	private double cargoVariable;
+
+	@OneToMany(mappedBy="categ",cascade=CascadeType.ALL)
+	private List<Cliente> cli;
 	
 	//Constructores
 	

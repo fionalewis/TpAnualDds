@@ -2,23 +2,45 @@ package modelo.Reglas;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang3.EnumUtils;
 
 import exceptions.CaracterInvalidoException;
 import modelo.Actuador.Actuador;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.Sensor;
-
+@Entity
 public class Regla {
 	
-	private List<Condicion> condiciones = new ArrayList<>(); // condiciones q c/u es una comparacion binaria
-	private List<Actuador> actuadores = new ArrayList<>(); //acciones
-	private int contador;
-	private DispositivoInteligente disp;
-	private String criterioCondiciones; // AND , OR
-	private enum criterios{AND,OR}
-	private boolean state; //para test NO AGREGAR AL DIAGRAMA DE CLASES
+	@Id
 	private String nombreRegla; //solo para mostrar en el main
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinColumn(name = "Regla")
+	private List<Condicion> condiciones = new ArrayList<>(); // condiciones q c/u es una comparacion binaria
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinColumn(name = "Regla")
+	private List<Actuador> actuadores = new ArrayList<>(); //acciones
+	
+	@Transient
+	private int contador;
+	@Transient
+	private DispositivoInteligente disp;
+	@Transient
+	private String criterioCondiciones; // AND , OR
+	
+	private enum criterios{AND,OR}
+	//private boolean state; //para test NO AGREGAR AL DIAGRAMA DE CLASES
 	
 	public Regla(String unNombreRegla,DispositivoInteligente unDispo,String critCond){
 		this.nombreRegla = unNombreRegla;
@@ -27,6 +49,7 @@ public class Regla {
 	}
 	
 	//getters y setters
+	
 	public void setCondiciones(List<Condicion> comparaciones){
 		this.condiciones = comparaciones;
 	}
@@ -39,6 +62,7 @@ public class Regla {
 	public void quitarCondicion(Condicion unaCondicion){
 		condiciones.remove(unaCondicion);
 	}
+	
 	public void setActuadores(List<Actuador> acts){
 		this.actuadores = acts;
 	}
@@ -64,7 +88,7 @@ public class Regla {
 	public Condicion getCondicion(Condicion con){
 		return getCondicionConIndice(condiciones.indexOf(con));
 	}
-	public boolean getState(){
+	/*public boolean getState(){
 		return this.state;
 	}
 	public void setNombreRegla(String unNombreRegla){
@@ -72,7 +96,7 @@ public class Regla {
 	}
 	public String getNombreRegla(){
 		return this.nombreRegla;
-	}
+	}*/
 	// ============================
 	public void aplicarRegla(){
 			
@@ -99,7 +123,7 @@ public class Regla {
 			for(Actuador act:actuadores){
 				act.execute(disp);
 			}
-			this.state = true; //para test 
+			//his.state = true; //para test 
 		}else{
 			System.out.println("No se cumplieron todas las condiciones para la regla de criterio AND");
 		}
@@ -111,23 +135,18 @@ public class Regla {
 			for(Actuador act:actuadores){
 				act.execute(disp);
 			}
-			this.state = true; //para test
+			//this.state = true; //para test
 		}else{
 			System.out.println("No se cumplio ninguna condicion");
 		}
 	}
-	
-	//sensor --> variables
-	//valor --> fijo
-	//1 variable con 1 fijo o 2 variables
-	//signo comparacion
 
 	public void crearCondicionDosSensores(Sensor sen1, Sensor sen2, String comparacion){ 
-		Condicion comp = new CondicionDosSensores(this,sen1,sen2,comparacion); //sen1 comparacion sen2
+		Condicion comp = new CondicionDosSensores(sen1,sen2,comparacion); //sen1 comparacion sen2
 		condiciones.add(comp);
 	}
 	public void crearCondicionSensoresYValor(Sensor sen1, double valorFijo, String comparacion){
-		Condicion comp = new CondicionSensorYValor(this,sen1,valorFijo,comparacion); //sen1 comparacion valor
+		Condicion comp = new CondicionSensorYValor(sen1,valorFijo,comparacion); //sen1 comparacion valor
 		condiciones.add(comp);
 	}
 	

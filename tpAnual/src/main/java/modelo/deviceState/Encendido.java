@@ -22,30 +22,30 @@ public class Encendido implements EstadoDispositivo {
 
 	@Override
 	public void encender(DispositivoInteligente disp) {
-		System.out.println("El dispositivo continúa en modo encendido.");
+		System.out.println("El dispositivo continï¿½a en modo encendido.");
 	}
 
 	@Override
 	public void ahorroEnergia(DispositivoInteligente disp) {
-		System.out.println("El dispositivo ha cambiado a modo ahorro de energía.");
+		System.out.println("El dispositivo ha cambiado a modo ahorro de energï¿½a.");
 		disp.setEstadoDisp(new AhorroEnergia());
 	}
 
 	@Override
 	public boolean estaEncendido() {
-		System.out.println("El dispositivo se encuentra encendido en modo estándar.");
+		System.out.println("El dispositivo se encuentra encendido en modo estï¿½ndar.");
 		return true;
 	}
 
 	@Override
 	public boolean estaApagado() {
-		System.out.println("El dispositivo no está apagado.");
+		System.out.println("El dispositivo no estï¿½ apagado.");
 		return false;
 	}
 
 	@Override
 	public boolean estaEnAhorro() {
-		System.out.println("El dispositivo no se encuentra en modo ahorro de energía.");
+		System.out.println("El dispositivo no se encuentra en modo ahorro de energï¿½a.");
 		return false;
 	}
 

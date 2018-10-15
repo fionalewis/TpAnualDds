@@ -2,22 +2,25 @@ package modelo.geoLocation;
 
 import java.util.List;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
+
 import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
 import modelo.JsonManager;
 
 //El metodo ubicacionDe usa la ruta del json de las zonas y transfMasCercanoA usa el json de los transformadores!
-
+@Embeddable
 public class GeoLocation {
 	
 	/* Cod. de: https://introcs.cs.princeton.edu/java/44st/Location.java.html */
-	
+		@Transient
 	    private String name = "";
 	    private double longitude;
 	    private double latitude;   
 	   
 	    // create and initialize a point with given name and (latitude, longitude) specified in degrees
-	    
+	    public GeoLocation(){}
 	    public GeoLocation(String direcc) {
 	    	this.name = direcc;
 	    }
@@ -84,7 +87,7 @@ public class GeoLocation {
 			List<Zona> zonas = null;
 			Zona unaZona = null;
 			try {
-				zonas = DAOJson.deserializarLista(Zona.class,JsonManager.rutaZonas);
+				zonas = DAOJson.deserializarLista(Zona.class,JsonManager.rutaJsonZonas);
 			} catch (Exception e) {
 				ExceptionsHandler.catchear(e);
 			}
@@ -100,7 +103,7 @@ public class GeoLocation {
 		public static Transformador transfMasCercanoA(GeoLocation unPunto)  {
 			List<Transformador> transformadores = null;
 			try {
-				transformadores = DAOJson.deserializarLista(Transformador.class,JsonManager.rutaTransfSalo);
+				transformadores = DAOJson.deserializarLista(Transformador.class,JsonManager.rutaJsonTransf);
 			} catch (Exception e) {
 				ExceptionsHandler.catchear(e);
 			}

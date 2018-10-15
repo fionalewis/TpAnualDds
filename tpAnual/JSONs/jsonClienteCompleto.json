@@ -1,0 +1,17 @@
+<div class="jumbotron" id="ListadoReconocimiento" style="display:none;">
+    @*<div class="text-center">
+        <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalPersona">Crear Persona</button>
+        <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalCara">Agregar Cara</button>
+        <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#modalListado">Listado</button>
+        <button type="button" class="btn btn-dark btn-lg" data-toggle="modal" data-target="#modalImagenes">Imagenes</button>
+    </div>*@
+    <br />
+    <h1>Listado de Personas</h1>
+    <br />
+    <div id="tablaListado"></div>
+
+    <div id="errorListado" class="alert alert-danger" role="alert" style="display: none;">
+        Error: Problema al conectarse a la base de datos.
+    </div>
+
+</div>

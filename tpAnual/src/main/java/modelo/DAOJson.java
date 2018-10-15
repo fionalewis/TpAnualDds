@@ -20,6 +20,8 @@ import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.IntervaloDispositivo;
 import modelo.devices.IntervaloDispositivo.modo;
+import modelo.geoLocation.Transformador;
+import modelo.repositories.DispositivoRepository;
 import modelo.users.Cliente;
 
 public class DAOJson {
@@ -90,6 +92,7 @@ public class DAOJson {
 		
 		for( Cliente p : objetos){
 			p.setDispositivos( (List<Dispositivo>) objetos2.get(0));
+			
 		}
 			
 		return objetos;
@@ -147,4 +150,57 @@ public class DAOJson {
 		}	
 		return objetos;
 	}
+
+	public static List<Dispositivo> deserializarDispositivos(Class<Dispositivo> clase, String ruta) throws FileNotFoundException, InstantiationException, IllegalAccessException {		
+		JsonReader reader = new JsonReader(new FileReader(ruta));		
+		JsonElement aux1 = new JsonParser().parse(reader);
+		JsonArray jsonProfile2 = (aux1).getAsJsonArray();
+		//for(int i = 0; i < jsonProfile2.size();i++){
+		//JsonArray p = jsonProfile2.get(i).getAsJsonObject().getAsJsonArray();
+		List<Dispositivo> objeto = new ArrayList<>();
+		for(JsonElement j : jsonProfile2){
+			JsonParser parser = new JsonParser();
+			JsonObject o = parser.parse(j.toString()).getAsJsonObject();
+			if (o.get("esInteligente").getAsBoolean()){
+				DispositivoInteligente d = new DispositivoInteligente();
+				d.setNombreDisp(o.get("nombreDisp").getAsString());
+				d.setEquipoConcreto(o.get("equipoConcreto").getAsString());
+				d.setEsInteligente(true);
+				d.setFechaRegistro(LocalDateTime.parse(o.get("fechaRegistro") == null? LocalDateTime.now().toString() : o.get("fechaRegistro").getAsString()));
+				d.setEsBajoConsumo(o.get("esBajoConsumo").getAsBoolean());
+				d.setkWh(o.get("kWh").getAsDouble());
+				if (o.get("horasUsoMax") != null) { //heladeras 
+					d.setHorasUsoMax(o.get("horasUsoMax").getAsDouble());
+					d.setHorasUsoMin(o.get("horasUsoMin").getAsDouble());
+				}
+				if(o.get("intervalos") != null){
+					List<IntervaloDispositivo> listaints = new ArrayList<>();
+					JsonArray arr = o.get("intervalos").getAsJsonArray();
+					for (JsonElement obj :arr){
+						IntervaloDispositivo intd = new IntervaloDispositivo();
+						intd.setInicio( LocalDateTime.parse( obj.getAsJsonObject().get("inicio").getAsString() ) );
+						intd.setFin( LocalDateTime.parse( obj.getAsJsonObject().get("fin").getAsString() ) );							
+						intd.setModo( modo.valueOf(obj.getAsJsonObject().get("modo").getAsString()) );
+						d.setIntervalo(intd);
+						listaints.add(intd);
+					}
+					d.setIntervalos(listaints);
+				}
+				objeto.add(d);
+			}else{
+				DispositivoEstandar d = new DispositivoEstandar();
+				d.setNombreDisp(o.get("nombreDisp").toString());
+				d.setEquipoConcreto(o.get("equipoConcreto").toString());
+				d.setEsInteligente(false);
+				d.setEsBajoConsumo(o.get("esBajoConsumo").getAsBoolean());
+				d.setkWh(o.get("kWh").getAsDouble());
+				d.setHorasUsoMax(o.get("horasUsoMax").getAsDouble());
+				d.setHorasUsoMin(o.get("horasUsoMin").getAsDouble());
+				objeto.add(d);
+			}									
+		}
+
+		return objeto;
+	}
+	
 }
