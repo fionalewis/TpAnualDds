@@ -1,0 +1,37 @@
+package presentacion;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import lombok.Data;
+
+@Data
+@Entity
+public class Dispositivo {
+	
+	private @Id @GeneratedValue Long id;
+	private String nombre;
+	private String kWh;
+	
+	public Dispositivo(String nombreDisp, String kWh) {
+		this.nombre = nombreDisp;
+		this.kWh = kWh;
+	}
+	
+	//public Dispositivo() {} 
+	
+	
+/*	public String getNombreDisp() {
+		return nombre;
+	}
+	public void setNombreDisp(String nombreDisp) {
+		this.nombre = nombreDisp;
+	}
+	public String getkWh() {
+		return kWh;
+	}
+	public void setkWh(String kWh) {
+		this.kWh = kWh;
+	}*/
+
+}

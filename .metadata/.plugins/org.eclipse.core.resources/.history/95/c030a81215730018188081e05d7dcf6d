@@ -1,0 +1,20 @@
+package presentacion;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@SpringBootApplication
+@ComponentScan(basePackages= {"model"}) 
+public class DataRestApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DataRestApplication.class, args);
+	}
+	
+	@RequestMapping(value = "/")
+	public String index() {
+		return "index";
+	}
+}

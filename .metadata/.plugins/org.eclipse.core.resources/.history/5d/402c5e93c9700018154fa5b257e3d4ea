@@ -1,0 +1,29 @@
+package presentacion;
+
+@Data
+@Entity
+public class DispositivoDTO {
+	
+	private String nombreDisp;
+	private double kWh;
+	
+	public DispositivoDTO(String nombreDisp, double kWh) {
+		this.nombreDisp = nombreDisp;
+		this.kWh = kWh;
+	}
+	
+	
+	public String getNombreDisp() {
+		return nombreDisp;
+	}
+	public void setNombreDisp(String nombreDisp) {
+		this.nombreDisp = nombreDisp;
+	}
+	public double getkWh() {
+		return kWh;
+	}
+	public void setkWh(double kWh) {
+		this.kWh = kWh;
+	}
+
+}

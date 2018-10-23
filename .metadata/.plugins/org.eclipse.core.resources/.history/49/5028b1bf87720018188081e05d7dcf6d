@@ -1,0 +1,7 @@
+package presentacion;
+
+import org.springframework.data.repository.CrudRepository;
+
+@RepositoryRestResource
+public interface DispositivoRepository extends CrudRepository<Dispositivo, Long> {	
+}

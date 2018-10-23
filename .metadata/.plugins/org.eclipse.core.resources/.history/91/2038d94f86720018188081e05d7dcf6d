@@ -1,0 +1,22 @@
+package presentacion;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DatabaseLoader implements CommandLineRunner {
+
+	private final DispositivoRepository repository;
+
+	@Autowired
+	public DatabaseLoader(DispositivoRepository repository) {
+		this.repository = repository;
+	}
+
+	@Override
+	public void run(String... strings) throws Exception {
+		this.repository.save(new Dispositivo("Heladera", "15.00"));
+		this.repository.save(new Dispositivo("Aire acondicionado", "27.00"));
+	}
+}
