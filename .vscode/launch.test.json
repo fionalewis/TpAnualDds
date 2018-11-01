@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "tpDdS",
+                "projectName": "tpDdS",
+                "workingDirectory": "c:\\Users\\flewis\\.vscode\\TpAnualDds\\tpAnual",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "tpDdS",
+                "projectName": "tpDdS",
+                "workingDirectory": "c:\\Users\\flewis\\.vscode\\TpAnualDds\\tpAnual",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}
