@@ -4,12 +4,15 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.*;
 
+@Entity
 public class Zona {
-	
+	@Id
 	private String nombreZona;
 	private double radius;
 	private GeoLocation center;	
+	@Transient
 	private List<Transformador> transformadores = new ArrayList<>();
 	
 	public String getNombreZona() {

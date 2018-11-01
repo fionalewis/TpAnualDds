@@ -1,4 +1,4 @@
-package modelo.factories;
+package modelo.repositories;
 import java.time.LocalDate;
 
 import db.EntityManagerHelper;
@@ -6,11 +6,18 @@ import modelo.users.Administrador;
 import modelo.users.Cliente;
 
 
-public class AdministradorFactory {
+public class AdministradorRepository {
 	
 	public static void addAdministrador(Administrador admin) {
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.persist(admin);
+		EntityManagerHelper.commit();
+		EntityManagerHelper.closeEntityManager();
+	}	
+
+	public static void mergeAdministrador(Administrador admin) {
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.merge(admin);
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 	}

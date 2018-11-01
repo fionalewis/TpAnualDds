@@ -6,20 +6,34 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.*;
+
 import modelo.deviceState.Apagado;
 import modelo.deviceState.Encendido;
 import modelo.deviceState.EstadoDispositivo;
 import modelo.devices.IntervaloDispositivo.modo;
+import modelo.repositories.*;
 
+@Entity
+@DiscriminatorValue("I")
 public class DispositivoInteligente extends Dispositivo {
 	
 	public double kWhAhorro;
+
+	@Transient
 	private EstadoDispositivo estadoDisp;
+
+	@Transient
 	Map<String, Sensor> sensores = new HashMap<String, Sensor>();
+
+	@Transient
 	private IntervaloDispositivo unIntervalo;
 
+	@Transient
 	boolean esInteligente = true; //Ya no se si hace falta este atributo, pero lo vemos despues
 
+	@OneToMany(mappedBy="dispositivo", cascade=CascadeType.ALL)
+	//@JoinColumn(name="dispositivo_id", referencedColumnName="id", nullable=true, unique=false)
 	private List<IntervaloDispositivo> intervalos = new ArrayList<>();
 	
 	//Constructor para los dispositivos que no cuentan para evaluar ya que no estan en la lista de precargados
@@ -67,7 +81,7 @@ public class DispositivoInteligente extends Dispositivo {
 		return estadoDisp;
 	}
 	public void setEstadoDisp(EstadoDispositivo estadoDisp) {
-		this.estadoDisp = estadoDisp;
+		this.estadoDisp = estadoDisp;		
 	}	
 	
 	public boolean getEsInteligente(){
@@ -320,10 +334,10 @@ public class DispositivoInteligente extends Dispositivo {
 	public boolean condicionDeError(int i,int f) {
 		if(i==-1||f==-1) {
 			if(i==-1) {
-				System.out.println("Fecha inicial no válida.");
+				System.out.println("Fecha inicial no vï¿½lida.");
 				return true;
 			}
-			System.out.println("Fecha final no válida.");
+			System.out.println("Fecha final no vï¿½lida.");
 			return true;
 		}
 		return false;

@@ -1,8 +1,16 @@
 package modelo.devices;
 
+import javax.persistence.*;
+
+@Entity
+@DiscriminatorValue("C")
 public class DispositivoConvertido extends DispositivoInteligente {
 	
+	@Transient
 	private Dispositivo dispOriginal;
+	
+	@Column(name="idOriginalConvertido")
+	private Long idDispOriginal = dispOriginal.id;
 
 	//Constructor actualizado para el factory
 	

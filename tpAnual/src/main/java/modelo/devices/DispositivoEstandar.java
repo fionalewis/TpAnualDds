@@ -1,14 +1,19 @@
 package modelo.devices;
 
 import java.time.Period;
+
+import javax.persistence.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import modelo.deviceState.EstadoDispositivo;
 
-public class DispositivoEstandar extends Dispositivo {
+@Entity
+@DiscriminatorValue("E")
+public class DispositivoEstandar<Reporte> extends Dispositivo {
 	
 	public double horasUsoDiarias = 0;
-	
+
 	//Constructor default
 		public DispositivoEstandar(String nombDisp,double kWhAprox,double horasDiarias,String descrip,double horasMin,double horasMax,boolean bajoConsumo) {
 			setNombreDisp(nombDisp);

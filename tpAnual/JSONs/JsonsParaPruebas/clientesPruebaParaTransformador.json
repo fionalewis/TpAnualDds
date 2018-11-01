@@ -1,7 +1,7 @@
 [
 	{  
 		'tipoDoc':'DNI',
-		'nroDoc':'40505652',
+		'nroDoc':'30305652',
 		'telefono':'45454545',
 		'domicilio':'Avenida Corrientes y Avenida Medrano',
 		'nombre':'Juan',
@@ -35,7 +35,7 @@
 	},
 	{  
 		'tipoDoc':'DNI',
-		'nroDoc':'20505652',
+		'nroDoc':'20503652',
 		'telefono':'55454545',
 		'domicilio':'Medrano 951',
 		'nombre':'Homero',
@@ -79,7 +79,7 @@
 	},
 	{  
 		'tipoDoc':'DNI',
-		'nroDoc':'40505653',
+		'nroDoc':'40335653',
 		'telefono':'45454845',
 		'domicilio':'Ruiz Huidobro 1991',
 		'nombre':'fiona',

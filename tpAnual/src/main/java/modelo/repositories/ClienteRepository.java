@@ -1,19 +1,50 @@
-package modelo.factories;
+package modelo.repositories;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import db.EntityManagerHelper;
+import modelo.devices.Dispositivo;
 import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
 
 
-public class ClienteFactory {
+public class ClienteRepository {
 	
 	public static void addCliente(Cliente cliente) {
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.persist(cliente);
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
+		System.out.println(cliente.getCateg());
+	}
+
+	public static void addClienteConDispositivos(Cliente cliente) {
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.persist(cliente);
+		EntityManagerHelper.commit();
+		EntityManagerHelper.closeEntityManager();
+		for (Dispositivo d : cliente.getDispositivos()){ 
+			DispositivoRepository.addDispositivoConCliente(cliente.getNroDoc(), d);
+		}
+		System.out.println(cliente.getCateg());
+	}
+
+	public static void addClienteConDispositivosEIntervalos(Cliente cliente) {
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.persist(cliente);
+		EntityManagerHelper.commit();		
+		EntityManagerHelper.closeEntityManager();
+		for (Dispositivo d : cliente.getDispositivos()){ 
+			DispositivoRepository.addDispositivoEIntervaloConCliente(cliente.getNroDoc(), d);
+		}
+	}
+
+	public static List<Cliente> getTodosLosClientes() {
+		EntityManagerHelper.beginTransaction();
+		List<Cliente> cli = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM Cliente", Cliente.class).getResultList();
+		EntityManagerHelper.closeEntityManager();
+		return cli;
 	}
 	
 	public static void updateNombre(String nroDoc, String nombre) {

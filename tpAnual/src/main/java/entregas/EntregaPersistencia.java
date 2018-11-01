@@ -2,9 +2,7 @@ package entregas;
 
 import java.util.Scanner;
 
-import modelo.factories.ActuadorFactory;
-import modelo.factories.AdministradorFactory;
-import modelo.factories.ClienteFactory;
+import modelo.repositories.*;
 import modelo.users.Administrador;
 import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
@@ -88,11 +86,11 @@ public class EntregaPersistencia {
 		System.out.println("\nIngrese un nombre de usuario:");
 		user = s.nextLine();
 				
-		System.out.println("\nIngrese una contraseña:");
+		System.out.println("\nIngrese una contraseï¿½a:");
 		password = s.nextLine();
 				
 		Administrador admin = new Administrador(nombre,apellido,user,password);
-		AdministradorFactory.addAdministrador(admin);
+		AdministradorRepository.addAdministrador(admin);
 	}
 	
 	public static void agregarCliente() {
@@ -111,7 +109,7 @@ public class EntregaPersistencia {
 		System.out.println("\nIngrese un nombre de usuario:");
 		user = s.nextLine();
 				
-		System.out.println("\nIngrese una contraseña:");
+		System.out.println("\nIngrese una contraseï¿½a:");
 		password = s.nextLine();
 
 		System.out.println("\nIngrese tipo de documento:");
@@ -127,7 +125,7 @@ public class EntregaPersistencia {
 		telefono = s.nextLine();
 
 		Cliente cliente = new Cliente(nombre,apellido,user,password,tipoDoc,nroDoc,telefono,domicilio);
-		ClienteFactory.addCliente(cliente);
+		ClienteRepository.addCliente(cliente);
 	}
 	
 	public static void consultarUsuario() {
@@ -144,11 +142,11 @@ public class EntregaPersistencia {
 			System.out.println("\nIngrese un nombre de usuario:");
 			user = s.nextLine();
 					
-			System.out.println("\nIngrese una contraseña:");
+			System.out.println("\nIngrese una contraseï¿½a:");
 			password = s.nextLine();
 					
 			Administrador admin = new Administrador(nombre,apellido,user,password);
-			AdministradorFactory.addAdministrador(admin);
+			AdministradorRepository.addAdministrador(admin);
 }
 	
 	public static void prueba3(){

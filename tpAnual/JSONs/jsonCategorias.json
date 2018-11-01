@@ -1,7 +1,7 @@
 [  
    {  
       'clasif':"R1",
-      'min':0,
+      'min':-1000000,
       'max':150,
       'cargoFijo':18.76,
       'cargoVariable':0.644

@@ -11,7 +11,7 @@ public class AhorroEnergia implements EstadoDispositivo {
 	
 	@Override
 	public String darEstado() {
-		return "El dispositivo se encuentra en modo ahorro de energía.";
+		return "El dispositivo se encuentra en modo ahorro de energï¿½a.";
 	}
 
 	@Override
@@ -28,24 +28,24 @@ public class AhorroEnergia implements EstadoDispositivo {
 
 	@Override
 	public void ahorroEnergia(DispositivoInteligente disp) {
-		System.out.println("El dispositivo continúa en modo ahorro de energía.");
+		System.out.println("El dispositivo continï¿½a en modo ahorro de energï¿½a.");
 	}
 
 	@Override
 	public boolean estaEncendido() {
-		System.out.println("El dispositivo se encuentra encendido en modo ahorro de energía.");
+		System.out.println("El dispositivo se encuentra encendido en modo ahorro de energï¿½a.");
 		return true;
 	}
 
 	@Override
 	public boolean estaApagado() {
-		System.out.println("El dispositivo no está apagado.");
+		System.out.println("El dispositivo no estï¿½ apagado.");
 		return false;
 	}
 
 	@Override
 	public boolean estaEnAhorro() {
-		System.out.println("El dispositivo se encuentra encendido en modo ahorro de energía.");
+		System.out.println("El dispositivo se encuentra encendido en modo ahorro de energï¿½a.");
 		return true;
 	}
 

@@ -1,10 +1,10 @@
-package modelo.factories;
+package modelo.repositories;
 
 import db.EntityManagerHelper;
 import modelo.devices.Sensor;
 
 
-public class SensorFactory {
+public class SensorRepository {
 	public static void addSensor(Sensor sensor) {
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.persist(sensor);

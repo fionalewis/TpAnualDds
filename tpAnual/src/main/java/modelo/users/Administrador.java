@@ -41,7 +41,7 @@ public class Administrador extends Usuario {
 		setApellido(apellido);
 		setUserName(userName);
 		setPassword(pass);
-		this.codAdmin = this.asignarCod();
+		//this.codAdmin = this.asignarCod();
 		this.fechaAlta = LocalDate.of(y,m,d);
 	}
 

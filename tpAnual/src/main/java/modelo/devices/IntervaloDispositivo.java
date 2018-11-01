@@ -2,14 +2,23 @@ package modelo.devices;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import javax.persistence.*;
 
+@Entity
 public class IntervaloDispositivo {
-	
 	public enum modo {AHORRO, NORMAL};
-	
+
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+	public Long id;
 	private LocalDateTime inicio;
 	private LocalDateTime fin;
+	@Enumerated(EnumType.STRING)
 	private modo modo;
+
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="dispositivo_id", referencedColumnName="dispositivo_id", nullable=true, unique=false)
+    private Dispositivo dispositivo;
 	
 	public IntervaloDispositivo() {}
 	

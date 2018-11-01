@@ -2,13 +2,14 @@ package modelo.users;
 
 import java.time.LocalDate;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class Usuario {
 	
 	protected String nombre;
 	protected String apellido;
+	@Column(nullable=true)
 	protected LocalDate fechaAlta;
 	protected String userName;
 	protected String password;

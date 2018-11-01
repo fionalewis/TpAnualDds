@@ -1,24 +1,47 @@
 package modelo.devices;
 
 import java.time.LocalDateTime;
-import modelo.deviceState.EstadoDispositivo;;
+import java.util.*;
 
+import javax.persistence.*;
+
+import modelo.deviceState.EstadoDispositivo;
+import modelo.users.Cliente;
+import modelo.users.Reporte;;
+
+@Entity
+@Inheritance
+@DiscriminatorColumn(name="TIPO")
 public abstract class Dispositivo {
+
+	@Id @GeneratedValue
+	@Column(name="dispositivo_id")
+	public Long id;
+
+	@ManyToOne
+    @JoinColumn(name="cliente_id", referencedColumnName="cliente_id", nullable=true,unique=false)
+	public Cliente cliente;
 
 	protected String nombreDisp;
 	public String equipoConcreto = "";
 	
+	@Transient
 	boolean esInteligente = false; //esto es para el json
 	
 	protected double kWh;
+
 	protected LocalDateTime fechaRegistro;
 	protected double horasDeUso = 0;
 	protected double horasUsoMax = 0;
 	protected double horasUsoMin = 0;
 	boolean esBajoConsumo = false;
+
+	
+	// @OneToMany(mappedBy="dispositivo", cascade=CascadeType.ALL)
+	// private List<Reporte> reportes = new ArrayList<>();	
 	
 	//Getters y Setters
-	
+
 	public String getNombreDisp() {
 		return nombreDisp;
 	}

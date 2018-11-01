@@ -16,7 +16,7 @@ public class Apagado implements EstadoDispositivo{
 
 	@Override
 	public void apagar(DispositivoInteligente disp) {
-		System.out.println("El dispositivo continúa apagado.");
+		System.out.println("El dispositivo continï¿½a apagado.");
 	}
 
 	@Override
@@ -39,13 +39,13 @@ public class Apagado implements EstadoDispositivo{
 
 	@Override
 	public boolean estaApagado() {
-		System.out.println("El dispositivo está apagado.");
+		System.out.println("El dispositivo estï¿½ apagado.");
 		return true;
 	}
 	
 	@Override
 	public boolean estaEnAhorro() {
-		System.out.println("El dispositivo no se encuentra en modo ahorro de energía.");
+		System.out.println("El dispositivo no se encuentra en modo ahorro de energï¿½a.");
 		return false;
 	}
 

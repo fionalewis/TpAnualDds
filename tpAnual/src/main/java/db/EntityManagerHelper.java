@@ -69,11 +69,19 @@ public class EntityManagerHelper {
     
     public static Query createQuery(String query) {
     	return getEntityManager().createQuery(query);
+	}
+	
+	public static Query createNativeQuery(String query) {
+    	return getEntityManager().createNativeQuery(query);
     }
     
     public static void persist(Object o){
        entityManager().persist(o);
-    }
+	}
+	
+	public static Object merge(Object o){
+		return entityManager().merge(o);
+	}
 
 	public static void withTransaction(Runnable action) {
 		withTransaction(() -> {
