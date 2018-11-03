@@ -3,6 +3,7 @@ package presentacion.Spark;
 import java.util.HashSet;
 import java.util.Set;
 
+import controllers.ClienteController;
 import controllers.HomeController;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -27,7 +28,7 @@ public class Router {
 		Spark.before(SessionHandler.allowed());
 		
  		HomeController homeController = new HomeController();
- 	//	EmpresasController empresasController = new EmpresasController();
+ 		ClienteController clienteController = new ClienteController();
   //		IndicadoresController indicadoresController = new IndicadoresController();
 // 		MetodologiasController metodologiasController = new MetodologiasController();
 
@@ -36,6 +37,12 @@ public class Router {
   		Spark.post("/login", homeController::newSession);
 		Spark.get("/wrong-user-or-pass", homeController::wrongLogin, engine);
 		Spark.post("/wrong-user-or-pass", homeController::wrongLogin, engine);
+		
+		Spark.get("/consumo", clienteController::consumo,engine);
+		Spark.post("/consumo", clienteController::calcularConsumo,engine);
+		Spark.get("/hogar", clienteController::hogar,engine);
+		Spark.get("/carga", clienteController::carga,engine);
+		Spark.post("/carga", clienteController::carga,engine);
   		
 	/*	Spark.get("/cuentas", empresasController::verArchivos,engine);
 		Spark.post("/cuentas", empresasController::cargarArchivos,engine);

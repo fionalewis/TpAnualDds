@@ -40,6 +40,8 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		Cliente user = new Cliente();
 		try
 		{
+		//TODO ir a buscar a la base de datos al cliente posta
+		//Cliente cliente = ClienteFactory.getCliente(nroDoc);
 		//user = ClienteFactory.getCliente(username);
 		user.setPassword("pass");
 		user.setUserName("user");
