@@ -1,0 +1,45 @@
+<html>
+<head>
+	<link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	{{#block "estilo"}} {{/block}}
+	<meta charset="utf-8">
+	<title>{{#block "titulo"}}{{/block}}</title>
+</head>
+<body>
+
+<style media="screen" type="text/css">
+
+body
+{
+	background:#f2b780;
+}
+
+
+</style>
+
+<nav class="navbar navbar-inverse">
+
+  <a class="navbar-brand" href="/">Analizador de Inversiones</a>
+  <div class="collapse navbar-collapse" id="navBar">
+	{{#block "navbar"}}
+	{{/block}}
+  </div>
+</nav>
+
+
+ <div class="container-fluid">
+	<div class="container" style="width:{{#block "ancho"}}{{/block}}">
+	<div class="panel panel-default">
+		<div class="panel-body">
+	{{#block "contenido"}}
+	{{/block}}
+</div>
+</div>
+</div>
+</div>
+<footer class="footer">
+    <p class="text-center">
+      Pomita SRL &copy; 2017
+</footer>
+</body>
+</html>
