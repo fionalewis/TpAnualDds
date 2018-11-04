@@ -368,6 +368,22 @@ public class Cliente extends Usuario {
 		}		
 	}
 	
+	public String obtenerRecomendacionString() throws FileNotFoundException, InstantiationException, IllegalAccessException {
+		Map<String,Double> horasXDisp = simplex.horasMaxXDisp();
+		String retorno = "";
+		List<Dispositivo> descartados = new ArrayList<>();
+		if(descartados.size()!=0) {
+			retorno = "Se han descartado del cálculo de horas máximas los siguientes dispositivos:";
+			for(Dispositivo unDisp : descartados) {
+				retorno = retorno + unDisp.getNombreDisp() + ", " + unDisp.getEquipoConcreto();
+			}
+		}
+		for(Entry<String, Double> unValor : horasXDisp.entrySet()) {
+			retorno = retorno + "La recomendación de horas máximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.";
+		}		
+		return retorno;
+	}
+	
 	public PointValuePair llamarSimplex() throws FileNotFoundException, InstantiationException, IllegalAccessException {
 		//obtener lista de descartados para nombrarlos
 		//enviar al simplex solo los convertidos,inteligentes y estandar analizables (no heladeras, ni descartados)
