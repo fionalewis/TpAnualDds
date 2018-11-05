@@ -47,18 +47,25 @@ public class ClienteRepository {
 		return cli;
 	}
 	
+	public static Cliente getCliente(String dni) {
+		Cliente cliente = EntityManagerHelper.getEntityManager().find(Cliente.class,dni);
+	    return cliente;
+	  }
+	
 	public static void updateNombre(String nroDoc, String nombre) {
 		EntityManagerHelper.beginTransaction();
-		EntityManagerHelper.getEntityManager().createQuery("UPDATE Cliente SET nombre = " + nombre + " WHERE nroDoc = '"
-				+ nroDoc).executeUpdate();
+		EntityManagerHelper.getEntityManager().createQuery("UPDATE Cliente as c SET c.nombre = :comp WHERE c.nroDoc = '" 
+				+ nroDoc + "'");
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 	}
 	
 	public static void updateApellido(String nroDoc, String apellido) {
 		EntityManagerHelper.beginTransaction();
-		EntityManagerHelper.getEntityManager().createQuery("UPDATE Cliente SET apellido = " + apellido + " WHERE nroDoc = '"
-				+ nroDoc).executeUpdate();
+		EntityManagerHelper.getEntityManager().createQuery("UPDATE Cliente as c SET c.apellido = :a WHERE c.nroDoc = '" 
+				+ nroDoc + "'")
+			.setParameter("a",apellido)
+			.executeUpdate();
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 	}
@@ -121,11 +128,12 @@ public class ClienteRepository {
 
 	public static void deleteCliente(String nroDoc){
 		EntityManagerHelper.beginTransaction();
-		EntityManagerHelper.getEntityManager().createQuery("DELETE FROM Sensor WHERE nroDoc = '"
+		EntityManagerHelper.getEntityManager().createQuery("DELETE FROM Cliente WHERE nroDoc = '"
 				+ nroDoc).executeUpdate();
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 	}
+	
 	
 	
 

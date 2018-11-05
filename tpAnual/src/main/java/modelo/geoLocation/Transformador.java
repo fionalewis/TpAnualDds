@@ -35,6 +35,8 @@ public class Transformador {
 		@AttributeOverride(name="latitude", column=@Column(name="latitud"))
 	})
 	private GeoLocation ubicacion;
+	@Transient
+	double suministroActual;
 	public Transformador(){}
 	public Transformador(String zona,double lat,double lng) {
 		this.zona = zona;
@@ -90,7 +92,8 @@ public class Transformador {
 				}
 			}			
 		}
-		return consumo.stream().mapToDouble( d -> d ).sum();
+		this.suministroActual = consumo.stream().mapToDouble( d -> d ).sum();
+		return suministroActual;
 	}
 
 }

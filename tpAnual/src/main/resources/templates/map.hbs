@@ -1,0 +1,67 @@
+
+{{#partial "contenido"}}
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+
+  <div id="mapa" style="height: 500px">
+  </div> 
+  <div value={{transformadores}}> <h3>{{transformadores}} </h3></div>
+  
+  <script type="text/javascript">
+ 
+    $( document ).ready(function() {
+      
+      mapa = L.map('mapa', {
+        center: [-34.598313, -58.463745],
+        zoom: 11,  
+        minZoom: 4,
+        maxZoom:17,
+        zoomControl:true 
+      });
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: ''}).addTo(mapa);
+      var marker = L.marker([-34.598494, -58.420186]).addTo(mapa).bindPopup("<button class='btn btn-info' onclick='alert(\"Soy medrano\")'>No me toques(o Si)</button>");
+      
+      var marker2 = L.marker([-34.659438,-58.4704135]).addTo(mapa).on('click', onClick);
+      
+      var polygon = L.polygon([
+          [-34.697878, -58.468897],
+            [-34.686919, -58.486813],
+            [-34.651905, -58.530758],
+            [-34.614052, -58.529385],
+            [-34.552432, -58.499172],
+            [-34.533202, -58.46484],
+            [-34.582965, -58.381756],
+            [-34.634075, -58.35159],
+            [-34.65924, -58.418313]
+        ],{
+          color: 'red',
+          fillColor: 'blue',
+            fillOpacity: 0.1,
+            radius: 500
+        }).addTo(mapa).on('click', onMapClick);
+        
+      function onMapClick(e) {
+          alert("Latitud y Longitud: " + e.latlng);
+      }
+    });
+
+    function loadTranformadores(){
+      L.marker([-34.659438,-58.4704135]).addTo(mapa)
+    }
+
+    function onClick(e){
+      var r = confirm("Ir a medrano?");
+      if (r == true) {
+        mapa.setView(new L.LatLng((-34.598494), (-58.420186)), parseInt(17));
+      } else {
+          
+      }
+    }
+  </script>
+
+{{/partial}}
+
+{{>layout.hbs}}

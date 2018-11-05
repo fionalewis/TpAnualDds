@@ -1,12 +1,23 @@
 package modelo.Reglas;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import modelo.devices.Sensor;
-
+@Entity
+@Table(name="condicion_sensor_y_valor")
 public class CondicionSensorYValor extends Condicion{
 	
+	@OneToOne(cascade=CascadeType.ALL)
 	private Sensor sensor;
 	private Double valorFijo;
 	
@@ -14,10 +25,10 @@ public class CondicionSensorYValor extends Condicion{
 		this.sensor = sen;
 		this.valorFijo = valor;
 		this.comparacion = comp;
-		this.sensor.subscribir(this);
+		//this.sensor.subscribir(this);
 	}
+	public CondicionSensorYValor(){}
 	
-	//llamado por sensor
 	@Override
 	public void update(){
 		this.estado = evaluar(sensor.getMagnitud(), valorFijo); //evalua la condicion y le avisa regla
@@ -37,7 +48,11 @@ public class CondicionSensorYValor extends Condicion{
 	//ESTO ESTA PARA CONSULTARLE AL SENSOR EL VALOR ACTUAL DE LA MAGNITUD QUE NECESITO
 	@Override
 	public boolean getEstado(){
-		sensor.medir();
+		//sensor.medir();
 		return this.estado;
+	}
+	
+	public void setValorFijo(double unValor){
+		valorFijo = unValor;
 	}
 }

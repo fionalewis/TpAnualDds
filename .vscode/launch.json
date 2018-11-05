@@ -2,6 +2,28 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - Server",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "presentacion.Spark.Server",
+            "args": "",
+            "projectName": "tpDdS"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Bootstrap",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopOnEntry": false,
+            "mainClass": "presentacion.Spark.Bootstrap",
+            "args": "",
+            "projectName": "tpDdS"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Runner",
             "request": "launch",
             "cwd": "${workspaceFolder}",

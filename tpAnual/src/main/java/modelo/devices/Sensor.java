@@ -6,24 +6,28 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import modelo.Reglas.Condicion;
 
 @Entity
+@Embeddable
 public class Sensor {
 	
-	@Id
+	@Id @GeneratedValue
+	private Long id;
 	private String nombreMagnitud;
 	
 	@ElementCollection
-	@CollectionTable(name = "registroMediciones")
+	@CollectionTable(name = "registro_mediciones")
 	private List<Double> mediciones = new ArrayList<Double>();
 	
 	private double magnitud = 0;
@@ -31,15 +35,18 @@ public class Sensor {
 	@Transient
 	private List<Condicion> subscribers = new ArrayList<>();
 	
-	@Transient
-	int jaja;
-	
-	public Sensor(String nomMag){
+	public Sensor(String nomMag, double valor, int unIntervalo){
 		this.nombreMagnitud = nomMag;
+		this.magnitud = valor;
+		this.intervalo = unIntervalo;
+		mediciones.add(magnitud);
 	}
 	
+	public Sensor(){}
+	
 	//funcionalidades
-	public void notificar(){
+	
+	/*public void notificar(){
 		for(Condicion subs:subscribers){
 			subs.update();
 		}
@@ -47,11 +54,11 @@ public class Sensor {
 	public void subscribir(Condicion cond){
 		subscribers.add(cond);
 	}
-	
+	*/
 	//para disparar evaluar las condiciones
-	public void medir(){
+	/*public void medir(){
 		notificar();
-	}
+	}*/
 	
 	//magnitud
 	public void setMagnitud(double unaMagnitud){

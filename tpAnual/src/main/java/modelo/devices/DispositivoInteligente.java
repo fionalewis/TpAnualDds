@@ -41,6 +41,9 @@ public class DispositivoInteligente extends Dispositivo {
 		setNombreDisp(nombDisp);
 		setEquipoConcreto(descrip);
 		setkWh(0);setHorasUsoMin(-1);setHorasUsoMax(-1);
+		setEstadoDisp(new Encendido());
+		setFechaRegistro(LocalDateTime.now());
+		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
 	}
 		
 	public DispositivoInteligente(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec,boolean esBajoC) {

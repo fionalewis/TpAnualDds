@@ -23,6 +23,12 @@ import modelo.devices.Sensor;
 import modelo.repositories.*;
 import modelo.geoLocation.Transformador;
 import modelo.geoLocation.Zona;
+import modelo.devices.DispositivoEstandar;
+import modelo.devices.DispositivoInteligente;
+import modelo.devices.Sensor;
+import modelo.repositories.*;
+import modelo.factories.CategoriaFactory;
+import modelo.factories.DispositivoFactory;
 import modelo.users.Administrador;
 import modelo.users.Categoria;
 import modelo.users.Cliente;
@@ -38,7 +44,7 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	List<Administrador> admins = new ArrayList<>();
 	List<Zona> zonas = new ArrayList<>();
 	
-	Sensor sensor = new Sensor("Temperatura");
+	Sensor sensor = new Sensor("Temperatura",24.0,15);
 	CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,25,"MAYOR");
 	Actuador actuador = new Actuador(152,"APAGAR");
 	Cliente cliente = new Cliente("Lucas","Ramirez","lramirez","1234",TipoDocumento.DNI,"40123456","45424625","Villa Urquiza"); 
@@ -46,6 +52,10 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	DispositivoInteligente dispositivo = new DispositivoInteligente("Televisor", "LED 24'");
 	//Cliente c = new Cliente("pepe","argento","pepe123","12345", TipoDocumento.DNI, "40123456", "12345678", "Avenida Medrano 986");
 
+	Categoria cat1 = new Categoria("R1", 0, 150, 18.76, 0.644);
+	DispositivoInteligente dispInteligente = new DispositivoInteligente("Televisor","LED 20'");
+	DispositivoEstandar dispEstandar = new DispositivoEstandar("Ventilador",0.46,3,"Ventilador",1,4,true);
+	
 	public static void main(String[] args) {
 		new Runner().init();
 		new Reporte().jobReporte(60000);// 1 min en ms  // 2592000000 es un mes
@@ -63,12 +73,17 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 		// drop table if exists tp_anual_dds.transformador;
 
 		// drop table if exists tp_anual_dds.condicion;
-		// drop table if exists tp_anual_dds.registromediciones;
-		// drop table if exists tp_anual_dds.regla;
-		// drop table if exists tp_anual_dds.sensor;
+		// drop table if exists tp_anual_dds.registro_mediciones;
+
 
 		// drop table if exists tp_anual_dds.categoria;
+		// drop table if exists tp_anual_dds.condicion_dos_sensores;
+		// drop table if exists tp_anual_dds.condicion_sensor_y_valor;
+		// drop table if exists tp_anual_dds.regla;
+
+		// drop table if exists tp_anual_dds.sensor;
 		// drop table if exists tp_anual_dds.zona;
+
 
 	public void init() {
 		
@@ -91,10 +106,14 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 			
 			
 			setUnDispositivoACliente();
-			setSensor();
-			setRegla();
-			setActuador();
+			//setSensor();
+			//setRegla();
+			//setActuador();
 					
+		//	setCliente();
+		//	setAdministrador();
+		//	setDispositivoEstandar();
+		//	setDispositivoInteligente();
 		});
 	}
 
@@ -134,7 +153,7 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	public void setRegla(){		
 		condicion.setNombreCondicion("TemperaturaMayorA25");
 		Regla regla = new Regla("Super Regla", dispositivo,"OR");
-		regla.agregarCondicion(condicion);
+		regla.agregarCondicionSYV(condicion);
 		regla.agregarActuador(actuador);
 		ReglaRepository.addRegla(regla);
 	}
@@ -231,4 +250,13 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 			e.printStackTrace();
 		}
 	}
+	public void setDispositivoEstandar() {
+		DispositivoFactory.addDispositivoEstandar(dispEstandar);
+	}
+	
+	public void setDispositivoInteligente() {
+		DispositivoFactory.addDispositivoEstandar(dispInteligente);
+	}
+
+
 }

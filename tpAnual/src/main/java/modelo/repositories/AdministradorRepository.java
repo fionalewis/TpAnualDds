@@ -1,6 +1,7 @@
 package modelo.repositories;
 import java.time.LocalDate;
 
+
 import db.EntityManagerHelper;
 import modelo.users.Administrador;
 import modelo.users.Cliente;
@@ -22,6 +23,11 @@ public class AdministradorRepository {
 		EntityManagerHelper.closeEntityManager();
 	}
 	
+	public static Administrador getAdministrador(int unCodigo) {
+		Administrador administrador = EntityManagerHelper.getEntityManager().find(Administrador.class,unCodigo);
+	    return administrador;
+	  }
+
 	public static void updateNombre(int codAdmin, String nombre) {
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().createQuery("UPDATE Administrador SET nombre = " + nombre + " WHERE codAdmin = '"

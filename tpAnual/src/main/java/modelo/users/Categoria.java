@@ -24,7 +24,15 @@ public class Categoria {
 	//Constructores
 	
 	public Categoria() {}
-	
+	public Categoria(String clasif, int min, int max, double cargoFijo, double cargoVariable) {
+		setClasif(clasif);
+		setMin(min);
+		setMax(max);
+		setCargoFijo(cargoFijo);
+		setCargoVariable(cargoVariable);
+		this.consumo = 0;
+	}
+
 	public Categoria(double cons) {
 		consumo = cons;
 	}

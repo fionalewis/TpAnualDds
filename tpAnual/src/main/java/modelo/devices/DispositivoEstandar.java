@@ -104,6 +104,8 @@ public class DispositivoEstandar<Reporte> extends Dispositivo {
 	        return horasDeUsoAprox;
 		}
 		
+		
+		
 		//Tengo que ver como hacer con esto sorry
 		
 		public EstadoDispositivo getEstadoDisp() {
