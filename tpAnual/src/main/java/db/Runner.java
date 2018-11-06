@@ -52,7 +52,7 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	DispositivoInteligente dispositivo = new DispositivoInteligente("Televisor", "LED 24'");
 	//Cliente c = new Cliente("pepe","argento","pepe123","12345", TipoDocumento.DNI, "40123456", "12345678", "Avenida Medrano 986");
 
-	Categoria cat1 = new Categoria("R1", 0, 150, 18.76, 0.644);
+	//Categoria cat1 = new Categoria("R1", 0, 150, 18.76, 0.644);
 	DispositivoInteligente dispInteligente = new DispositivoInteligente("Televisor","LED 20'");
 	DispositivoEstandar dispEstandar = new DispositivoEstandar("Ventilador",0.46,3,"Ventilador",1,4,true);
 	

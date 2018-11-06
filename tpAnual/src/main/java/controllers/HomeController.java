@@ -69,13 +69,14 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 	}
 
 	public ModelAndView map (Request req, Response res){
-		// Map<String, Object> model = new HashMap<>();
-		// List<Transformador> t = TransformadorRepository.getListaTranformadores();
-		// for(Transformador tt : t){
-		// 	tt.suministroActual();
-		// }
-		// model.put("transformadores",new Gson().toJson(t));
-		return new ModelAndView(null, "/map.hbs");
+		Map<String, Object> model = new HashMap<>();
+		List<Transformador> t = TransformadorRepository.getListaTranformadores();
+		String s = new String();
+		for(Transformador tt : t){
+			s += tt.getIdTransformador() + ";" + tt.suministroActual() + ";" + tt.getUbicacion().toString() + ";";
+		}
+		model.put("transformadores", s);
+		return new ModelAndView(model, "/map.hbs");
 		// para mandar las cosas sería en vez de null model ahí.
 	}
 }
