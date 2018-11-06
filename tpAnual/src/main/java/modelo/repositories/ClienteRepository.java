@@ -1,6 +1,7 @@
 package modelo.repositories;
 
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.List;
 
 import db.EntityManagerHelper;
@@ -46,6 +47,17 @@ public class ClienteRepository {
 		EntityManagerHelper.closeEntityManager();
 		return cli;
 	}
+	
+	public static Cliente obtenerCliente(String username){
+		List<Cliente> lista = new ClienteRepository().getTodosLosClientes();
+		Iterator<Cliente> iterator = lista.iterator();
+	    while (iterator.hasNext()) {
+	        Cliente cliente = iterator.next();
+	        if (cliente.getUserName().equals(username)) {
+	            return cliente;
+	        }}
+	        	return null;
+	        }
 	
 	public static void updateNombre(String nroDoc, String nombre) {
 		EntityManagerHelper.beginTransaction();

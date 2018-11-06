@@ -53,7 +53,9 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
+		
 		Cliente cliente = new Cliente();
+		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		model.put("consumo", cliente.consumoXPeriodo(fechaInicio, fechaFin));
 		}
 		return new ModelAndView(model, "consumo.hbs");
@@ -67,14 +69,19 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
+		
+
+		List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
 		Cliente cliente = new Cliente();
+		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+		/*
 		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
 		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
 		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
 		cliente.agregarDispositivo(disp1);
 		cliente.agregarDispositivo(disp2);
 		cliente.agregarDispositivo(disp3);
-		
+		*/
 		model.put("consumo", cliente.consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now()));
 		model.put("dispositivos",  cliente.obtenerLista("IyC"));
 		return new ModelAndView(model, "hogar.hbs");
@@ -100,7 +107,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
-		Cliente cliente = new Cliente();
+		/*Cliente cliente = new Cliente();
 		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
 		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
 		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
@@ -108,7 +115,11 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		cliente.agregarDispositivo(disp2);
 		cliente.agregarDispositivo(disp3);
 		
+*/
 
+		List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
+		Cliente cliente = new Cliente();
+		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 			try {
 				if(cliente.hogarEficiente()){
 				model.put("eficiente","SI");
@@ -133,14 +144,16 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
-		Cliente cliente = new Cliente();
+		/*Cliente cliente = new Cliente();
 		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
 		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
 		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
 		cliente.agregarDispositivo(disp1);
 		cliente.agregarDispositivo(disp2);
 		cliente.agregarDispositivo(disp3);
-		
+		*/
+		Cliente cliente = new Cliente();
+		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		model.put("consumo", cliente.consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now()));
 		model.put("dispositivos",  cliente.obtenerLista("IyC"));
 		return new ModelAndView(model, "reglas.hbs");
@@ -151,15 +164,17 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
-		Cliente cliente = new Cliente();
+		/*Cliente cliente = new Cliente();
 		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
 		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
 		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
 		cliente.agregarDispositivo(disp1);
 		cliente.agregarDispositivo(disp2);
 		cliente.agregarDispositivo(disp3);
-		
+		*/
 		System.out.println(req.queryParams("id"));
+		Cliente cliente = new Cliente();
+		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		
 		model.put("consumo", cliente.consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now()));
 		model.put("dispositivos",  cliente.obtenerLista("IyC"));

@@ -1,5 +1,8 @@
 package controllers;
 
+import java.util.Iterator;
+import java.util.List;
+
 import javax.persistence.NoResultException;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
@@ -43,8 +46,7 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		//TODO ir a buscar a la base de datos al cliente posta
 		//Cliente cliente = ClienteFactory.getCliente(nroDoc);
 		//user = ClienteFactory.getCliente(username);
-		user.setPassword("pass");
-		user.setUserName("user");
+		user = ClienteRepository.obtenerCliente(username);
 		}
 		catch (NoResultException e)
 		{
@@ -61,3 +63,4 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		return null;
 	}
 }
+	
