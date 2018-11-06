@@ -5,7 +5,7 @@ import javax.persistence.NoResultException;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
-import modelo.factories.ClienteFactory;
+import modelo.repositories.ClienteRepository;
 import modelo.users.Cliente;
 import modelo.users.Usuario;
 //import model.Usuario;
