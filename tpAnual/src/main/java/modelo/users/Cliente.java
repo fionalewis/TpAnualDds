@@ -28,6 +28,9 @@ import java.util.Iterator;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+
 import org.apache.commons.math3.optim.PointValuePair;
 
 //Ojo las rutas de json!!! (ver JsonManager)
@@ -318,6 +321,22 @@ public class Cliente extends Usuario {
 		return obtenerLista("Estandar").stream().mapToDouble(unDisp ->((DispositivoEstandar) unDisp).getHorasUsoDiarias()*720*(unDisp.getkWh())).sum();
 	}
 	
+	public double calculoHoras(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        Period period = Period.between(fechaInicio.toLocalDate(),fechaFin.toLocalDate());
+        int periodDays = period.getDays();
+        double horas = periodDays*24;
+        return horas;
+	}
+	//funcion nueva
+	public double consumoXPeriodo(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+		double horas = calculoHoras(fechaInicio, fechaFin);
+		double horasEstandar = obtenerLista("Estandar").stream().mapToDouble(unDisp ->((DispositivoEstandar) unDisp).getHorasUsoDiarias()*horas*(unDisp.getkWh())).sum();
+//		double horasInteligente = obtenerLista("Inteligente").stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(fechaInicio,fechaFin)).sum();
+//		double consumoTotal = horasEstandar + horasInteligente;
+	//	return consumoTotal;
+		return horasEstandar;
+	}
+	
 	//Este metodo quizas deberia ir en el administrador mas adelante, pero por ahora lo consultamos directamente desde el cliente
 	
 	public List<Dispositivo> dispDescartadosSimplex(){
@@ -355,6 +374,22 @@ public class Cliente extends Usuario {
 		for(Entry<String, Double> unValor : horasXDisp.entrySet()) {
 			System.out.println("La recomendaciï¿½n de horas mï¿½ximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.");
 		}		
+	}
+	
+	public String obtenerRecomendacionString() throws FileNotFoundException, InstantiationException, IllegalAccessException {
+		Map<String,Double> horasXDisp = simplex.horasMaxXDisp();
+		String retorno = "";
+		List<Dispositivo> descartados = new ArrayList<>();
+		if(descartados.size()!=0) {
+			retorno = "Se han descartado del cálculo de horas máximas los siguientes dispositivos:";
+			for(Dispositivo unDisp : descartados) {
+				retorno = retorno + unDisp.getNombreDisp() + ", " + unDisp.getEquipoConcreto();
+			}
+		}
+		for(Entry<String, Double> unValor : horasXDisp.entrySet()) {
+			retorno = retorno + "La recomendación de horas máximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.";
+		}		
+		return retorno;
 	}
 	
 	public PointValuePair llamarSimplex() throws FileNotFoundException, InstantiationException, IllegalAccessException {

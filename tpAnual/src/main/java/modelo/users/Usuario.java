@@ -45,6 +45,12 @@ public abstract class Usuario {
 		this.password = password;
 	}
 	
+	public boolean loginCorrecto(String pass)
+	{
+		return password.equals(pass);
+	}
+	
+	
 	public abstract double calcularConsumo(); //Redefinido por cada clase segun lo que necesiten hacer
 		
 }

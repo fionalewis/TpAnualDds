@@ -296,6 +296,83 @@ public class JsonManager {
 			}
 		}
 	}
+	
+	public static void inicializarFactory(String ruta) {
+		
+		JsonParser parserFactory = new JsonParser();
+		JsonReader readerFactory = null;
+		try {
+			readerFactory = new JsonReader(new FileReader(ruta));
+		} catch (Exception e) {
+			ExceptionsHandler.catchear(e);
+		}
+		JsonElement jsonTree = parserFactory.parse(readerFactory);
+		JsonArray arrayDisp = jsonTree.getAsJsonArray();
+	
+		for(int i = 0;i<arrayDisp.size();i++) {
+			String tipo = arrayDisp.get(i).getAsJsonObject().get("nombreDisp").getAsString();
+			String descrip = arrayDisp.get(i).getAsJsonObject().get("equipoConcreto").getAsString();
+			if (DeviceFactory.cumpleCondInteligente(tipo,descrip)) {
+				JsonObject precargado = arrayDisp.get(i).getAsJsonObject();
+				DispositivoInteligente dAAgregar = new DispositivoInteligente();
+				DispositivoInteligente dActual = new DispositivoInteligente();
+				//Inicializando el disp que corresponde al de la posicion actual en base al precargado
+				dActual.setNombreDisp(precargado.get("nombreDisp").getAsString());
+				dActual.setEquipoConcreto(precargado.get("equipoConcreto").getAsString());
+				dActual.setEsInteligente(true);
+				dActual.setkWh(precargado.get("kWh").getAsDouble());
+				dActual.setkWhAhorro(precargado.get("kWh").getAsDouble());
+				dActual.setEsBajoConsumo(precargado.get("esBajoConsumo").getAsBoolean());
+				if(dActual.getNombreDisp().equalsIgnoreCase("Heladera")) { //Las heladeras no pueden ser apagadas
+					dActual.setHorasUsoMax(-1);dActual.setHorasUsoMin(-1);
+				} else {
+					dActual.setHorasUsoMin(precargado.get("horasUsoMin").getAsDouble());
+					dActual.setHorasUsoMax(precargado.get("horasUsoMax").getAsDouble());
+				}
+				//Inicializando el disp a agregar en la tabla
+				LocalDateTime fechaactual = LocalDateTime.now();
+				dAAgregar.setNombreDisp(dActual.getNombreDisp());
+				dAAgregar.setEquipoConcreto(dActual.getEquipoConcreto());
+				dAAgregar.setFechaRegistro(fechaactual);
+				dAAgregar.setEsInteligente(true);dAAgregar.setEsBajoConsumo(dActual.getEsBajoConsumo());
+				dAAgregar.setkWh(dActual.getkWh());dAAgregar.setkWhAhorro(dActual.getkWh());
+				dAAgregar.setIntervalo(new IntervaloDispositivo(fechaactual,modo.NORMAL));dAAgregar.setEstadoDisp(new Encendido());
+				dAAgregar.setHorasUsoMin(dActual.getHorasUsoMin());dAAgregar.setHorasUsoMax(dActual.getHorasUsoMax());
+				
+				DeviceFactory.tablaDI.add(dAAgregar); //Lo agregamos a la lista de precargados
+				
+				} else {
+				JsonObject precargado = arrayDisp.get(i).getAsJsonObject();
+				DispositivoEstandar dAAgregar = new DispositivoEstandar();
+				DispositivoEstandar dActual = new DispositivoEstandar();
+
+				//Inicializando el disp que corresponde al de la posicion actual en base al precargado
+				dActual.setNombreDisp(precargado.get("nombreDisp").getAsString());
+				dActual.setEquipoConcreto(precargado.get("equipoConcreto").getAsString());
+				dActual.setEsInteligente(true);
+				dActual.setkWh(precargado.get("kWh").getAsDouble());
+				dActual.setEsBajoConsumo(precargado.get("esBajoConsumo").getAsBoolean());
+				if(dActual.getNombreDisp().equalsIgnoreCase("Heladera")) { //Las heladeras no pueden ser apagadas
+					dActual.setHorasUsoMax(-1);dActual.setHorasUsoMin(-1);
+				} else {
+					dActual.setHorasUsoMin(precargado.get("horasUsoMin").getAsDouble());
+					dActual.setHorasUsoMax(precargado.get("horasUsoMax").getAsDouble());
+				}
+				//Inicializando el disp a agregar en la tabla
+				LocalDateTime fechaactual = LocalDateTime.now();
+				dAAgregar.setNombreDisp(dActual.getNombreDisp());
+				dAAgregar.setEquipoConcreto(dActual.getEquipoConcreto());
+				dAAgregar.setFechaRegistro(fechaactual);
+				dAAgregar.setEsInteligente(true);dAAgregar.setEsBajoConsumo(dActual.getEsBajoConsumo());
+				dAAgregar.setkWh(dActual.getkWh());
+				dAAgregar.setHorasUsoMin(dActual.getHorasUsoMin());dAAgregar.setHorasUsoMax(dActual.getHorasUsoMax());
+				dAAgregar.setHorasUsoDiarias(1); //por default
+				
+				DeviceFactory.tablaDE.add(dAAgregar);
+				
+			}
+		}
+	}
 
 	public static Dispositivo buscarPrimerMatch(String tipo) {
 		Dispositivo unDisp = null;
