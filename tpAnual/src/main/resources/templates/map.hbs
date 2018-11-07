@@ -10,6 +10,9 @@
   <div id="transformador" hidden>
     {{transformadores}}
   </div>
+  <div id="zona" hidden>
+    {{zonas}}
+  </div>
   
   <script type="text/javascript">
  
@@ -19,24 +22,25 @@
         zoom: 11,  
         minZoom: 4,
         maxZoom:17,
+        
         zoomControl:true 
       });
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: ''}).addTo(mapa);
-
+      
       var polygon = L.polygon([
-          [-34.697878, -58.468897],
-            [-34.686919, -58.486813],
-            [-34.651905, -58.530758],
-            [-34.614052, -58.529385],
-            [-34.552432, -58.499172],
-            [-34.533202, -58.46484],
-            [-34.582965, -58.381756],
-            [-34.634075, -58.35159],
-            [-34.65924, -58.418313]
+        [-34.697878, -58.468897],
+        [-34.686919, -58.486813],
+        [-34.651905, -58.530758],
+        [-34.614052, -58.529385],
+        [-34.552432, -58.499172],
+        [-34.533202, -58.46484],
+        [-34.582965, -58.381756],
+        [-34.634075, -58.35159],
+        [-34.65924, -58.418313]
         ],{
           color: 'red',
-          fillColor: 'blue',
+          fillColor: 'green',
             fillOpacity: 0.1,
             radius: 500
         }).addTo(mapa).on('click', onMapClick);
@@ -44,9 +48,17 @@
       function onMapClick(e) {
           alert("Latitud y Longitud: " + e.latlng);
       }
+      loadZonas();
       loadTranformadores();
     });
 
+    function loadZonas(){
+      var vak = $("#zona").html().split(';');
+      for (var i = 0; i < vak.length-2; i += 3) {
+        L.circle([vak[i+1], vak[i+2]], {radius: vak[i]}).addTo(mapa);
+      }
+        
+    }
     function loadTranformadores(){
       var vak = $("#transformador").html().split(';');
       for (var i = 0; i < vak.length; i += 3) {

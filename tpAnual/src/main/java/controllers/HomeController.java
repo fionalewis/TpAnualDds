@@ -12,7 +12,9 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import modelo.geoLocation.Transformador;
+import modelo.geoLocation.Zona;
 import modelo.repositories.ClienteRepository;
+import modelo.repositories.DispositivoRepository;
 import modelo.repositories.ReporteRepository;
 import modelo.repositories.TransformadorRepository;
 import modelo.users.Cliente;
@@ -71,11 +73,17 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 	public ModelAndView map (Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
 		List<Transformador> t = TransformadorRepository.getListaTranformadores();
+		List<Zona> z = DispositivoRepository.getListaZonas();
 		String s = new String();
+		String sz = new String();
 		for(Transformador tt : t){
 			s += tt.getIdTransformador() + ";" + tt.suministroActual() + ";" + tt.getUbicacion().toString() + ";";
 		}
 		model.put("transformadores", s);
+		for(Zona tt : z){
+			sz += tt.getRadius() + ";" + tt.getCenter().getLatitude() + ";" + tt.getCenter().getLongitude() + ";";
+		}
+		model.put("zonas",sz);
 		return new ModelAndView(model, "/map.hbs");
 		// para mandar las cosas sería en vez de null model ahí.
 	}

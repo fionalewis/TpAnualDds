@@ -104,6 +104,13 @@ public class DispositivoRepository {
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 	}
+	
+	public static List<Zona> getListaZonas() {
+		EntityManagerHelper.beginTransaction();
+		List<Zona> transf = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM Zona", Zona.class).getResultList();
+		EntityManagerHelper.closeEntityManager();
+		return transf;
+	}
 
 	public static List<Dispositivo> getListaDispositivos(String tipo) {
 		if(tipo=="estandar"){

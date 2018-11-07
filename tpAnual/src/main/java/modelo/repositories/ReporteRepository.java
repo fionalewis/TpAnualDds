@@ -51,6 +51,13 @@ public class ReporteRepository {
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 	}
+
+	// public static String getConsumoTransf(int id) {
+	// 	EntityManagerHelper.beginTransaction();
+	// 	String transf = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT consumo FROM Zona where id_transformador="+id).toString();
+	// 	EntityManagerHelper.closeEntityManager();
+	// 	return transf;
+	// }
 	
 	// public static void getReportePorPeriodo() {
 	// 	EntityManagerHelper.beginTransaction();
