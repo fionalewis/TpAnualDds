@@ -3,6 +3,7 @@ package presentacion.Spark;
 import java.util.HashSet;
 import java.util.Set;
 
+import controllers.AdminController;
 import controllers.ClienteController;
 import controllers.HomeController;
 import spark.Spark;
@@ -29,7 +30,8 @@ public class Router {
 		
  		HomeController homeController = new HomeController();
  		ClienteController clienteController = new ClienteController();
-  //		IndicadoresController indicadoresController = new IndicadoresController();
+ 		AdminController adminController = new AdminController();
+//		IndicadoresController indicadoresController = new IndicadoresController();
 // 		MetodologiasController metodologiasController = new MetodologiasController();
 
  		Spark.get("/", homeController::home, engine);
@@ -37,6 +39,9 @@ public class Router {
   		Spark.post("/login", homeController::newSession);
 		Spark.get("/wrong-user-or-pass", homeController::wrongLogin, engine);
 		Spark.post("/wrong-user-or-pass", homeController::wrongLogin, engine);
+		
+		Spark.get("/admin_hogar", adminController::hogarYConsumo);
+		Spark.post("/admin_hogar", adminController::hogarYConsumo);
 		
 		Spark.get("/consumo", clienteController::consumo,engine);
 		Spark.post("/consumo", clienteController::calcularConsumo,engine);

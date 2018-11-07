@@ -1,0 +1,31 @@
+{{#partial "contenido"}}
+<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Hogares y sus consumos </title>
+</head>
+
+<body>
+		
+	<div class="table-responsive">
+		<h3>Administracion de hogares</h3>
+	<table class="table">
+		<tr>
+			<th>Hogares</th>
+			<th>Consumo</th>
+		</tr>
+		{{#each Usuario}}
+		<tr>
+			<td>{{hogar}}</td>
+			<div value={{consumo}}> {{consumo}}</div>
+		</tr>
+		{{/each}}
+	</table>
+
+	<div>
+    	<a href="../"><input class="btn btn-primary btn-lg" value="Ir al menu principal"></a>
+  	</div>
+</body>
+{{/partial}}
+{{>layout.hbs}}

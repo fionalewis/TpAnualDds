@@ -1,3 +1,5 @@
+package UI;
+
 import static spark.Spark.*;
 
 public class HelloWorld {
