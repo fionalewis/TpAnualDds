@@ -79,7 +79,7 @@ public class DispositivoRepository {
 		}
 	}
 
-	public static void deleteDispositivo(String nroDoc, int dispId) {
+	public static void deleteDispositivo(String nroDoc, long dispId) {
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().createNativeQuery("SET SQL_SAFE_UPDATES = 0; ").executeUpdate();
 		EntityManagerHelper.getEntityManager().createNativeQuery("delete FROM tp_anual_dds.intervalodispositivo where dispositivo_id = "+dispId+";").executeUpdate();

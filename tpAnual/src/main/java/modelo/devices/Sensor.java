@@ -38,6 +38,14 @@ public class Sensor {
 		this.nombreMagnitud = nomMag;
 	}
 	
+	public Sensor(String nomMag, double valor, int unIntervalo){
+		this.nombreMagnitud = nomMag;
+		this.magnitud = valor;
+		this.intervalo = unIntervalo;
+		mediciones.add(magnitud);
+	}
+
+	
 	//funcionalidades
 	public void notificar(){
 		for(Condicion subs:subscribers){
