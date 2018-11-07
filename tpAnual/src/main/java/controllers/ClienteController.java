@@ -141,7 +141,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		cliente.agregarDispositivo(disp2);
 		cliente.agregarDispositivo(disp3);
 		
-		model.put("consumo", cliente.consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now()));
+		
 		model.put("dispositivos",  cliente.obtenerLista("IyC"));
 		return new ModelAndView(model, "reglas.hbs");
 	}
@@ -149,21 +149,23 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	public ModelAndView eliminarDisp(Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
 		
-		//TODO ir a buscar el cliente posta a la base de datos
-		//Cliente user = ClienteFactory.getCliente(req.session().id());
-		Cliente cliente = new Cliente();
-		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
-		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
-		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
-		cliente.agregarDispositivo(disp1);
-		cliente.agregarDispositivo(disp2);
-		cliente.agregarDispositivo(disp3);
-		
-		System.out.println(req.queryParams("id"));
-		
-		model.put("consumo", cliente.consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now()));
-		model.put("dispositivos",  cliente.obtenerLista("IyC"));
+		//TODO
+		//Buscar el dispositivo en la base de datos
+		//Buscar el cliente
+		//Eliminar ese dispositivo del cliente
+		//Volver a meter 
 		return new ModelAndView(model, "reglas.hbs");
+	}
+	
+	public ModelAndView agregarDispPantalla(Request req, Response res){
+		return new ModelAndView(null, "agregar-disp.hbs");
+	}
+	
+	public ModelAndView agregarDisp(Request req, Response res){
+		DispositivoInteligente disp1 = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripciom"));
+		//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
+		res.redirect("/reglas");
+		return null;
 	}
 	
 	/*public ModelAndView archivoInvalido (Request req, Response res){

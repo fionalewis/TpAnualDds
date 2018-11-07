@@ -45,7 +45,9 @@ public class Router {
 		Spark.post("/carga", clienteController::carga,engine);
 		Spark.get("/simplex", clienteController::simplex,engine);
 		Spark.get("/reglas", clienteController::reglasydisp,engine);
-		Spark.post("/eliminar-disp/:id", clienteController::eliminarDisp,engine);
+		Spark.get("/agregar-disp", clienteController::agregarDispPantalla,engine);
+		Spark.post("/agregar-disp", clienteController::agregarDisp,engine);
+		Spark.get("/eliminar-disp/:id", clienteController::eliminarDisp,engine);
   		
 	/*	Spark.get("/cuentas", empresasController::verArchivos,engine);
 		Spark.post("/cuentas", empresasController::cargarArchivos,engine);

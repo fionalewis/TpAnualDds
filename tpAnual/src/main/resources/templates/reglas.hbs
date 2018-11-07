@@ -9,8 +9,12 @@
 <body>
 
 	<h1>Reglas y Dispositivos</h1>
-
 	
+	
+
+	<div>
+    	<a href="/agregar-disp"><input class="btn btn-primary btn-lg" value="+ Agregar dispositivo"></a>
+  	</div>
 		
 	<div class="table-responsive">
 		<h3>Dispositivos</h3>
@@ -25,7 +29,7 @@
 			<td>{{nombreDisp}}</td>
 			<td>{{estadoDisp}}</td>
 			<td>
-				<a class="btn btn-secondary" href="eliminar-disp/{{id}}">Eliminar</a>
+				<a class="btn btn-secondary" href="eliminar-disp/{{nombreDisp}}">Eliminar</a>
 			</td>
 		</tr>
 		{{/each}}
