@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.logging.FileHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,10 +20,15 @@ import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import modelo.JsonManager;
+import modelo.Actuador.Actuador;
+import modelo.Reglas.CondicionSensorYValor;
+import modelo.Reglas.Regla;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
+import modelo.devices.Sensor;
 import modelo.factories.ClienteFactory;
+import modelo.factories.ReglaFactory;
 import modelo.users.Cliente;
 import spark.ModelAndView;
 import spark.Request;
@@ -151,7 +157,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		//Buscar el dispositivo en la base de datos
 		//Buscar el cliente
 		//Eliminar ese dispositivo del cliente
-		//Volver a meter 
+		//Volver a meter la lista de dispositivos del cliente en model
 		return new ModelAndView(model, "reglas.hbs");
 	}
 	
@@ -164,6 +170,52 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
 		res.redirect("/reglas");
 		return null;
+	}
+	
+	public ModelAndView crearRegla(Request req, Response res){
+		Map<String, Object> model = new HashMap<>();
+		
+		//TODO
+		/*String criterio=null;
+		DispositivoInteligente dispositivo = new DispositivoInteligente("Televisor","LED 24'");
+		
+		Scanner in = new Scanner(System.in);
+		System.out.println("Ingrese un nombre para la regla");
+		String nombreRegla = in.nextLine();
+		System.out.println("Ingrese criterio de comparacion:\n"
+				+ "1 para AND\n"
+				+ "2 para OR\n");
+		
+		switch(in.nextInt()){
+		case 1: criterio = "AND";
+		break;
+		case 2: criterio = "OR";
+		break;
+		}
+		
+		//asociar dispositivo, agregar acciones y condiciones
+		Sensor sensor = new Sensor("Humedad",30,10);
+		dispositivo.agregarSensor(sensor);
+		
+		CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,50,"MENOR");
+		System.out.println("Ingrese un nombre para la condicion");
+		in.nextLine();
+		String nombreCond = in.nextLine();
+		condicion.setNombreCondicion(nombreCond);
+		Actuador actuador = new Actuador(2,"APAGAR");
+		
+		System.out.println("Se asociara un dispositivo sobre la cual actuar: "
+				+ "Televisor LED 24 con un sensor de humedad \n"
+				+ "Se agregara una condicion: 'Humedad menor a 50%'"
+				+ "Se agregara un actuador con id fabricante 2, con la accion de apagar el dispositivo");
+		
+		//persistir la regla
+		Regla regla = new Regla(nombreRegla,dispositivo,criterio);
+		regla.agregarCondicionSYV(condicion);
+		regla.agregarActuador(actuador);
+		ReglaFactory.addRegla(regla);*/
+		model.put("mensajeRegla", "Nueva Regla creada exitosamente");
+		return new ModelAndView(model, "reglas.hbs");
 	}
 	
 	/*public ModelAndView archivoInvalido (Request req, Response res){
