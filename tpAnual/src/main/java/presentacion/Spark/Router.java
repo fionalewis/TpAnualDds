@@ -48,6 +48,7 @@ public class Router {
 		Spark.get("/agregar-disp", clienteController::agregarDispPantalla,engine);
 		Spark.post("/agregar-disp", clienteController::agregarDisp,engine);
 		Spark.get("/eliminar-disp/:id", clienteController::eliminarDisp,engine);
+		Spark.post("/crear-regla", clienteController::crearRegla,engine);
   		
 	/*	Spark.get("/cuentas", empresasController::verArchivos,engine);
 		Spark.post("/cuentas", empresasController::cargarArchivos,engine);
