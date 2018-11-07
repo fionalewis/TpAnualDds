@@ -40,8 +40,8 @@ public class Router {
 		Spark.get("/wrong-user-or-pass", homeController::wrongLogin, engine);
 		Spark.post("/wrong-user-or-pass", homeController::wrongLogin, engine);
 		
-		Spark.get("/admin_hogar", adminController::hogarYConsumo);
-		Spark.post("/admin_hogar", adminController::hogarYConsumo);
+		Spark.get("/hogar_consumo", adminController::hogar_consumo,engine);
+		//Spark.post("/hogar_consumo", adminController::hogar_consumo);
 		
 		Spark.get("/consumo", clienteController::consumo,engine);
 		Spark.post("/consumo", clienteController::calcularConsumo,engine);
