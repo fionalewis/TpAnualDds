@@ -63,8 +63,6 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	public ModelAndView hogar(Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
 		
-		
-		
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
 		Cliente cliente = new Cliente();
