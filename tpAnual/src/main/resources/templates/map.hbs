@@ -5,8 +5,10 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
 
+  <button type="button" class="btn btn-dark" onClick="window.location.reload()" style="margin-bottom:5px">Actualizar Mapa</button>
   <div id="mapa" style="height: 500px">
   </div> 
+  
   <div id="transformador" hidden>
     {{transformadores}}
   </div>
@@ -17,9 +19,11 @@
   <script type="text/javascript">
  
     $( document ).ready(function() {
+      document.body.style.backgroundColor = "whitesmoke";
+      $("div.container").attr("style","width:100%");
       mapa = L.map('mapa', {
         center: [-34.598313, -58.463745],
-        zoom: 11,  
+        zoom: 12,  
         minZoom: 4,
         maxZoom:17,
         
