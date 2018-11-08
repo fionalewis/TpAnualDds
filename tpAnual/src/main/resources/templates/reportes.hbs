@@ -1,0 +1,40 @@
+{{#partial "contenido"}}
+<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Hogares y sus consumos </title>
+</head>
+
+<body>
+	
+	<div class="table-responsive">
+		<h3>Administracion de hogares</h3>
+	
+	<div class="table-responsive">
+		<h3>Reporte de consumo por hogar/periodo </h3>
+	<table class="table">
+		<tr>
+			<th>Hogares</th>
+			<th>Periodo inicio</th>
+			<th>Periodo fin</th>
+			<th>Consumo</th>
+		</tr>
+		
+		<tr>
+			<td>{{nombre}}</td>
+			<td>{{periodoHogarInicio}}</td>
+			<td>{{periodoHogarFin}}</td>
+			<td>{{consumoHogar}}</td>
+		</tr>
+	</table>
+	
+	
+	
+	
+	<div>
+    	<a href="../"><input class="btn btn-primary btn-lg" value="Ir al menu principal"></a>
+  	</div>
+</body>
+{{/partial}}
+{{>layout.hbs}}

@@ -1,0 +1,27 @@
+{{#partial "titulo"}}
+Login
+{{/partial}}
+{{#partial "ancho"}}
+30%
+{{/partial}}
+{{#partial "contenido"}}
+
+   
+      <form class="form-signin" action="/agregar-disp" method="POST">
+      <br />
+        <h4>Ingrese datos del dispositivo</h4>
+         <br />
+        <label for="nombre" class="sr-only">Nombre</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required autofocus>
+        <label for="descripcion" class="sr-only">Descripcion</label>
+        <br />
+        <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripcion" required>
+        <br />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Agregar Dispositivo</button>
+        {{#block "alerta"}}{{/block}}
+      </form>
+
+
+{{/partial}}
+
+{{>layout.hbs}}

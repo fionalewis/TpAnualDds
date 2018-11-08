@@ -9,8 +9,12 @@
 <body>
 
 	<h1>Reglas y Dispositivos</h1>
-
 	
+	
+
+	<div>
+    	<a href="/agregar-disp"><input class="btn btn-primary btn-lg" value="+ Agregar dispositivo"></a>
+  	</div>
 		
 	<div class="table-responsive">
 		<h3>Dispositivos</h3>
@@ -25,11 +29,57 @@
 			<td>{{nombreDisp}}</td>
 			<td>{{estadoDisp}}</td>
 			<td>
-				<a class="btn btn-secondary" href="eliminar-disp/{{id}}">Eliminar</a>
+				<a class="btn btn-secondary" href="eliminar-disp/{{nombreDisp}}">Eliminar</a>
 			</td>
 		</tr>
 		{{/each}}
 	</table>
+	<br />
+	<br />
+	<br />
+	<h1>Crear regla nueva</h1>
+	
+	   <form class="form-signin" action="/crear-regla" method="POST">
+      <br />
+        <h4>Datos de la regla</h4>
+         <br />
+        <label for="nombre" class="sr-only">Nombre</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de la Regla" required>
+        <label for="criterio" class="sr-only">Criterio de comparacion ("AND" o "OR")</label>
+        <br />
+        <input type="text" id="criterio" name="criterio" class="form-control" placeholder="Criterio de comparacion (&quot AND&quot o &quot OR&quot)" required>
+        <br />
+        		<h4>Datos del sensor</h4>
+        <br />
+        <label for="magnitud" class="sr-only">Magnitud</label>
+        <input type="text" id="magnitud" name="magnitud" class="form-control" placeholder="Tipo de Magnitud" >
+        <label for="valor" class="sr-only">Valor</label>
+        <br />
+        <input type="number" id="valor" name="valor" class="form-control" placeholder="Valor" >
+        <label for="intervalo" class="sr-only">Intervalo</label>
+        <br />
+        <input type="number" id="intervalo" name="intervalo" class="form-control" placeholder="Intervalo">
+        <br />
+                <h4>Datos de la condicion</h4>
+        <br />
+        <label for="valorCondicion" class="sr-only">Valor Condicion</label>
+        <input type="number" id="valorCondicion" name="valorCondicion" class="form-control" placeholder="Valor de la condicion">
+        <label for="comparacion" class="sr-only">Comparacion ("MENOR", "MAYOR" o "IGUAL")</label>
+        <br />
+        <input type="text" id="comparacion" name="comparacion" class="form-control" placeholder="Comparacion (&quot MENOR&quot, &quot MAYOR&quot o &quot IGUAL&quot )">
+        <br />
+                <h4>Datos de la Accion</h4>
+         <br />
+        <label for="idFabricante" class="sr-only">idFabricante</label>
+        <input type="number" id="idFabricante" name="idFabricante" class="form-control" placeholder="Id del fabricante" required>
+        <label for="orden" class="sr-only">Orden (Ej: PRENDER,APAGAR,AHORRO)</label>
+        <br />
+        <input type="text" id="orden" name="orden" class="form-control" placeholder="Orden (Ej: PRENDER,APAGAR,AHORRO)" required>
+        <br />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Agregar Regla</button>
+        <h1 style="color:rgb(0,255,0);" value={{mensajeRegla}}>{{mensajeRegla}}</h1>
+        {{#block "alerta"}}{{/block}}
+      </form>
 
 	<div>
     	<a href="../"><input class="btn btn-primary btn-lg" value="Ir al menu principal"></a>

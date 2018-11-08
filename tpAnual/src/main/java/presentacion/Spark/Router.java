@@ -3,6 +3,7 @@ package presentacion.Spark;
 import java.util.HashSet;
 import java.util.Set;
 
+import controllers.AdminController;
 import controllers.ClienteController;
 import controllers.HomeController;
 import spark.Spark;
@@ -28,9 +29,9 @@ public class Router {
 		Spark.before(SessionHandler.allowed());
 		
  		HomeController homeController = new HomeController();
- 	//	EmpresasController empresasController = new EmpresasController();
  		ClienteController clienteController = new ClienteController();
-  //		IndicadoresController indicadoresController = new IndicadoresController();
+ 		AdminController adminController = new AdminController();
+//		IndicadoresController indicadoresController = new IndicadoresController();
 // 		MetodologiasController metodologiasController = new MetodologiasController();
 
  		Spark.get("/", homeController::home, engine);
@@ -40,6 +41,10 @@ public class Router {
 		Spark.post("/wrong-user-or-pass", homeController::wrongLogin, engine);
 
 		Spark.get("/map", homeController::map, engine);
+		
+		Spark.get("/hogar_consumo", adminController::hogar_consumo,engine);
+		//Spark.post("/hogar_consumo", adminController::hogar_consumo);
+		Spark.get("/reportes", adminController::reportes,engine);
 		
 		Spark.get("/consumo", clienteController::consumo,engine);
 		Spark.post("/consumo", clienteController::calcularConsumo,engine);
@@ -52,7 +57,7 @@ public class Router {
 		Spark.post("/agregar-disp", clienteController::agregarDisp,engine);
 		Spark.get("/eliminar-disp/:id", clienteController::eliminarDisp,engine);
 		Spark.post("/crear-regla", clienteController::crearRegla,engine);
-
+  		
 	/*	Spark.get("/cuentas", empresasController::verArchivos,engine);
 		Spark.post("/cuentas", empresasController::cargarArchivos,engine);
 		Spark.get("/archivo-invalido.hbs", empresasController::archivoInvalido,engine);
