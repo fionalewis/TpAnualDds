@@ -3,8 +3,7 @@ package presentacion.Spark;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.mysql.cj.xdevapi.JsonArray;
-
+import controllers.ClienteController;
 import controllers.HomeController;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -30,6 +29,7 @@ public class Router {
 		
  		HomeController homeController = new HomeController();
  	//	EmpresasController empresasController = new EmpresasController();
+ 		ClienteController clienteController = new ClienteController();
   //		IndicadoresController indicadoresController = new IndicadoresController();
 // 		MetodologiasController metodologiasController = new MetodologiasController();
 
@@ -40,6 +40,18 @@ public class Router {
 		Spark.post("/wrong-user-or-pass", homeController::wrongLogin, engine);
 
 		Spark.get("/map", homeController::map, engine);
+		
+		Spark.get("/consumo", clienteController::consumo,engine);
+		Spark.post("/consumo", clienteController::calcularConsumo,engine);
+		Spark.get("/hogar", clienteController::hogar,engine);
+		Spark.get("/carga", clienteController::carga,engine);
+		Spark.post("/carga", clienteController::carga,engine);
+		Spark.get("/simplex", clienteController::simplex,engine);
+		Spark.get("/reglas", clienteController::reglasydisp,engine);
+		Spark.get("/agregar-disp", clienteController::agregarDispPantalla,engine);
+		Spark.post("/agregar-disp", clienteController::agregarDisp,engine);
+		Spark.get("/eliminar-disp/:id", clienteController::eliminarDisp,engine);
+		Spark.post("/crear-regla", clienteController::crearRegla,engine);
 
 	/*	Spark.get("/cuentas", empresasController::verArchivos,engine);
 		Spark.post("/cuentas", empresasController::cargarArchivos,engine);

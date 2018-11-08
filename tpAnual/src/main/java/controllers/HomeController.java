@@ -19,6 +19,17 @@ import modelo.repositories.ReporteRepository;
 import modelo.repositories.TransformadorRepository;
 import modelo.users.Cliente;
 import modelo.users.*;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.persistence.NoResultException;
+
+import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
+import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
+
+import modelo.repositories.ClienteRepository;
+import modelo.users.Cliente;
+import modelo.users.Usuario;
 //import model.Usuario;
 //import repositories.Repositorios;
 //import scala.Console;
@@ -38,7 +49,7 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 	
 		return new ModelAndView(null, "/login.hbs");
 	}
-		
+	
 	public ModelAndView wrongLogin (Request req, Response res){
 		
 		return new ModelAndView(null, "/wrongLogin.hbs");
@@ -51,9 +62,10 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		Cliente user = new Cliente();
 		try
 		{
-			//user = ClienteFactory.getCliente(username);
-			user.setPassword("pass");
-			user.setUserName("user");
+		//TODO ir a buscar a la base de datos al cliente posta
+		//Cliente cliente = ClienteFactory.getCliente(nroDoc);
+		//user = ClienteFactory.getCliente(username);
+		user = ClienteRepository.obtenerCliente(username);
 		}
 		catch (NoResultException e)
 		{

@@ -45,6 +45,10 @@ public abstract class Dispositivo {
 	public String getNombreDisp() {
 		return nombreDisp;
 	}
+	
+	public Long getId(){
+		return id;
+	}
 	public void setNombreDisp(String nombreDisp) {
 		this.nombreDisp = nombreDisp;
 	}

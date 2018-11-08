@@ -337,7 +337,6 @@ public class Cliente extends Usuario {
 		return horasEstandar;
 	}
 	
-	
 	//Este metodo quizas deberia ir en el administrador mas adelante, pero por ahora lo consultamos directamente desde el cliente
 	
 	public List<Dispositivo> dispDescartadosSimplex(){
@@ -375,6 +374,22 @@ public class Cliente extends Usuario {
 		for(Entry<String, Double> unValor : horasXDisp.entrySet()) {
 			System.out.println("La recomendaci�n de horas m�ximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.");
 		}		
+	}
+	
+	public String obtenerRecomendacionString() throws FileNotFoundException, InstantiationException, IllegalAccessException {
+		Map<String,Double> horasXDisp = simplex.horasMaxXDisp();
+		String retorno = "";
+		List<Dispositivo> descartados = new ArrayList<>();
+		if(descartados.size()!=0) {
+			retorno = "Se han descartado del c�lculo de horas m�ximas los siguientes dispositivos:";
+			for(Dispositivo unDisp : descartados) {
+				retorno = retorno + unDisp.getNombreDisp() + ", " + unDisp.getEquipoConcreto();
+			}
+		}
+		for(Entry<String, Double> unValor : horasXDisp.entrySet()) {
+			retorno = retorno + "La recomendaci�n de horas m�ximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.";
+		}		
+		return retorno;
 	}
 	
 	public PointValuePair llamarSimplex() throws FileNotFoundException, InstantiationException, IllegalAccessException {

@@ -153,7 +153,7 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	public void setRegla(){		
 		condicion.setNombreCondicion("TemperaturaMayorA25");
 		Regla regla = new Regla("Super Regla", dispositivo,"OR");
-		regla.agregarCondicionSYV(condicion);
+		//regla.agregarCondicionSYV(condicion);
 		regla.agregarActuador(actuador);
 		ReglaRepository.addRegla(regla);
 	}

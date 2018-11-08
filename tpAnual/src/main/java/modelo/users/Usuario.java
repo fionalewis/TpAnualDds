@@ -50,6 +50,7 @@ public abstract class Usuario {
 		return password.equals(pass);
 	}
 	
+	
 	public abstract double calcularConsumo(); //Redefinido por cada clase segun lo que necesiten hacer
 		
 }

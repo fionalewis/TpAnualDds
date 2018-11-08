@@ -254,7 +254,7 @@ public class EntregaPersistencia {
 		
 		//persistir la regla
 		Regla regla = new Regla(nombreRegla,dispositivo,criterio);
-		regla.agregarCondicionSYV(condicion);
+		//regla.agregarCondicionSYV(condicion);
 		regla.agregarActuador(actuador);
 		ReglaRepository.addRegla(regla);
 	}
@@ -268,7 +268,7 @@ public class EntregaPersistencia {
 		
 		//cambiar despues de persistir los dispositivos
 		DispositivoInteligente dispositivo = new DispositivoInteligente("Televisor","LED 24'");
-		unaRegla.setDisp(dispositivo);
+		//unaRegla.setDisp(dispositivo);
 		
 		System.out.println("Se ejecutara la regla creada");
 		unaRegla.aplicarRegla();
