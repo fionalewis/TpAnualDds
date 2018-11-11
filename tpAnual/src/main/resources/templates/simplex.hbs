@@ -12,7 +12,20 @@
 	<div value={{eficiente}}> <h3>{{eficiente}} </h3></div>
 	
 	<h2>Recomendacion</h2>
-	<div value={{recomendacion}}> <h3>{{recomendacion}} </h3></div>
+		<div class="table-responsive">
+		<h3>Dispositivos</h3>
+	<table class="table">
+		<tr>
+			<th>Dispositivo</th>
+			<th>Horas Maximas recomendadas</th>
+		</tr>
+		{{#each recHoras}}
+		<tr>
+			<td>{{dispositivo}}</td>
+			<td>{{value}}</td>
+		</tr>
+		{{/each}}
+	</table>
 	
 
 

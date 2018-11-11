@@ -1,11 +1,13 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.Map.Entry;
 import java.util.logging.FileHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,6 +28,7 @@ import modelo.Reglas.Regla;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
+import modelo.devices.RecomendacionDTO;
 import modelo.devices.Sensor;
 import modelo.repositories.ActuadorRepository;
 import modelo.repositories.ClienteRepository;
@@ -116,7 +119,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
-		/*Cliente cliente = new Cliente();
+		Cliente cliente = new Cliente();
 		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
 		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
 		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
@@ -124,17 +127,30 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		cliente.agregarDispositivo(disp2);
 		cliente.agregarDispositivo(disp3);
 		
-*/
 
-		List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
-		Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+
+		//List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
+		/*Cliente cliente = new Cliente();
+		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));*/
 			try {
 				if(cliente.hogarEficiente()){
 				model.put("eficiente","SI");
 				}else{model.put("eficiente","NO");}
 				
-				model.put("recomendacion", cliente.obtenerRecomendacionString());
+				//model.put("recomendacion", cliente.obtenerRecomendacionString());
+				List<String> recHoras = new ArrayList();
+				for(Entry<String, Double> unValor : cliente.horasXDisp().entrySet()) {
+					recHoras.add("La recomendaci�n de horas m�ximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.");
+				}		
+				
+				//System.out.println(cliente.horasXDisp());
+				//System.out.println(((RecomendacionDTO) cliente.obtenerRecomendacionDTO().get(0)).getDispositivo());
+				RecomendacionDTO rec = cliente.obtenerRecomendacionDTO().get(0);
+				System.out.println(rec.getDispositivo());
+				
+				
+				
+				model.put("recHoras",cliente.obtenerRecomendacionDTO());
 				
 			} catch (FileNotFoundException | InstantiationException | IllegalAccessException e) {
 				// TODO Auto-generated catch block

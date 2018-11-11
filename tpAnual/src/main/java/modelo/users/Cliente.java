@@ -10,6 +10,7 @@ import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoConvertido;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
+import modelo.devices.RecomendacionDTO;
 import modelo.repositories.*;
 import modelo.geoLocation.GeoLocation;
 import modelo.geoLocation.Transformador;
@@ -374,6 +375,27 @@ public class Cliente extends Usuario {
 		for(Entry<String, Double> unValor : horasXDisp.entrySet()) {
 			System.out.println("La recomendaci�n de horas m�ximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.");
 		}		
+	}
+	
+	public Map<String,Double> horasXDisp() throws FileNotFoundException, InstantiationException, IllegalAccessException {
+		return simplex.horasMaxXDisp();
+	}
+	
+	public List<RecomendacionDTO> obtenerRecomendacionDTO() throws FileNotFoundException, InstantiationException, IllegalAccessException {
+		Map<String,Double> horasXDisp = simplex.horasMaxXDisp();
+		List<RecomendacionDTO> retorno = new ArrayList();
+		List<Dispositivo> descartados = new ArrayList<>();
+		/*if(descartados.size()!=0) {
+			retorno = "Se han descartado del c�lculo de horas m�ximas los siguientes dispositivos:";
+			for(Dispositivo unDisp : descartados) {
+				retorno = retorno + unDisp.getNombreDisp() + ", " + unDisp.getEquipoConcreto();
+			}
+		}*/
+		for(Entry<String, Double> unValor : horasXDisp.entrySet()) {
+			RecomendacionDTO rec = new RecomendacionDTO(unValor.getKey(),unValor.getValue());
+			retorno.add(rec);
+		}		
+		return retorno;
 	}
 	
 	public String obtenerRecomendacionString() throws FileNotFoundException, InstantiationException, IllegalAccessException {
