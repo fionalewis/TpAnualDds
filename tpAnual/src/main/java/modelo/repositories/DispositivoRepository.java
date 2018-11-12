@@ -49,8 +49,7 @@ public class DispositivoRepository {
 		Dispositivo managedEntity = (Dispositivo) EntityManagerHelper.merge(dispositivo);
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
-		return managedEntity.id;
-		
+		return managedEntity.id;		
 	}
 
 	public static void addDispositivoConCliente(String nro, Dispositivo d) {
@@ -67,13 +66,27 @@ public class DispositivoRepository {
 		EntityManagerHelper.getEntityManager().createQuery("UPDATE Dispositivo set cliente_id='"+nro+"' where id = "+idPreMerge).executeUpdate();
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();		
-		addIntervaloDispositivo(d.id, ((DispositivoInteligente) d).getIntervalos());
+		addIntervaloDispositivo(idPreMerge, ((DispositivoInteligente) d).getIntervalos());
 	}
-
+	public static Long addIntDispMerge(IntervaloDispositivo dispositivo) { 
+		EntityManagerHelper.beginTransaction();
+		IntervaloDispositivo managedEntity = (IntervaloDispositivo) EntityManagerHelper.merge(dispositivo);
+		EntityManagerHelper.commit();
+		EntityManagerHelper.closeEntityManager();
+		return managedEntity.id;
+		
+	}
 	public static void addIntervaloDispositivo(Long nro, List<IntervaloDispositivo> intd) {
 		for(IntervaloDispositivo d : intd){
+			Long idPreMerge = addIntDispMerge(d); //es necesario porque hibernate es un estúpido
 			EntityManagerHelper.beginTransaction();
-			EntityManagerHelper.getEntityManager().createQuery("UPDATE IntervaloDispositivo set dispositivo_id='"+nro+"' where id = "+d.id).executeUpdate();
+			EntityManagerHelper.getEntityManager().createQuery("UPDATE IntervaloDispositivo set dispositivo_id="+nro+" where id="+idPreMerge).executeUpdate();//fin='"+d.getFin()+"' and inicio='"+d.getInicio()+"' and modo='"+d.getModo()+"'").executeUpdate();
+			EntityManagerHelper.commit();
+			EntityManagerHelper.closeEntityManager();
+			EntityManagerHelper.beginTransaction();
+			EntityManagerHelper.getEntityManager().createNativeQuery("SET SQL_SAFE_UPDATES = 0; ").executeUpdate();
+			EntityManagerHelper.getEntityManager().createNativeQuery("delete FROM tp_anual_dds.intervalodispositivo where dispositivo_id is null").executeUpdate();
+			EntityManagerHelper.getEntityManager().createNativeQuery("SET SQL_SAFE_UPDATES = 1;").executeUpdate();
 			EntityManagerHelper.commit();
 			EntityManagerHelper.closeEntityManager();
 		}
@@ -123,8 +136,14 @@ public class DispositivoRepository {
 			List<Dispositivo> disp = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM Dispositivo where (TIPO = 'C' or TIPO = 'I')", DispositivoInteligente.class).getResultList();
 			EntityManagerHelper.closeEntityManager();
 			return disp;
-		}
-		
+		}		
+	}
+
+	public static List<Dispositivo> getDispositivosDeUnCliente(String id) {
+		EntityManagerHelper.beginTransaction();
+		List<Dispositivo> disp = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM Dispositivo where cliente_id = '"+id+"'", Dispositivo.class).getResultList();
+		EntityManagerHelper.closeEntityManager();
+		return disp;
 	}
 
 	//public static void addDispConCliente(Long id, String nroDoc) {

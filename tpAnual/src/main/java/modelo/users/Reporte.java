@@ -104,10 +104,10 @@ public class Reporte {
 
 			for (Cliente c : cli) {				
 				ReporteRepository.addReporte(new Reporte(), c);	
-
+				List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(c.getNroDoc()).stream().filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
 				if (c.getTransformadorActual() != null){ 
 					int i = c.getTransformadorActual().getIdTransformador() - 1;
-					consumosTransformadores.set( i, consumosTransformadores.get(i) + c.calcularConsumo());
+					consumosTransformadores.set( i, consumosTransformadores.get(i) + disps.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum());
 				}
 			}
 

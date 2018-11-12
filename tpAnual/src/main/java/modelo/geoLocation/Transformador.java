@@ -10,6 +10,9 @@ import exceptions.ExceptionsHandler;
 import modelo.DAOJson;
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoInteligente;
+import modelo.repositories.ClienteRepository;
+import modelo.repositories.DispositivoRepository;
+import modelo.repositories.TransformadorRepository;
 import modelo.users.Cliente;
 import modelo.users.Reporte;
 
@@ -73,18 +76,19 @@ public class Transformador {
 		List<Cliente> listaClientes = new ArrayList<>();
 		List<Double> consumo = new ArrayList<>();
 		
-		try {
-			listaClientes = DAOJson.deserializarListaTransf(Cliente.class, "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\JsonsParaPruebas\\clientesPruebaParaTransformador.json");
+		listaClientes = ClienteRepository.getTodosLosClientes();
+		// try {
+		// 	listaClientes = DAOJson.deserializarListaTransf(Cliente.class, "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\JsonsParaPruebas\\clientesPruebaParaTransformador.json");
 			
-		} catch (Exception e) {
-			ExceptionsHandler.catchear(e);
-		}
+		// } catch (Exception e) {
+		// 	ExceptionsHandler.catchear(e);
+		// }
 		
 		for (Cliente c : listaClientes){
-			if (c.getTransformadorActual().getIdTransformador() == idTransformador) {	
-				for (Dispositivo d : c.getDispositivos()){				
-					if (d.getClass() == DispositivoInteligente.class) {
-						consumo.add( ((DispositivoInteligente) d).consumoTotalEntre(d.getFechaRegistro(), LocalDateTime.now().plusHours(3)) );
+			if (c.getTransformadorActual() != null && c.getTransformadorActual().getIdTransformador() == idTransformador) {	
+				for (Dispositivo d : DispositivoRepository.getDispositivosDeUnCliente(c.getNroDoc())){				
+					if (d.getEsInteligente()) {
+						consumo.add( ((DispositivoInteligente) d).consumoTotalEntre(d.getFechaRegistro(), LocalDateTime.now()) );
 					} else {
 						consumo.add( d.consumoTotal() );
 					}

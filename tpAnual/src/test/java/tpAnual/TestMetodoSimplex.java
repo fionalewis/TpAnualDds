@@ -33,8 +33,8 @@ public class TestMetodoSimplex {
 		//Dispositivo dani6 = f.crearDisp("Microondas","Convencional"); //Estandar
 		//Dispositivo dani7 = f.crearDisp("Plancha","A vapor"); //Estandar
 		Dispositivo dani8 = f.crearDisp("Ventilador","De techo");
-		Dispositivo dani9 = f.crearDisp("Termotanque","Eléctrico"); //El simplex ignora a estos dos ultimos disp
-		Dispositivo dani10 = f.crearDisp("Horno","Eléctrico");
+		Dispositivo dani9 = f.crearDisp("Termotanque","Elï¿½ctrico"); //El simplex ignora a estos dos ultimos disp
+		Dispositivo dani10 = f.crearDisp("Horno","Elï¿½ctrico");
 		
 		daniel.agregarDispositivo(dani1);daniel.agregarDispositivo(dani2);daniel.agregarDispositivo(dani3);daniel.agregarDispositivo(dani4);
 		daniel.agregarDispositivo(dani5);daniel.agregarDispositivo(dani8);daniel.agregarDispositivo(dani9);daniel.agregarDispositivo(dani10);
@@ -50,13 +50,13 @@ public class TestMetodoSimplex {
 	@Test
     public void testSimplexDanielSinEstandar() throws FileNotFoundException, InstantiationException, IllegalAccessException{	
 		PointValuePair solucionSimplexDaniel = daniel.llamarSimplex();
-		System.out.println("Test simplexDanielSinDispEstandar:\n" + "El valor de Z Máx dio: " + solucionSimplexDaniel.getValue()); 
-		System.out.println("Las horas máximas para el dispositivo x1 (Televisor LED 40') son: " + solucionSimplexDaniel.getPoint()[0]);
-		System.out.println("Las horas máximas para el dispositivo x2 (Lámpara de 11W) son: " + solucionSimplexDaniel.getPoint()[1]);
-		System.out.println("Las horas máximas para el dispositivo x3 (Lavarropas semi automático de 5kg) son: " + solucionSimplexDaniel.getPoint()[2]);
-		System.out.println("Las horas máximas para el dispositivo x4 (PC de escritorio) son: " + solucionSimplexDaniel.getPoint()[3]);
-		System.out.println("Las horas máximas para el dispositivo x5 (Aire Acondicionado de 2200 frigorías) son: " + solucionSimplexDaniel.getPoint()[4]);
-		System.out.println("Las horas máximas para el dispositivo x6 (Ventilador de techo) son: " + solucionSimplexDaniel.getPoint()[5]);
+		System.out.println("Test simplexDanielSinDispEstandar:\n" + "El valor de Z Mï¿½x dio: " + solucionSimplexDaniel.getValue()); 
+		System.out.println("Las horas mï¿½ximas para el dispositivo x1 (Televisor LED 40') son: " + solucionSimplexDaniel.getPoint()[0]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x2 (Lï¿½mpara de 11W) son: " + solucionSimplexDaniel.getPoint()[1]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x3 (Lavarropas semi automï¿½tico de 5kg) son: " + solucionSimplexDaniel.getPoint()[2]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x4 (PC de escritorio) son: " + solucionSimplexDaniel.getPoint()[3]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x5 (Aire Acondicionado de 2200 frigorï¿½as) son: " + solucionSimplexDaniel.getPoint()[4]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x6 (Ventilador de techo) son: " + solucionSimplexDaniel.getPoint()[5]);
 	}	
 	
 	@Test
@@ -66,15 +66,15 @@ public class TestMetodoSimplex {
 		Dispositivo dani7 = f.crearDisp("Plancha","A vapor"); //Estandar
 		daniel.agregarDispositivo(dani6);daniel.agregarDispositivo(dani7);
 		PointValuePair solucionSimplexDaniel = daniel.llamarSimplex();
-		System.out.println("Test simplexDanielConDispEstandar:\n" + "El valor de Z Máx dio: " + solucionSimplexDaniel.getValue()); 
-		System.out.println("Las horas máximas para el dispositivo x1 (Televisor LED 40') son: " + solucionSimplexDaniel.getPoint()[0]);
-		System.out.println("Las horas máximas para el dispositivo x2 (Lámpara de 11W) son: " + solucionSimplexDaniel.getPoint()[1]);
-		System.out.println("Las horas máximas para el dispositivo x3 (Lavarropas semi automático de 5kg) son: " + solucionSimplexDaniel.getPoint()[2]);
-		System.out.println("Las horas máximas para el dispositivo x4 (PC de escritorio) son: " + solucionSimplexDaniel.getPoint()[3]);
-		System.out.println("Las horas máximas para el dispositivo x5 (Aire Acondicionado de 2200 frigorías) son: " + solucionSimplexDaniel.getPoint()[4]);
-		System.out.println("Las horas máximas para el dispositivo x6 (Ventilador de techo) son: " + solucionSimplexDaniel.getPoint()[5]);
-		System.out.println("Las horas máximas para el dispositivo x7 (Microondas convencional) son: " + solucionSimplexDaniel.getPoint()[6]);
-		System.out.println("Las horas máximas para el dispositivo x8 (Plancha a vapor) son: " + solucionSimplexDaniel.getPoint()[7]);	
+		System.out.println("Test simplexDanielConDispEstandar:\n" + "El valor de Z Mï¿½x dio: " + solucionSimplexDaniel.getValue()); 
+		System.out.println("Las horas mï¿½ximas para el dispositivo x1 (Televisor LED 40') son: " + solucionSimplexDaniel.getPoint()[0]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x2 (Lï¿½mpara de 11W) son: " + solucionSimplexDaniel.getPoint()[1]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x3 (Lavarropas semi automï¿½tico de 5kg) son: " + solucionSimplexDaniel.getPoint()[2]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x4 (PC de escritorio) son: " + solucionSimplexDaniel.getPoint()[3]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x5 (Aire Acondicionado de 2200 frigorï¿½as) son: " + solucionSimplexDaniel.getPoint()[4]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x6 (Ventilador de techo) son: " + solucionSimplexDaniel.getPoint()[5]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x7 (Microondas convencional) son: " + solucionSimplexDaniel.getPoint()[6]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x8 (Plancha a vapor) son: " + solucionSimplexDaniel.getPoint()[7]);	
 	}
     
 	@Test
@@ -87,23 +87,23 @@ public class TestMetodoSimplex {
 		DispositivoConvertido dani7conv = new DispositivoConvertido(dani7);	
 		daniel.agregarDispositivo(dani6conv);daniel.agregarDispositivo(dani7conv);
 		PointValuePair solucionSimplexDaniel = daniel.llamarSimplex();
-		System.out.println("Test simplexDanielConDispConvertidos:\n" + "El valor de Z Máx dio: " + solucionSimplexDaniel.getValue()); 
-		System.out.println("Las horas máximas para el dispositivo x1 (Televisor LED 40') son: " + solucionSimplexDaniel.getPoint()[0]);
-		System.out.println("Las horas máximas para el dispositivo x2 (Lámpara de 11W) son: " + solucionSimplexDaniel.getPoint()[1]);
-		System.out.println("Las horas máximas para el dispositivo x3 (Lavarropas semi automático de 5kg) son: " + solucionSimplexDaniel.getPoint()[2]);
-		System.out.println("Las horas máximas para el dispositivo x4 (PC de escritorio) son: " + solucionSimplexDaniel.getPoint()[3]);
-		System.out.println("Las horas máximas para el dispositivo x5 (Aire Acondicionado de 2200 frigorías) son: " + solucionSimplexDaniel.getPoint()[4]);
-		System.out.println("Las horas máximas para el dispositivo x6 (Ventilador de techo) son: " + solucionSimplexDaniel.getPoint()[5]);
-		System.out.println("Las horas máximas para el dispositivo x7 (Microondas convencional - CONVERTIDO) son: " + solucionSimplexDaniel.getPoint()[6]);
-		System.out.println("Las horas máximas para el dispositivo x8 (Plancha a vapor - CONVERTIDO) son: " + solucionSimplexDaniel.getPoint()[7]);	
+		System.out.println("Test simplexDanielConDispConvertidos:\n" + "El valor de Z Mï¿½x dio: " + solucionSimplexDaniel.getValue()); 
+		System.out.println("Las horas mï¿½ximas para el dispositivo x1 (Televisor LED 40') son: " + solucionSimplexDaniel.getPoint()[0]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x2 (Lï¿½mpara de 11W) son: " + solucionSimplexDaniel.getPoint()[1]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x3 (Lavarropas semi automï¿½tico de 5kg) son: " + solucionSimplexDaniel.getPoint()[2]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x4 (PC de escritorio) son: " + solucionSimplexDaniel.getPoint()[3]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x5 (Aire Acondicionado de 2200 frigorï¿½as) son: " + solucionSimplexDaniel.getPoint()[4]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x6 (Ventilador de techo) son: " + solucionSimplexDaniel.getPoint()[5]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x7 (Microondas convencional - CONVERTIDO) son: " + solucionSimplexDaniel.getPoint()[6]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x8 (Plancha a vapor - CONVERTIDO) son: " + solucionSimplexDaniel.getPoint()[7]);	
 	}
 
 	@Test
 	public void testSimplexPepe() throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		PointValuePair solucionSCD = pepe.llamarSimplex();
-		System.out.println("Test testSimplexPepe:\n" + "El valor de Z Máx dio: " + solucionSCD.getValue());
-		System.out.println("Las horas máximas para el dispositivo x1 (Aire Acondicionado de 3500 frigorías) son: " + solucionSCD.getPoint()[0]);
-		System.out.println("Las horas máximas para el dispositivo x2 (Aire Acondicionado de 2200 frigorías) son: " + solucionSCD.getPoint()[1]);
+		System.out.println("Test testSimplexPepe:\n" + "El valor de Z Mï¿½x dio: " + solucionSCD.getValue());
+		System.out.println("Las horas mï¿½ximas para el dispositivo x1 (Aire Acondicionado de 3500 frigorï¿½as) son: " + solucionSCD.getPoint()[0]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x2 (Aire Acondicionado de 2200 frigorï¿½as) son: " + solucionSCD.getPoint()[1]);
 	}
 	
 	@Test
@@ -112,10 +112,10 @@ public class TestMetodoSimplex {
 		Dispositivo estandar = f.crearDisp("Microondas","Convencional");	
 		pepe.agregarDispositivo(estandar);
 		PointValuePair solucionSCD = pepe.llamarSimplex();
-		System.out.println("Test testSimplexPepeConDispEstandar:\n" + "El valor de Z Máx dio: " + solucionSCD.getValue());
-		System.out.println("Las horas máximas para el dispositivo x1 (Aire Acondicionado de 3500 frigorías) son: " + solucionSCD.getPoint()[0]);
-		System.out.println("Las horas máximas para el dispositivo x2 (Aire Acondicionado de 2200 frigorías) son: " + solucionSCD.getPoint()[1]);
-		System.out.println("Las horas máximas para el dispositivo x3 (Microondas convencional) son: " + solucionSCD.getPoint()[2]);
+		System.out.println("Test testSimplexPepeConDispEstandar:\n" + "El valor de Z Mï¿½x dio: " + solucionSCD.getValue());
+		System.out.println("Las horas mï¿½ximas para el dispositivo x1 (Aire Acondicionado de 3500 frigorï¿½as) son: " + solucionSCD.getPoint()[0]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x2 (Aire Acondicionado de 2200 frigorï¿½as) son: " + solucionSCD.getPoint()[1]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x3 (Microondas convencional) son: " + solucionSCD.getPoint()[2]);
 	}
 	
 	//@Test
@@ -125,10 +125,10 @@ public class TestMetodoSimplex {
 		DispositivoConvertido estandarConv = new DispositivoConvertido(estandar);
 		daniel.agregarDispositivo(estandarConv);
 		PointValuePair solucionSCD = pepe.llamarSimplex();
-		System.out.println("Test testSimplexPepeConDispConv:\n" + "El valor de Z Máx dio: " + solucionSCD.getValue());
-		System.out.println("Las horas máximas para el dispositivo x1 (Aire Acondicionado de 3500 frigorías) son: " + solucionSCD.getPoint()[0]);
-		System.out.println("Las horas máximas para el dispositivo x2 (Aire Acondicionado de 2200 frigorías) son: " + solucionSCD.getPoint()[1]);
-		System.out.println("Las horas máximas para el dispositivo x3 (Microondas convencional - CONVERTIDO) son: " + solucionSCD.getPoint()[2]);
+		System.out.println("Test testSimplexPepeConDispConv:\n" + "El valor de Z Mï¿½x dio: " + solucionSCD.getValue());
+		System.out.println("Las horas mï¿½ximas para el dispositivo x1 (Aire Acondicionado de 3500 frigorï¿½as) son: " + solucionSCD.getPoint()[0]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x2 (Aire Acondicionado de 2200 frigorï¿½as) son: " + solucionSCD.getPoint()[1]);
+		System.out.println("Las horas mï¿½ximas para el dispositivo x3 (Microondas convencional - CONVERTIDO) son: " + solucionSCD.getPoint()[2]);
 	}
 	
 }
