@@ -103,11 +103,12 @@ public class Reporte {
 			List<Double> consumosTransformadores = listaParaCalcularConsumosTransformadores();
 
 			for (Cliente c : cli) {				
-				ReporteRepository.addReporte(new Reporte(), c);	
 				List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(c.getNroDoc()).stream().filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
+				double consum = disps.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
+				ReporteRepository.addReporte(new Reporte(), c, consum);	
 				if (c.getTransformadorActual() != null){ 
 					int i = c.getTransformadorActual().getIdTransformador() - 1;
-					consumosTransformadores.set( i, consumosTransformadores.get(i) + disps.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum());
+					consumosTransformadores.set( i, consumosTransformadores.get(i) + consum);
 				}
 			}
 

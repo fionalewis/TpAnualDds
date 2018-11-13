@@ -210,8 +210,6 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
     	((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,8,21,8,30,0));
 		List<Dispositivo> disp = new ArrayList<>(); disp.add(d1);
 		Cliente c = new Cliente("pepe","argento","pepe123","12345",2018,8,21,TipoDocumento.DNI,"40403456","12345678","Avenida Medrano 986",disp);
-		System.out.println(c.calcularConsumo());
-
 
 		ClienteRepository.addClienteConDispositivosEIntervalos(c);
 	}

@@ -64,8 +64,8 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		{
 		//TODO ir a buscar a la base de datos al cliente posta
 		//Cliente cliente = ClienteFactory.getCliente(nroDoc);
-		user = ClienteFactory.getCliente(username);
-		//user = ClienteRepository.obtenerCliente(username);
+		//user = ClienteFactory.getCliente(username);
+		user = ClienteRepository.obtenerCliente(username);
 		//	user.setUserName("user");
 		//	user.setPassword("pass");
 		}
@@ -99,6 +99,5 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		}
 		model.put("zonas",sz);
 		return new ModelAndView(model, "/map.hbs");
-		// para mandar las cosas sería en vez de null model ahí.
 	}
 }

@@ -9,14 +9,14 @@ import modelo.users.Reporte;
 
 public class ReporteRepository {
 
-	public static void addReporte(Reporte reporte,Cliente cli) { 
+	public static void addReporte(Reporte reporte,Cliente cli,double consumo) { 
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.persist(reporte);			
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 
 		EntityManagerHelper.beginTransaction();
-		EntityManagerHelper.getEntityManager().createQuery("UPDATE Reporte set cliente_id='"+cli.getNroDoc()+"',consumo = " + cli.calcularConsumo() + " where id = "+reporte.id).executeUpdate();
+		EntityManagerHelper.getEntityManager().createQuery("UPDATE Reporte set cliente_id='"+cli.getNroDoc()+"',consumo = " + consumo + " where id = "+reporte.id).executeUpdate();
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
 	}
