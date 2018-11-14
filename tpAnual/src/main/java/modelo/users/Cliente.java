@@ -363,7 +363,7 @@ public class Cliente extends Usuario {
 	}
 	
 	public List<Dispositivo> listaSimplex() {
-		List<Dispositivo> aAnalizar = dispositivos;
+		List<Dispositivo> aAnalizar = new DispositivoRepository().getDispositivosDeUnCliente(this.getNroDoc());
 		List<Dispositivo> toRemove = new ArrayList<>();
 		for(Dispositivo unDisp: dispositivos){
 		    if(unDisp.getHorasUsoMax()==-1){
