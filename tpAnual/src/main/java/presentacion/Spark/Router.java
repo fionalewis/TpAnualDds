@@ -39,6 +39,7 @@ public class Router {
   		Spark.post("/login", homeController::newSession);
 		Spark.get("/wrong-user-or-pass", homeController::wrongLogin, engine);
 		Spark.post("/wrong-user-or-pass", homeController::wrongLogin, engine);
+		Spark.get("/logout", homeController::logout,engine);
 
 		Spark.get("/map", homeController::map, engine);
 		
@@ -57,6 +58,7 @@ public class Router {
 		Spark.post("/agregar-disp", clienteController::agregarDisp,engine);
 		Spark.get("/eliminar-disp/:id", clienteController::eliminarDisp,engine);
 		Spark.post("/crear-regla", clienteController::crearRegla,engine);
+		
   		
 	/*	Spark.get("/cuentas", empresasController::verArchivos,engine);
 		Spark.post("/cuentas", empresasController::cargarArchivos,engine);

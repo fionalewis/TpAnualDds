@@ -83,6 +83,14 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 			res.redirect("/wrong-user-or-pass");
 		return null;
 	}
+	
+	public ModelAndView logout(Request req, Response res){
+		Session sesion = req.session(false);
+		sesion.attribute("user", null);
+		System.out.println("bla bla i crasy now");
+		res.redirect("/login");
+		return null;
+	}
 
 	public ModelAndView map (Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
