@@ -216,8 +216,9 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 
 		Cliente cliente = new Cliente();
 		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
-		DispositivoInteligente disp = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripciom"));
-		new DispositivoRepository().deleteDispositivo(cliente.getNroDoc(), disp.getId());
+		//DispositivoInteligente disp = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripciom"));
+		long bb = 30;
+		new DispositivoRepository().deleteDispositivo(cliente.getNroDoc(),bb);
 		return new ModelAndView(model, "reglas.hbs");
 	}
 	

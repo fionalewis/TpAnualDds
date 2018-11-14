@@ -9,6 +9,7 @@ import modelo.devices.DispositivoInteligente;
 import modelo.devices.IntervaloDispositivo;
 import modelo.devices.IntervaloDispositivo.modo;
 import modelo.users.Cliente;
+import modelo.users.Reporte;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -65,13 +66,21 @@ public class AdminController {
 		
 		double horasDeConsumo = cliente.consumoXPeriodo(inicio, fin);
 		
+		Reporte reporte = new Reporte();
+		long consumoEstandar = reporte.CalculoConsumoDispsEstandares();
+		long consumoInteligente = reporte.CalculoConsumoDispsInteligentes();
+		
+		
 		//Reporte de consumo por hogar/periodo 
 		model.put("nombre",cliente.getNombre());
 		model.put("periodoHogarInicio",inicio);
 		model.put("periodoHogarFin",fin);
 		model.put("consumoHogar",horasDeConsumo);
 		
-		//Reporte de consumo promedio por tipo de dispositivos
+//		model.put("tipoDisp","Estandar");
+		model.put("consumoDispositivoEst",consumoEstandar);
+		model.put("consumoDispositivoInt",consumoInteligente);
+
 		/*model.put("tipoDisp",  );
 		model.put("periodoTipoDisp",  );
 		model.put("consumoDisp",  );
