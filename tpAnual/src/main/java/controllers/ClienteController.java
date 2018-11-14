@@ -219,7 +219,6 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		//DispositivoInteligente disp = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripciom"));
 		long bb = 30;
 		System.out.println(req.queryParams("id"));
-		System.out.println("tu vieja");
 		String documento = cliente.getNroDoc();
 		String documento2 = "";
 		new DispositivoRepository().deleteDispositivo(documento, Long.parseLong(req.queryParams("id")));
