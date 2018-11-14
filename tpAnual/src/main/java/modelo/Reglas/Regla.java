@@ -26,8 +26,8 @@ public class Regla {
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "Regla")
-	private List<Condicion> condiciones = new ArrayList<>(); // condiciones q c/u es una comparacion binaria
-	
+	private List<CondicionSensorYValor> condiciones = new ArrayList<>(); // condiciones q c/u es una comparacion binaria
+	//esto esta mal en realidad deberia agregar el otro tipo de condicion 
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "Regla")
 	private List<Actuador> actuadores = new ArrayList<>(); //acciones
@@ -50,13 +50,13 @@ public class Regla {
 	
 	//getters y setters
 	
-	public void setCondiciones(List<Condicion> comparaciones){
+	public void setCondiciones(List<CondicionSensorYValor> comparaciones){
 		this.condiciones = comparaciones;
 	}
-	public List<Condicion> getCondiciones(){
+	public List<CondicionSensorYValor> getCondiciones(){
 		return this.condiciones;
 	}
-	public void agregarCondicion(Condicion unaCondicion){
+	public void agregarCondicion(CondicionSensorYValor unaCondicion){
 		condiciones.add(unaCondicion);
 	}
 	public void quitarCondicion(Condicion unaCondicion){
@@ -141,12 +141,12 @@ public class Regla {
 		}
 	}
 
-	public void crearCondicionDosSensores(Sensor sen1, Sensor sen2, String comparacion){ 
+	/*public void crearCondicionDosSensores(Sensor sen1, Sensor sen2, String comparacion){ 
 		Condicion comp = new CondicionDosSensores(sen1,sen2,comparacion); //sen1 comparacion sen2
 		condiciones.add(comp);
-	}
+	}*/
 	public void crearCondicionSensoresYValor(Sensor sen1, double valorFijo, String comparacion){
-		Condicion comp = new CondicionSensorYValor(sen1,valorFijo,comparacion); //sen1 comparacion valor
+		CondicionSensorYValor comp = new CondicionSensorYValor(sen1,valorFijo,comparacion); //sen1 comparacion valor
 		condiciones.add(comp);
 	}
 	

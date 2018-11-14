@@ -51,7 +51,8 @@ public class JsonManager {
 	public static String maru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\";
 	public static String salo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\tpAnual\\JSONs\\";
 	public static String linux = "//home//dds//git//TpAnualDds//tpAnual//JSONs//";
-
+	public static String agus = "C:\\Users\\User\\Desktop\\Facultad\\Tercer año\\Diseño de sistemas\\TpAnualDds\\tpAnual\\JSONs\\";
+	
 	public static String jsonClientes = "jsonClientes.json";
 	public static String jsonDisps = "jsonDispositivos.json";
 	public static String jsonAdmin = "jsonAdministradores.json";
@@ -62,7 +63,7 @@ public class JsonManager {
 	public static String jsonClientesCompletos = "JsonsParaPruebas\\clientesPruebaParaTransformador.json";
 
 	//RUTAS PRINCIPALES
-	public static String actual = fiona;
+	public static String actual = agus;
 	public static String rutaJsonClientes = actual + jsonClientes;
 	public static String rutaJsonDisp = actual + jsonDisps;
 	public static String rutaJsonAdmin = actual + jsonAdmin;

@@ -61,29 +61,29 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 		new Reporte().jobReporte(60000);// 1 min en ms  // 2592000000 es un mes
 		return;
 	}
-		// con estas borras lo que haya antes en la tabla para que te quede de cero lo de los jsons
-		// drop table if exists tp_anual_dds.actuador;
-		// drop table if exists tp_anual_dds.administrador;
+		/* con estas borras lo que haya antes en la tabla para que te quede de cero lo de los jsons
+		 drop table if exists tp_anual_dds.actuador;
+		 drop table if exists tp_anual_dds.administrador;
 
-		// drop table if exists tp_anual_dds.intervalodispositivo;
-		// drop table if exists tp_anual_dds.reporte;
-		// drop table if exists tp_anual_dds.dispositivo;
+		 drop table if exists tp_anual_dds.intervalodispositivo;
+		 drop table if exists tp_anual_dds.reporte;
+		 drop table if exists tp_anual_dds.dispositivo;
 
-		// drop table if exists tp_anual_dds.cliente;
-		// drop table if exists tp_anual_dds.transformador;
+		 drop table if exists tp_anual_dds.cliente;
+		 drop table if exists tp_anual_dds.transformador;
 
-		// drop table if exists tp_anual_dds.condicion;
-		// drop table if exists tp_anual_dds.registro_mediciones;
+		 drop table if exists tp_anual_dds.condicion;
+		 drop table if exists tp_anual_dds.registro_mediciones;
 
 
-		// drop table if exists tp_anual_dds.categoria;
-		// drop table if exists tp_anual_dds.condicion_dos_sensores;
-		// drop table if exists tp_anual_dds.condicion_sensor_y_valor;
-		// drop table if exists tp_anual_dds.regla;
+		 drop table if exists tp_anual_dds.categoria;
+		 drop table if exists tp_anual_dds.condicion_dos_sensores;
+		 drop table if exists tp_anual_dds.condicion_sensor_y_valor;
+		 drop table if exists tp_anual_dds.regla;
 
-		// drop table if exists tp_anual_dds.sensor;
-		// drop table if exists tp_anual_dds.zona;
-
+		 drop table if exists tp_anual_dds.sensor;
+		drop table if exists tp_anual_dds.zona;
+		*/
 
 	public void init() {
 		
