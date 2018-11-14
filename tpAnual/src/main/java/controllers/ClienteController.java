@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.Map.Entry;
 import java.util.logging.FileHandler;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -16,6 +18,7 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
+import javax.persistence.Convert;
 import javax.persistence.NoResultException;
 
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
@@ -68,7 +71,10 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		Cliente cliente = new Cliente();
 		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
-		model.put("consumo", cliente.consumoXPeriodo(fechaInicio, fechaFin));
+		DispositivoRepository disp = new DispositivoRepository();
+		List <Dispositivo> d = disp.getDispositivosDeUnCliente(cliente.getNroDoc());
+		List <Dispositivo> de = d.stream().filter(UnDisp -> UnDisp.getEsInteligente()).collect(Collectors.toList()); 
+		model.put("consumo", de.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(fechaInicio,fechaFin)).sum());
 		}
 		return new ModelAndView(model, "consumo.hbs");
 	}
@@ -94,8 +100,15 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		cliente.agregarDispositivo(disp2);
 		cliente.agregarDispositivo(disp3);
 		*/
-		model.put("consumo", cliente.consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now()));
-		model.put("dispositivos",  cliente.obtenerLista("IyC"));
+		DispositivoRepository disp = new DispositivoRepository();
+		List <Dispositivo> d = disp.getDispositivosDeUnCliente(cliente.getNroDoc());
+		List <Dispositivo> di = d.stream().filter(UnDisp -> UnDisp.getEsInteligente()).collect(Collectors.toList()); 
+		List <Dispositivo> de = d.stream().filter(UnDisp -> UnDisp.getEsInteligente() != true).collect(Collectors.toList());
+		double consumoDE = di.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(LocalDateTime.now().minusMonths(1),LocalDateTime.now())).sum();
+		double consumoDS = de.stream().mapToDouble(UnDisp -> ((DispositivoEstandar) UnDisp).consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now())).sum();
+		//model.put("consumo", cliente.consumoXPeriodoNuevo(LocalDateTime.now().minusMonths(1), LocalDateTime.now(),disp));
+		model.put("consumo", consumoDE + consumoDS);
+		model.put("dispositivos", d);
 		return new ModelAndView(model, "hogar.hbs");
 	}
 	
@@ -119,19 +132,17 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
-		Cliente cliente = new Cliente();
+		/*Cliente cliente = new Cliente();
 		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
 		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
 		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
 		cliente.agregarDispositivo(disp1);
 		cliente.agregarDispositivo(disp2);
 		cliente.agregarDispositivo(disp3);
-		
+		*/
 
-
-		//List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
-		/*Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));*/
+		Cliente cliente = new Cliente();
+		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 			try {
 				if(cliente.hogarEficiente()){
 				model.put("eficiente","SI");
@@ -180,7 +191,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		Cliente cliente = new Cliente();
 		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		//model.put("consumo", cliente.consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now()));
-		model.put("dispositivos",  cliente.obtenerLista("IyC"));
+		model.put("dispositivos", new DispositivoRepository().getDispositivosDeUnCliente(cliente.getNroDoc()));
 		return new ModelAndView(model, "reglas.hbs");
 	}
 	
@@ -255,11 +266,10 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		String nombreRegla = req.queryParams("nombre");
 		String criterio = req.queryParams("criterio");
 		Sensor sensor = new Sensor(req.queryParams("magnitud"),Double.parseDouble(req.queryParams("valor")),Integer.parseInt(req.queryParams("intervalo")));
-		new SensorRepository().addSensor(sensor);
 		CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,Double.parseDouble(req.queryParams("valorCondicion")),req.queryParams("comparacion"));
+		condicion.setNombreCondicion(req.queryParams("nombreCondicion"));
 		// hace falta agregar el nombre a la condicion
 		Actuador actuador = new Actuador(Integer.parseInt(req.queryParams("idFabricante")),req.queryParams("orden"));
-		new ActuadorRepository().addActuador(actuador);
 		Regla regla = new Regla(nombreRegla,null,criterio);
 		regla.agregarCondicion(condicion);
 		regla.agregarActuador(actuador);
@@ -276,15 +286,38 @@ public ModelAndView agregarDispPantalla(Request req, Response res){
 	}
 
 	public ModelAndView agregarDisp(Request req, Response res){
-		DispositivoInteligente disp1 = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripciom"));
 		Cliente cliente = new Cliente();
 		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+		if(req.queryParams("tipo").equals("INTELIGENTE"))
+		{
+			DispositivoInteligente disp1 = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripcion"));
+			disp1.setkWh(Double.parseDouble(req.queryParams("kWh")));
+			disp1.setHorasDeUso(Double.parseDouble(req.queryParams("horasDiarias")));
+			disp1.setEsBajoConsumo(Boolean.valueOf(req.queryParams("bajoConsumo")));
+			DispositivoRepository d = new DispositivoRepository();
+			disp1.encender();
+			d.addDispositivo(disp1);
+			d.addDispositivoConCliente(cliente.getNroDoc(),disp1);
+			//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
+			res.redirect("/reglas");
+			return null;
+
+		}
+		else{
+			DispositivoEstandar disp1 = new DispositivoEstandar();
+			disp1.setNombreDisp(req.queryParams("nombre"));
+			disp1.setEquipoConcreto(req.queryParams("descripcion"));
+		disp1.setkWh(Double.parseDouble(req.queryParams("kWh")));
+		disp1.setHorasDeUso(Double.parseDouble(req.queryParams("horasDiarias")));
+		disp1.setEsBajoConsumo(Boolean.valueOf(req.queryParams("bajoConsumo")));
 		DispositivoRepository d = new DispositivoRepository();
 		d.addDispositivo(disp1);
 		d.addDispositivoConCliente(cliente.getNroDoc(),disp1);
 		//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
 		res.redirect("/reglas");
 		return null;
+		}
+		
 	}
 
 	
