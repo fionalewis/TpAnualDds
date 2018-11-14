@@ -36,7 +36,11 @@ public class Router {
 
  		Spark.get("/", homeController::home, engine);
  		Spark.get("/login", homeController::login, engine);
-  		Spark.post("/login", homeController::newSession);
+		Spark.post("/login", homeController::newSession);
+		  
+		Spark.get("/login-admin", homeController::loginAdmin, engine);
+		Spark.post("/login-admin", homeController::newSessionAdmin);
+
 		Spark.get("/wrong-user-or-pass", homeController::wrongLogin, engine);
 		Spark.post("/wrong-user-or-pass", homeController::wrongLogin, engine);
 		Spark.get("/logout", homeController::logout,engine);
@@ -98,6 +102,7 @@ public class Router {
 	
 	private static void setPublicRoutes(Set<String> publicRoutes){
 		publicRoutes.add("/login");
+		publicRoutes.add("/login-admin");
 		publicRoutes.add("/wrong-user-or-pass");
 		publicRoutes.add("/map");
 	}

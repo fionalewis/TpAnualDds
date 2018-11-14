@@ -13,6 +13,7 @@ import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
 import modelo.geoLocation.Transformador;
 import modelo.geoLocation.Zona;
+import modelo.repositories.AdministradorRepository;
 import modelo.repositories.ClienteRepository;
 import modelo.repositories.DispositivoRepository;
 import modelo.repositories.ReporteRepository;
@@ -41,13 +42,19 @@ import spark.Session;
 public class HomeController implements WithGlobalEntityManager, TransactionalOps{
 	
 	public ModelAndView home(Request req, Response res){
-		
-		return new ModelAndView(null, "/home.hbs");
+		Map<String, Object> model = new HashMap<>();
+		model.put("isAdmin", req.session().attribute("isAdmin"));		
+		return new ModelAndView(model, "/home.hbs");
 	}
 	
 	public ModelAndView login (Request req, Response res){
 	
 		return new ModelAndView(null, "/login.hbs");
+	}
+
+	public ModelAndView loginAdmin (Request req, Response res){
+	
+		return new ModelAndView(null, "/login-admin.hbs");
 	}
 	
 	public ModelAndView wrongLogin (Request req, Response res){
@@ -77,6 +84,37 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		{
 			Session sesion = req.session(true);
 			sesion.attribute("user", username);
+			sesion.attribute("esAdmin",false);
+			res.redirect("/");
+		}
+		else
+			res.redirect("/wrong-user-or-pass");
+		return null;
+	}
+
+	public Void newSessionAdmin(Request req, Response res){
+		//creo que se podría reusar la otra pero por las dudas hoy no lo quiero tocar
+		String username = req.queryParams("user");
+		String pass = req.queryParams("password");
+		Administrador user = new Administrador();
+		try
+		{
+		//TODO ir a buscar a la base de datos al cliente posta
+		//Cliente cliente = ClienteFactory.getCliente(nroDoc);
+		//user = ClienteFactory.getCliente(username);
+		user = AdministradorRepository.getAdminConNombre(username);
+		//	user.setUserName("user");
+		//	user.setPassword("pass");
+		}
+		catch (NoResultException e)
+		{
+			res.redirect("/archivo-incorrecto");
+		}
+		if(user.loginCorrecto(pass))
+		{
+			Session sesion = req.session(true);
+			sesion.attribute("user", username);
+			sesion.attribute("esAdmin",true);
 			res.redirect("/");
 		}
 		else

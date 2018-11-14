@@ -76,7 +76,10 @@ public class AdministradorRepository {
 		EntityManagerHelper.closeEntityManager();
 	}
 	
-	
-
-	
+	public static Administrador getAdminConNombre(String username) {
+		EntityManagerHelper.beginTransaction();
+		Administrador admin = (Administrador) EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM Administrador where userName = '" + username + "'",Administrador.class).getSingleResult();
+		EntityManagerHelper.closeEntityManager();
+		return admin;
+	}	
 }

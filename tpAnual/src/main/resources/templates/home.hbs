@@ -1,5 +1,7 @@
 
 {{#partial "contenido"}}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <!DOCTYPE html>
 
 <head>
@@ -7,35 +9,46 @@
   <title>Home</title>
 </head>
 
-<body>
+<div id="isAdmin" hidden>{{isAdmin}}</div>
 
-		 	<h3>Bienvenido al sistema!</h3>
+<body>
+	
+		 	<h3>¡Bienvenido al sistema!</h3>
 		 	<br />
-		 	Elija una opcion
-		 	<li>
+		 	<h4>Elija una opcion</h4>
+		<ul class="list-group list-group-flush">
+		 	<li name="cliente" class="list-group-item">
 		 	<a href="/hogar">Estado del Hogar </a>
 		 	</li>
-		 	<li>
+		 	<li name="cliente" class="list-group-item">
 		 	<a href="/consumo">Consulta consumo por periodo </a>
 		 	</li>
-		 	<li>
+		 	<li name="cliente" class="list-group-item">
 		 	<a href="/simplex">Hogar eficiente </a>
 		 	</li>
-		 	<li>
+		 	<li name="cliente" class="list-group-item">
 		 	<a href="/reglas">Reglas y Dispositivos </a>
 		 	</li>
-		 	<li>
+		 	<li name="admin" class="list-group-item">
 		 	<a href="/hogar_consumo">Hogares y sus consumos</a>
 		 	</li>
-		 	<li>
+		 	<li name="admin" class="list-group-item">
 		 	<a href="/reportes">Reportes de consumos</a>
 		 	</li>
-		 	<li>
+		 	<li name="admin" class="list-group-item">
 		 	<a href="/carga">Carga de dispositivos </a>
 		 	</li>
-		 	
-		 	
-
+		</ul>
+		
 </body>
+<script>
+	var isAdmin = $("#isAdmin").html();
+	if(isAdmin == "true"){
+		$('[name="cliente"]').hide();
+	}
+	else{
+		$('[name="admin"]').hide();
+	}
+</script>
 {{/partial}}
 {{>mainLayout.hbs}}
