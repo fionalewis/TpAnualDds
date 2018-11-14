@@ -22,15 +22,22 @@
 		<tr>
 			<th>Nombre</th>
 			<th>Estado</th>
+			<th>ID</th>
 			<th> Dar de baja</th>
 		</tr>
 		{{#each dispositivos}}
 		<tr>
+		<form action="/eliminar-disp" method="POST">
 			<td>{{nombreDisp}}</td>
 			<td>{{estadoDisp}}</td>
+			<td type="text" name="id" value="{{id}}">{{id}}</td>
+			    <select name="id" hidden>
+		  			<option value="{{id}}">{{id}}</option>
+				</select>
 			<td>
-				<a class="btn btn-secondary" href="eliminar-disp/{{nombreDisp}}">Eliminar</a>
+				<button class="btn btn-secondary" type="submit">Eliminar</a>
 			</td>
+		</form>
 		</tr>
 		{{/each}}
 	</table>

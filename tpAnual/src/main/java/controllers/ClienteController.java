@@ -218,8 +218,13 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		//DispositivoInteligente disp = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripciom"));
 		long bb = 30;
-		new DispositivoRepository().deleteDispositivo(cliente.getNroDoc(),bb);
-		return new ModelAndView(model, "reglas.hbs");
+		System.out.println(req.queryParams("id"));
+		System.out.println("tu vieja");
+		String documento = cliente.getNroDoc();
+		String documento2 = "";
+		new DispositivoRepository().deleteDispositivo(documento, Long.parseLong(req.queryParams("id")));
+		res.redirect("/reglas");
+		return null;
 	}
 	
 	public ModelAndView crearRegla(Request req, Response res){
@@ -276,7 +281,8 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		regla.agregarActuador(actuador);
 		new ReglaRepository().addRegla(regla);
 		model.put("mensajeRegla", "Nueva Regla creada exitosamente");
-		return new ModelAndView(model, "reglas.hbs");
+		res.redirect("/reglas");
+		return null;
 	}
 
 
