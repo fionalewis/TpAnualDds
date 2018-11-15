@@ -43,7 +43,7 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 	
 	public ModelAndView home(Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
-		model.put("isAdmin", req.session().attribute("isAdmin"));		
+		model.put("esAdmin", req.session().attribute("esAdmin"));		
 		return new ModelAndView(model, "/home.hbs");
 	}
 	

@@ -9,13 +9,17 @@
   <title>Home</title>
 </head>
 
-<div id="isAdmin" hidden>{{isAdmin}}</div>
+<div id="isAdmin" hidden>{{esAdmin}}</div>
 
 <body>
 	
-		 	<h3>¡Bienvenido al sistema!</h3>
+		 	<h2 style="padding-left:5px;">Consulta de estados, consumos y acciones</h2>
 		 	<br />
-		 	<h4>Elija una opcion</h4>
+		 	<h4 style="padding-left:5px;">Elija una opcion</h4>
+		 	<br />
+	<div class="container">
+		<div class="row">
+		<div style="float: left;width:40%;">
 		<ul class="list-group list-group-flush">
 		 	<li name="cliente" class="list-group-item">
 		 	<a href="/hogar">Estado del Hogar </a>
@@ -39,7 +43,12 @@
 		 	<a href="/carga">Carga de dispositivos </a>
 		 	</li>
 		</ul>
-		
+		</div>
+		<div style="float: left;width:60%;padding-left:70px;">
+			<img src="https://mansion-global-app.s3.amazonaws.com/stories/year-ahead-2018-smart-home-technology/media/smarthomes_yearinreview_lead-mr.jpg" style="max-height: 175px;">
+		</div>
+	</div>
+	</div>		
 </body>
 <script>
 	var isAdmin = $("#isAdmin").html();
