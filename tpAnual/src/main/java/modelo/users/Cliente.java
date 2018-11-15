@@ -328,14 +328,30 @@ public class Cliente extends Usuario {
         double horas = periodDays*24;
         return horas;
 	}
+	
+	public int calculoDias(LocalDateTime fechaInicio, LocalDateTime fechaFin){
+        Period period = Period.between(fechaInicio.toLocalDate(),fechaFin.toLocalDate());
+        return period.getDays();
+	}
+	
 	//funcion nueva
 	public double consumoXPeriodo(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
-		double horas = calculoHoras(fechaInicio, fechaFin);
+		double horas = calculoDias(fechaInicio, fechaFin);
 		double horasEstandar = obtenerLista("Estandar").stream().mapToDouble(unDisp ->((DispositivoEstandar) unDisp).getHorasUsoDiarias()*horas*(unDisp.getkWh())).sum();
 //		double horasInteligente = obtenerLista("Inteligente").stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(fechaInicio,fechaFin)).sum();
 //		double consumoTotal = horasEstandar + horasInteligente;
 	//	return consumoTotal;
 		return horasEstandar;
+	}
+	
+	public double consumoXPeriodoNuevo(LocalDateTime fechaInicio, LocalDateTime fechaFin,DispositivoRepository disp){
+		double horas = calculoHoras(fechaInicio, fechaFin);
+		List <Dispositivo> de = disp.getListaDispositivos("estandar");
+		List <Dispositivo> di = disp.getListaDispositivos("inteligente");
+		double horasEstandar = de.stream().mapToDouble(unDisp ->((DispositivoEstandar) unDisp).getHorasUsoDiarias()*horas*(unDisp.getkWh())).sum();
+		double horasInteligente = di.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(fechaInicio,fechaFin)).sum();
+		double consumoTotal = horasEstandar + horasInteligente;
+		return consumoTotal;
 	}
 	
 	//Este metodo quizas deberia ir en el administrador mas adelante, pero por ahora lo consultamos directamente desde el cliente
@@ -347,7 +363,7 @@ public class Cliente extends Usuario {
 	}
 	
 	public List<Dispositivo> listaSimplex() {
-		List<Dispositivo> aAnalizar = dispositivos;
+		List<Dispositivo> aAnalizar = new DispositivoRepository().getDispositivosDeUnCliente(this.getNroDoc());
 		List<Dispositivo> toRemove = new ArrayList<>();
 		for(Dispositivo unDisp: dispositivos){
 		    if(unDisp.getHorasUsoMax()==-1){

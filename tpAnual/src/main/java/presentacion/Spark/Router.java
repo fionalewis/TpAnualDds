@@ -60,7 +60,7 @@ public class Router {
 		Spark.get("/reglas", clienteController::reglasydisp,engine);
 		Spark.get("/agregar-disp", clienteController::agregarDispPantalla,engine);
 		Spark.post("/agregar-disp", clienteController::agregarDisp,engine);
-		Spark.get("/eliminar-disp/:id", clienteController::eliminarDisp,engine);
+		Spark.post("/eliminar-disp", clienteController::eliminarDisp,engine);
 		Spark.post("/crear-regla", clienteController::crearRegla,engine);
 		
   		

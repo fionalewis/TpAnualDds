@@ -105,6 +105,20 @@ public class DispositivoEstandar<Reporte> extends Dispositivo {
 		}
 		
 		
+		public int calculoDias(LocalDateTime fechaInicio, LocalDateTime fechaFin){
+	        Period period = Period.between(fechaInicio.toLocalDate(),fechaFin.toLocalDate());
+	        return period.getDays();
+		}
+		
+		public double consumoXPeriodo(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+			double horas = calculoDias(fechaInicio, fechaFin);
+			double horasEstandar = this.getHorasUsoDiarias()*horas*this.getkWh();
+//			double horasInteligente = obtenerLista("Inteligente").stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(fechaInicio,fechaFin)).sum();
+//			double consumoTotal = horasEstandar + horasInteligente;
+		//	return consumoTotal;
+			return horasEstandar;
+		}
+		
 		
 		//Tengo que ver como hacer con esto sorry
 		
