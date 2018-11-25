@@ -150,7 +150,14 @@
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
-        </configuration>            	
+        </configuration>      
+		<executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals><goal>copy-dependencies</goal></goals>
+                    </execution>
+                </executions>      	
       </plugin>
     </plugins>
   </build>
