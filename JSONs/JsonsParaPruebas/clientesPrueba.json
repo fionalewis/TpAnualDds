@@ -1,0 +1,26 @@
+[  
+   {  
+      "tipoDoc": "DNI",
+      "nroDoc": "40505652",
+      "telefono": "45454545",
+      "domicilio": "Avenida Corrientes y Avenida Medrano",
+      "nombre": "Juan",
+      "apellido": "López",
+      "userName": "juancitoperez",
+      "password": "contrasenia",
+      "dispositivos":[
+	  ]
+   },
+   {  
+      "tipoDoc": "DNI",
+      "nroDoc": "20505652",
+      "telefono": "55454545",
+      "domicilio": "Medrano 951",
+      "nombre": "Homero",
+      "apellido": "Thompson",
+      "userName": "B0ssman69",
+      "password": "12345",
+      "dispositivos":[
+	  ]
+   }
+]

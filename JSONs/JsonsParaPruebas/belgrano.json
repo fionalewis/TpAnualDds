@@ -1,0 +1,54 @@
+{
+   "results" : [
+      {
+         "address_components" : [
+            {
+               "long_name" : "Avenida Congreso & Avenida Cabildo",
+               "short_name" : "Av. Congreso & Av. Cabildo",
+               "types" : [ "intersection" ]
+            },
+            {
+               "long_name" : "Núñez",
+               "short_name" : "Núñez",
+               "types" : [ "political", "sublocality", "sublocality_level_1" ]
+            },
+            {
+               "long_name" : "Comuna 13",
+               "short_name" : "Comuna 13",
+               "types" : [ "administrative_area_level_2", "political" ]
+            },
+            {
+               "long_name" : "Buenos Aires",
+               "short_name" : "CABA",
+               "types" : [ "administrative_area_level_1", "political" ]
+            },
+            {
+               "long_name" : "Argentina",
+               "short_name" : "AR",
+               "types" : [ "country", "political" ]
+            }
+         ],
+         "formatted_address" : "Av. Congreso & Av. Cabildo, Buenos Aires, Argentina",
+         "geometry" : {
+            "location" : {
+               "lat" : -34.5554968,
+               "lng" : -58.4625885
+            },
+            "location_type" : "GEOMETRIC_CENTER",
+            "viewport" : {
+               "northeast" : {
+                  "lat" : -34.5541478197085,
+                  "lng" : -58.46123951970849
+               },
+               "southwest" : {
+                  "lat" : -34.5568457802915,
+                  "lng" : -58.4639374802915
+               }
+            }
+         },
+         "place_id" : "EjNBdi4gQ29uZ3Jlc28gJiBBdi4gQ2FiaWxkbywgQnVlbm9zIEFpcmVzLCBBcmdlbnRpbmEiZiJkChQKEgkt-K37KbS8lRFXWj7zsxiTBRIUChIJLfit-ym0vJURV1o-87MYkwUaFAoSCXXtQlGItryVEXhiBx-69LHSGhQKEgn1fx3vLLS8lRFVJ3AoWpqzsSIKDeg_Z-sVI1En3Q",
+         "types" : [ "intersection" ]
+      }
+   ],
+   "status" : "OK"
+}
