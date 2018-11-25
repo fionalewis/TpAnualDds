@@ -1,4 +1,4 @@
-package tpAnual;
+/*package tpAnual;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -56,4 +56,4 @@ public class TestCliente {
 		Assert.assertEquals(clienteDePrueba.cantDisp(true),1);
 		System.out.println("Test cantDispositivosApagados:\n Al tener únicamente a la tele en la lista, la cantidad de dispositivos encendidos es uno: " + clienteDePrueba.cantDisp(true));
 	}*/
-}
+//}

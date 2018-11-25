@@ -1,4 +1,4 @@
-package tpAnual;
+/*package tpAnual;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,4 +97,4 @@ public class TestRegla {/*
 				+ "La regla devolvio: " + reglaCopada.getState()); 
 	}*/
 	
-}
+/*}*/

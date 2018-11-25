@@ -1,4 +1,4 @@
-package tpAnual;
+/*package tpAnual;
 
 import java.io.FileNotFoundException;
 
@@ -131,4 +131,4 @@ public class TestMetodoSimplex {
 		System.out.println("Las horas m�ximas para el dispositivo x3 (Microondas convencional - CONVERTIDO) son: " + solucionSCD.getPoint()[2]);
 	}
 	
-}
+}*/

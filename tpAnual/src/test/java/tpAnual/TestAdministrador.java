@@ -1,4 +1,4 @@
-package tpAnual;
+/*package tpAnual;
 
 import org.junit.Assert;
 
@@ -25,4 +25,4 @@ public class TestAdministrador {
 		System.out.println("Test cantidadDeMesesComoAdmin: En el intervalo seleccionado han pasado 42 meses: " + adminDePrueba.cantMesesComoAdmin(fechaR));
 	}
 
-}
+}*/

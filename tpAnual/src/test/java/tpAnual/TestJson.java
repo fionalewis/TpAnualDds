@@ -1,4 +1,4 @@
-package tpAnual;
+/*package tpAnual;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -78,4 +78,4 @@ public class TestJson {
 		System.out.println("Test JsonTraeCategorias:\n El valor de cargoVariable de R9 es 0.851: " + categorias.get(8).getCargoVariable());
     }
 
-}
+}*/
