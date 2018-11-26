@@ -151,17 +151,17 @@
           <appName>tpdds</appName>
           <source>1.8</source>
           <target>1.8</target>
-            <processTypes>
-			     <web>java $JAVA_OPTS -cp target/classes:target/dependency/* Server</web>
-			</processTypes>
         </configuration>
       </plugin>
       <plugin>
 			<groupId>com.heroku.sdk</groupId>
 			<artifactId>heroku-maven-plugin</artifactId>
-			<version>0.5.1</version>
+			<version>2.0.6</version>
 			<configuration>
-			 <appName>tpDdS</appName>
+			 <appName>ancient-badlands-87097</appName>
+			             <processTypes>
+			     <web>java -cp target/classes:target/dependency/* presentacion.Spark.Server</web>
+			</processTypes>s
 			</configuration>
 	  </plugin>
     </plugins>
