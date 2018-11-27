@@ -35,7 +35,7 @@ public class CondicionDosSensores extends Condicion{
 	@Override
 	public void update(){
 		this.estado = evaluar(sensor1.getMagnitud(), sensor2.getMagnitud());	
-		System.out.println("Se evalu¨® si: ");
+		System.out.println("Se evalu si: ");
 		System.out.println("\nEl sensor 1, " + sensor1.getNombreMagnitud() + " = " + sensor1.getMagnitud());
 		System.out.println(" es: " + comparacion + " al ");
 		System.out.println(" sensor 2, " + sensor2.getNombreMagnitud() + " = " + sensor2.getMagnitud());

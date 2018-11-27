@@ -32,7 +32,7 @@ public class CondicionSensorYValor extends Condicion{
 	@Override
 	public void update(){
 		this.estado = evaluar(sensor.getMagnitud(), valorFijo); //evalua la condicion y le avisa regla
-		System.out.println("Se evalu¨® si: ");
+		System.out.println("Se evalu si: ");
 		System.out.println("\nEl sensor, " + sensor.getNombreMagnitud() + " = " + sensor.getMagnitud());
 		System.out.println(" es: " + comparacion + " al ");
 		System.out.println(" valor fijo = " + valorFijo);
