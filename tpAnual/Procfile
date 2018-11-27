@@ -1,1 +1,1 @@
-web: java --server.port=${PORT:8080} -cp target/classes/:target/dependency/* presentacion.Spark.Server
+web: java --server.port=${PORT:9001} -cp target/classes/:target/dependency/* presentacion.Spark.Server
