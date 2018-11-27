@@ -162,7 +162,7 @@
             <programs>
                 <program>
                     <mainClass>Server</mainClass>
-                    <name>runserv</name>
+                    <name>server</name>
                 </program>
             </programs>
           </configuration>
