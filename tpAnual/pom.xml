@@ -160,7 +160,7 @@
 			<configuration>
 			 <appName>ancient-badlands-87097</appName>
 			             <processTypes>
-			     <web>java -cp target/classes:target/dependency/* presentacion.Spark.Server</web>
+			     <web>java -Dserver.port=${PORT:8080} -cp target/classes:target/dependency/* presentacion.Spark.Server</web>
 			</processTypes>
 			</configuration>
 	  </plugin>
