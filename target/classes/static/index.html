@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>React + Spring</title>
+</head>
+<body>
+    <div id='root'></div>
+
+    <script src="https://fb.me/react-15.0.1.js"></script>
+    <script src="https://fb.me/react-dom-15.0.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <script type="text/babel">
+
+//Codigo
+
+var App = React.createClass({
+
+  loadDispositivosFromServer: function () {
+    var self = this;
+    $.ajax({
+      url: "http://localhost:8080/api/dispositivoes"
+    }).then(function (data) {
+      self.setState({dispositivos: data._embedded.dispositivoes});
+    });
+  },
+
+  getInitialState: function () {
+    return {dispositivos: []};
+  },
+
+  componentDidMount: function () {
+    this.loadDispositivosFromServer();
+  },
+
+  render() {
+    return ( <DispositivoTable dispositivos={this.state.dispositivos}/> );
+  }
+});
+
+    var Dispositivo = React.createClass({
+      render: function() {
+        return (
+          <tr>
+            <td>{this.props.dispositivo.nombre}</td>
+            <td>{this.props.dispositivo.kwh}</td>
+          </tr>);
+      }
+    });
+
+var DispositivoTable = React.createClass({
+  render: function() {
+    var rows = [];
+    this.props.dispositivos.forEach(function(dispositivo) {
+      rows.push(<Dispositivo dispositivo={dispositivo} />);
+    });
+    return (
+
+      <div className="container">
+  <table className="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>kwh</th>
+      </tr>
+    </thead>
+    <tbody>{rows}</tbody>
+  </table>
+</div>);
+  }
+});
+
+var DISPOSITIVOS = [
+  {nombre: 'Heladera Epson', kWh: 45},
+  {nombre: 'Luz led del living', kWh: 20},
+  {nombre: 'Aire acondicionado ACME', kWh: 150}
+];
+
+ReactDOM.render(
+  <App />, document.getElementById('root')
+);
+
+
+</script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</body>
+</html>
