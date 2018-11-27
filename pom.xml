@@ -84,18 +84,6 @@
 			<artifactId>handlebars-helpers</artifactId>
 			<version>4.0.6</version>
 		</dependency>
-		
-		<dependency>
-			<groupId>com.github.jknack</groupId>
-			<artifactId>handlebars-humanize</artifactId>
-			<version>4.0.6</version>
-		</dependency>
-		
-				<dependency>
-			<groupId>com.github.jknack</groupId>
-			<artifactId>handlebars-helpers</artifactId>
-			<version>4.0.6</version>
-		</dependency>
 
 		<dependency>
 			<groupId>com.github.jknack</groupId>
