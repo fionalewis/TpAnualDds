@@ -1,1 +1,1 @@
-web: java -cp target/classes/:target/dependency/* presentacion.Spark.Server
+web: java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes/:target/dependency/* presentacion.Spark.Server
