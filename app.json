@@ -1,0 +1,7 @@
+{
+  "name": "TpAnualDds",
+  "description": "ejem",
+  "repository":"https://github.com/fionalewis/TpAnualDds",
+  "image": "heroku/java",
+  "addons": [ "heroku-cleardb" ]
+}

@@ -5,7 +5,11 @@
   <groupId>proyectoDdS</groupId>
   <artifactId>tpDdS</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> herokubdd
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -19,9 +23,15 @@
 		</dependency>
 		
 		<dependency>
+<<<<<<< HEAD
 	    	<groupId>com.heroku.sdk</groupId>
 	    	<artifactId>heroku-maven-plugin</artifactId>
 	    	<version>2.0.6</version>
+=======
+			<groupId>com.heroku.sdk</groupId>
+			<artifactId>heroku-maven-plugin</artifactId>
+			<version>1.0.3</version>
+>>>>>>> herokubdd
 		</dependency>
 		
 		<dependency>
@@ -84,6 +94,7 @@
 			<artifactId>handlebars-helpers</artifactId>
 			<version>4.0.6</version>
 		</dependency>
+<<<<<<< HEAD
 		
 		<dependency>
 			<groupId>com.github.jknack</groupId>
@@ -96,6 +107,8 @@
 			<artifactId>handlebars-helpers</artifactId>
 			<version>4.0.6</version>
 		</dependency>
+=======
+>>>>>>> herokubdd
 
 		<dependency>
 			<groupId>com.github.jknack</groupId>
@@ -148,6 +161,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.1</version>
         <configuration>
+<<<<<<< HEAD
           <appName>tpdds</appName>
           <source>1.8</source>
           <target>1.8</target>
@@ -164,6 +178,73 @@
 			</processTypes>s
 			</configuration>
 	  </plugin>
+=======
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>            	
+      </plugin>
+	  
+	  <plugin>
+		<groupId>com.heroku.sdk</groupId>
+		<artifactId>heroku-maven-plugin</artifactId>
+		<version>2.0.6</version>
+		<configuration>
+			<appName>tpAnualDdsHeroku</appName>
+		</configuration>
+		</plugin>
+		
+		
+		<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                    <!-- Additional configuration. -->
+                </configuration>
+                <executions>
+                    <!-- Run shade goal on package phase -->
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <!-- add Main-Class to manifest file -->
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>Server</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+		
+		
+
+	  <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals><goal>copy-dependencies</goal></goals>
+                    </execution>
+                </executions>
+            </plugin>
+>>>>>>> herokubdd
     </plugins>
   </build>
 
