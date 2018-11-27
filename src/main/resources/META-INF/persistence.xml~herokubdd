@@ -30,9 +30,11 @@
         
          
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> 
-            <property name="hibernate.connection.url" value="jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_6ffa8e4b6d4ae6b?reconnect=true?user=bea5b27f8e7650&password=47c770e3" /> 
-            <property name="hibernate.connection.username" value="bea5b27f8e7650" /> 
-            <property name="hibernate.connection.password" value="47c770e3" /> 
+			<!--<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp_anual_dds?serverTimeZone=UTC" />  -->
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp_anual_dds?serverTimezone=UTC" />
+			
+            <property name="hibernate.connection.username" value="root" /> 
+            <property name="hibernate.connection.password" value="mysql" /> 
 
 <!-- 
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> 
