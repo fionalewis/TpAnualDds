@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: tpAnual.TestDispositivo
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.003 sec <<< FAILURE!
-testInstanciarDosDisposIguales(tpAnual.TestDispositivo)  Time elapsed: 0.001 sec  <<< ERROR!
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.2 sec <<< FAILURE!
+testInstanciarDosDisposIguales(tpAnual.TestDispositivo)  Time elapsed: 0 sec  <<< ERROR!
 java.lang.NullPointerException
 	at com.google.gson.JsonParser.parse(JsonParser.java:81)
 	at modelo.JsonManager.inicializarFactory(JsonManager.java:233)
@@ -37,7 +37,7 @@ java.lang.NullPointerException
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
 
-testInstanciarDosDisposDistintos(tpAnual.TestDispositivo)  Time elapsed: 0 sec  <<< ERROR!
+testInstanciarDosDisposDistintos(tpAnual.TestDispositivo)  Time elapsed: 0.003 sec  <<< ERROR!
 java.lang.NullPointerException
 	at com.google.gson.JsonParser.parse(JsonParser.java:81)
 	at modelo.JsonManager.inicializarFactory(JsonManager.java:233)
