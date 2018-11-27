@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: tpAnual.TestAdministrador
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.114 sec <<< FAILURE!
-cantidadDeMesesComoAdmin(tpAnual.TestAdministrador)  Time elapsed: 0.114 sec  <<< FAILURE!
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec <<< FAILURE!
+cantidadDeMesesComoAdmin(tpAnual.TestAdministrador)  Time elapsed: 0 sec  <<< FAILURE!
 java.lang.AssertionError: expected:<45> but was:<42>
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.failNotEquals(Assert.java:743)

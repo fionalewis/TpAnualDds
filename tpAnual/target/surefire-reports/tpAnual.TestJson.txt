@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 Test set: tpAnual.TestJson
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.001 sec <<< FAILURE!
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.028 sec <<< FAILURE!
 testJsonTraeCategoriasYDatos(tpAnual.TestJson)  Time elapsed: 0.001 sec  <<< ERROR!
 java.lang.NullPointerException
 	at tpAnual.TestJson.testJsonTraeCategoriasYDatos(TestJson.java:71)
