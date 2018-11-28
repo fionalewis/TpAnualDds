@@ -47,6 +47,7 @@ public class Router {
 		Spark.get("/logout", homeController::logout,engine);
 
 		Spark.get("/map", homeController::map, engine);
+		Spark.get("/mapi", homeController::map, engine);
 		
 		Spark.get("/hogar_consumo", adminController::hogar_consumo,engine);
 		//Spark.post("/hogar_consumo", adminController::hogar_consumo);

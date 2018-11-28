@@ -137,7 +137,11 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		return null;
 	}
 
-	public ModelAndView map (Request req, Response res){
+	public Void map (Request req, Response res){
+		return new ModelAndView(null, "/map.hbs");
+	}
+
+	public ModelAndView mapi (Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
 		System.out.println("Entra");
 		List<Transformador> t = TransformadorRepository.getListaTranformadores();
