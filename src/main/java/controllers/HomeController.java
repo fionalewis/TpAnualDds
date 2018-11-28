@@ -11,6 +11,9 @@ import com.google.gson.Gson;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
+import exceptions.ExceptionsHandler;
+import modelo.DAOJson;
+import modelo.JsonManager;
 import modelo.geoLocation.Transformador;
 import modelo.geoLocation.Zona;
 import modelo.repositories.AdministradorRepository;
@@ -139,11 +142,17 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 
 	public ModelAndView map (Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
-		List<Zona> z = DispositivoRepository.getListaZonas();
+		//List<Zona> z = DispositivoRepository.getListaZonas();
+		List<Zona> zonas = null;
+		try {
+			zonas = DAOJson.deserializarLista(Zona.class,JsonManager.rutaJsonZonas);
+		} catch (Exception e) {
+			ExceptionsHandler.catchear(e);
+		}
 		String sz = new String();
 		int clearbd = 0;
 		while (clearbd<9){
-			sz += z.get(clearbd).getRadius() + ";" + z.get(clearbd).getCenter().getLatitude() + ";" + z.get(clearbd).getCenter().getLongitude() + ";";
+			sz += zonas.get(clearbd).getRadius() + ";" + zonas.get(clearbd).getCenter().getLatitude() + ";" + zonas.get(clearbd).getCenter().getLongitude() + ";";
 			clearbd++;
 		}
 		System.out.println("Salió del loop");
