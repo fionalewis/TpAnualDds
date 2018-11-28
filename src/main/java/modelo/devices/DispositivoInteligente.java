@@ -415,7 +415,9 @@ public class DispositivoInteligente extends Dispositivo {
 		intervalos.stream().forEach(unInt-> fInicios.add(unInt.getInicio()));
  		int i = 0, tam = intervalos.size();
 		LocalDateTime[] fechas = fInicios.toArray(new LocalDateTime[tam]);
-		
+		if(tam == 0) {
+			return 0;
+		}
 		LocalDateTime primerFI = intervalos.get(0).getInicio();
 		LocalDateTime primerFF = intervalos.get(0).getFin();
 		LocalDateTime ultFF = intervalos.get(tam-1).getFin();
