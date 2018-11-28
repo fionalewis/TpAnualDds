@@ -139,8 +139,11 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 
 	public ModelAndView map (Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
+		System.out.println("Entra");
 		List<Transformador> t = TransformadorRepository.getListaTranformadores();
+		System.out.println("lee transf");
 		List<Zona> z = DispositivoRepository.getListaZonas();
+		System.out.println("lee disps");
 		String s = new String();
 		String sz = new String();
 		int clearbd = 0;
@@ -150,10 +153,10 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		while (clearbd<9){
 			s += t.get(clearbd).getIdTransformador() + ";" + t.get(clearbd).suministroActual() + ";" + t.get(clearbd).getUbicacion().toString() + ";";
 			sz += z.get(clearbd).getRadius() + ";" + z.get(clearbd).getCenter().getLatitude() + ";" + z.get(clearbd).getCenter().getLongitude() + ";";
+			System.out.println("Entra al loop");
 			clearbd++;
 		}
-		System.out.println(s);
-		System.out.println(sz);
+		System.out.println("Salió del loop");
 		model.put("transformadores", s);
 		// for(Zona tt : z){
 		// 	sz += tt.getRadius() + ";" + tt.getCenter().getLatitude() + ";" + tt.getCenter().getLongitude() + ";";
