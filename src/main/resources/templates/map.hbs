@@ -19,13 +19,13 @@
   <script type="text/javascript">
  
     $( document ).ready(function() {
-    $.ajax({
+    
+$.ajax({
         url: "/mapi",
         type: "GET",
         cache : false,
         contentType : false,
         processData : false,
-        data: formData,
         success: function(res) {
             // success
             console.log(res)
@@ -34,7 +34,6 @@
             // error
         }
     });
-
       $("div.container").attr("style","width:100%");
       mapa = L.map('mapa', {
         center: [-34.598313, -58.463745],
