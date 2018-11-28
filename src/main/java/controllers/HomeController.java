@@ -11,9 +11,6 @@ import com.google.gson.Gson;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
-import exceptions.ExceptionsHandler;
-import modelo.DAOJson;
-import modelo.JsonManager;
 import modelo.geoLocation.Transformador;
 import modelo.geoLocation.Zona;
 import modelo.repositories.AdministradorRepository;
@@ -142,24 +139,13 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 
 	public ModelAndView map (Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
-		//List<Zona> z = DispositivoRepository.getListaZonas();
-		List<Zona> zonas = null;
-		try {
-			zonas = DAOJson.deserializarLista(Zona.class,JsonManager.rutaJsonZonas);
-		} catch (Exception e) {
-			ExceptionsHandler.catchear(e);
-		}
-		System.out.println(zonas.get(0).getRadius());
-		System.out.println(zonas.size());
+		String s = new String();
 		String sz = new String();
-		int clearbd = 0;
-		while (clearbd<9){
-			sz += zonas.get(clearbd).getRadius() + ";" + zonas.get(clearbd).getCenter().getLatitude() + ";" + zonas.get(clearbd).getCenter().getLongitude() + ";";
-			clearbd++;
-		}
-		System.out.println("Salió del loop");
+		s = "";
+		sz = "";
+		model.put("transformadores", s);
 		model.put("zonas",sz);
-		return new ModelAndView(model, "/map.hbs");
+		return new ModelAndView(null, "/map.hbs");
 	}
 
 	public ModelAndView mapi (Request req, Response res){
