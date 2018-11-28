@@ -142,7 +142,6 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		System.out.println("Entra");
 		List<Transformador> t = TransformadorRepository.getListaTranformadores();
 		System.out.println("lee transf ");
-		System.out.println(t.get(0).getIdTransformador());
 		List<Zona> z = DispositivoRepository.getListaZonas();
 		System.out.println("lee disps");
 		String s = new String();
@@ -154,7 +153,7 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		while (clearbd<9){
 			s += t.get(clearbd).getIdTransformador() + ";" + t.get(clearbd).suministroActual() + ";" + t.get(clearbd).getUbicacion().toString() + ";";
 			sz += z.get(clearbd).getRadius() + ";" + z.get(clearbd).getCenter().getLatitude() + ";" + z.get(clearbd).getCenter().getLongitude() + ";";
-			System.out.println("Entra al loop");
+			System.out.println("sum act "+ t.get(clearbd).suministroActual() );
 			clearbd++;
 		}
 		System.out.println("Salió del loop");

@@ -88,8 +88,6 @@ public class Transformador {
 			if (c.getTransformadorActual() != null && c.getTransformadorActual().getIdTransformador() == idTransformador) {	
 				for (Dispositivo d : DispositivoRepository.getDispositivosDeUnCliente(c.getNroDoc())){				
 					if (d.getEsInteligente()) {
-						System.out.println("- Suministro Actual - "+ d.id);
-						System.out.println(d.getFechaRegistro().toString());
 						consumo.add( ((DispositivoInteligente) d).consumoTotalEntre(d.getFechaRegistro(), LocalDateTime.now()) );
 					} else {
 						consumo.add( d.consumoTotal() );
