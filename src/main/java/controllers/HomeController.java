@@ -149,6 +149,8 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		} catch (Exception e) {
 			ExceptionsHandler.catchear(e);
 		}
+		System.out.println(zonas.get(0).getRadius());
+		System.out.println(zonas.size());
 		String sz = new String();
 		int clearbd = 0;
 		while (clearbd<9){
