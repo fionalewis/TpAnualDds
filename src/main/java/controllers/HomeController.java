@@ -141,7 +141,8 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		Map<String, Object> model = new HashMap<>();
 		System.out.println("Entra");
 		List<Transformador> t = TransformadorRepository.getListaTranformadores();
-		System.out.println("lee transf");
+		System.out.println("lee transf ");
+		System.out.println(t.get(0).getIdTransformador());
 		List<Zona> z = DispositivoRepository.getListaZonas();
 		System.out.println("lee disps");
 		String s = new String();
