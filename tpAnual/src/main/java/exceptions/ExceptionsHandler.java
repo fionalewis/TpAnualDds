@@ -11,7 +11,7 @@ public class ExceptionsHandler {
 		if (e instanceof FileNotFoundException) {
 			System.out.println("No se ha encontrado el archivo.");
 		} else if (e instanceof InstantiationException) {
-			System.out.println("Error en la inicialización.");
+			System.out.println("Error en la inicializaciï¿½n.");
 		} else if (e instanceof IllegalAccessException) {
 			System.out.println("Error de acceso.");
 		} else if (e instanceof CaracterInvalidoException) {

@@ -69,18 +69,13 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		Cliente user = new Cliente();
 		try
 		{
-		//TODO ir a buscar a la base de datos al cliente posta
-		//Cliente cliente = ClienteFactory.getCliente(nroDoc);
-		//user = ClienteFactory.getCliente(username);
 		user = ClienteRepository.obtenerCliente(username);
-		//	user.setUserName("user");
-		//	user.setPassword("pass");
 		}
 		catch (NoResultException e)
 		{
 			res.redirect("/archivo-incorrecto");
 		}
-		if(user.loginCorrecto(pass))
+		if(user != null && user.loginCorrecto(pass))
 		{
 			Session sesion = req.session(true);
 			sesion.attribute("user", username);
@@ -92,25 +87,20 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		return null;
 	}
 
-	public Void newSessionAdmin(Request req, Response res){
+	public Void newSessionAdmin(Request req, Response res) {
 		//creo que se podría reusar la otra pero por las dudas hoy no lo quiero tocar
 		String username = req.queryParams("user");
 		String pass = req.queryParams("password");
 		Administrador user = new Administrador();
 		try
 		{
-		//TODO ir a buscar a la base de datos al cliente posta
-		//Cliente cliente = ClienteFactory.getCliente(nroDoc);
-		//user = ClienteFactory.getCliente(username);
-		user = AdministradorRepository.getAdminConNombre(username);
-		//	user.setUserName("user");
-		//	user.setPassword("pass");
+			user = AdministradorRepository.getAdminConNombre(username);
 		}
 		catch (NoResultException e)
 		{
 			res.redirect("/archivo-incorrecto");
 		}
-		if(user.loginCorrecto(pass))
+		if(user != null && user.loginCorrecto(pass))
 		{
 			Session sesion = req.session(true);
 			sesion.attribute("user", username);

@@ -3,6 +3,8 @@ import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import db.EntityManagerHelper;
 import modelo.users.Administrador;
 import modelo.users.Cliente;

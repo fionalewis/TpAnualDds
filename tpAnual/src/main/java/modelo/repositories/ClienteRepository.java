@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import db.EntityManagerHelper;
 import modelo.devices.Dispositivo;
 import modelo.users.Cliente;
@@ -52,7 +54,7 @@ public class ClienteRepository {
 		Cliente cliente = EntityManagerHelper.getEntityManager().find(Cliente.class,dni);
 	    return cliente;
 	  }
-	public static Cliente obtenerCliente(String username){
+	public static Cliente obtenerCliente(String username) throws NoResultException{
 		List<Cliente> lista = new ClienteRepository().getTodosLosClientes();
 		Iterator<Cliente> iterator = lista.iterator();
 	    while (iterator.hasNext()) {
