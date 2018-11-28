@@ -377,7 +377,9 @@ public class DispositivoInteligente extends Dispositivo {
 		intervalos.stream().forEach(unInt-> fInicios.add(unInt.getInicio())); // Una lista con todas las fechas iniciales
  		int i = 0, tam = intervalos.size();
 		LocalDateTime[] fechas = fInicios.toArray(new LocalDateTime[tam]); // Creo un array para usar los indices que es mas facil que el get (para mi)
-		
+		if(tam == 0) {
+			return 0;
+		}
 		LocalDateTime primerFI = intervalos.get(0).getInicio();
 		LocalDateTime ultFI = intervalos.get(tam-1).getInicio();
 		LocalDateTime ultFF = intervalos.get(tam-1).getFin();
