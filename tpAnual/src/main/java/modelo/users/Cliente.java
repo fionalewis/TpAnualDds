@@ -72,7 +72,8 @@ public class Cliente extends Usuario {
 	
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
 	@Transient
-	private List<DispositivoEstandar> aux = new ArrayList<>(); 
+	private List<DispositivoEstandar> aux = new ArrayList<>();
+	protected double consumo = 0;
 	
 	public Cliente() {
 		super();
@@ -170,7 +171,12 @@ public class Cliente extends Usuario {
 	public void setPuntos(int puntos) {
 		this.puntos = puntos;
 	}
-	
+	public double getConsumo(){
+		return consumo;
+	}
+	public void setConsumo(double cons){
+		consumo = cons;
+	}
 	//Getters y Setters - Entrega 2
 	
 	public Transformador getTransformadorActual() {
@@ -254,7 +260,9 @@ public class Cliente extends Usuario {
 	//Consumo
 	
 	@Override public double calcularConsumo() {
-		return obtenerLista("IyC").stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();		
+		double cons = obtenerLista("IyC").stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();		
+		this.consumo = cons;
+		return cons;
 	}
 
 	/* Para obtener la tarifa. El admin va a ser el unico que pueda usar este metodo
@@ -341,6 +349,7 @@ public class Cliente extends Usuario {
 //		double horasInteligente = obtenerLista("Inteligente").stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(fechaInicio,fechaFin)).sum();
 //		double consumoTotal = horasEstandar + horasInteligente;
 	//	return consumoTotal;
+		consumo = horasEstandar;
 		return horasEstandar;
 	}
 	
