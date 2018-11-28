@@ -109,7 +109,9 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		//model.put("consumo", cliente.consumoXPeriodoNuevo(LocalDateTime.now().minusMonths(1), LocalDateTime.now(),disp));
 		model.put("consumo", consumoDE + consumoDS);
 		model.put("dispositivos", d);
+		
 		return new ModelAndView(model, "hogar.hbs");
+		
 	}
 	
 	public ModelAndView carga(Request req, Response res){
@@ -192,6 +194,8 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		//model.put("consumo", cliente.consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now()));
 		model.put("dispositivos", new DispositivoRepository().getDispositivosDeUnCliente(cliente.getNroDoc()));
+		ReglaRepository reg = new ReglaRepository();
+		model.put("reglas", reg.getTodasLasReglas());
 		return new ModelAndView(model, "reglas.hbs");
 	}
 	
