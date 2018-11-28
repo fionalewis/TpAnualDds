@@ -143,8 +143,12 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		List<Zona> z = DispositivoRepository.getListaZonas();
 		String s = new String();
 		String sz = new String();
+		int cleardb = 0;
+		while(cleardb < 9){
 		for(Transformador tt : t){
 			s += tt.getIdTransformador() + ";" + tt.suministroActual() + ";" + tt.getUbicacion().toString() + ";";
+		}
+		cleardb++;
 		}
 		model.put("transformadores", s);
 		for(Zona tt : z){
