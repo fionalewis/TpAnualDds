@@ -137,7 +137,7 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		return null;
 	}
 
-	public Void map (Request req, Response res){
+	public ModelAndView map (Request req, Response res){
 		return new ModelAndView(null, "/map.hbs");
 	}
 
