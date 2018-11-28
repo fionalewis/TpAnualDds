@@ -152,6 +152,8 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 			sz += z.get(clearbd).getRadius() + ";" + z.get(clearbd).getCenter().getLatitude() + ";" + z.get(clearbd).getCenter().getLongitude() + ";";
 			clearbd++;
 		}
+		System.out.println(s);
+		System.out.println(sz);
 		model.put("transformadores", s);
 		// for(Zona tt : z){
 		// 	sz += tt.getRadius() + ";" + tt.getCenter().getLatitude() + ";" + tt.getCenter().getLongitude() + ";";
