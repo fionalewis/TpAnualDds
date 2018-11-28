@@ -1,0 +1,37 @@
+{{#partial "titulo"}}
+Login
+{{/partial}}
+{{#partial "ancho"}}
+40%
+{{/partial}}
+{{#partial "contenido"}}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <h3 style="color:black;">Regule y reduzca su consumo de energia: </h3>
+    <br /><br /><br />
+      <form class="form-signin" action="/login" method="POST">
+      <br />
+        <h4>Ingrese usuario y contrase&ntilde;a</h4>
+         <br />
+        <label for="user" class="sr-only">Usuario</label>
+        <input type="text" id="user" name="user" class="form-control" placeholder="Usuario" required autofocus>
+        <label for="password" class="sr-only">Contrasena</label>
+        <br />
+        <input type="password" id="password" name="password" class="form-control" placeholder="Contrase&ntilde;a" required>
+        <br />
+        <br />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+        {{#block "alerta"}}{{/block}}
+      </form>
+      <br /><br /><br />
+      <a href="/login-admin">Ingreso para administradores</a>
+<script>
+$(document).ready(function(){
+  $("body").css("background-size","100%");
+  $("body").css("background-image", "url('http://lepassetempsderose.l.e.pic.centerblog.net/o/7f9bfe05.jpg')");
+});
+</script>
+
+{{/partial}}
+
+{{>layout.hbs}}
