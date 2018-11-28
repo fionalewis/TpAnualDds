@@ -138,7 +138,17 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 	}
 
 	public ModelAndView map (Request req, Response res){
-		return new ModelAndView(null, "/map.hbs");
+		Map<String, Object> model = new HashMap<>();
+		List<Zona> z = DispositivoRepository.getListaZonas();
+		String sz = new String();
+		int clearbd = 0;
+		while (clearbd<9){
+			sz += z.get(clearbd).getRadius() + ";" + z.get(clearbd).getCenter().getLatitude() + ";" + z.get(clearbd).getCenter().getLongitude() + ";";
+			clearbd++;
+		}
+		System.out.println("Salió del loop");
+		model.put("zonas",sz);
+		return new ModelAndView(model, "/map.hbs");
 	}
 
 	public ModelAndView mapi (Request req, Response res){
