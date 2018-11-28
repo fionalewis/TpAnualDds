@@ -23,7 +23,8 @@ public class Router {
 				.withHelper("isTrue", BooleanHelper.isTrue)
 				.build();
 
-		Spark.staticFiles.location("/public");
+		//Spark.staticFiles.location("/public");
+		Spark.staticFileLocation("/public");
 		setPublicRoutes(publicRoutes);
 
 		Spark.before(SessionHandler.allowed());
