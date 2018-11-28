@@ -67,6 +67,8 @@ public class AdminController {
 		String inicioPeriodo = req.queryParams("inicio");
 		String finPeriodo = req.queryParams("fin");
 		
+		System.out.println(inicioPeriodo);
+		System.out.println(finPeriodo);
 		if(inicioPeriodo != "" && finPeriodo != ""){
 			String[] outputI = inicioPeriodo.split("-");
 			LocalDateTime fechaInicio = LocalDateTime.of(Integer.parseInt(outputI[0]), 
@@ -75,8 +77,15 @@ public class AdminController {
 			LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[0]), 
 					Integer.parseInt(outputF[1]), Integer.parseInt(outputF[2]), 0, 0);
 			
-			List<Transformador> trans = new TransformadorRepository().getListaTranformadores();
-			trans.forEach(t -> t.suministroActual());
+			
+			System.out.println(fechaInicio);
+			System.out.println(fechaFin);
+			
+			TransformadorRepository tr = new TransformadorRepository();
+			List<Transformador> trans = tr.getListaTranformadores();
+			System.out.println(trans);
+			//if(trans.size() != 0){
+			//trans.forEach(t -> t.suministroActual());}
 			
 			model.put("transformadores",trans);
 		}

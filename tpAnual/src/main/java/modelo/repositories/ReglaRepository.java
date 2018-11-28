@@ -7,6 +7,9 @@ import modelo.Reglas.Regla;
 import modelo.users.Cliente;
 
 public class ReglaRepository {
+	
+	public ReglaRepository(){}
+	
 	public static void addRegla(Regla regla) {
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.persist(regla);

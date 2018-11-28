@@ -196,6 +196,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		model.put("dispositivos", new DispositivoRepository().getDispositivosDeUnCliente(cliente.getNroDoc()));
 		ReglaRepository reg = new ReglaRepository();
 		model.put("reglas", reg.getTodasLasReglas());
+		
 		return new ModelAndView(model, "reglas.hbs");
 	}
 	
@@ -282,7 +283,8 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		Regla regla = new Regla(nombreRegla,null,criterio);
 		regla.agregarCondicion(condicion);
 		regla.agregarActuador(actuador);
-		new ReglaRepository().addRegla(regla);
+		new ReglaRepository();
+		ReglaRepository.addRegla(regla);
 		model.put("mensajeRegla", "Nueva Regla creada exitosamente");
 		res.redirect("/reglas");
 		return null;
