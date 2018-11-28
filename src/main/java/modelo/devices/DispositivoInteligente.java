@@ -352,9 +352,11 @@ public class DispositivoInteligente extends Dispositivo {
 			interv.setInicio(fechaIoF);
 		} else {interv.setInicio(intervalos.get(posIoF).getInicio());}
 		if(opcion) {
-			interv.setFin(intervalos.get(posIoF).getFin());
+			if (intervalos.get(posIoF)!=null){
+			interv.setFin(intervalos.get(posIoF).getFin());}
 		} else {interv.setFin(fechaIoF);}
-		interv.setModo(intervalos.get(posIoF).getModo());
+		if (intervalos.get(posIoF)!=null){
+		interv.setModo(intervalos.get(posIoF).getModo());}
 		return interv;
 	}
 	
@@ -377,7 +379,9 @@ public class DispositivoInteligente extends Dispositivo {
 		intervalos.stream().forEach(unInt-> fInicios.add(unInt.getInicio())); // Una lista con todas las fechas iniciales
  		int i = 0, tam = intervalos.size();
 		LocalDateTime[] fechas = fInicios.toArray(new LocalDateTime[tam]); // Creo un array para usar los indices que es mas facil que el get (para mi)
-		
+		if(tam == 0) {
+			return 0;
+		}
 		LocalDateTime primerFI = intervalos.get(0).getInicio();
 		LocalDateTime ultFI = intervalos.get(tam-1).getInicio();
 		LocalDateTime ultFF = intervalos.get(tam-1).getFin();
@@ -413,7 +417,9 @@ public class DispositivoInteligente extends Dispositivo {
 		intervalos.stream().forEach(unInt-> fInicios.add(unInt.getInicio()));
  		int i = 0, tam = intervalos.size();
 		LocalDateTime[] fechas = fInicios.toArray(new LocalDateTime[tam]);
-		
+		if(tam == 0) {
+			return 0;
+		}
 		LocalDateTime primerFI = intervalos.get(0).getInicio();
 		LocalDateTime primerFF = intervalos.get(0).getFin();
 		LocalDateTime ultFF = intervalos.get(tam-1).getFin();

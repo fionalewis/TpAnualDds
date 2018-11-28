@@ -69,26 +69,28 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		Cliente user = new Cliente();
 		try
 		{
-		//TODO ir a buscar a la base de datos al cliente posta
-		//Cliente cliente = ClienteFactory.getCliente(nroDoc);
-		//user = ClienteFactory.getCliente(username);
 		user = ClienteRepository.obtenerCliente(username);
-		//	user.setUserName("user");
-		//	user.setPassword("pass");
 		}
 		catch (NoResultException e)
 		{
 			res.redirect("/archivo-incorrecto");
 		}
-		if(user.loginCorrecto(pass))
+		if(user!= null)
 		{
-			Session sesion = req.session(true);
-			sesion.attribute("user", username);
-			sesion.attribute("esAdmin",false);
-			res.redirect("/");
+			if(user.loginCorrecto(pass))
+			{
+				Session sesion = req.session(true);
+				sesion.attribute("user", username);
+				sesion.attribute("esAdmin",false);
+				res.redirect("/");
+			}
+			else { res.redirect("/wrong-user-or-pass"); }
 		}
 		else
+		{
 			res.redirect("/wrong-user-or-pass");
+		}
+		
 		return null;
 	}
 
@@ -99,23 +101,22 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		Administrador user = new Administrador();
 		try
 		{
-		//TODO ir a buscar a la base de datos al cliente posta
-		//Cliente cliente = ClienteFactory.getCliente(nroDoc);
-		//user = ClienteFactory.getCliente(username);
 		user = AdministradorRepository.getAdminConNombre(username);
-		//	user.setUserName("user");
-		//	user.setPassword("pass");
 		}
 		catch (NoResultException e)
 		{
 			res.redirect("/archivo-incorrecto");
 		}
-		if(user.loginCorrecto(pass))
+		if(user!= null)
 		{
-			Session sesion = req.session(true);
-			sesion.attribute("user", username);
-			sesion.attribute("esAdmin",true);
-			res.redirect("/");
+			if(user.loginCorrecto(pass))
+			{
+				Session sesion = req.session(true);
+				sesion.attribute("user", username);
+				sesion.attribute("esAdmin",true);
+				res.redirect("/");
+			}
+			else { res.redirect("/wrong-user-or-pass"); }
 		}
 		else
 			res.redirect("/wrong-user-or-pass");
@@ -132,18 +133,40 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 
 	public ModelAndView map (Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
-		List<Transformador> t = TransformadorRepository.getListaTranformadores();
-		List<Zona> z = DispositivoRepository.getListaZonas();
 		String s = new String();
 		String sz = new String();
-		for(Transformador tt : t){
-			s += tt.getIdTransformador() + ";" + tt.suministroActual() + ";" + tt.getUbicacion().toString() + ";";
-		}
+		s = "";
+		sz = "";
 		model.put("transformadores", s);
-		for(Zona tt : z){
-			sz += tt.getRadius() + ";" + tt.getCenter().getLatitude() + ";" + tt.getCenter().getLongitude() + ";";
-		}
 		model.put("zonas",sz);
-		return new ModelAndView(model, "/map.hbs");
+		return new ModelAndView(null, "/map.hbs");
+	}
+
+	public ModelAndView mapi (Request req, Response res){
+		Map<String, Object> model = new HashMap<>();
+		System.out.println("Entra");
+		List<Transformador> t = TransformadorRepository.getListaTranformadores();
+		System.out.println("lee transf ");
+		List<Zona> z = DispositivoRepository.getListaZonas();
+		System.out.println("lee disps");
+		String s = new String();
+		String sz = new String();
+		int clearbd = 0;
+		// for(Transformador tt : t){
+		// 	s += tt.getIdTransformador() + ";" + tt.suministroActual() + ";" + tt.getUbicacion().toString() + ";";
+		// }
+		while (clearbd<9){
+			s += t.get(clearbd).getIdTransformador() + ";" + t.get(clearbd).suministroActual() + ";" + t.get(clearbd).getUbicacion().toString() + ";";
+			sz += z.get(clearbd).getRadius() + ";" + z.get(clearbd).getCenter().getLatitude() + ";" + z.get(clearbd).getCenter().getLongitude() + ";";
+			System.out.println("sum act "+ t.get(clearbd).suministroActual() );
+			clearbd++;
+		}
+		System.out.println("Salió del loop");
+		model.put("transformadores", s);
+		// for(Zona tt : z){
+		// 	sz += tt.getRadius() + ";" + tt.getCenter().getLatitude() + ";" + tt.getCenter().getLongitude() + ";";
+		// }
+		model.put("zonas",sz);
+		return new ModelAndView(model, "/mapi.hbs");
 	}
 }
