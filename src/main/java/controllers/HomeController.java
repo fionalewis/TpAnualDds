@@ -137,7 +137,7 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		String sz = "1500.0;-34.6110583;-58.4201892;1000.0;-34.6101223;-58.40594059999999;1500.0;-34.641094;-58.3773949;1000.0;-34.63099;-58.4201892;800.0;-34.6209278;-58.445874;1500.0;-34.6130871;-58.38136;1250.0;-34.57115;-58.423297;1000.0;-34.6359102;-58.43731149999999;1500.0;-34.637701;-58.4002165;500.0;-34.5895459;-58.3973636;800.0;-34.62442619999999;-58.3973636;1500.0;-34.6045547;-58.3802473;";
 		model.put("transformadores", s);
 		model.put("zonas",sz);
-		return new ModelAndView(null, "/map.hbs");
+		return new ModelAndView(model, "/map.hbs");
 	}
 
 	public ModelAndView mapi (Request req, Response res){
