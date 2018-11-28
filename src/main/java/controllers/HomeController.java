@@ -141,8 +141,8 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		return new ModelAndView(null, "/map.hbs");
 	}
 
-	public Map<String, String> mapi (Request req, Response res){
-		Map<String, String> model = new HashMap<>();
+	public ModelAndView mapi (Request req, Response res){
+		Map<String, Object> model = new HashMap<>();
 		System.out.println("Entra");
 		List<Transformador> t = TransformadorRepository.getListaTranformadores();
 		System.out.println("lee transf ");
@@ -166,6 +166,6 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		// 	sz += tt.getRadius() + ";" + tt.getCenter().getLatitude() + ";" + tt.getCenter().getLongitude() + ";";
 		// }
 		model.put("zonas",sz);
-		return model;
+		return new ModelAndView(model, "/map.hbs");
 	}
 }

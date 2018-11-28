@@ -20,20 +20,6 @@
  
     $( document ).ready(function() {
     
-$.ajax({
-        url: window.location + "/mapi",
-        type: "GET",
-        cache : false,
-        contentType : false,
-        processData : false,
-        success: function(res) {
-            // success
-            console.log(res)
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            // error
-        }
-    });
       $("div.container").attr("style","width:100%");
       mapa = L.map('mapa', {
         center: [-34.598313, -58.463745],
@@ -83,6 +69,9 @@ $.ajax({
         var lyl = vak[i+2].replace(/\(|\)/g, "").split(',');
         L.marker([lyl[0].trim(), lyl[1].trim()]).addTo(mapa).bindPopup("Transformador:"+vak[i]+", Consumo:"+vak[i+1]);
       }      
+    }
+    if($("#zonas").html() == null){
+      window.location.href = '/mapi';
     }
   </script>
 
