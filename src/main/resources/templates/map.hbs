@@ -20,10 +20,19 @@
  
     $( document ).ready(function() {
     $.ajax({
-      url: '/mapi',
-      success: function(data) {
-        $('#result').text(data);
-      }
+        url: "/mapi",
+        type: "GET",
+        cache : false,
+        contentType : false,
+        processData : false,
+        data: formData,
+        success: function(res) {
+            // success
+            console.log(res)
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            // error
+        }
     });
 
       $("div.container").attr("style","width:100%");
