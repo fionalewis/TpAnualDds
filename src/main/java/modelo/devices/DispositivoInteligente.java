@@ -352,9 +352,11 @@ public class DispositivoInteligente extends Dispositivo {
 			interv.setInicio(fechaIoF);
 		} else {interv.setInicio(intervalos.get(posIoF).getInicio());}
 		if(opcion) {
-			interv.setFin(intervalos.get(posIoF).getFin());
+			if (intervalos!=null){
+			interv.setFin(intervalos.get(posIoF).getFin());}
 		} else {interv.setFin(fechaIoF);}
-		interv.setModo(intervalos.get(posIoF).getModo());
+		if (intervalos!=null){
+		interv.setModo(intervalos.get(posIoF).getModo());}
 		return interv;
 	}
 	
