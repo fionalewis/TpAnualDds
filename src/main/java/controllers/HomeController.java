@@ -143,17 +143,19 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		List<Zona> z = DispositivoRepository.getListaZonas();
 		String s = new String();
 		String sz = new String();
-		int cleardb = 0;
-		while(cleardb < 9){
-		for(Transformador tt : t){
-			s += tt.getIdTransformador() + ";" + tt.suministroActual() + ";" + tt.getUbicacion().toString() + ";";
-		}
-		cleardb++;
+		int clearbd = 0;
+		// for(Transformador tt : t){
+		// 	s += tt.getIdTransformador() + ";" + tt.suministroActual() + ";" + tt.getUbicacion().toString() + ";";
+		// }
+		while (clearbd<9){
+			s += t.get(clearbd).getIdTransformador() + ";" + t.get(clearbd).suministroActual() + ";" + t.get(clearbd).getUbicacion().toString() + ";";
+			sz += z.get(clearbd).getRadius() + ";" + z.get(clearbd).getCenter().getLatitude() + ";" + z.get(clearbd).getCenter().getLongitude() + ";";
+			clearbd++;
 		}
 		model.put("transformadores", s);
-		for(Zona tt : z){
-			sz += tt.getRadius() + ";" + tt.getCenter().getLatitude() + ";" + tt.getCenter().getLongitude() + ";";
-		}
+		// for(Zona tt : z){
+		// 	sz += tt.getRadius() + ";" + tt.getCenter().getLatitude() + ";" + tt.getCenter().getLongitude() + ";";
+		// }
 		model.put("zonas",sz);
 		return new ModelAndView(model, "/map.hbs");
 	}
