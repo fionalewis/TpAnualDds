@@ -2,12 +2,18 @@ package controllers;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.IntervaloDispositivo;
 import modelo.devices.IntervaloDispositivo.modo;
+import modelo.geoLocation.Transformador;
+import modelo.repositories.AdministradorRepository;
+import modelo.repositories.ClienteRepository;
+import modelo.repositories.TransformadorRepository;
+import modelo.users.Administrador;
 import modelo.users.Cliente;
 import modelo.users.Reporte;
 import spark.ModelAndView;
@@ -19,113 +25,64 @@ public class AdminController {
 	public ModelAndView hogar_consumo(Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
 		
-		//TODO ir a buscar el cliente posta a la base de datos
-		//Cliente user = ClienteFactory.getCliente(req.session().id());
-		
-		Cliente cliente = new Cliente();
-		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
-		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
-		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
-		
-		LocalDateTime int01 = LocalDateTime.of(2018,10,7,0,0,0);
-		IntervaloDispositivo int1 = new IntervaloDispositivo(int01,modo.AHORRO);
-		cliente.setNombre("Marina");
-		disp1.setIntervalo(int1);
-		
-		cliente.agregarDispositivo(disp1);
-		cliente.agregarDispositivo(disp2);
-		cliente.agregarDispositivo(disp3);
-		
-		model.put("hogar",  cliente);
-		model.put("nombre", cliente.getNombre());
-		model.put("consumo", cliente.consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now()));
+		List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
+		cli.forEach(c -> c.calcularConsumo());
+		model.put("clientes",cli);
 		
 		return new ModelAndView(model, "hogar_consumo.hbs");
 	}
 	
 	public ModelAndView reportes(Request req, Response res){
+		
+		return new ModelAndView(null, "reportes.hbs");
+	}
+	
+	public ModelAndView reporteHogar(Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
 		
-		//TODO ir a buscar el cliente posta a la base de datos
-		//Cliente user = ClienteFactory.getCliente(req.session().id());
+		String inicioPeriodo = req.queryParams("inicioPeriodo");
+		String finPeriodo = req.queryParams("finPeriodo");
 		
-		Cliente cliente = new Cliente();
-		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
-		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
-		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
+		System.out.println("inicio" + inicioPeriodo);
+		System.out.println("fin" + finPeriodo);
 		
-		LocalDateTime inicio = LocalDateTime.of(2018,10,7,0,0,0);
-		LocalDateTime fin = LocalDateTime.now();
-		IntervaloDispositivo int1 = new IntervaloDispositivo(inicio,modo.AHORRO);
-		cliente.setNombre("Marina");
-		disp1.setIntervalo(int1);
-		
-		cliente.agregarDispositivo(disp1);
-		cliente.agregarDispositivo(disp2);
-		cliente.agregarDispositivo(disp3);
-		
-		double horasDeConsumo = cliente.consumoXPeriodo(inicio, fin);
-		
-		Reporte reporte = new Reporte();
-		long consumoEstandar = reporte.CalculoConsumoDispsEstandares();
-		long consumoInteligente = reporte.CalculoConsumoDispsInteligentes();
-		
-		
-		//Reporte de consumo por hogar/periodo 
-		model.put("nombre",cliente.getNombre());
-		model.put("periodoHogarInicio",inicio);
-		model.put("periodoHogarFin",fin);
-		model.put("consumoHogar",horasDeConsumo);
-		
-//		model.put("tipoDisp","Estandar");
-		model.put("consumoDispositivoEst",consumoEstandar);
-		model.put("consumoDispositivoInt",consumoInteligente);
-
-		/*model.put("tipoDisp",  );
-		model.put("periodoTipoDisp",  );
-		model.put("consumoDisp",  );
-		
-		//Reporte de transformadores por periodo
-		model.put("Trans",  );
-		model.put("periodoTrans",  );
-		model.put("consumoTrans",  );
-		
-		
-		
-		<div class="table-responsive">
-		<h3>Reporte de consumo promedio por tipo de dispositivos </h3>
-	<table class="table">
-		<tr>
-			<th>Tipo dispositivos</th>
-			<th>Periodo inicio</th>
-			<th>Periodo fin</th>
-			<th>Consumo</th>
-		</tr>
-		
-		<tr>
-			<td>{{tipoDisp}}</td>
-			<td>{{periodoTipoDisp}}</td>
-			<td>{{consumoDisp}}</td>
-		</tr>
-	</table>
-	
-	<div class="table-responsive">
-		<h3>Reporte de transformadores por periodo </h3>
-	<table class="table">
-		<tr>
-			<th>Transformadores</th>
-			<th>Periodo</th>
-			<th>Consumo</th>
-		</tr>
-		
-		<tr>
-			<td>{{Trans}}</td>
-			<td>{{periodoTrans}}</td>
-			<td>{{consumoTrans}}</td>
-		</tr>
-	</table>
-		*/
+		if(inicioPeriodo != "" && finPeriodo != ""){
+			String[] outputI = inicioPeriodo.split("-");
+			LocalDateTime fechaInicio = LocalDateTime.of(Integer.parseInt(outputI[0]), 
+					Integer.parseInt(outputI[1]), Integer.parseInt(outputI[2]), 0, 0);
+			String[] outputF = finPeriodo.split("-");
+			LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[0]), 
+					Integer.parseInt(outputF[1]), Integer.parseInt(outputF[2]), 0, 0);
+			
+			List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
+			cli.forEach(c -> c.consumoXPeriodo(fechaInicio,fechaFin));
+			model.put("clientes",cli);
+		}
 		
 		return new ModelAndView(model, "reportes.hbs");
 	}
+	
+	public ModelAndView reporteTransformador(Request req, Response res){
+		Map<String, Object> model = new HashMap<>();
+		String inicioPeriodo = req.queryParams("inicio");
+		String finPeriodo = req.queryParams("fin");
+		
+		if(inicioPeriodo != "" && finPeriodo != ""){
+			String[] outputI = inicioPeriodo.split("-");
+			LocalDateTime fechaInicio = LocalDateTime.of(Integer.parseInt(outputI[0]), 
+					Integer.parseInt(outputI[1]), Integer.parseInt(outputI[2]), 0, 0);
+			String[] outputF = finPeriodo.split("-");
+			LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[0]), 
+					Integer.parseInt(outputF[1]), Integer.parseInt(outputF[2]), 0, 0);
+			
+			List<Transformador> trans = new TransformadorRepository().getListaTranformadores();
+			trans.forEach(t -> t.suministroActual());
+			
+			model.put("transformadores",trans);
+		}
+		
+		return new ModelAndView(model, "reportes.hbs");
+	}
+	
+	
 }

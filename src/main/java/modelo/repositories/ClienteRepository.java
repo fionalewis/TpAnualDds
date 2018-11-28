@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import db.EntityManagerHelper;
 import modelo.devices.Dispositivo;
 import modelo.users.Cliente;
@@ -52,7 +54,7 @@ public class ClienteRepository {
 		Cliente cliente = EntityManagerHelper.getEntityManager().find(Cliente.class,dni);
 	    return cliente;
 	  }
-	public static Cliente obtenerCliente(String username){
+	public static Cliente obtenerCliente(String username) throws NoResultException{
 		List<Cliente> lista = new ClienteRepository().getTodosLosClientes();
 		Iterator<Cliente> iterator = lista.iterator();
 	    while (iterator.hasNext()) {
@@ -89,6 +91,14 @@ public class ClienteRepository {
 		EntityManagerHelper.closeEntityManager();
 	}
 	
+	public static void updateConsumo(String nombre, double consumo) {
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().createQuery("UPDATE Cliente as c SET c.consumo = :consumo WHERE c.nombre = '" 
+				+ nombre + "'").setParameter("consumo", consumo);
+		EntityManagerHelper.commit();
+		EntityManagerHelper.closeEntityManager();
+	}
+
 	public static void updateUserName(String nroDoc, String userName) {
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().createQuery("UPDATE Cliente SET userName = " + userName + " WHERE nroDoc = '"

@@ -1,6 +1,9 @@
 package modelo.repositories;
 import java.time.LocalDate;
+import java.util.Iterator;
+import java.util.List;
 
+import javax.persistence.NoResultException;
 
 import db.EntityManagerHelper;
 import modelo.users.Administrador;
@@ -81,5 +84,25 @@ public class AdministradorRepository {
 		Administrador admin = (Administrador) EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM Administrador where userName = '" + username + "'",Administrador.class).getSingleResult();
 		EntityManagerHelper.closeEntityManager();
 		return admin;
-	}	
+	}
+	
+	public static Administrador obtenerAdmin(String username){
+		List<Administrador> lista = new AdministradorRepository().getTodosLosAdmin();
+		Iterator<Administrador> iterator = lista.iterator();
+	    while (iterator.hasNext()) {
+	        Administrador adm = iterator.next();
+	        if (adm.getUserName().equals(username)) {
+	            return adm;
+	        }
+	    }
+	    return null;
+	}
+	
+	public static List<Administrador> getTodosLosAdmin() {
+		EntityManagerHelper.beginTransaction();
+		List<Administrador> adm = EntityManagerHelper.getEntityManager()
+				.createNativeQuery("SELECT * FROM Administrador", Administrador.class).getResultList();
+		EntityManagerHelper.closeEntityManager();
+		return adm;
+	}
 }

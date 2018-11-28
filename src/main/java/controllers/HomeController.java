@@ -69,12 +69,7 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		Cliente user = new Cliente();
 		try
 		{
-		//TODO ir a buscar a la base de datos al cliente posta
-		//Cliente cliente = ClienteFactory.getCliente(nroDoc);
-		//user = ClienteFactory.getCliente(username);
 		user = ClienteRepository.obtenerCliente(username);
-		//	user.setUserName("user");
-		//	user.setPassword("pass");
 		}
 		catch (NoResultException e)
 		{
@@ -106,23 +101,22 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		Administrador user = new Administrador();
 		try
 		{
-		//TODO ir a buscar a la base de datos al cliente posta
-		//Cliente cliente = ClienteFactory.getCliente(nroDoc);
-		//user = ClienteFactory.getCliente(username);
 		user = AdministradorRepository.getAdminConNombre(username);
-		//	user.setUserName("user");
-		//	user.setPassword("pass");
 		}
 		catch (NoResultException e)
 		{
 			res.redirect("/archivo-incorrecto");
 		}
-		if(user.loginCorrecto(pass))
+		if(user!= null)
 		{
-			Session sesion = req.session(true);
-			sesion.attribute("user", username);
-			sesion.attribute("esAdmin",true);
-			res.redirect("/");
+			if(user.loginCorrecto(pass))
+			{
+				Session sesion = req.session(true);
+				sesion.attribute("user", username);
+				sesion.attribute("esAdmin",true);
+				res.redirect("/");
+			}
+			else { res.redirect("/wrong-user-or-pass"); }
 		}
 		else
 			res.redirect("/wrong-user-or-pass");
