@@ -88,7 +88,9 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 			res.redirect("/");
 		}
 		else
+		{
 			res.redirect("/wrong-user-or-pass");
+		}
 		return null;
 	}
 
