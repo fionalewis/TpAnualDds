@@ -173,6 +173,6 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		// 	sz += tt.getRadius() + ";" + tt.getCenter().getLatitude() + ";" + tt.getCenter().getLongitude() + ";";
 		// }
 		model.put("zonas",sz);
-		return new ModelAndView(model, "/map.hbs");
+		return new ModelAndView(model, "/mapi.hbs");
 	}
 }
