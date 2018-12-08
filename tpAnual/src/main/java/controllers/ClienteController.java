@@ -297,6 +297,10 @@ public ModelAndView agregarDispPantalla(Request req, Response res){
 		return new ModelAndView(null, "agregar-disp.hbs");
 	}
 
+public ModelAndView agregarReglaPantalla(Request req, Response res){
+	return new ModelAndView(null, "agregar-regla.hbs");
+}
+
 	public ModelAndView agregarDisp(Request req, Response res){
 		Cliente cliente = new Cliente();
 		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));

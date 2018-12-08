@@ -63,39 +63,10 @@ public class Router {
 		Spark.get("/agregar-disp", clienteController::agregarDispPantalla,engine);
 		Spark.post("/agregar-disp", clienteController::agregarDisp,engine);
 		Spark.post("/eliminar-disp", clienteController::eliminarDisp,engine);
+		Spark.get("/agregar-regla", clienteController::agregarReglaPantalla,engine);
 		Spark.post("/crear-regla", clienteController::crearRegla,engine);
 		
   		
-	/*	Spark.get("/cuentas", empresasController::verArchivos,engine);
-		Spark.post("/cuentas", empresasController::cargarArchivos,engine);
-		Spark.get("/archivo-invalido.hbs", empresasController::archivoInvalido,engine);
- 		Spark.get("/empresas", empresasController::home,engine);
- 		Spark.post("/empresas", empresasController::aplicar,engine);
-  		
- 		Spark.get("/metodologias", metodologiasController::home, engine);
- 		Spark.post("/metodologias", metodologiasController::aplicar, engine);
- 		Spark.get("/metodologias/nueva", metodologiasController::nueva, engine);
- 		Spark.post("/metodologias/nueva", metodologiasController::crear, engine);
- 		Spark.get("/metodologias/:id", metodologiasController::mostrar, engine);
-  		
- 		Spark.get("/indicadores", indicadoresController::home, engine);
- 		Spark.post("/indicadores", indicadoresController::aplicar, engine);
- 		Spark.get("/indicadores/nuevo", indicadoresController::nuevo, engine);
- 		Spark.get("/indicadores/error", indicadoresController::error, engine);
- 		Spark.post("/indicadores/nuevo", indicadoresController::crear, engine);
- 		
- 		
- 		Spark.get("/condiciones/nueva", metodologiasController::verCondicion, engine);
- 		Spark.post("/condiciones/nueva", metodologiasController::crearCondicion, engine);
-		Spark.get("/condiciones/condicionTipo1", metodologiasController::verCondicionTipo1, engine);
-		Spark.post("/condiciones/condicionTipo1", metodologiasController::crearCondicionTipo1, engine);
-		Spark.get("/condiciones/condicionTipo2", metodologiasController::verCondicionTipo2, engine);
-		Spark.post("/condiciones/condicionTipo2", metodologiasController::crearCondicionTipo2, engine);
-		Spark.get("/condiciones/condicionTipo3", metodologiasController::verCondicionTipo3, engine);
-		Spark.post("/condiciones/condicionTipo3", metodologiasController::crearCondicionTipo3, engine);
-		Spark.get("/condiciones/condicionTipo4", metodologiasController::verCondicionTipo4, engine);
-		Spark.post("/condiciones/condicionTipo4", metodologiasController::crearCondicionTipo4, engine);
-*/
 	}
 	
 	public static Boolean isPublic(String route){
