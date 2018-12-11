@@ -100,15 +100,18 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		cliente.agregarDispositivo(disp2);
 		cliente.agregarDispositivo(disp3);
 		*/
-		DispositivoRepository disp = new DispositivoRepository();
-		List <Dispositivo> d = disp.getDispositivosDeUnCliente(cliente.getNroDoc());
-		List <Dispositivo> di = d.stream().filter(UnDisp -> UnDisp.getEsInteligente()).collect(Collectors.toList()); 
-		List <Dispositivo> de = d.stream().filter(UnDisp -> UnDisp.getEsInteligente() != true).collect(Collectors.toList());
-		double consumoDE = di.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(LocalDateTime.now().minusMonths(1),LocalDateTime.now())).sum();
-		double consumoDS = de.stream().mapToDouble(UnDisp -> ((DispositivoEstandar) UnDisp).consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now())).sum();
+		//DispositivoRepository disp = new DispositivoRepository();
+		//List <Dispositivo> d = disp.getDispositivosDeUnCliente(cliente.getNroDoc());
+		//List <Dispositivo> di = d.stream().filter(UnDisp -> UnDisp.getEsInteligente()).collect(Collectors.toList()); 
+		//List <Dispositivo> de = d.stream().filter(UnDisp -> UnDisp.getEsInteligente() != true).collect(Collectors.toList());
+		//double consumoDE = di.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(LocalDateTime.now().minusMonths(1),LocalDateTime.now())).sum();
+		//double consumoDS = de.stream().mapToDouble(UnDisp -> ((DispositivoEstandar) UnDisp).consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now())).sum();
 		//model.put("consumo", cliente.consumoXPeriodoNuevo(LocalDateTime.now().minusMonths(1), LocalDateTime.now(),disp));
-		model.put("consumo", consumoDE + consumoDS);
-		model.put("dispositivos", d);
+		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
+		double consum = disps.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
+		
+		model.put("consumo", consum);//consumoDE + consumoDS);
+		model.put("dispositivos", disps);
 		
 		return new ModelAndView(model, "hogar.hbs");
 		

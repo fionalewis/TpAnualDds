@@ -5,7 +5,7 @@ import spark.debug.DebugScreen;
 
 public class Server {
 	public static void main(String[] args) {
-		Spark.port(Integer.valueOf(System.getenv("PORT")));//9001);
+		Spark.port(9001);//Integer.valueOf(System.getenv("PORT")));
 		DebugScreen.enableDebugScreen();
 		Router.configure();
 	}

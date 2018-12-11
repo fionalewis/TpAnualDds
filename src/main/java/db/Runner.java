@@ -47,7 +47,7 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	Sensor sensor = new Sensor("Temperatura",24.0,15);
 	CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,25,"MAYOR");
 	Actuador actuador = new Actuador(152,"APAGAR");
-	Cliente cliente = new Cliente("Lucas","Ramirez","lramirez","1234",TipoDocumento.DNI,"40123456","45424625","Villa Urquiza"); 
+	//Cliente cliente = new Cliente("Lucas","Ramirez","lramirez","1234",TipoDocumento.DNI,"40123456","45424625","Villa Urquiza"); 
 	Administrador admin = new Administrador("Lucia","Gomez", "lgomez","1111");
 	DispositivoInteligente dispositivo = new DispositivoInteligente("Televisor", "LED 24'");
 	//Cliente c = new Cliente("pepe","argento","pepe123","12345", TipoDocumento.DNI, "40123456", "12345678", "Avenida Medrano 986");
@@ -104,8 +104,8 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 
 			setClientesCompletos();
 			
-			
-			setUnDispositivoACliente();
+			setUnDispositivoANico();
+			//setUnDispositivoACliente();
 			//setSensor();
 			//setRegla();
 			//setActuador();
@@ -206,10 +206,29 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
     	((DispositivoInteligente) d1).setEstadoDisp(new Encendido());
     	((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,8,21,3,0,0));
 		((DispositivoInteligente) d1).encender(LocalDateTime.of(2018,8,21,4,0,0));
+		((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,8,21,5,0,0));
 		((DispositivoInteligente) d1).ahorroEnergia(LocalDateTime.of(2018,8,21,6,0,0));
     	((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,8,21,8,30,0));
 		List<Dispositivo> disp = new ArrayList<>(); disp.add(d1);
 		Cliente c = new Cliente("pepe","argento","pepe123","12345",2018,8,21,TipoDocumento.DNI,"40403456","12345678","Avenida Medrano 986",disp);
+
+		ClienteRepository.addClienteConDispositivosEIntervalos(c);
+	}
+	
+	public void setUnDispositivoANico(){
+		DeviceFactory f = new DeviceFactory();
+		Dispositivo d1 = f.crearDisp("Aire Acondicionado","2200 frigorias");
+    	LocalDateTime fechaReg = LocalDateTime.of(2018,8,21,0,30,0);
+		d1.setFechaRegistro(fechaReg);
+		
+    	((DispositivoInteligente) d1).setEstadoDisp(new Encendido());
+    	((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,8,21,3,0,0));
+		/*((DispositivoInteligente) d1).encender(LocalDateTime.of(2018,8,21,4,0,0));
+		((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,8,21,5,0,0));
+		((DispositivoInteligente) d1).ahorroEnergia(LocalDateTime.of(2018,8,21,6,0,0));
+    	((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,8,21,8,30,0));*/
+		List<Dispositivo> disp = new ArrayList<>(); disp.add(d1);
+		Cliente c = new Cliente("nico","contreras","nico","las",2018,8,21,TipoDocumento.DNI,"40403456","12345678","Avenida Medrano 986",disp);
 
 		ClienteRepository.addClienteConDispositivosEIntervalos(c);
 	}
