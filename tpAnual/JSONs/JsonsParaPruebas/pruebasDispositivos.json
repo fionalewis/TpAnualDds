@@ -1,0 +1,214 @@
+[  
+         {  
+            'nombreDisp' : "Aire Acondicionado",
+			'equipoConcreto':"3500 frigorias",
+			'esInteligente':true,
+			'esBajoConsumo':false,
+            'kWh':1.613,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+         {  
+            'nombreDisp' : "Aire Acondicionado",
+			'equipoConcreto':"2200 frigorias",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':1.013,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Televisor",
+			'equipoConcreto':"Color de tubo fluorescente de 21' ",
+			'esInteligente':false,
+			'esBajoConsumo':false,
+            'kWh':0.075,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Televisor",
+			'equipoConcreto':"Color de tubo fluorescente de 29' a 34' ",
+			'esInteligente':false,
+			'esBajoConsumo':false,
+            'kWh':0.175,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Televisor",
+			'equipoConcreto':"LCD de 40' ",
+			'esInteligente':false,
+			'esBajoConsumo':false,
+            'kWh':0.18,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Televisor",
+			'equipoConcreto':"LED 24' ",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':0.04,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Televisor",
+			'equipoConcreto':"LED 32' ",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':0.055,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Televisor",
+			'equipoConcreto':"LED 40' ",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':0.08,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Heladera",
+			'equipoConcreto':"Con freezer",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':0.09
+         },
+		 {  
+            'nombreDisp' : "Heladera",
+			'equipoConcreto':"Sin freezer",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':0.075
+         },
+		 {  
+            'nombreDisp' : "Lavarropas",
+			'equipoConcreto':"Automatico de 5 kg con calentamiento de agua",
+			'esInteligente':false,
+			'esBajoConsumo':false,
+            'kWh':0.875,
+			'horasUsoMin':6,
+			'horasUsoMax':30
+         },
+		 {  
+            'nombreDisp' : "Lavarropas",
+			'equipoConcreto':"Automatico de 5 kg",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':0.175,
+			'horasUsoMin':6,
+			'horasUsoMax':30
+         },
+		 {  
+            'nombreDisp' : "Lavarropas",
+			'equipoConcreto':"Semi-automatico de 5 kg",
+			'esInteligente':false,
+			'esBajoConsumo':true,
+            'kWh':0.1275,
+			'horasUsoMin':6,
+			'horasUsoMax':30
+         },
+		 {  
+            'nombreDisp' : "Ventilador",
+			'equipoConcreto':"De pie",
+			'esInteligente':false,
+			'esBajoConsumo':true,
+            'kWh':0.09,
+			'horasUsoMin':120,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Ventilador",
+			'equipoConcreto':"De techo",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':0.06,
+			'horasUsoMin':120,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Lampara",
+			'equipoConcreto':"Halogenas de 40 W",
+			'esInteligente':true,
+			'esBajoConsumo':false,
+            'kWh':0.04,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Lampara",
+			'equipoConcreto':"Halogenas de 60 W",
+			'esInteligente':true,
+			'esBajoConsumo':false,
+            'kWh':0.06,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Lampara",
+			'equipoConcreto':"Halogenas de 100 W",
+			'esInteligente':true,
+			'esBajoConsumo':false,
+            'kWh':0.015,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Lampara",
+			'equipoConcreto':"De 11 W",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':0.011,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Lampara",
+			'equipoConcreto':"De 15 W",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':0.015,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Lampara",
+			'equipoConcreto':"De 20 W",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':0.02,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "PC",
+			'equipoConcreto':"De escritorio",
+			'esInteligente':true,
+			'esBajoConsumo':true,
+            'kWh':0.4,
+			'horasUsoMin':60,
+			'horasUsoMax':360
+         },
+		 {  
+            'nombreDisp' : "Microondas",
+			'equipoConcreto':"Convencional",
+			'esInteligente':false,
+			'esBajoConsumo':true,
+            'kWh':0.64,
+			'horasUsoMin':3,
+			'horasUsoMax':15
+         },
+		 {  
+            'nombreDisp' : "Plancha",
+			'equipoConcreto':"A vapor",
+			'esInteligente':false,
+			'esBajoConsumo':true,
+            'kWh':0.75,
+			'horasUsoMin':3,
+			'horasUsoMax':30
+         }
+]
