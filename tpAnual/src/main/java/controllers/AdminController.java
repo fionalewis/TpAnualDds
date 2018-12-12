@@ -114,9 +114,7 @@ public class AdminController {
 	}
 	
 	public ModelAndView nuevoDisp(Request req, Response res){
-	/*
-	 * Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+	
 		if(req.queryParams("tipo").equals("INTELIGENTE"))
 		{
 			DispositivoInteligente disp1 = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripcion"));
@@ -126,9 +124,10 @@ public class AdminController {
 			DispositivoRepository d = new DispositivoRepository();
 			disp1.encender();
 			d.addDispositivo(disp1);
-			d.addDispositivoConCliente(cliente.getNroDoc(),disp1);
-			//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
-			res.redirect("/reglas");
+			
+			//serializar
+			
+			res.redirect("/carga");
 			return null;
 
 		}
@@ -141,16 +140,11 @@ public class AdminController {
 		disp1.setEsBajoConsumo(Boolean.valueOf(req.queryParams("bajoConsumo")));
 		DispositivoRepository d = new DispositivoRepository();
 		d.addDispositivo(disp1);
-		d.addDispositivoConCliente(cliente.getNroDoc(),disp1);
-		//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
-		res.redirect("/reglas");
+		//serializar
+		res.redirect("/carga");
 		return null;
 		}
 		
-	 * 
-	 */
-		
-		return null;
 	}
 	
 }

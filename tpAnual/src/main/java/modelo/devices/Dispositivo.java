@@ -5,6 +5,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import com.google.gson.annotations.Expose;
+
 import modelo.deviceState.EstadoDispositivo;
 import modelo.users.Cliente;
 import modelo.users.Reporte;;
@@ -20,21 +22,21 @@ public abstract class Dispositivo {
 
 	@ManyToOne
     @JoinColumn(name="cliente_id", referencedColumnName="cliente_id", nullable=true,unique=false)
-	public Cliente cliente;
+	 public Cliente cliente;
 
-	protected String nombreDisp;
-	public String equipoConcreto = "";
+	@Expose protected String nombreDisp;
+	@Expose public String equipoConcreto = "";
 	
 	@Transient
-	boolean esInteligente = false; //esto es para el json
+	public transient boolean esInteligente = false; //esto es para el json
 	
-	protected double kWh;
+	@Expose protected double kWh;
 
 	protected LocalDateTime fechaRegistro;
 	protected double horasDeUso = 0;
-	protected double horasUsoMax = 0;
-	protected double horasUsoMin = 0;
-	boolean esBajoConsumo = false;
+	@Expose protected double horasUsoMax = 0;
+	@Expose protected double horasUsoMin = 0;
+	@Expose boolean esBajoConsumo = false;
 
 	
 	// @OneToMany(mappedBy="dispositivo", cascade=CascadeType.ALL)

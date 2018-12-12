@@ -2,6 +2,7 @@ package entregas;
 import java.time.LocalDateTime;
 import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
@@ -25,11 +26,12 @@ import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
 
 public class EntregaPersistencia {
-	public static void main(String[] args) throws HeadlessException, SQLException, CaracterInvalidoException, FileNotFoundException, InstantiationException, IllegalAccessException{
-		menuPrincipal();
+	public static void main(String[] args) throws HeadlessException, SQLException, CaracterInvalidoException, InstantiationException, IllegalAccessException, IOException{
+		//menuPrincipal();
+		pruebaSerializacion();
 	}
 	
-	@SuppressWarnings("resource")
+	/*@SuppressWarnings("resource")
 	public static void menuPrincipal() throws CaracterInvalidoException, HeadlessException, SQLException, FileNotFoundException, InstantiationException, IllegalAccessException{
 
 		System.out.println("\n Por favor elija una opcion:"
@@ -337,7 +339,6 @@ public class EntregaPersistencia {
 	}
 
 	public static void prueba6() throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		
 		Scanner in = new Scanner(System.in);
 		System.out.println("Ingrese la ruta: ");
 		String ruta = in.nextLine();
@@ -353,8 +354,22 @@ public class EntregaPersistencia {
 		final DispositivoEstandar<?> dispEstandar = gson.fromJson(json, DispositivoEstandar.class);
 		DispositivoRepository d = new DispositivoRepository();
 		DispositivoRepository.addDispositivo(dispEstandar);
-		
 	*/
-
-}
+	//}
+	
+	public static void pruebaSerializacion() throws IOException, InstantiationException, IllegalAccessException{
+		System.out.println("prueba serializer");
+		DispositivoInteligente d = new DispositivoInteligente("Notebook","Macbook Air");
+		d.setEsBajoConsumo(true);
+		d.setkWh(0.1);
+		d.setHorasUsoMax(360);
+		d.setHorasUsoMin(200);
+		
+		DAOJson js = new DAOJson();
+		js.serializar_disp(d);
+		DispositivoRepository dr = new DispositivoRepository();
+		dr.addDispositivo(d);
+		System.out.println("fin prueba serializer");
+		
+	}
 }

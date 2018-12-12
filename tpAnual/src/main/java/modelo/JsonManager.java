@@ -93,6 +93,9 @@ public class JsonManager {
 			}
 			return categoria;
 		}
+	public String getRutaDisp(){
+		return rutaJsonDisp;
+	}
 	
 	//Metodos que usamos para GeoLocation, transformadores y zonas
 	

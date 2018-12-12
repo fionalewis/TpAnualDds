@@ -2,6 +2,9 @@ package modelo;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.lang.reflect.ParameterizedType;
@@ -9,11 +12,13 @@ import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 
 import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoEstandar;
@@ -201,6 +206,19 @@ public class DAOJson {
 		}
 
 		return objeto;
+	}
+	
+	public void serializar_disp(Dispositivo disp) throws IOException, InstantiationException, IllegalAccessException{
+		
+		List<Dispositivo> list_disp = deserializarDispositivos(Dispositivo.class,JsonManager.rutaJsonDisp);
+		list_disp.add(disp);
+		System.out.println(list_disp);
+		
+		try(Writer writer = new FileWriter(JsonManager.rutaJsonDisp)){
+			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+			gson.toJson(list_disp,writer);
+		}
+		
 	}
 	
 }
