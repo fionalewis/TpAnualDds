@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -113,34 +114,36 @@ public class AdminController {
 		return null;
 	}
 	
-	public ModelAndView nuevoDisp(Request req, Response res){
-	
+	public ModelAndView nuevoDisp(Request req, Response res) throws InstantiationException, IllegalAccessException, IOException{
+		DAOJson js = new DAOJson();
 		if(req.queryParams("tipo").equals("INTELIGENTE"))
 		{
 			DispositivoInteligente disp1 = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripcion"));
+			disp1.setEsInteligente(true);
 			disp1.setkWh(Double.parseDouble(req.queryParams("kWh")));
-			disp1.setHorasDeUso(Double.parseDouble(req.queryParams("horasDiarias")));
 			disp1.setEsBajoConsumo(Boolean.valueOf(req.queryParams("bajoConsumo")));
+			disp1.setHorasUsoMax(Double.valueOf(req.queryParams("horasUsoMax")));
+			disp1.setHorasUsoMin(Double.valueOf(req.queryParams("horasUsoMin")));
 			DispositivoRepository d = new DispositivoRepository();
 			disp1.encender();
+			js.serializar_disp(disp1);
 			d.addDispositivo(disp1);
-			
-			//serializar
-			
 			res.redirect("/carga");
 			return null;
 
 		}
 		else{
-			DispositivoEstandar disp1 = new DispositivoEstandar();
-			disp1.setNombreDisp(req.queryParams("nombre"));
-			disp1.setEquipoConcreto(req.queryParams("descripcion"));
+		DispositivoEstandar disp1 = new DispositivoEstandar();
+		disp1.setNombreDisp(req.queryParams("nombre"));
+		disp1.setEquipoConcreto(req.queryParams("descripcion"));
+		disp1.setEsInteligente(false);
 		disp1.setkWh(Double.parseDouble(req.queryParams("kWh")));
-		disp1.setHorasDeUso(Double.parseDouble(req.queryParams("horasDiarias")));
 		disp1.setEsBajoConsumo(Boolean.valueOf(req.queryParams("bajoConsumo")));
+		disp1.setHorasUsoMax(Double.valueOf(req.queryParams("horasUsoMax")));
+		disp1.setHorasUsoMin(Double.valueOf(req.queryParams("horasUsoMin")));
 		DispositivoRepository d = new DispositivoRepository();
+		js.serializar_disp(disp1);
 		d.addDispositivo(disp1);
-		//serializar
 		res.redirect("/carga");
 		return null;
 		}
