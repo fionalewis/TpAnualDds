@@ -41,7 +41,7 @@ public class Regla {
 	
 	private enum criterios{AND,OR}
 	//private boolean state; //para test NO AGREGAR AL DIAGRAMA DE CLASES
-	
+	public Regla(){};
 	public Regla(String unNombreRegla,DispositivoInteligente unDispo,String critCond){
 		this.nombreRegla = unNombreRegla;
 		this.disp = unDispo;
@@ -87,6 +87,10 @@ public class Regla {
 	}
 	public Condicion getCondicion(Condicion con){
 		return getCondicionConIndice(condiciones.indexOf(con));
+	}
+	
+	public String getNombreRegla(){
+		return nombreRegla;
 	}
 	/*public boolean getState(){
 		return this.state;

@@ -56,13 +56,16 @@ public class Router {
 		//Spark.post("/hogar_consumo", adminController::hogar_consumo);
 		Spark.get("/reportes", adminController::reportes,engine);
 		Spark.post("/reporteHogar", adminController::reporteHogar,engine);
-		Spark.post("/reporteTransformador", adminController::reporteTransformador,engine);
+		Spark.post("/reporteTransformador", adminController::reporteTransformador,engine);		
+		Spark.get("/carga", adminController::carga,engine);
+		Spark.post("/carga", adminController::cargarArchivo,engine);
+		Spark.post("/nuevo_disp", adminController::nuevoDisp,engine);
 		
 		Spark.get("/consumo", clienteController::consumo,engine);
 		Spark.post("/consumo", clienteController::calcularConsumo,engine);
 		Spark.get("/hogar", clienteController::hogar,engine);
-		Spark.get("/carga", clienteController::carga,engine);
-		Spark.post("/carga", clienteController::carga,engine);
+		//Spark.get("/carga", clienteController::carga,engine);
+		//Spark.post("/carga", clienteController::carga,engine);
 		Spark.get("/simplex", clienteController::simplex,engine);
 		Spark.get("/reglas", clienteController::reglasydisp,engine);
 		Spark.get("/agregar-disp", clienteController::agregarDispPantalla,engine);

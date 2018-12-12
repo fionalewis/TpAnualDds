@@ -99,9 +99,11 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 			System.out.println("Admins - OK");
 
 			setClientesCompletos();
-			
+			System.out.println("Clientes - OK");
 			setUnDispositivoANico();
+			System.out.println("Nico - OK");
 			setUpSuenio();
+			System.out.println("Suenio - OK");
 			//setUnDispositivoACliente();
 			//setSensor();
 			//setRegla();

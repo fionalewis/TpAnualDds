@@ -85,7 +85,7 @@ public class DispositivoRepository {
 			EntityManagerHelper.closeEntityManager();
 			EntityManagerHelper.beginTransaction();
 			EntityManagerHelper.getEntityManager().createNativeQuery("SET SQL_SAFE_UPDATES = 0; ").executeUpdate();
-			EntityManagerHelper.getEntityManager().createNativeQuery("delete FROM tp_anual_dds.intervalodispositivo where dispositivo_id is null").executeUpdate();
+			EntityManagerHelper.getEntityManager().createNativeQuery("delete FROM heroku_ba12b0d1203acf9.intervalodispositivo where dispositivo_id is null").executeUpdate();
 			EntityManagerHelper.getEntityManager().createNativeQuery("SET SQL_SAFE_UPDATES = 1;").executeUpdate();
 			EntityManagerHelper.commit();
 			EntityManagerHelper.closeEntityManager();
@@ -95,8 +95,8 @@ public class DispositivoRepository {
 	public static void deleteDispositivo(String nroDoc, long dispId) {
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().createNativeQuery("SET SQL_SAFE_UPDATES = 0; ").executeUpdate();
-		EntityManagerHelper.getEntityManager().createNativeQuery("delete FROM tp_anual_dds.intervalodispositivo where dispositivo_id = "+dispId+";").executeUpdate();
-		EntityManagerHelper.getEntityManager().createNativeQuery("delete FROM tp_anual_dds.dispositivo where cliente_id = '"+nroDoc+"' and dispositivo_id = "+dispId+";").executeUpdate();
+		EntityManagerHelper.getEntityManager().createNativeQuery("delete FROM heroku_ba12b0d1203acf9.intervalodispositivo where dispositivo_id = "+dispId+";").executeUpdate();
+		EntityManagerHelper.getEntityManager().createNativeQuery("delete FROM heroku_ba12b0d1203acf9.dispositivo where cliente_id = '"+nroDoc+"' and dispositivo_id = "+dispId+";").executeUpdate();
 		EntityManagerHelper.getEntityManager().createNativeQuery("SET SQL_SAFE_UPDATES = 1;").executeUpdate();
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
