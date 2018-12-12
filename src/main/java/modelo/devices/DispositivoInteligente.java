@@ -350,12 +350,12 @@ public class DispositivoInteligente extends Dispositivo {
 		IntervaloDispositivo interv = new IntervaloDispositivo();
 		if(opcion) {
 			interv.setInicio(fechaIoF);
-		} else {interv.setInicio(intervalos.get(posIoF).getInicio());}
+		} else {if (!intervalos.isEmpty()){interv.setInicio(intervalos.get(posIoF).getInicio());}}
 		if(opcion) {
-			if (intervalos.get(posIoF)!=null){
+			if (!intervalos.isEmpty()){
 			interv.setFin(intervalos.get(posIoF).getFin());}
 		} else {interv.setFin(fechaIoF);}
-		if (intervalos.get(posIoF)!=null){
+		if (!intervalos.isEmpty()){
 		interv.setModo(intervalos.get(posIoF).getModo());}
 		return interv;
 	}

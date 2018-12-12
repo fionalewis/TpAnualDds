@@ -47,8 +47,11 @@ public class Router {
 		Spark.get("/logout", homeController::logout,engine);
 
 		Spark.get("/map", homeController::map, engine);
-		Spark.get("/mapi", homeController::mapi, engine);
-		
+		Spark.get("/mapi", homeController::mapi);
+		Spark.get("/mapz", homeController::mapz);
+		//Spark.get("/mapzonas", homeController::mapzonas);
+		//Spark.get("/maptransf", homeController::maptransf);
+				
 		Spark.get("/hogar_consumo", adminController::hogar_consumo,engine);
 		//Spark.post("/hogar_consumo", adminController::hogar_consumo);
 		Spark.get("/reportes", adminController::reportes,engine);
@@ -110,6 +113,7 @@ public class Router {
 		publicRoutes.add("/wrong-user-or-pass");
 		publicRoutes.add("/map");
 		publicRoutes.add("/mapi");
+		publicRoutes.add("/mapz");
 	}
 
 }
