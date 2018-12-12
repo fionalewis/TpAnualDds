@@ -208,7 +208,7 @@ public class DAOJson {
 		return objeto;
 	}
 	
-	public void serializar_disp(Dispositivo disp) throws IOException, InstantiationException, IllegalAccessException{
+	public static void serializar_disp(Dispositivo disp) throws IOException, InstantiationException, IllegalAccessException{
 		
 		List<Dispositivo> list_disp = deserializarDispositivos(Dispositivo.class,JsonManager.rutaJsonDisp);
 		list_disp.add(disp);
@@ -219,6 +219,17 @@ public class DAOJson {
 			gson.toJson(list_disp,writer);
 		}
 		
+	}
+	
+	public static void serializarListDisp(List<Dispositivo> disp){
+		disp.forEach(d-> {
+			try {
+				serializar_disp(d);
+			} catch (InstantiationException | IllegalAccessException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 	
 }

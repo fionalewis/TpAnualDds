@@ -107,7 +107,10 @@ public class AdminController {
 	
 	public ModelAndView cargarArchivo(Request req, Response res) throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		String ruta = req.queryParams("ruta");
+		System.out.println(ruta);
 		List<Dispositivo> dispositivos = DAOJson.deserializarDispositivos(Dispositivo.class, ruta);
+		DAOJson.serializarListDisp(dispositivos);
+		
 		for (Dispositivo d : dispositivos) {
 			DispositivoRepository.addDispositivo(d);
 			}

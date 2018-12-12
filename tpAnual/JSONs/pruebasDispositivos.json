@@ -1,0 +1,20 @@
+[  
+         {  
+            'nombreDisp' : "Maru",
+			'equipoConcreto':"Mac",
+			'esInteligente':true,
+			'esBajoConsumo':false,
+            'kWh':1.613,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         },
+         {  
+            'nombreDisp' : "Manana",
+			'equipoConcreto':"Lenovo Yoga",
+			'esInteligente':false,
+			'esBajoConsumo':true,
+            'kWh':1.013,
+			'horasUsoMin':90,
+			'horasUsoMax':360
+         }
+]

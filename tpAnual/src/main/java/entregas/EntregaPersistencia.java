@@ -4,6 +4,7 @@ import java.awt.HeadlessException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -364,13 +365,27 @@ public class EntregaPersistencia {
 		d.setkWh(0.1);
 		d.setHorasUsoMax(360);
 		d.setHorasUsoMin(200);
-		d.setEsInteligente(true);
+		
+		DispositivoEstandar dd = new DispositivoEstandar();
+		dd.setEquipoConcreto("Macbook Pro");
+		dd.setNombreDisp("NBEstandar");
+		d.setEsBajoConsumo(true);
+		d.setkWh(0.1);
+		d.setHorasUsoMax(360);
+		d.setHorasUsoMin(200);
 		
 		DAOJson js = new DAOJson();
 		js.serializar_disp(d);
 		DispositivoRepository dr = new DispositivoRepository();
 		dr.addDispositivo(d);
+		
+		List<Dispositivo> list_disp = new ArrayList();
+		list_disp.add(d);
+		list_disp.add(dd);
+		js.serializarListDisp(list_disp);
+		
 		System.out.println("fin prueba serializer");
+		
 		
 	}
 }
