@@ -29,8 +29,8 @@ public class DispositivoInteligente extends Dispositivo {
 	@Transient
 	private IntervaloDispositivo unIntervalo;
 
-	@Transient
-	boolean esInteligente = true; //Ya no se si hace falta este atributo, pero lo vemos despues
+	//@Transient
+	//boolean esInteligente = true; //Ya no se si hace falta este atributo, pero lo vemos despues
 
 	@OneToMany(mappedBy="dispositivo", cascade=CascadeType.ALL)
 	//@JoinColumn(name="dispositivo_id", referencedColumnName="id", nullable=true, unique=false)
