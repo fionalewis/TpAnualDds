@@ -28,7 +28,7 @@ public abstract class Dispositivo {
 	@Expose public String equipoConcreto = "";
 	
 	@Transient
-	public transient boolean esInteligente = false; //esto es para el json
+	@Expose public boolean esInteligente = false; //esto es para el json
 	
 	@Expose protected double kWh;
 

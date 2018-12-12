@@ -364,6 +364,7 @@ public class EntregaPersistencia {
 		d.setkWh(0.1);
 		d.setHorasUsoMax(360);
 		d.setHorasUsoMin(200);
+		d.setEsInteligente(true);
 		
 		DAOJson js = new DAOJson();
 		js.serializar_disp(d);

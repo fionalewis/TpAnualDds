@@ -44,6 +44,7 @@ public class DispositivoInteligente extends Dispositivo {
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.now());
 		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
+		setEsInteligente(true);
 	}
 		
 	public DispositivoInteligente(String nombDisp,double kWh,int year,int month,int day,int hour,int min,int sec,boolean esBajoC) {
@@ -62,6 +63,7 @@ public class DispositivoInteligente extends Dispositivo {
 		setEstadoDisp(new Encendido());
 		setFechaRegistro(LocalDateTime.now());
 		setIntervalo(new IntervaloDispositivo(getFechaRegistro(),modo.NORMAL));
+		
 	}
 	
 	//Conversion 2.0
