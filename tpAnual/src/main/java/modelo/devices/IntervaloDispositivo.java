@@ -10,6 +10,8 @@ public class IntervaloDispositivo {
 
 	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long id;
+	
+
 	private LocalDateTime inicio;
 	private LocalDateTime fin;
 	@Enumerated(EnumType.STRING)
@@ -30,7 +32,10 @@ public class IntervaloDispositivo {
 		setInicio(LocalDateTime.of(y,m,d,h,min,sec));
 		setModo(mod);
 	}
-
+	public Long getId() {
+		return id;
+	}
+	
 	public LocalDateTime getInicio() {
 		return inicio;
 	}

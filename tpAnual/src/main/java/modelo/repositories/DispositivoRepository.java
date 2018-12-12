@@ -2,6 +2,7 @@ package modelo.repositories;
 
 import static org.junit.Assume.assumeNoException;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,8 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.metamodel.Metamodel;
 
 import org.hibernate.hql.internal.ast.tree.IntoClause;
+import java.time.LocalDateTime;
+
 
 import db.EntityManagerHelper;
 import modelo.deviceState.EstadoDispositivo;
@@ -137,6 +140,27 @@ public class DispositivoRepository {
 			EntityManagerHelper.closeEntityManager();
 			return disp;
 		}		
+	}
+	public static List<IntervaloDispositivo> getIntervalosDispositivo(Long idDisp){
+		EntityManagerHelper.beginTransaction();
+		List<IntervaloDispositivo> intervalos = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * from IntervaloDispositivo where dispositivo_id = "+idDisp,IntervaloDispositivo.class).getResultList();
+		EntityManagerHelper.closeEntityManager();
+		return intervalos;
+	}
+	
+	public static void actualizarIntervaloDispositivo(Long idIntervalo, LocalDateTime fecha){
+		EntityManagerHelper.beginTransaction();
+		Timestamp time = new LocalDateTimeAttributeConverter().convertToDatabaseColumn(fecha);
+
+		EntityManagerHelper.getEntityManager().createQuery("UPDATE IntervaloDispositivo SET fin = '"+ time +"' where id = "+idIntervalo).executeUpdate();
+		EntityManagerHelper.commit();
+		EntityManagerHelper.closeEntityManager();
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().createNativeQuery("SET SQL_SAFE_UPDATES = 0; ").executeUpdate();
+		EntityManagerHelper.getEntityManager().createNativeQuery("delete FROM tp_anual_dds.intervalodispositivo where dispositivo_id is null").executeUpdate();
+		EntityManagerHelper.getEntityManager().createNativeQuery("SET SQL_SAFE_UPDATES = 1;").executeUpdate();
+		EntityManagerHelper.commit();
+		EntityManagerHelper.closeEntityManager();
 	}
 
 	public static List<Dispositivo> getDispositivosDeUnCliente(String id) {

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence 
+    http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" 
+    version="2.0"> 
+  
+    <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
+    	<provider>org.hibernate.ejb.HibernatePersistence</provider>
+    	
+    	<class>modelo.devices.Sensor</class>
+    	<class>modelo.Reglas.Regla.condiciones</class>
+    	<class>modelo.Reglas.Condicion</class>
+    	<class>modelo.Reglas.CondicionDosSensores</class>
+    	<class>modelo.Reglas.CondicionSensorYValor</class>
+    	<class>modelo.Reglas.Regla</class>
+    	<class>modelo.Actuador.Actuador</class>
+		<class>modelo.users.Usuario</class>
+    	<class>modelo.users.Administrador</class>
+    	<class>modelo.users.Cliente</class> 
+        <class>modelo.devices.Dispositivo</class>    	 
+        <class>modelo.devices.IntervaloDispositivo</class>    
+        <class>modelo.devices.DispositivoInteligente</class>    
+        <class>modelo.devices.DispositivoEstandar</class>    
+        <class>modelo.devices.DispositivoConvertido</class>    
+        <class>modelo.users.Categoria</class>    
+		
+        <properties> 
+	    <property name="hibernate.archive.autodetection" value="class"/>        
+        
+         
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> 
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp_anual_dds?useSSL=false" /> 
+            <property name="hibernate.connection.username" value="root" /> 
+            <property name="hibernate.connection.password" value="mysql" /> 
+
+<!-- 
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> 
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp_anual_dds" /> 
+            <property name="hibernate.connection.username" value="root" /> 
+            <property name="hibernate.connection.password" value="Gordis24" /> 
+ -->
+                            
+            <property name="hibernate.show_sql" value="true" /> 
+            <property name="hibernate.format_sql" value="true" /> 
+            <property name="use_sql_comments" value="true" /> 
+            <property name="hibernate.hbm2ddl.auto" value="update" /> 
+        </properties>
+          
+    </persistence-unit> 
+  
+</persistence> 

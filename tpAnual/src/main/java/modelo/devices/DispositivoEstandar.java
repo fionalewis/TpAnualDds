@@ -126,4 +126,8 @@ public class DispositivoEstandar<Reporte> extends Dispositivo {
 			return null;
 		}
 		
+		public String getEstado(){
+			return "Sin estado";
+		}
+		
 }

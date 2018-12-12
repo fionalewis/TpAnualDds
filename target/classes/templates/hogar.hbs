@@ -1,0 +1,36 @@
+{{#partial "contenido"}}
+<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Analizar Empresas</title>
+</head>
+
+<body>
+	<h1>Estado del hogar</h1>
+	<h2>Consumo ultimo mes:</h2>
+	<div value={{consumo}}> {{consumo}}</div>
+
+	
+		
+	<div class="table-responsive">
+		<h3>Dispositivos</h3>
+	<table class="table">
+		<tr>
+			<th>Nombre</th>
+			<th>Estado</th>
+		</tr>
+		{{#each dispositivos}}
+		<tr>
+			<td>{{nombreDisp}}</td>
+			<td>{{estadoDisp}}</td>
+		</tr>
+		{{/each}}
+	</table>
+
+	<div>
+    	<a href="../"><input class="btn btn-primary btn-lg" value="Ir al menu principal"></a>
+  	</div>
+</body>
+{{/partial}}
+{{>layout.hbs}}
