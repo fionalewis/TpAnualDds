@@ -105,52 +105,52 @@ public class AdminController {
 	}
 	
 	public ModelAndView cargarArchivo(Request req, Response res) throws FileNotFoundException, InstantiationException, IllegalAccessException{
-			String ruta = req.queryParams("ruta");
-			List<Dispositivo> dispositivos = DAOJson.deserializarDispositivos(Dispositivo.class, ruta);
-			for (Dispositivo d : dispositivos) {
-				DispositivoRepository.addDispositivo(d);
-				}
-			return null;		 		
-		
-		/*
+		String ruta = req.queryParams("ruta");
+		List<Dispositivo> dispositivos = DAOJson.deserializarDispositivos(Dispositivo.class, ruta);
+		for (Dispositivo d : dispositivos) {
+			DispositivoRepository.addDispositivo(d);
+			}
+		return null;
+	}
+	
+	public ModelAndView nuevoDisp(Request req, Response res){
+	/*
+	 * Cliente cliente = new Cliente();
+		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		if(req.queryParams("tipo").equals("INTELIGENTE"))
 		{
 			DispositivoInteligente disp1 = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripcion"));
 			disp1.setkWh(Double.parseDouble(req.queryParams("kWh")));
-			disp1.setHorasUsoMax(Double.parseDouble(req.queryParams("horasMax")));
-			disp1.setHorasUsoMin(Double.parseDouble(req.queryParams("horasMin")));
+			disp1.setHorasDeUso(Double.parseDouble(req.queryParams("horasDiarias")));
 			disp1.setEsBajoConsumo(Boolean.valueOf(req.queryParams("bajoConsumo")));
 			DispositivoRepository d = new DispositivoRepository();
-			
+			disp1.encender();
 			d.addDispositivo(disp1);
+			d.addDispositivoConCliente(cliente.getNroDoc(),disp1);
 			//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
+			res.redirect("/reglas");
 			return null;
 
 		}
 		else{
-		DispositivoEstandar disp1 = new DispositivoEstandar();
-		disp1.setNombreDisp(req.queryParams("nombre"));
-		disp1.setEquipoConcreto(req.queryParams("descripcion"));
+			DispositivoEstandar disp1 = new DispositivoEstandar();
+			disp1.setNombreDisp(req.queryParams("nombre"));
+			disp1.setEquipoConcreto(req.queryParams("descripcion"));
 		disp1.setkWh(Double.parseDouble(req.queryParams("kWh")));
-		disp1.setHorasUsoMax(Double.parseDouble(req.queryParams("horasMax")));
-		disp1.setHorasUsoMin(Double.parseDouble(req.queryParams("horasMin")));
+		disp1.setHorasDeUso(Double.parseDouble(req.queryParams("horasDiarias")));
 		disp1.setEsBajoConsumo(Boolean.valueOf(req.queryParams("bajoConsumo")));
 		DispositivoRepository d = new DispositivoRepository();
 		d.addDispositivo(disp1);
+		d.addDispositivoConCliente(cliente.getNroDoc(),disp1);
 		//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
+		res.redirect("/reglas");
 		return null;
 		}
 		
+	 * 
+	 */
+		
+		return null;
 	}
-	
-	public void convertirAJson(DispositivoEstandar disp) 
-	{
-		Gson gson = new Gson();
-		String JSON = gson.toJson(disp);
-	}
-	*/
-	
-}
-
 	
 }

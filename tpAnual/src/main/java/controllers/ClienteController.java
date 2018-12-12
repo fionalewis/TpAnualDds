@@ -114,7 +114,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 	}
 	
-	public ModelAndView carga(Request req, Response res){
+	/*public ModelAndView carga(Request req, Response res){
 		return new ModelAndView(null, "carga.hbs");
 	}
 	
@@ -127,7 +127,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		res.redirect("/archivo-invalido.hbs");
 		}
 		return null;
-	}
+	}*/
 	
 	public ModelAndView simplex(Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
