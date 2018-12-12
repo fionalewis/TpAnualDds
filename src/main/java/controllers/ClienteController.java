@@ -154,7 +154,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 				}else{model.put("eficiente","NO");}
 				
 				//model.put("recomendacion", cliente.obtenerRecomendacionString());
-				List<String> recHoras = new ArrayList();
+				List<String> recHoras = new ArrayList<String>();
 				for(Entry<String, Double> unValor : cliente.horasXDisp().entrySet()) {
 					recHoras.add("La recomendaci�n de horas m�ximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.");
 				}		
