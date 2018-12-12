@@ -63,7 +63,7 @@ public class JsonManager {
 	public static String jsonClientesCompletos = "JsonsParaPruebas\\clientesPruebaParaTransformador.json";
 
 	//RUTAS PRINCIPALES
-	public static String actual = maru;
+	public static String actual = giuli;
 	public static String rutaJsonClientes = actual + jsonClientes;
 	public static String rutaJsonDisp = actual + jsonDisps;
 	public static String rutaJsonAdmin = actual + jsonAdmin;

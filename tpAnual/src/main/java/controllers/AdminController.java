@@ -1,10 +1,16 @@
 package controllers;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import modelo.DAOJson;
+import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.IntervaloDispositivo;
@@ -12,6 +18,7 @@ import modelo.devices.IntervaloDispositivo.modo;
 import modelo.geoLocation.Transformador;
 import modelo.repositories.AdministradorRepository;
 import modelo.repositories.ClienteRepository;
+import modelo.repositories.DispositivoRepository;
 import modelo.repositories.TransformadorRepository;
 import modelo.users.Administrador;
 import modelo.users.Cliente;
@@ -93,5 +100,57 @@ public class AdminController {
 		return new ModelAndView(model, "reportes.hbs");
 	}
 	
+	public ModelAndView carga(Request req, Response res){
+		return new ModelAndView(null, "carga.hbs");
+	}
+	
+	public ModelAndView cargarArchivo(Request req, Response res) throws FileNotFoundException, InstantiationException, IllegalAccessException{
+			String ruta = req.queryParams("ruta");
+			List<Dispositivo> dispositivos = DAOJson.deserializarDispositivos(Dispositivo.class, ruta);
+			for (Dispositivo d : dispositivos) {
+				DispositivoRepository.addDispositivo(d);
+				}
+			return null;		 		
+		
+		/*
+		if(req.queryParams("tipo").equals("INTELIGENTE"))
+		{
+			DispositivoInteligente disp1 = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripcion"));
+			disp1.setkWh(Double.parseDouble(req.queryParams("kWh")));
+			disp1.setHorasUsoMax(Double.parseDouble(req.queryParams("horasMax")));
+			disp1.setHorasUsoMin(Double.parseDouble(req.queryParams("horasMin")));
+			disp1.setEsBajoConsumo(Boolean.valueOf(req.queryParams("bajoConsumo")));
+			DispositivoRepository d = new DispositivoRepository();
+			
+			d.addDispositivo(disp1);
+			//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
+			return null;
+
+		}
+		else{
+		DispositivoEstandar disp1 = new DispositivoEstandar();
+		disp1.setNombreDisp(req.queryParams("nombre"));
+		disp1.setEquipoConcreto(req.queryParams("descripcion"));
+		disp1.setkWh(Double.parseDouble(req.queryParams("kWh")));
+		disp1.setHorasUsoMax(Double.parseDouble(req.queryParams("horasMax")));
+		disp1.setHorasUsoMin(Double.parseDouble(req.queryParams("horasMin")));
+		disp1.setEsBajoConsumo(Boolean.valueOf(req.queryParams("bajoConsumo")));
+		DispositivoRepository d = new DispositivoRepository();
+		d.addDispositivo(disp1);
+		//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
+		return null;
+		}
+		
+	}
+	
+	public void convertirAJson(DispositivoEstandar disp) 
+	{
+		Gson gson = new Gson();
+		String JSON = gson.toJson(disp);
+	}
+	*/
+	
+}
+
 	
 }

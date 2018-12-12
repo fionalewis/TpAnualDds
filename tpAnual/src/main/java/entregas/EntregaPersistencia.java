@@ -1,14 +1,21 @@
 package entregas;
 import java.time.LocalDateTime;
 import java.awt.HeadlessException;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
+
+import com.google.gson.Gson;
 
 import modelo.repositories.*;
 import exceptions.CaracterInvalidoException;
+import modelo.DAOJson;
+import modelo.JsonManager;
 import modelo.Actuador.Actuador;
 import modelo.Reglas.CondicionSensorYValor;
 import modelo.Reglas.Regla;
+import modelo.devices.Dispositivo;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
 import modelo.devices.Sensor;
@@ -18,18 +25,19 @@ import modelo.users.Cliente;
 import modelo.users.Cliente.TipoDocumento;
 
 public class EntregaPersistencia {
-	public static void main(String[] args) throws HeadlessException, SQLException, CaracterInvalidoException{
+	public static void main(String[] args) throws HeadlessException, SQLException, CaracterInvalidoException, FileNotFoundException, InstantiationException, IllegalAccessException{
 		menuPrincipal();
 	}
 	
 	@SuppressWarnings("resource")
-	public static void menuPrincipal() throws CaracterInvalidoException, HeadlessException, SQLException{
+	public static void menuPrincipal() throws CaracterInvalidoException, HeadlessException, SQLException, FileNotFoundException, InstantiationException, IllegalAccessException{
 
 		System.out.println("\n Por favor elija una opcion:"
 				+ "\n1. Prueba 1"
 				+ "\n3. Prueba 3 paso 1: crear nueva regla"
 				+ "\n4. Prueba 3 paso 2: modificar una condicion"
-				+ "\n5. Prueba 5");
+				+ "\n5. Prueba 5"
+				+ "\n6. Prueba 6");
 			
 		Scanner in = new Scanner(System.in);
 			switch(in.nextInt()){
@@ -45,6 +53,9 @@ public class EntregaPersistencia {
 				break;
 			case 5:
 				prueba5();
+			case 6:
+				prueba6();
+				break;
 
 			
 			default: menuPrincipal();
@@ -325,6 +336,25 @@ public class EntregaPersistencia {
 //		String nroDisp = in.nextLine();
 	}
 
-	
-	
+	public static void prueba6() throws FileNotFoundException, InstantiationException, IllegalAccessException{
+		
+		Scanner in = new Scanner(System.in);
+		System.out.println("Ingrese la ruta: ");
+		String ruta = in.nextLine();
+		List<Dispositivo> dispositivos = DAOJson.deserializarDispositivos(Dispositivo.class, ruta);
+		
+		for (Dispositivo d : dispositivos) {
+			DispositivoRepository.addDispositivo(d);
+			}
+		
+		System.out.println("El dispositivo se cargó con éxito");
+	/*	final String json = ruta;
+		final Gson gson = new Gson();
+		final DispositivoEstandar<?> dispEstandar = gson.fromJson(json, DispositivoEstandar.class);
+		DispositivoRepository d = new DispositivoRepository();
+		DispositivoRepository.addDispositivo(dispEstandar);
+		
+	*/
+
+}
 }
