@@ -3,24 +3,62 @@
     "nombreZona": "Caballito",
     "radius": 1500.0,
     "center": {
+      "name": "",
       "longitude": -58.445874,
       "latitude": -34.6209278
     },
-    "transformadores": []
+    "transformadores": [
+      {
+        "idTransformador": 1,
+        "zona": "Caballito",
+        "reportes": [],
+        "ubicacion": {
+          "name": "",
+          "longitude": -58.446179,
+          "latitude": -34.617015
+        },
+        "suministroActual": 0.0
+      },
+      {
+        "idTransformador": 4,
+        "zona": "Caballito",
+        "reportes": [],
+        "ubicacion": {
+          "name": "",
+          "longitude": -58.433519,
+          "latitude": -34.619663
+        },
+        "suministroActual": 0.0
+      }
+    ]
   },
   {
     "nombreZona": "Almagro",
     "radius": 1500.0,
     "center": {
+      "name": "",
       "longitude": -58.4201892,
       "latitude": -34.6110583
     },
-    "transformadores": []
+    "transformadores": [
+      {
+        "idTransformador": 2,
+        "zona": "Almagro",
+        "reportes": [],
+        "ubicacion": {
+          "name": "",
+          "longitude": -58.419014,
+          "latitude": -34.602957
+        },
+        "suministroActual": 0.0
+      }
+    ]
   },
   {
     "nombreZona": "Villa Crespo",
     "radius": 1500.0,
     "center": {
+      "name": "",
       "longitude": -58.4430195,
       "latitude": -34.5976786
     },
@@ -30,6 +68,7 @@
     "nombreZona": "Boedo",
     "radius": 1000.0,
     "center": {
+      "name": "",
       "longitude": -58.4201892,
       "latitude": -34.63099
     },
@@ -39,15 +78,29 @@
     "nombreZona": "Balvanera",
     "radius": 1000.0,
     "center": {
+      "name": "",
       "longitude": -58.40594059999999,
       "latitude": -34.6101223
     },
-    "transformadores": []
+    "transformadores": [
+      {
+        "idTransformador": 5,
+        "zona": "Balvanera",
+        "reportes": [],
+        "ubicacion": {
+          "name": "",
+          "longitude": -58.398715,
+          "latitude": -34.610269
+        },
+        "suministroActual": 0.0
+      }
+    ]
   },
   {
     "nombreZona": "Parque Chacabuco",
     "radius": 1250.0,
     "center": {
+      "name": "",
       "longitude": -58.43731149999999,
       "latitude": -34.6359102
     },
@@ -57,6 +110,7 @@
     "nombreZona": "Parque Patricios",
     "radius": 1000.0,
     "center": {
+      "name": "",
       "longitude": -58.4002165,
       "latitude": -34.637701
     },
@@ -66,6 +120,7 @@
     "nombreZona": "Monserrat",
     "radius": 800.0,
     "center": {
+      "name": "",
       "longitude": -58.38136,
       "latitude": -34.6130871
     },
@@ -75,6 +130,7 @@
     "nombreZona": "Recoleta",
     "radius": 1500.0,
     "center": {
+      "name": "",
       "longitude": -58.3973636,
       "latitude": -34.5895459
     },
@@ -84,6 +140,7 @@
     "nombreZona": "San Nicolás",
     "radius": 800.0,
     "center": {
+      "name": "",
       "longitude": -58.3802473,
       "latitude": -34.6045547
     },
@@ -93,6 +150,7 @@
     "nombreZona": "San Cristobal",
     "radius": 500.0,
     "center": {
+      "name": "",
       "longitude": -58.3973636,
       "latitude": -34.62442619999999
     },
@@ -102,6 +160,7 @@
     "nombreZona": "Barracas",
     "radius": 1500.0,
     "center": {
+      "name": "",
       "longitude": -58.3773949,
       "latitude": -34.641094
     },
@@ -111,9 +170,22 @@
     "nombreZona": "Palermo",
     "radius": 1500.0,
     "center": {
+      "name": "",
       "longitude": -58.423297,
       "latitude": -34.57115
     },
-    "transformadores": []
+    "transformadores": [
+      {
+        "idTransformador": 3,
+        "zona": "Palermo",
+        "reportes": [],
+        "ubicacion": {
+          "name": "",
+          "longitude": -58.423005,
+          "latitude": -34.575435
+        },
+        "suministroActual": 0.0
+      }
+    ]
   }
 ]
