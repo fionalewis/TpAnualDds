@@ -6,8 +6,9 @@ import java.util.*;
 import javax.persistence.*;
 
 import modelo.deviceState.EstadoDispositivo;
+import modelo.repositories.DispositivoRepository;
 import modelo.users.Cliente;
-import modelo.users.Reporte;;
+import modelo.users.Reporte;
 
 @Entity
 @Inheritance
@@ -27,7 +28,9 @@ public abstract class Dispositivo {
 	
 	@Transient
 	boolean esInteligente = false; //esto es para el json
-	
+	//para la fucking vista
+	public String estadoActual;
+
 	protected double kWh;
 
 	protected LocalDateTime fechaRegistro;
@@ -42,6 +45,19 @@ public abstract class Dispositivo {
 	
 	//Getters y Setters
 
+	
+	public String getEstadoActual() {
+		return estadoActual;
+	}
+
+	public void setEstadoActual(String estadoActual) {
+		this.estadoActual = estadoActual;
+	}
+	
+	public void actualizarEstadoActual(){
+		this.estadoActual = this.getEstado();
+	}
+	
 	public String getNombreDisp() {
 		return nombreDisp;
 	}
@@ -123,11 +139,16 @@ public abstract class Dispositivo {
 	
 	public abstract EstadoDispositivo getEstadoDisp(); //Solo para que no llore el cantDisp de cliente
 	
+	//Funcion para el Controller
+	
+	public abstract String getEstado();
+	
 	//Para los predicates (puede llegar a ser util mas adelante tambien)
 	
 	public static boolean esInteligente(Dispositivo disp) {
 		return disp instanceof DispositivoInteligente;
 	}
+
 	
 	public static boolean esEstandar(Dispositivo undisp) {
 		return undisp instanceof DispositivoEstandar;

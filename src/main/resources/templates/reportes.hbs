@@ -1,101 +1,180 @@
 {{#partial "contenido"}}
-<!DOCTYPE html>
-
-<head>
-	<meta charset="utf-8">
-	<title>Hogares y sus consumos </title>
-</head>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>.ahre > li > a {
+    width:330px;
+}
+.nav li a{
+   text-align: center;
+}
+.nav li{
+   display:inline-block;
+}</style>
 <body>
 	
 	<div class="table-responsive">
-<h3>Administracion de hogares</h3>
-		
+<h3>Reporte de hogares y consumos</h3>
+
+<ul class="nav ahre groove" style="border: 1px solid #ddd;">
+  <li class="nav-item" onclick="toggleHogar()">
+    <a class="nav-link" href="#">Hogar </a>
+  </li>
+  <li class="nav-item" onclick="toggleDisp()">
+    <a class="nav-link" href="#">Consumo </a>
+  </li>
+  <li class="nav-item" onclick="toggleTransf()">
+    <a class="nav-link" href="#">Transformador</a>
+  </li>
+</ul>
+
+<div id="porHogar" onclick="toggleHogar()" style="display:none;">			
 	<form action="/reporteHogar" method="POST">
 	<div class="table-responsive">
-		
-<h3>Reporte de consumo por hogar/periodo </h3>
-		
-	<div class="form-group">
-			<label for="inicioPeriodo">Inicio Periodo</label>
-			<input type="date" placeholder="Ingrese un año" name="inicioPeriodo">
-		</div>
-	
-		<div class="form-group">		
-			<label for="finPeriodo">Fin Periodo</label>
-			<input type="date" placeholder="Ingrese un año" name="finPeriodo">
-		</div>
-		
-		<div class="form-group">
-			<input class="btn btn-primary btn-lg" type="submit" value="Consultar">
-		</div>
+
+
+<h4>Consumo mensual por hogar</h4>
+<div class="form-row">
+    <div class="form-group col-md-3">
+    <label for="periodo"></label>
+  <select id="periodo" name="periodo" class="form-control" onchange="this.form.submit()">
+  	<option hidden >Seleccione un mes</option>
+    <option value="1">Enero</option>
+    <option value="2">Febrero</option>
+    <option value="3">Marzo</option>
+    <option value="4">Abril</option>
+    <option value="5">Mayo</option>
+    <option value="6">Junio</option>
+    <option value="7">Julio</option>
+    <option value="8">Agosto</option>
+    <option value="9">Septiembre</option>
+    <option value="10">Octubre</option>
+    <option value="11">Noviembre</option>
+    <option value="12">Diciembre</option>
+  </select>
+  </div>
+  </div>
 		
 	<table class="table">
 		<tr>
 			<th>Hogares</th>
 			<th>Consumo</th>
-		</tr>
-		{{#each clientes}}
+		</tr>		
+		{{#each hogar}}
 		<tr>
 			<td>{{nombre}}</td>
 			<td>{{consumo}}</td>
 		</tr>
 		{{/each}}
 	</table>
+	</div>
 </form>
-	
-<h3>Consumo promedio por tipo de dispositivo </h3>
-
+</div>
+<div id="porDisp" onclick="toggleDisp()" style="display:none;">
+<form action="/reporteDispositivo" method="POST">
+<h4>Consumo promedio mensual por tipo de dispositivo </h4>
+<div class="form-row">
+    <div class="form-group col-md-3">
+    <label for="periodo"></label>
+  <select id="periodo" name="periodo" class="form-control" onchange="this.form.submit()">
+  	<option hidden >Seleccione un mes</option>
+    <option value="1">Enero</option>
+    <option value="2">Febrero</option>
+    <option value="3">Marzo</option>
+    <option value="4">Abril</option>
+    <option value="5">Mayo</option>
+    <option value="6">Junio</option>
+    <option value="7">Julio</option>
+    <option value="8">Agosto</option>
+    <option value="9">Septiembre</option>
+    <option value="10">Octubre</option>
+    <option value="11">Noviembre</option>
+    <option value="12">Diciembre</option>
+  </select>
+  </div>
+  </div>
 	<table class="table">
 		<tr>
 			<th>Tipo de Dispositivo</th>
 			<th>Consumo promedio</th>
 		</tr>
+		{{#each dispositivo}}
 		<tr>
-			<td>Inteligente</td>
-			<td>{{consumoDispositivoInt}}</td>
+			<td>{{disp}}</td>
+			<td>{{consumo}}</td>
 		</tr>
-		<tr>
-			<td>Estandar</td>
-			<td>{{consumoDispositivoEst}}</td>
-		</tr>
+		{{/each}}
+		
+	</table>	
 		
 	</table>
-	
+	</form>
+</div>
+<div id="porTransf" style="display:none;">
 <form action="/reporteTransformador" method="POST">
-<h3>Consumo por transformador por periodo </h3>
-
-	
-	<div class="form-group">
-			<label for="inicio">Inicio Periodo</label>
-			<input type="date" placeholder="Ingrese un año" name="inicio">
-		</div>
-	
-		<div class="form-group">		
-			<label for="fin">Fin Periodo</label>
-			<input type="date" placeholder="Ingrese un año" name="fin">
-		</div>
-		
-		<div class="form-group">
-			<input class="btn btn-primary btn-lg" type="submit" value="Consultar">
-		</div>
+<h4>Consumo mensual por transformador</h4>
+<div class="form-row">
+    <div class="form-group col-md-3">
+    <label for="periodo"></label>
+  <select id="periodo" name="periodo" class="form-control" onchange="this.form.submit()">
+  	<option hidden >Seleccione un mes</option>
+    <option value="1">Enero</option>
+    <option value="2">Febrero</option>
+    <option value="3">Marzo</option>
+    <option value="4">Abril</option>
+    <option value="5">Mayo</option>
+    <option value="6">Junio</option>
+    <option value="7">Julio</option>
+    <option value="8">Agosto</option>
+    <option value="9">Septiembre</option>
+    <option value="10">Octubre</option>
+    <option value="11">Noviembre</option>
+    <option value="12">Diciembre</option>
+  </select>
+  </div>
+  </div>
 	
 	<table class="table">
 		<tr>
 			<th>Transformador</th>
 			<th>Consumo</th>
 		</tr>
-		{{#each transformadores}}
+		{{#each transformador}}
 		<tr>
-			<td>{{idTransformador}}</td>
-			<td>{{suministroActual}}</td>
+			<td>{{transf}}</td>
+			<td>{{consumo}}</td>
 		</tr>
 		{{/each}}
 	</table>	
 	</form>
-	<div>
-    	<a href="../"><input class="btn btn-primary btn-lg" value="Ir al menu principal"></a>
+	</div>
+	<div class="form-row text-center">
+    	<a href="../"><input class="btn btn-primary btn-lg" value="Volver" style="width:100px;margin-top:5px;"></a>
   	</div>
 </body>
+<script>
+$( document ).ready(function() {
+	var pag = window.location.href;
+	if(pag.includes("Hogar")) {$('#porHogar').show();}
+	else if(pag.includes("Transf")) {$('#porTransf').show();}
+	else if(pag.includes("Disp")) {$('#porDisp').show();}
+});
+function toggleHogar(){
+        // Toggle classes of divs
+		$('#porTransf').hide();
+		$('#porDisp').hide();
+		$('#porHogar').show();
+    };
+function toggleDisp(){
+        // Toggle classes of divs
+		$('#porTransf').hide();
+		$('#porDisp').show();
+		$('#porHogar').hide();
+    };
+function toggleTransf(){
+        // Toggle classes of divs
+		$('#porTransf').show();
+		$('#porDisp').hide();
+		$('#porHogar').hide();
+    };
+</script>
 {{/partial}}
-{{>layout.hbs}}
+{{>mainLayout.hbs}}

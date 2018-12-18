@@ -49,6 +49,13 @@ public class ClienteRepository {
 		EntityManagerHelper.closeEntityManager();
 		return cli;
 	}
+			
+	public static String getnombrecli(String nrodoc) {
+		EntityManagerHelper.beginTransaction();
+		String cli = (String) EntityManagerHelper.getEntityManager().createNativeQuery("select nombre FROM tp_anual_dds.cliente where cliente_id = '"+nrodoc+"'").getSingleResult();
+		EntityManagerHelper.closeEntityManager();
+		return cli;
+	}
 	
 	public static Cliente getCliente(String dni) {
 		Cliente cliente = EntityManagerHelper.getEntityManager().find(Cliente.class,dni);

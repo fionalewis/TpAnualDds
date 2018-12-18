@@ -21,6 +21,7 @@ import modelo.geoLocation.Transformador;
 import modelo.repositories.AdministradorRepository;
 import modelo.repositories.ClienteRepository;
 import modelo.repositories.DispositivoRepository;
+import modelo.repositories.ReporteRepository;
 import modelo.repositories.TransformadorRepository;
 import modelo.users.Administrador;
 import modelo.users.Cliente;
@@ -51,7 +52,7 @@ public class AdminController {
 		return new ModelAndView(null, "reportes.hbs");
 	}
 	
-	public ModelAndView reporteHogar(Request req, Response res){
+	/*public ModelAndView reporteHogar(Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
 		
 		String inicioPeriodo = req.queryParams("inicioPeriodo");
@@ -67,41 +68,52 @@ public class AdminController {
 			String[] outputF = finPeriodo.split("-");
 			LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[0]), 
 					Integer.parseInt(outputF[1]), Integer.parseInt(outputF[2]), 0, 0);
-			
+			double consum =0;
 			List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
-			cli.forEach(c -> c.consumoXPeriodo(fechaInicio,fechaFin));
+			for(Cliente c : cli) {
+				List<DispositivoInteligente> disps = DispositivoRepository.getDispositivosDeUnClienteI(c.getNroDoc()).stream().filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
+				consum += disps.stream().mapToDouble(unDisp ->  unDisp.consumoTotalEntre(fechaInicio,fechaFin)).sum();
+				c.setConsumo(consum);
+			}
+			
+			
 			model.put("clientes",cli);
 		}
+		
+		return new ModelAndView(model, "reportes.hbs");
+	}*/
+	
+	public ModelAndView reporteHogar(Request req, Response res){
+		Map<String, Object> model = new HashMap<>();
+		
+		int periodo = Integer.parseInt(req.queryParams("periodo"));
+		List<Reporte> rep = new ReporteRepository().getValoresPorReporte("cliente_id",periodo);
+		model.put("hogar",rep);
+		
+		return new ModelAndView(model, "reportes.hbs");
+	}
+	
+	public ModelAndView reporteDispositivo(Request req, Response res){
+		Map<String, Object> model = new HashMap<>();
+		
+		int periodo = Integer.parseInt(req.queryParams("periodo"));
+	
+		List<Reporte> rep = new ReporteRepository().getValoresPorReporte("tipo_dispositivo",periodo);
+		System.out.println(rep);
+		for(Reporte r : rep) {System.out.println(r.getDisp());System.out.println(r.getConsumo());}
+		model.put("dispositivo",rep);
 		
 		return new ModelAndView(model, "reportes.hbs");
 	}
 	
 	public ModelAndView reporteTransformador(Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
-		String inicioPeriodo = req.queryParams("inicio");
-		String finPeriodo = req.queryParams("fin");
 		
-		System.out.println(inicioPeriodo);
-		System.out.println(finPeriodo);
-		if(inicioPeriodo != "" && finPeriodo != ""){
-			String[] outputI = inicioPeriodo.split("-");
-			LocalDateTime fechaInicio = LocalDateTime.of(Integer.parseInt(outputI[0]), 
-					Integer.parseInt(outputI[1]), Integer.parseInt(outputI[2]), 0, 0);
-			String[] outputF = finPeriodo.split("-");
-			LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[0]), 
-					Integer.parseInt(outputF[1]), Integer.parseInt(outputF[2]), 0, 0);
-			
-			System.out.println(fechaInicio);
-			System.out.println(fechaFin);
-			
-			TransformadorRepository tr = new TransformadorRepository();
-			List<Transformador> trans = tr.getListaTranformadores();
-			System.out.println(trans);
-			//if(trans.size() != 0){
-			//trans.forEach(t -> t.suministroActual());}
-			
-			model.put("transformadores",trans);
-		}
+		int periodo = Integer.parseInt(req.queryParams("periodo"));
+	
+		List<Reporte> rep = new ReporteRepository().getValoresPorReporte("transformador_id",periodo);
+		
+		model.put("transformador",rep);
 		
 		return new ModelAndView(model, "reportes.hbs");
 	}

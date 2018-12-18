@@ -43,8 +43,8 @@ public class Reporte {
 	@Id @GeneratedValue
 	public Long id;
 
-	private String fecha;
-
+	private int mes;
+		
 	@ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="cliente_id", referencedColumnName="cliente_id", nullable=true, unique=false)
 	private Cliente cliente;
@@ -62,16 +62,28 @@ public class Reporte {
 	public double getConsumo() {
 		return consumo;
 	}
-
-	public String getFecha() {
-		return fecha;
+	
+	public String getNombre() {
+		return cliente.getNombre();
 	}
-	public void setFecha(String fecha) {
-		this.fecha = fecha;
+	
+	public String getDisp() {
+		return tipo_dispositivo;
+	}
+	
+	public int getTransf() {
+		return transf.getIdTransformador();
+	}
+
+	public int getMes() {
+		return mes;
+	}
+	public void setMes(int fecha) {
+		this.mes = fecha;
 	}
 
 	public Reporte(){
-		this.fecha = LocalDate.now().toString();		
+		this.mes = LocalDate.now().getMonthValue();		
 	}
 
 	public List<Cliente> listaParaCalcularConsumosClientes() {
@@ -118,7 +130,7 @@ public class Reporte {
 
 			ReporteRepository.addReporte(new Reporte(), "estandares", CalculoConsumoDispsEstandares());
 			ReporteRepository.addReporte(new Reporte(), "inteligentes", CalculoConsumoDispsInteligentes());
-			//System.out.println("estoy corriendo");
+			System.out.println("Ha corrido el reporte");
 		}
 		}, 0, intervalo); // es en milisegundos 
 	}
