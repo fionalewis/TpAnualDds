@@ -273,19 +273,33 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		res.redirect("/reglas");
 		return null;
 	}
-
-
 	
-
-public ModelAndView agregarDispPantalla(Request req, Response res){
-		return new ModelAndView(null, "agregar-disp.hbs");
+	public ModelAndView agregarDispPantalla(Request req, Response res){
+		Map<String, Object> model = new HashMap<>();
+		List<Dispositivo> d = new DispositivoRepository().getDispositivosLegales();
+		model.put("legales",d);
+		return new ModelAndView(model, "/agregar-disp.hbs");
+		}
+	
+	public ModelAndView agregarReglaPantalla(Request req, Response res){
+		return new ModelAndView(null, "agregar-regla.hbs");
 	}
-
-public ModelAndView agregarReglaPantalla(Request req, Response res){
-	return new ModelAndView(null, "agregar-regla.hbs");
-}
-
 	public ModelAndView agregarDisp(Request req, Response res){
+		Cliente cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+		DispositivoRepository dr = new DispositivoRepository();
+		Dispositivo d = dr.getDispositivoById(req.queryParams("dispos"));
+		if (d.getEsInteligente()) {
+			DispositivoInteligente disp =(DispositivoInteligente)d;
+			disp.encender();
+			dr.addDispositivoConCliente(cliente.getNroDoc(),disp);
+		} else {
+			dr.addDispositivoConCliente(cliente.getNroDoc(),d);
+		}
+		
+		res.redirect("/reglas");
+		return null;
+	}
+	public ModelAndView agregarDispno(Request req, Response res){
 		Cliente cliente = new Cliente();
 		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		if(req.queryParams("tipo").equals("INTELIGENTE"))

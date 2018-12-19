@@ -143,6 +143,20 @@ public class DispositivoRepository {
 		}		
 	}
 	
+	public static List<Dispositivo> getDispositivosLegales() {
+			EntityManagerHelper.beginTransaction();
+			List<Dispositivo> disp = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM Dispositivo where cliente_id is null", Dispositivo.class).getResultList();
+			EntityManagerHelper.closeEntityManager();
+			return disp;
+	}
+	
+	public static Dispositivo getDispositivoById(String id) {
+		EntityManagerHelper.beginTransaction();
+		Dispositivo disp = (Dispositivo) EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM Dispositivo where dispositivo_id ="+id, Dispositivo.class).getSingleResult();
+		EntityManagerHelper.closeEntityManager();
+		return disp;
+	}
+	
 	public static List<IntervaloDispositivo> getIntervalosDispositivo(Long idDisp){
 		EntityManagerHelper.beginTransaction();
 		List<IntervaloDispositivo> intervalos = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * from IntervaloDispositivo where dispositivo_id = "+idDisp,IntervaloDispositivo.class).getResultList();

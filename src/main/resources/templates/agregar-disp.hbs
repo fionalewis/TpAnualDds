@@ -5,33 +5,49 @@ Agregar Dispositivo
 30%
 {{/partial}}
 {{#partial "contenido"}}
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
    
       <form class="form-signin" action="/agregar-disp" method="POST">
       <br />
-        <h4>Ingrese datos del dispositivo</h4>
+        <h4>Seleccione el dispositivo que quiere agregar</h4>
          <br />
-         <p>Tipo de dispositivo</p>
-         <form action="">
-		  <input type="radio" name="tipo" value="INTELIGENTE">Dispositivo Inteligente<br>
-		  <input type="radio" name="tipo" value="ESTANDAR"> Dispositivo Estandar<br>
-        <label for="nombre" class="sr-only">Nombre</label>
-        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required autofocus>
-        <label for="descripcion" class="sr-only">Descripcion</label>
-        <br />
-        <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripcion" required>
-        <br />
-        <input type="double" id="kWh" name="kWh" class="form-control" placeholder="KiloWatts que consume por hora" required>
-        <br />
-        <input type="double" id="horasDiarias" name="horasDiarias" class="form-control" placeholder="Horas de uso diarias" required>
-        <br />
-		<input type="checkbox" name="bajoConsumo" value="true">Es Bajo Consumo?<br>
-		 <br />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Agregar Dispositivo</button>
+         <label for="dispos"></label>
+         <select class="form-control" id="dispos" name="dispos">
+         {{#each legales}}
+			<option value="{{id}}">{{nombreDisp}} {{equipoConcreto}}</option>
+		{{/each}}
+        </select>
+         
+         {{#each legales}}
+		<div id="{{id}}" style="display:none;" class="upuntou">
+		<table class="table" style="margin-top:10px;">
+			<tr>
+			<td>Nombre</td>
+			<td>{{nombreDisp}} {{equipoConcreto}}</td>
+			</tr>
+			<tr>
+			<td>Es inteligente</td>
+			<td>{{esInteligente}}</td>
+			</tr>
+			<tr>
+			<td>Es bajo consumo</td>
+			<td>{{esBajoConsumo}}</td>
+			</tr>
+		</table>
+		</div>
+		{{/each}}
+         
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="margin-top:15px;">Agregar Dispositivo</button>
         {{#block "alerta"}}{{/block}}
-        		</form>
-        
       </form>
+      
+      <script>
+      $( "#dispos" ).change(function() {
+      		$('div.upuntou').hide();
+  			var elelegido = $('#dispos').find(":selected").val();
+  			$("#"+elelegido).show();
+		});
+      </script>
 
 
 {{/partial}}
