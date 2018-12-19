@@ -19,6 +19,7 @@ import java.io.FileReader;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Convert;
 import javax.persistence.NoResultException;
@@ -63,14 +64,17 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		//Empresa empresa = Repositorios.repositorioEmpresas.buscarEmpresa(nombreEmpresa);
 		String inicioPeriodo = req.queryParams("inicioPeriodo");
 		String finPeriodo = req.queryParams("finPeriodo");
-		System.out.println(inicioPeriodo == "");
-		System.out.println(finPeriodo != "");
+		System.out.println(inicioPeriodo);
+		System.out.println(finPeriodo);
 		if(inicioPeriodo != "" && finPeriodo != ""){
-		String[] outputI = inicioPeriodo.split("-");
-		LocalDateTime fechaInicio= LocalDateTime.of(Integer.parseInt(outputI[0]), Integer.parseInt(outputI[1]), Integer.parseInt(outputI[2]), 0, 0);
-		String[] outputF = finPeriodo.split("-");
-		LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[0]), Integer.parseInt(outputF[1]), Integer.parseInt(outputF[2]), 0, 0);
+		String[] outputI = inicioPeriodo.split("/");
+		LocalDateTime fechaInicio= LocalDateTime.of(Integer.parseInt(outputI[2]), Integer.parseInt(outputI[0]), Integer.parseInt(outputI[1]), 0, 0);
+		String[] outputF = finPeriodo.split("/");
+		LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[2]), Integer.parseInt(outputF[0]), Integer.parseInt(outputF[1]), 0, 0);
 		
+		System.out.println("---");
+		System.out.println(fechaInicio);
+		System.out.println(fechaFin);
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
 		

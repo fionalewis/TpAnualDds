@@ -1,4 +1,11 @@
 {{#partial "contenido"}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
 <!DOCTYPE html>
 
 <head>
@@ -10,25 +17,55 @@
 
 	<form action="/consumo" method="POST">
 		
-		<h1>Calculo de Consumo </h1>
+		<h1>Calculo de consumo por periodo</h1>
+		<br>
+		<div class="container">
+    <div class='col-md-5'>
+        <div class="form-group">
+            <div class='input-group date' id='datetimepicker6'>
+            <label hidden for="inicioPeriodo"></label>
+                <input type='text' class="form-control" name="inicioPeriodo" placeholder="Ingrese una fecha de inicio" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class='col-md-5'>
+        <div class="form-group">
+            <div class='input-group date' id='datetimepicker7'>
+            <label for="finPeriodo" hidden></label>
+                <input type='text' class="form-control" name="finPeriodo" placeholder="Ingrese una fecha de fin" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker6').datetimepicker({format: 'L'});
+        $('#datetimepicker7').datetimepicker({    
+        	format: 'L',    	
+            useCurrent: false //Important! See issue #1075
+        });
+        $("#datetimepicker6").on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker7").on("dp.change", function (e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+</script>
 		
-		<h2>Ingrese un periodo</h2>
-
-		<div class="form-group">
-			<label for="inicioPeriodo">Inicio Periodo</label>
-			<input type="date" placeholder="Ingrese un año" name="inicioPeriodo">
-		</div>
-	
-		<div class="form-group">		
-			<label for="finPeriodo">Fin Periodo</label>
-			<input type="date" placeholder="Ingrese un año" name="finPeriodo">
-		</div>
-		
-		<div class="form-group">
+		<div class="form-group text-center">
 			<input class="btn btn-primary btn-lg" type="submit" value="Calcular consumo">
 		</div>
 		
 		<h3>Consumo en horas de:</h3> <div value={{consumo}}>{{consumo}}</div>
+		
+		
 
 	<div class="form-row text-center">
     	<a href="../"><input class="btn btn-primary btn-lg" value="Volver" style="width:100px"></a>
