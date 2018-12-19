@@ -57,6 +57,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	}
 	
 	public ModelAndView calcularConsumo(Request req, Response res){
+		try {
 		Map<String, Object> model = new HashMap<>();
 		//String nombreEmpresa = req.queryParams("nombreEmpresa");
 		//Empresa empresa = Repositorios.repositorioEmpresas.buscarEmpresa(nombreEmpresa);
@@ -81,21 +82,21 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		model.put("consumo", de.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(fechaInicio,fechaFin)).sum());
 		}
 		return new ModelAndView(model, "consumo.hbs");
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
 	}
 	
 	
 	public ModelAndView hogar(Request req, Response res){
-		Map<String, Object> model = new HashMap<>();
-		
-		
-		
+		try {
+		Map<String, Object> model = new HashMap<>();		
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
-		
-
 		List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
-		Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+
+		Cliente cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
+		
 		/*
 		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
 		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
@@ -111,14 +112,15 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		//double consumoDE = di.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(LocalDateTime.now().minusMonths(1),LocalDateTime.now())).sum();
 		//double consumoDS = de.stream().mapToDouble(UnDisp -> ((DispositivoEstandar) UnDisp).consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now())).sum();
 		//model.put("consumo", cliente.consumoXPeriodoNuevo(LocalDateTime.now().minusMonths(1), LocalDateTime.now(),disp));
-		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
+		
 		double consum = disps.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
 		
 		model.put("consumo", consum);//consumoDE + consumoDS);
 		model.put("dispositivos", disps);
-		
 		return new ModelAndView(model, "hogar.hbs");
-		
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
+			
 	}
 	
 	public ModelAndView carga(Request req, Response res){
@@ -137,6 +139,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	}
 	
 	public ModelAndView simplex(Request req, Response res){
+		try {
 		Map<String, Object> model = new HashMap<>();
 
 		Cliente cliente = new Cliente();
@@ -164,11 +167,11 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 			} catch (FileNotFoundException | InstantiationException | IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-
-		
+			}		
 		
 		return new ModelAndView(model, "simplex.hbs");
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
 	}
 	
 	public void actualizarEstadosDisp(List <Dispositivo> disp){
@@ -178,10 +181,10 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	}
 	
 	public ModelAndView reglasydisp(Request req, Response res){
+		try {
 		Map<String, Object> model = new HashMap<>();
 
-		Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+		Cliente cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		List <Dispositivo> ldisp = new DispositivoRepository().getDispositivosDeUnCliente(cliente.getNroDoc());
 		//ingreso el estado correcto de cada dispositivo
 		this.actualizarEstadosDisp(ldisp);
@@ -190,17 +193,20 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		model.put("reglas", reg.getTodasLasReglas());
 		List <String> listaDeEstados = (List<String>) ldisp.stream().map(m -> m.getEstado()).collect(Collectors.toList());
 		return new ModelAndView(model, "reglas.hbs");
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
 	}
 	
 	public ModelAndView eliminarDisp(Request req, Response res){
+		try {
 		Map<String, Object> model = new HashMap<>();
 
-		Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+		Cliente cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		//DispositivoInteligente disp = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripciom"));
-		String documento = cliente.getNroDoc();
-		new DispositivoRepository().deleteDispositivo(documento, Long.parseLong(req.queryParams("id")));
+		new DispositivoRepository().deleteDispositivo( cliente.getNroDoc(), Long.parseLong(req.queryParams("id")));
 		res.redirect("/reglas");
+		return null;
+		}catch(Exception ex) {res.redirect("/error");}
 		return null;
 	}
 	
@@ -240,6 +246,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	
 	@SuppressWarnings("static-access")
 	public ModelAndView accionDisp(Request req, Response res){
+		try {
 		Map<String, Object> model = new HashMap<>();
 		
 		Cliente cliente = new Cliente();
@@ -252,9 +259,12 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		this.cambiarEstado(disp);
 		res.redirect("/reglas");
 		return null;
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
 	}
 	
 	public ModelAndView crearRegla(Request req, Response res){
+		try {
 		Map<String, Object> model = new HashMap<>();
 		
 		String nombreRegla = req.queryParams("nombre");
@@ -267,24 +277,29 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		Regla regla = new Regla(nombreRegla,null,criterio);
 		regla.agregarCondicion(condicion);
 		regla.agregarActuador(actuador);
-		new ReglaRepository();
 		ReglaRepository.addRegla(regla);
 		model.put("mensajeRegla", "Nueva Regla creada exitosamente");
 		res.redirect("/reglas");
 		return null;
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
 	}
 	
 	public ModelAndView agregarDispPantalla(Request req, Response res){
+		try {
 		Map<String, Object> model = new HashMap<>();
 		List<Dispositivo> d = new DispositivoRepository().getDispositivosLegales();
 		model.put("legales",d);
 		return new ModelAndView(model, "/agregar-disp.hbs");
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
 		}
 	
 	public ModelAndView agregarReglaPantalla(Request req, Response res){
 		return new ModelAndView(null, "agregar-regla.hbs");
 	}
 	public ModelAndView agregarDisp(Request req, Response res){
+		try {
 		Cliente cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		DispositivoRepository dr = new DispositivoRepository();
 		Dispositivo d = dr.getDispositivoById(req.queryParams("dispos"));
@@ -298,42 +313,9 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		res.redirect("/reglas");
 		return null;
-	}
-	public ModelAndView agregarDispno(Request req, Response res){
-		Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
-		if(req.queryParams("tipo").equals("INTELIGENTE"))
-		{
-			DispositivoInteligente disp1 = new DispositivoInteligente(req.queryParams("nombre"),req.queryParams("descripcion"));
-			disp1.setkWh(Double.parseDouble(req.queryParams("kWh")));
-			disp1.setHorasDeUso(Double.parseDouble(req.queryParams("horasDiarias")));
-			disp1.setEsBajoConsumo(Boolean.valueOf(req.queryParams("bajoConsumo")));
-			DispositivoRepository d = new DispositivoRepository();
-			disp1.encender();
-			d.addDispositivo(disp1);
-			d.addDispositivoConCliente(cliente.getNroDoc(),disp1);
-			//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
-			res.redirect("/reglas");
-			return null;
-
-		}
-		else{
-			DispositivoEstandar disp1 = new DispositivoEstandar();
-			disp1.setNombreDisp(req.queryParams("nombre"));
-			disp1.setEquipoConcreto(req.queryParams("descripcion"));
-		disp1.setkWh(Double.parseDouble(req.queryParams("kWh")));
-		disp1.setHorasDeUso(Double.parseDouble(req.queryParams("horasDiarias")));
-		disp1.setEsBajoConsumo(Boolean.valueOf(req.queryParams("bajoConsumo")));
-		DispositivoRepository d = new DispositivoRepository();
-		d.addDispositivo(disp1);
-		d.addDispositivoConCliente(cliente.getNroDoc(),disp1);
-		//TODO Persistir este dispositivo en la base de datos y agregarlo al cliente
-		res.redirect("/reglas");
+		}catch(Exception ex) {res.redirect("/error");}
 		return null;
-		}
-		
 	}
-
 	
 	/*public ModelAndView archivoInvalido (Request req, Response res){
 		

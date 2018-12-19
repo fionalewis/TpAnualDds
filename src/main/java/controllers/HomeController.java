@@ -141,6 +141,7 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 	}
 
 	public String mapi (Request req, Response res){
+		try {
 		List<Transformador> t = TransformadorRepository.getListaTranformadores();
 		
 		String s = new String();
@@ -150,9 +151,12 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		 }
 		 System.out.println(s);
 		return s;
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
 	}
 	
 	public String mapz(Request req, Response res){
+		try {
 		List<Zona> z = DispositivoRepository.getListaZonas();
 
 		String sz = new String();
@@ -162,5 +166,11 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		}
 		System.out.println(sz);
 		return sz;
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
+	}
+	
+	public ModelAndView error(Request req, Response res){
+		return new ModelAndView(null, "error.hbs");
 	}
 }

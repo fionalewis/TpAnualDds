@@ -52,10 +52,8 @@
       function onMapClick(e) {
           alert("Latitud y Longitud: " + e.latlng);
       }
-      loadDataZonas();
       loadDataTransf();
-      
-      //loadTranformadores();
+      loadDataZonas();
     });
     
     function loadDataTransf(){
@@ -67,10 +65,14 @@
         dataType: "text",
         success: function( data ) {
         console.log(data);
+        if(data.includes("Oh no")){
+        	window.location.href = "/error"
+        }else{
 	      var vak = data.split(';');
 	      for (var i = 0; i < vak.length; i += 3) {
 	        var lyl = vak[i+2].replace(/\(|\)/g, "").split(',');
 	        L.marker([lyl[0].trim(), lyl[1].trim()]).addTo(mapa).bindPopup("Transformador:"+vak[i]+", Consumo:"+vak[i+1]);
+	      }
 	      }
     	}
       });
@@ -85,9 +87,13 @@
         dataType: "text",
         success: function( data ) {
         console.log(data);
+        if(data.includes("Oh no")){
+        	window.location.href = "/error"
+        }else{
 	      var vak = data.split(';');
 	      for (var i = 0; i < vak.length-2; i += 3) {
         	L.circle([vak[i+1], vak[i+2]], {radius: vak[i]}).addTo(mapa);
+      	  }
       	  }
     	}
       });
@@ -110,4 +116,4 @@
 
 {{/partial}}
 
-{{>mainLayout.hbs}}
+{{>layout.hbs}}

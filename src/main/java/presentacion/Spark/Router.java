@@ -49,6 +49,7 @@ public class Router {
 		Spark.get("/map", homeController::map, engine);
 		Spark.get("/mapi", homeController::mapi);
 		Spark.get("/mapz", homeController::mapz);
+		Spark.get("/error", homeController::error, engine);
 		//Spark.get("/mapzonas", homeController::mapzonas);
 		//Spark.get("/maptransf", homeController::maptransf);
 				
@@ -120,6 +121,7 @@ public class Router {
 		publicRoutes.add("/map");
 		publicRoutes.add("/mapi");
 		publicRoutes.add("/mapz");
+		publicRoutes.add("/error");
 	}
 
 }

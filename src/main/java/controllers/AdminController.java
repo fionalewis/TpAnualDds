@@ -33,6 +33,7 @@ import spark.Response;
 public class AdminController {
 	
 	public ModelAndView hogar_consumo(Request req, Response res){
+		try {
 		Map<String, Object> model = new HashMap<>();
 		double consum = 0;
 		List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
@@ -45,6 +46,8 @@ public class AdminController {
 		model.put("clientes",cli);
 		
 		return new ModelAndView(model, "hogar_consumo.hbs");
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
 	}
 	
 	public ModelAndView reportes(Request req, Response res){
@@ -84,6 +87,7 @@ public class AdminController {
 	}*/
 	
 	public ModelAndView reporteHogar(Request req, Response res){
+		try {
 		Map<String, Object> model = new HashMap<>();
 		
 		int periodo = Integer.parseInt(req.queryParams("periodo"));
@@ -91,9 +95,12 @@ public class AdminController {
 		model.put("hogar",rep);
 		
 		return new ModelAndView(model, "reportes.hbs");
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
 	}
 	
 	public ModelAndView reporteDispositivo(Request req, Response res){
+		try {
 		Map<String, Object> model = new HashMap<>();
 		
 		int periodo = Integer.parseInt(req.queryParams("periodo"));
@@ -104,9 +111,12 @@ public class AdminController {
 		model.put("dispositivo",rep);
 		
 		return new ModelAndView(model, "reportes.hbs");
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
 	}
 	
 	public ModelAndView reporteTransformador(Request req, Response res){
+		try {
 		Map<String, Object> model = new HashMap<>();
 		
 		int periodo = Integer.parseInt(req.queryParams("periodo"));
@@ -116,6 +126,8 @@ public class AdminController {
 		model.put("transformador",rep);
 		
 		return new ModelAndView(model, "reportes.hbs");
+		}catch(Exception ex) {res.redirect("/error");}
+		return null;
 	}
 	
 	public ModelAndView carga(Request req, Response res){
