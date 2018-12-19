@@ -22,18 +22,29 @@
 		<tr>
 			<th>Nombre</th>
 			<th>Estado</th>
+			<th>Accion</th>
 			<th>ID</th>
 			<th> Dar de baja</th>
+
 		</tr>
 		{{#each dispositivos}}
 		<tr>
-		<form action="/eliminar-disp" method="POST">
 			<td>{{nombreDisp}}</td>
-			<td>{{estadoDisp}}</td>
+			<td>{{estadoActual}}</td>
+			
+		<form action="/accion" method="POST">
+			<td>
+				<button class="btn btn-secondary" type="submit">Apagar/Encender</a>
+			</td>
 			<td type="text" name="id" value="{{id}}">{{id}}</td>
 			    <select name="id" hidden>
 		  			<option value="{{id}}">{{id}}</option>
 				</select>
+		</form>
+		<form action="/eliminar-disp" method="POST">
+		<select name="id" hidden>
+		  	<option value="{{id}}">{{id}}</option>
+		</select>
 			<td>
 				<button class="btn btn-secondary" type="submit">Eliminar</a>
 			</td>
@@ -56,73 +67,19 @@
 	
 	<br />
 	<br />
-	<h1>Crear regla nueva</h1>
-	
-	   <form class="form-signin" action="/crear-regla" method="POST">
-	    <button class="btn btn-lg btn-primary btn-block" type="submit">Agregar Regla</button>
-        <h1 style="color:rgb(0,255,0);" value={{mensajeRegla}}>{{mensajeRegla}}</h1>
-        {{#block "alerta"}}{{/block}}
-      <br />
-        <h4>Datos de la regla</h4>
-         <br />
-        <label for="nombre" class="sr-only">Nombre</label>
-        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre de la Regla" required>
-       <br />
-        <form action="">
-		  <input type="radio" name="criterio" value="AND"> Aplicarse al cumplirse TODAS las condiciones<br>
-		  <input type="radio" name="criterio" value="OR"> Aplicarse al cumplirse CUALQUIER condicion<br>
-        <label for="criterio" class="sr-only">Criterio de comparacion ("AND" o "OR")</label>
-        <br />
-        		<h4>Datos del sensor</h4>
-        <br />
-        <label for="magnitud" class="sr-only">Magnitud</label>
-        <input type="text" id="magnitud" name="magnitud" class="form-control" placeholder="Tipo de Magnitud" >
-        <label for="valor" class="sr-only">Valor</label>
-        <br />
-        <input type="number" id="valor" name="valor" class="form-control" placeholder="Valor de la magnitud" >
-        <label for="intervalo" class="sr-only">Intervalo</label>
-        <br />
-        <input type="number" id="intervalo" name="intervalo" class="form-control" placeholder="Intervalo cada el cual mide el sensor">
-        <br />
-                <h4>Datos de la condicion</h4>
-        <br />
-        <label for="nombreCondicion" class="sr-only">Condicion</label>
-        <input type="text" id="nombreCondicion" name="nombreCondicion" class="form-control" placeholder="Nombre de la condicion" >
-        <br />
-        <label for="valorCondicion" class="sr-only">Valor Condicion</label>
-        <input type="number" id="valorCondicion" name="valorCondicion" class="form-control" placeholder="Valor de comparacion">
-        <br />
-        <label for="comparacion" > Escoja una Comparacion</label>
-        <br />
-          <select name="comparacion">
-		  <option value="MENOR">MENOR</option>
-		  <option value="MAYOR">MAYOR</option>
-		  <option value="IGUAL">IGUAL</option>
-		</select>
-        <br />
-        <br />
-                <h4>Datos de la Accion</h4>
-         <br />
-        <label for="idFabricante" class="sr-only">idFabricante</label>
-        <input type="number" id="idFabricante" name="idFabricante" class="form-control" placeholder="Numero de serie del dispositivo" required>
-        <br />
-        <label for="orden" >Escoja una Orden</label>
-        <br />
-        <select name="orden">
-		  <option value="PRENDER">PRENDER</option>
-		  <option value="APAGAR">APAGAR</option>
-		  <option value="AHORRO">AHORRO</option>
-		</select>
-				</form>
-		
-        <br />
-         <br />
-       
-      </form>
-
 	<div>
-    	<a href="../"><input class="btn btn-primary btn-lg" value="Ir al menu principal"></a>
+    	<a href="/agregar-regla"><input class="btn btn-primary btn-lg" value="+ Agregar Regla"></a>
+  	</div>
+  	
+  	<br />
+  	<br />
+  	
+  	
+
+
+	<div class="form-row text-center">
+    	<a href="../"><input class="btn btn-primary btn-lg" value="Volver" style="width:100px"></a>
   	</div>
 </body>
 {{/partial}}
-{{>layout.hbs}}
+{{>mainLayout.hbs}}

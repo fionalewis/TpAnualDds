@@ -47,13 +47,20 @@ public class Router {
 		Spark.get("/logout", homeController::logout,engine);
 
 		Spark.get("/map", homeController::map, engine);
-		Spark.get("/mapi", homeController::mapi, engine);
-		
+		Spark.get("/mapi", homeController::mapi);
+		Spark.get("/mapz", homeController::mapz);
+		//Spark.get("/mapzonas", homeController::mapzonas);
+		//Spark.get("/maptransf", homeController::maptransf);
+				
 		Spark.get("/hogar_consumo", adminController::hogar_consumo,engine);
 		//Spark.post("/hogar_consumo", adminController::hogar_consumo);
 		Spark.get("/reportes", adminController::reportes,engine);
 		Spark.post("/reporteHogar", adminController::reporteHogar,engine);
-		Spark.post("/reporteTransformador", adminController::reporteTransformador,engine);
+		Spark.post("/reporteTransformador", adminController::reporteTransformador,engine);	
+		Spark.post("/reporteDispositivo", adminController::reporteDispositivo,engine);
+		/*Spark.get("/carga", adminController::carga,engine);
+		Spark.post("/carga", adminController::cargarArchivo,engine);
+		Spark.post("/nuevo_disp", adminController::nuevoDisp,engine);*/
 		
 		Spark.get("/consumo", clienteController::consumo,engine);
 		Spark.post("/consumo", clienteController::calcularConsumo,engine);
@@ -65,6 +72,8 @@ public class Router {
 		Spark.get("/agregar-disp", clienteController::agregarDispPantalla,engine);
 		Spark.post("/agregar-disp", clienteController::agregarDisp,engine);
 		Spark.post("/eliminar-disp", clienteController::eliminarDisp,engine);
+		Spark.post("/accion", clienteController::accionDisp,engine);
+		Spark.get("/agregar-regla", clienteController::agregarReglaPantalla,engine);
 		Spark.post("/crear-regla", clienteController::crearRegla,engine);
 		
   		
@@ -110,6 +119,7 @@ public class Router {
 		publicRoutes.add("/wrong-user-or-pass");
 		publicRoutes.add("/map");
 		publicRoutes.add("/mapi");
+		publicRoutes.add("/mapz");
 	}
 
 }

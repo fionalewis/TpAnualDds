@@ -140,31 +140,27 @@ public class HomeController implements WithGlobalEntityManager, TransactionalOps
 		return new ModelAndView(model, "/map.hbs");
 	}
 
-	public ModelAndView mapi (Request req, Response res){
-		Map<String, Object> model = new HashMap<>();
-		System.out.println("Entra");
+	public String mapi (Request req, Response res){
 		List<Transformador> t = TransformadorRepository.getListaTranformadores();
-		System.out.println("lee transf ");
-		List<Zona> z = DispositivoRepository.getListaZonas();
-		System.out.println("lee disps");
+		
 		String s = new String();
+		
+		 for(Transformador tt : t){
+		 	s += tt.getIdTransformador() + ";" + tt.suministroActual() + ";" + tt.getUbicacion().toString() + ";";
+		 }
+		 System.out.println(s);
+		return s;
+	}
+	
+	public String mapz(Request req, Response res){
+		List<Zona> z = DispositivoRepository.getListaZonas();
+
 		String sz = new String();
-		int clearbd = 0;
-		// for(Transformador tt : t){
-		// 	s += tt.getIdTransformador() + ";" + tt.suministroActual() + ";" + tt.getUbicacion().toString() + ";";
-		// }
-		while (clearbd<9){
-			s += t.get(clearbd).getIdTransformador() + ";" + t.get(clearbd).suministroActual() + ";" + t.get(clearbd).getUbicacion().toString() + ";";
-			sz += z.get(clearbd).getRadius() + ";" + z.get(clearbd).getCenter().getLatitude() + ";" + z.get(clearbd).getCenter().getLongitude() + ";";
-			System.out.println("sum act "+ t.get(clearbd).suministroActual() );
-			clearbd++;
+		
+		for(Zona tt : z){
+		 	sz += tt.getRadius() + ";" + tt.getCenter().getLatitude() + ";" + tt.getCenter().getLongitude() + ";";
 		}
-		System.out.println("Salió del loop");
-		model.put("transformadores", s);
-		// for(Zona tt : z){
-		// 	sz += tt.getRadius() + ";" + tt.getCenter().getLatitude() + ";" + tt.getCenter().getLongitude() + ";";
-		// }
-		model.put("zonas",sz);
-		return new ModelAndView(model, "/mapi.hbs");
+		System.out.println(sz);
+		return sz;
 	}
 }

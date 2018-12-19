@@ -6,27 +6,47 @@ Cargar Cuentas
 active
 {{/partial}}
 {{#partial "contenido"}}
-<h2>Cargar Dispositivos JSON </h2>
+<h2>Crear un tipo nuevo de Dispositivo</h2>
 	
 	<form action="/carga" method="POST">
-	<div class="container" style="width:40%">
+	<div class="container" style="width:100%">
 
-		<div class="form-group">
-        <label for="nombre" class="sr-only">Ingrese la ruta del archivo</label>
-        <input type="file" id="nombre"  class="custom-file-input" name="ruta"  required>
-        <span class="custom-file-control"></span>
-        <label class="custom-file">
-		</div>
-		{{#block "alerta"}}{{/block}}
-		<div class="container" style="width:30%">
-			<input class="btn btn-success" type="submit" value="Cargar">
-		</div>
-		</div>
+		
+		
 		
 	</form>
 	
-	<div>
-    	<a href="../"><input class="btn btn-primary btn-lg" value="Ir al menu principal"></a>
+	<form class="form-signin" action="/nuevo_disp" method="POST">
+      <br />
+        <h4>Ingrese datos del dispositivo:</h4>
+         <br />
+         <p>Tipo de dispositivo:</p>
+         <form action="">
+		  <input type="radio" name="tipo" value="INTELIGENTE"> Dispositivo Inteligente<br>
+		  <input type="radio" name="tipo" value="ESTANDAR"> Dispositivo Estandar<br>
+		   <br />
+        <label for="nombre" class="sr-only">Nombre</label>
+        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" required autofocus>
+        <label for="descripcion" class="sr-only">Descripcion</label>
+        <br />
+        <input type="text" id="descripcion" name="descripcion" class="form-control" placeholder="Descripcion" required>
+        <br />
+        <input type="double" id="kWh" name="kWh" class="form-control" placeholder="KiloWatts que consume por hora" required>
+        <br />
+        <input type="double" id="horasUsoMin" name="horasUsoMin" class="form-control" placeholder="Horas de uso minimo" required>
+        <br />
+        <input type="double" id="horasUsoMax" name="horasUsoMax" class="form-control" placeholder="Horas de uso maximo" required>
+        <br />
+		<input type="checkbox" name="bajoConsumo" value="true">Es Bajo Consumo?<br>
+		 <br />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Agregar Dispositivo</button>
+        {{#block "alerta"}}{{/block}}
+        		</form>
+        
+      </form>
+	
+	<div class="form-row text-center">
+    	<a href="../"><input class="btn btn-primary btn-lg" value="Volver" style="width:100px"></a>
   	</div>
 
 {{/partial}}

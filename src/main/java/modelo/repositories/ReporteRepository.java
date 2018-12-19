@@ -1,5 +1,6 @@
 package modelo.repositories;
 import java.time.LocalDate;
+import java.util.List;
 
 import db.EntityManagerHelper;
 import modelo.users.Administrador;
@@ -50,6 +51,13 @@ public class ReporteRepository {
 		EntityManagerHelper.getEntityManager().createQuery("UPDATE Reporte SET consumo = " + consumo + " WHERE cliente_id = '"+nroDoc+"'").executeUpdate();
 		EntityManagerHelper.commit();
 		EntityManagerHelper.closeEntityManager();
+	}
+	
+	public static List<Reporte> getValoresPorReporte(String repo,int mes) {
+	 	EntityManagerHelper.beginTransaction();
+	 	List<Reporte> transf = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM reporte where "+repo+" is not null and mes="+mes,Reporte.class).getResultList();
+	 	EntityManagerHelper.closeEntityManager();
+	 	return transf;
 	}
 
 	// public static String getConsumoTransf(int id) {

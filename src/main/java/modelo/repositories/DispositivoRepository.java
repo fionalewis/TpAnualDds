@@ -2,6 +2,7 @@ package modelo.repositories;
 
 import static org.junit.Assume.assumeNoException;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,9 @@ import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.metamodel.Metamodel;
 
 import org.hibernate.hql.internal.ast.tree.IntoClause;
+import org.uqbarproject.jpa.java8.extras.convert.LocalDateTimeConverter;
+
+import java.time.LocalDateTime;
 
 import db.EntityManagerHelper;
 import modelo.deviceState.EstadoDispositivo;
@@ -138,10 +142,39 @@ public class DispositivoRepository {
 			return disp;
 		}		
 	}
+	
+	public static List<IntervaloDispositivo> getIntervalosDispositivo(Long idDisp){
+		EntityManagerHelper.beginTransaction();
+		List<IntervaloDispositivo> intervalos = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * from IntervaloDispositivo where dispositivo_id = "+idDisp,IntervaloDispositivo.class).getResultList();
+		EntityManagerHelper.closeEntityManager();
+		return intervalos;
+	}
+	
+	public static void actualizarIntervaloDispositivo(Long idIntervalo, LocalDateTime fecha){
+		EntityManagerHelper.beginTransaction();
+		Timestamp time = new LocalDateTimeConverter().convertToDatabaseColumn(fecha);
+
+		EntityManagerHelper.getEntityManager().createQuery("UPDATE IntervaloDispositivo SET fin = '"+ time +"' where id = "+idIntervalo).executeUpdate();
+		EntityManagerHelper.commit();
+		EntityManagerHelper.closeEntityManager();
+		EntityManagerHelper.beginTransaction();
+		EntityManagerHelper.getEntityManager().createNativeQuery("SET SQL_SAFE_UPDATES = 0; ").executeUpdate();
+		EntityManagerHelper.getEntityManager().createNativeQuery("delete FROM tp_anual_dds.intervalodispositivo where dispositivo_id is null").executeUpdate();
+		EntityManagerHelper.getEntityManager().createNativeQuery("SET SQL_SAFE_UPDATES = 1;").executeUpdate();
+		EntityManagerHelper.commit();
+		EntityManagerHelper.closeEntityManager();
+	}
 
 	public static List<Dispositivo> getDispositivosDeUnCliente(String id) {
 		EntityManagerHelper.beginTransaction();
 		List<Dispositivo> disp = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM Dispositivo where cliente_id = '"+id+"'", Dispositivo.class).getResultList();
+		EntityManagerHelper.closeEntityManager();
+		return disp;
+	}
+	
+	public static List<DispositivoInteligente> getDispositivosDeUnClienteI(String id) {
+		EntityManagerHelper.beginTransaction();
+		List<DispositivoInteligente> disp = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM Dispositivo where cliente_id = '"+id+"'", Dispositivo.class).getResultList();
 		EntityManagerHelper.closeEntityManager();
 		return disp;
 	}
@@ -151,6 +184,6 @@ public class DispositivoRepository {
 	//	//EntityManagerHelper.createNativeQuery("INSERT INTO Dispositivo VALUES (?,?)").setParameter(param, value);
 	//	EntityManagerHelper.commit();
 	//	EntityManagerHelper.closeEntityManager();
-	//}
+	//}login-admin
 
 }

@@ -93,7 +93,9 @@ public class JsonManager {
 			}
 			return categoria;
 		}
-	
+	public String getRutaDisp(){
+		return rutaJsonDisp;
+	}
 	//Metodos que usamos para GeoLocation, transformadores y zonas
 	
 	public static GeoLocation conseguirCoord(String direcc) throws IOException {
@@ -421,11 +423,11 @@ public class JsonManager {
     	((DispositivoInteligente) d1).setEstadoDisp(new Encendido());
     	((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,8,21,3,0,0));
     	((DispositivoInteligente) d1).encender(LocalDateTime.of(2018,8,21,4,0,0));
-    	((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,8,21,8,30,0));
+    	((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,10,21,8,0,0));
     	//estuvo prendido aprox 7hs -> de 0.30am a 3am y de 4am a 8.30am = 7hs (tiempo mio)
     	//su consumo seria aprox 2.5*1.613 + 4.5*1.613 = 11.291kwh (va a ser un poco mas porque el consumo entre fechas siempre pasa del limite)
     	System.out.println("Cant de intervalos que se generaron: " + ((DispositivoInteligente) d1).getIntervalos().size());
-    	System.out.println("Consumo entre la creacion de d1 y la fecha establecida: " + ((DispositivoInteligente) d1).consumoTotalEntre(d1.getFechaRegistro(),LocalDateTime.of(2018,8,21,8,31,0)));
+    	System.out.println("Consumo entre la creacion de d1 y la fecha establecida: " + ((DispositivoInteligente) d1).consumoTotalEntre(d1.getFechaRegistro(),LocalDateTime.of(2018,11,21,8,31,0)));
     	    	
     	//Disp Estandar
     	

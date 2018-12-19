@@ -350,12 +350,12 @@ public class DispositivoInteligente extends Dispositivo {
 		IntervaloDispositivo interv = new IntervaloDispositivo();
 		if(opcion) {
 			interv.setInicio(fechaIoF);
-		} else {interv.setInicio(intervalos.get(posIoF).getInicio());}
+		} else {if (!intervalos.isEmpty()){interv.setInicio(intervalos.get(posIoF).getInicio());}}
 		if(opcion) {
-			if (intervalos.get(posIoF)!=null){
+			if (!intervalos.isEmpty()){
 			interv.setFin(intervalos.get(posIoF).getFin());}
 		} else {interv.setFin(fechaIoF);}
-		if (intervalos.get(posIoF)!=null){
+		if (!intervalos.isEmpty()){
 		interv.setModo(intervalos.get(posIoF).getModo());}
 		return interv;
 	}
@@ -449,4 +449,24 @@ public class DispositivoInteligente extends Dispositivo {
 		return -1; //Si llego hasta aca y no evaluo es porque tambien hubo algun error
 	}
 	
+	// agregardo para mostar el estado en las vistas
+	public String estadoDispositivo(IntervaloDispositivo intervalo){
+		if(intervalo.getFin()!= null){
+			return "Apagado";
+		}
+		else return "Encendido";
+	}
+	
+	@Override
+	public String getEstado(){
+			List <IntervaloDispositivo> intervalos = new DispositivoRepository().getIntervalosDispositivo(this.getId());
+			try{
+				return this.estadoDispositivo(intervalos.get(intervalos.size() - 1));
+
+			}
+			catch(Exception e){
+				System.out.println("El dispositivo no tiene intervalos");
+			}
+			return "Apagado";
+	}
 }
