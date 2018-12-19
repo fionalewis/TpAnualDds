@@ -150,7 +150,16 @@ public class DispositivoInteligente extends Dispositivo {
 	// Funcionalidades Entrega1
 	
 	public double horasDeUsoTotales() {
+		if(intervalos.size()!=0) {
 		horasDeUso = intervalos.stream().mapToDouble(unInt -> unInt.calculoDeHoras()).sum();
+		} else {
+			//Si nunca lo cambiaron de estado no va a tener nada en la lista de intervalos
+			LocalDateTime ahora = LocalDateTime.now();
+			IntervaloDispositivo aux = new IntervaloDispositivo();
+			aux.setInicio(unIntervalo.getInicio());
+			aux.setFin(ahora);
+			horasDeUso = aux.calculoDeHoras();
+		}
 		return horasDeUso;
 	}
 	
@@ -166,7 +175,12 @@ public class DispositivoInteligente extends Dispositivo {
 		
 	@Override
 	public double consumoTotal() {
+		if(intervalos.size()!=0) {
 		return intervalos.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
+		} else {
+			IntervaloDispositivo aux = new IntervaloDispositivo(unIntervalo.getInicio(),LocalDateTime.now());
+			return aux.calculoDeHoras()*getkWh();
+		}
 	}
 	
 	// Duplicadas para evaluar en una lista especifica que nosotros creemos
@@ -273,7 +287,35 @@ public class DispositivoInteligente extends Dispositivo {
 	
 	// Consultas de consumo en periodos especificos y sus metodos delegados
 	
+	public double cons1IntEntre(LocalDateTime inicio,LocalDateTime fin) {
+		double resultBetween = inicio.compareTo(fin);
+		// O sea si las fechas pasadas por parámetro son iguales o la de inicio es mayor a la final, da error
+		if(resultBetween >=0) {
+			return -1;
+		}
+		//Si el intervalo a evaluar termina antes del inicio de nuestro dispositivo, da error
+		double resultFin = fin.compareTo(unIntervalo.getInicio());
+		if(resultFin<0){
+			return -1;
+			//Si es igual a nuestra fecha de inicio, el consumo va a dar 0
+		} else if(resultFin == 0) {
+			return 0;
+		} //Si no es ninguna de las anteriores, podemos calcularlo
+		double resultInicio = inicio.compareTo(unIntervalo.getInicio());
+		IntervaloDispositivo aux;
+		if(resultInicio <=0) {
+			aux = new IntervaloDispositivo(unIntervalo.getInicio(),fin);
+		} else {
+			aux = new IntervaloDispositivo(inicio,fin);
+		}		
+		return aux.calculoDeHoras()*getkWh();
+	}
+	
+	
 	public double consumoTotalEntre(LocalDateTime fechaInicio,LocalDateTime fechaFin){
+		if(intervalos.size()==0) {
+			return cons1IntEntre(fechaInicio,fechaFin);
+		}
 		int posIntInicial = posicionInicial(fechaInicio);
 		int posIntFin = posicionFinal(fechaFin);
 		if(condicionDeError(posIntInicial,posIntFin)){

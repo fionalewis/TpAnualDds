@@ -416,7 +416,7 @@ public class JsonManager {
     	
     	//Disp Inteligente
     	
-    	Dispositivo d1 = f.crearDisp("Aire Acondicionado","3500 frigorias");
+    	/*Dispositivo d1 = f.crearDisp("Aire Acondicionado","3500 frigorias");
     	LocalDateTime fechaReg = LocalDateTime.of(2018,8,21,0,30,0);
     	d1.setFechaRegistro(fechaReg);
     	System.out.println("Disp inteligente:\n" + d1.getNombreDisp() + " " + d1.getEquipoConcreto());
@@ -428,9 +428,28 @@ public class JsonManager {
     	//su consumo seria aprox 2.5*1.613 + 4.5*1.613 = 11.291kwh (va a ser un poco mas porque el consumo entre fechas siempre pasa del limite)
     	System.out.println("Cant de intervalos que se generaron: " + ((DispositivoInteligente) d1).getIntervalos().size());
     	System.out.println("Consumo entre la creacion de d1 y la fecha establecida: " + ((DispositivoInteligente) d1).consumoTotalEntre(d1.getFechaRegistro(),LocalDateTime.of(2018,11,21,8,31,0)));
-    	    	
-    	//Disp Estandar
+    	*/
+    	DispositivoInteligente dispi = new DispositivoInteligente(2018,12,18,0,0,0);
+    	LocalDateTime fechafin1 = LocalDateTime.of(2018,12,18,1,0,0);
+    	System.out.println("\nkwh " + dispi.getkWh());
+    	dispi.setkWh(1.2);
+    	System.out.println("lo seteamos a 1.2: " + dispi.getkWh());
+    	System.out.println(dispi.stringEstado());
+    	System.out.println("Cant de intervalos: " + dispi.getIntervalos().size());
+    	System.out.println("\n Inicio int inicial: " + dispi.getIntervalo().getInicio());
+    	System.out.println("\n Inicio int final: " + dispi.getIntervalo().getFin());
+    	System.out.println("\n Estado inicial: " + dispi.getIntervalo().getModo());
+    	for(int i=0;i<dispi.getIntervalos().size();i++) {
+    		System.out.println("\n Inicio: " + dispi.getIntervalos().get(i).getInicio());
+    		System.out.println("Fin: " + dispi.getIntervalos().get(i).getFin());
+    	}
+    	System.out.println("Su consumo hasta ahora fue de " + dispi.consumoTotal());
+    	System.out.println("horas de uso " + dispi.horasDeUsoTotales());
+    	System.out.println("consumo en 1h " + dispi.consumoTotalEntre(dispi.getFechaRegistro(),fechafin1));
     	
+    	
+    	//Disp Estandar
+    	/*
     	Dispositivo d2 = f.crearDisp("Plancha","A vapor");
     	d2.setFechaRegistro(2018, 8, 20, 6, 0, 0);
     	((DispositivoEstandar)d2).setHorasUsoDiarias(0.5); //Como ya paso un dia al ser estandar su consumo actual seria aprox 0.5hsDiarias*kwhAprox = 0.5*0.75 = 0.375kwh
@@ -455,5 +474,7 @@ public class JsonManager {
 			System.out.println( sumact != 0.0?  "transf"+t.getIdTransformador()+": " + sumact : "" );
 			//imprime transf2: 3735.6421358333328
 		}*/
+    	
+    	
     }
 }

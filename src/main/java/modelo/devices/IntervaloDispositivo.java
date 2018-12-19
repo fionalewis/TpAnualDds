@@ -30,6 +30,13 @@ public class IntervaloDispositivo {
 		setInicio(LocalDateTime.of(y,m,d,h,min,sec));
 		setModo(mod);
 	}
+	
+	//Para el intervalo auxiliar - NO USAR para otra cosa
+	public IntervaloDispositivo(LocalDateTime inicio,LocalDateTime fin) {
+		setInicio(inicio);
+		setFin(fin);
+	}
+	
 	public Long getId() {
 		return id;
 	}
