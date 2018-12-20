@@ -11,7 +11,7 @@ public class AhorroEnergia implements EstadoDispositivo {
 	
 	@Override
 	public String darEstado() {
-		return "El dispositivo se encuentra en modo ahorro de energ�a.";
+		return "Ahorro de energ�a";
 	}
 
 	@Override

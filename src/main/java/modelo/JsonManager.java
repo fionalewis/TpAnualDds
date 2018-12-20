@@ -446,6 +446,14 @@ public class JsonManager {
     	System.out.println("Su consumo hasta ahora fue de " + dispi.consumoTotal());
     	System.out.println("horas de uso " + dispi.horasDeUsoTotales());
     	System.out.println("consumo en 1h " + dispi.consumoTotalEntre(dispi.getFechaRegistro(),fechafin1));
+    	System.out.println("Consumo hasta ahora: " + dispi.consumoTotalEntre(dispi.getFechaRegistro(), LocalDateTime.now()));
+    	System.out.println("Consumo en las ultimas 2hs: (tiene que dar 1.2*4 = 4.8 aprox) " + dispi.consumoEnUltimasHoras(4));
+    	//
+    	LocalDateTime nuevoFin = LocalDateTime.of(2018,12,20,6,0,0);
+    	System.out.println("consumo hasta las 6am de corrido: " + dispi.consumoTotalEntre(dispi.getIntervalo().getInicio(),nuevoFin));
+    	
+    	System.out.println("\nahora lo apagamos");dispi.apagar();
+    	System.out.println("Ahora calculamos cuanto consumiria hasta las 6am de nuevo: " + dispi.consumoTotalEntre(dispi.getIntervalo().getInicio(),nuevoFin));
     	
     	
     	//Disp Estandar

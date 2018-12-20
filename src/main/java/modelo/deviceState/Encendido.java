@@ -11,7 +11,7 @@ public class Encendido implements EstadoDispositivo {
 	
 	@Override
 	public String darEstado() {
-		return "El dispositivo se encuentra en modo encendido.";
+		return "Encendido";
 	}
 
 	@Override

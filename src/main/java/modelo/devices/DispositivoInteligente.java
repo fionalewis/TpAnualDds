@@ -321,13 +321,42 @@ public class DispositivoInteligente extends Dispositivo {
 		if(condicionDeError(posIntInicial,posIntFin)){
 			return 0;
 		}
+		//
+		if(posIntInicial == posIntFin) {
+			LocalDateTime fechaI = intervalos.get(posIntInicial).getInicio();
+			LocalDateTime fechaF = intervalos.get(posIntFin).getFin();
+			IntervaloDispositivo idemint = new IntervaloDispositivo(fechaI,fechaF);
+			idemint.setModo(intervalos.get(posIntInicial).getModo());
+			if(idemint.getModo() == modo.NORMAL) {
+				return idemint.calculoDeHoras()*getkWh();
+			} else {
+				return idemint.calculoDeHoras()*getkWhAhorro();
+			}
+		}
+		//
 		IntervaloDispositivo intInic = setearIntervAux(fechaInicio,posIntInicial,true);
 		IntervaloDispositivo intFin = setearIntervAux(fechaFin,posIntFin,false);
 		List<IntervaloDispositivo> intervalosAEvaluar = listaAEvaluar(intInic,intFin,posIntInicial,posIntFin);
 		return consumoTotal(intervalosAEvaluar);	
 	}
 	
+	// Consumo en ultimas horas
+	
+	public double consUltHs1Int(int horas) {
+		LocalDateTime ahora = LocalDateTime.now();
+		LocalDateTime momentoInicial = ahora.minusHours(horas);
+		int result = momentoInicial.compareTo(unIntervalo.getInicio());
+		if(result <= 0) {
+			return consumoTotalEntre(unIntervalo.getInicio(),ahora);
+		} else {
+			return consumoTotalEntre(momentoInicial,ahora);
+		}
+	}
+	
 	public double consumoEnUltimasHoras(int horas) { // En tiempo real
+		if(intervalos.size()==0) {
+			return consUltHs1Int(horas);
+		}
 		LocalDateTime momentoActual = LocalDateTime.now();
 		LocalDateTime momentoInicial = momentoActual.minusHours(horas);		
 		boolean condicion = false;		

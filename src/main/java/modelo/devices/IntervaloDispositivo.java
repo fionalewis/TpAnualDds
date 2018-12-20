@@ -14,7 +14,6 @@ public class IntervaloDispositivo {
 	private LocalDateTime fin;
 	@Enumerated(EnumType.STRING)
 	private modo modo;
-
 	
 	@ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="dispositivo_id", referencedColumnName="dispositivo_id", nullable=true, unique=false)
