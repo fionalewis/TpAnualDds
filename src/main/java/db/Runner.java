@@ -24,6 +24,7 @@ import modelo.geoLocation.Transformador;
 import modelo.geoLocation.Zona;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
+
 import modelo.factories.DispositivoFactory;
 import modelo.users.Administrador;
 import modelo.users.Categoria;

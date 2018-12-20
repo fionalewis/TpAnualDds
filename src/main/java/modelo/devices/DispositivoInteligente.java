@@ -30,8 +30,7 @@ public class DispositivoInteligente extends Dispositivo {
 	private IntervaloDispositivo unIntervalo;
 
 	@Transient
-	boolean esInteligente = true; //Ya no se si hace falta este atributo, pero lo vemos despues
-
+	//boolean esInteligente = true; //Ya no se si hace falta este atributo, pero lo vemos despues
 	@OneToMany(mappedBy="dispositivo", cascade=CascadeType.ALL)
 	//@JoinColumn(name="dispositivo_id", referencedColumnName="id", nullable=true, unique=false)
 	private List<IntervaloDispositivo> intervalos = new ArrayList<>();
@@ -74,6 +73,7 @@ public class DispositivoInteligente extends Dispositivo {
 	//Getters y Setters
 	
 	public double getkWhAhorro() {
+		this.setkWhAhorro(getkWh());
 		return kWhAhorro;
 	}
 	public void setkWhAhorro(double kWh) {
@@ -207,6 +207,7 @@ public class DispositivoInteligente extends Dispositivo {
 	public void apagar() {
 		unIntervalo.setFin(LocalDateTime.now());
 		guardarAuxiliar();
+		this.setEstadoActual("Apagado");
 		estadoDisp.apagar(this);
 	}
 	
@@ -214,11 +215,13 @@ public class DispositivoInteligente extends Dispositivo {
 		if(estadoDisp instanceof Apagado) {
 			unIntervalo.setInicio(LocalDateTime.now());
 			unIntervalo.setModo(modo.NORMAL);
+			this.setEstadoActual("Encendido");
 		} else {
 			unIntervalo.setFin(LocalDateTime.now());
 			guardarAuxiliar();
 			unIntervalo.setInicio(LocalDateTime.now().plusSeconds(1));
 			unIntervalo.setModo(modo.NORMAL);
+			this.setEstadoActual("Encendido");
 		}
 		estadoDisp.encender(this);		
 	}
@@ -227,11 +230,13 @@ public class DispositivoInteligente extends Dispositivo {
 		if(estadoDisp instanceof Apagado) {
 			unIntervalo.setInicio(LocalDateTime.now());
 			unIntervalo.setModo(modo.AHORRO);
+			this.setEstadoActual("Ahorro de energía");
 		} else {
 			unIntervalo.setFin(LocalDateTime.now());
 			guardarAuxiliar();
 			unIntervalo.setInicio(LocalDateTime.now().plusSeconds(1));
 			unIntervalo.setModo(modo.AHORRO);
+			this.setEstadoActual("Ahorro de energía");
 		}
 		estadoDisp.ahorroEnergia(this);
 	}
@@ -241,6 +246,7 @@ public class DispositivoInteligente extends Dispositivo {
 	public void apagar(LocalDateTime unafecha) {
 		unIntervalo.setFin(unafecha);
 		guardarAuxiliar();
+		this.setEstadoActual("Apagado");
 		estadoDisp.apagar(this);
 	}
 	
@@ -248,11 +254,13 @@ public class DispositivoInteligente extends Dispositivo {
 		if(estadoDisp instanceof Apagado) {
 			unIntervalo.setInicio(unafecha);
 			unIntervalo.setModo(modo.NORMAL);
+			this.setEstadoActual("Encendido");
 		} else {
 			unIntervalo.setFin(unafecha);
 			guardarAuxiliar();
 			unIntervalo.setInicio(unafecha.plusSeconds(1));
 			unIntervalo.setModo(modo.NORMAL);
+			this.setEstadoActual("Encendido");
 		}
 		estadoDisp.encender(this);		
 	}
@@ -261,12 +269,14 @@ public class DispositivoInteligente extends Dispositivo {
 		if(estadoDisp instanceof Apagado) {
 			unIntervalo.setInicio(unafecha);
 			unIntervalo.setModo(modo.AHORRO);
+			this.setEstadoActual("Ahorro de energía");
 		}
 		else {
 			unIntervalo.setFin(unafecha);
 			guardarAuxiliar();
 			unIntervalo.setInicio(unafecha.plusSeconds(1));
 			unIntervalo.setModo(modo.AHORRO);
+			this.setEstadoActual("Ahorro de energía");
 		}
 		estadoDisp.ahorroEnergia(this);
 	}

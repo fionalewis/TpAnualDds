@@ -26,6 +26,8 @@ import javax.persistence.NoResultException;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
+import com.google.gson.Gson;
+
 import modelo.JsonManager;
 import modelo.Actuador.Actuador;
 import modelo.Reglas.CondicionSensorYValor;
@@ -58,8 +60,6 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	
 	public ModelAndView calcularConsumo(Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
-		//String nombreEmpresa = req.queryParams("nombreEmpresa");
-		//Empresa empresa = Repositorios.repositorioEmpresas.buscarEmpresa(nombreEmpresa);
 		String inicioPeriodo = req.queryParams("inicioPeriodo");
 		String finPeriodo = req.queryParams("finPeriodo");
 		System.out.println(inicioPeriodo == "");
@@ -96,30 +96,28 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
 		Cliente cliente = new Cliente();
 		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
-		/*
-		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
-		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
-		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
-		cliente.agregarDispositivo(disp1);
-		cliente.agregarDispositivo(disp2);
-		cliente.agregarDispositivo(disp3);
-		*/
-		//DispositivoRepository disp = new DispositivoRepository();
-		//List <Dispositivo> d = disp.getDispositivosDeUnCliente(cliente.getNroDoc());
-		//List <Dispositivo> di = d.stream().filter(UnDisp -> UnDisp.getEsInteligente()).collect(Collectors.toList()); 
-		//List <Dispositivo> de = d.stream().filter(UnDisp -> UnDisp.getEsInteligente() != true).collect(Collectors.toList());
-		//double consumoDE = di.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(LocalDateTime.now().minusMonths(1),LocalDateTime.now())).sum();
-		//double consumoDS = de.stream().mapToDouble(UnDisp -> ((DispositivoEstandar) UnDisp).consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now())).sum();
-		//model.put("consumo", cliente.consumoXPeriodoNuevo(LocalDateTime.now().minusMonths(1), LocalDateTime.now(),disp));
+		
 		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
 		double consum = disps.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
-		
+		//String json = new Gson().toJson(disps)
+		/*List<Dispositivo> d = new ArrayList<Dispositivo>();
+		for(int i=0;i<disps.size();i++) {
+			DispositivoInteligente dd = new DispositivoInteligente();
+			dd.setEquipoConcreto(disps.get(i).getEquipoConcreto());
+			dd.setNombreDisp(disps.get(i).getNombreDisp());
+			dd.setEstadoDisp(disps.get(i).getEstadoDisp());
+			d.add(dd);
+		}
+		String json = new Gson().toJson(d);
+		System.out.println(json);*/
+
 		model.put("consumo", consum);//consumoDE + consumoDS);
-		model.put("dispositivos", disps);
+		model.put("dispositivos",disps);
 		
-		return new ModelAndView(model, "hogar.hbs");
-		
+		return new ModelAndView(model, "hogar.hbs");		
 	}
+	
+
 	
 	public ModelAndView carga(Request req, Response res){
 		return new ModelAndView(null, "carga.hbs");
@@ -138,7 +136,6 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	
 	public ModelAndView simplex(Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
-
 		Cliente cliente = new Cliente();
 		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 			try {

@@ -30,6 +30,7 @@ import modelo.devices.Dispositivo;
 import modelo.devices.IntervaloDispositivo.modo;
 import modelo.devices.DispositivoEstandar;
 import modelo.devices.DispositivoInteligente;
+
 import modelo.devices.IntervaloDispositivo;
 import modelo.geoLocation.GeoLocation;
 import modelo.geoLocation.Transformador;
@@ -255,6 +256,10 @@ public class JsonManager {
 					dActual.setHorasUsoMin(precargado.get("horasUsoMin").getAsDouble());
 					dActual.setHorasUsoMax(precargado.get("horasUsoMax").getAsDouble());
 				}
+				
+				//Est
+				dActual.setEstadoActual("Encendido");
+				
 				//Inicializando el disp a agregar en la tabla
 				LocalDateTime fechaactual = LocalDateTime.now();
 				dAAgregar.setNombreDisp(dActual.getNombreDisp());
@@ -264,6 +269,9 @@ public class JsonManager {
 				dAAgregar.setkWh(dActual.getkWh());dAAgregar.setkWhAhorro(dActual.getkWh());
 				dAAgregar.setIntervalo(new IntervaloDispositivo(fechaactual,modo.NORMAL));dAAgregar.setEstadoDisp(new Encendido());
 				dAAgregar.setHorasUsoMin(dActual.getHorasUsoMin());dAAgregar.setHorasUsoMax(dActual.getHorasUsoMax());
+				
+				//Est
+				dAAgregar.setEstadoActual("Encendido");
 				
 				DeviceFactory.tablaDI.add(dAAgregar); //Lo agregamos a la lista de precargados
 				
@@ -275,7 +283,7 @@ public class JsonManager {
 				//Inicializando el disp que corresponde al de la posicion actual en base al precargado
 				dActual.setNombreDisp(precargado.get("nombreDisp").getAsString());
 				dActual.setEquipoConcreto(precargado.get("equipoConcreto").getAsString());
-				dActual.setEsInteligente(true);
+					dActual.setEsInteligente(true);
 				dActual.setkWh(precargado.get("kWh").getAsDouble());
 				dActual.setEsBajoConsumo(precargado.get("esBajoConsumo").getAsBoolean());
 				if(dActual.getNombreDisp().equalsIgnoreCase("Heladera")) { //Las heladeras no pueden ser apagadas
@@ -284,15 +292,22 @@ public class JsonManager {
 					dActual.setHorasUsoMin(precargado.get("horasUsoMin").getAsDouble());
 					dActual.setHorasUsoMax(precargado.get("horasUsoMax").getAsDouble());
 				}
+				
+				//Est
+				dActual.setEstadoActual("No disponible");
+				
 				//Inicializando el disp a agregar en la tabla
 				LocalDateTime fechaactual = LocalDateTime.now();
 				dAAgregar.setNombreDisp(dActual.getNombreDisp());
 				dAAgregar.setEquipoConcreto(dActual.getEquipoConcreto());
 				dAAgregar.setFechaRegistro(fechaactual);
-				dAAgregar.setEsInteligente(true);dAAgregar.setEsBajoConsumo(dActual.getEsBajoConsumo());
+					dAAgregar.setEsInteligente(true);dAAgregar.setEsBajoConsumo(dActual.getEsBajoConsumo());
 				dAAgregar.setkWh(dActual.getkWh());
 				dAAgregar.setHorasUsoMin(dActual.getHorasUsoMin());dAAgregar.setHorasUsoMax(dActual.getHorasUsoMax());
 				dAAgregar.setHorasUsoDiarias(1); //por default
+				
+				//Est
+				dAAgregar.setEstadoActual("No disponible");
 				
 				DeviceFactory.tablaDE.add(dAAgregar);
 				
@@ -332,6 +347,10 @@ public class JsonManager {
 					dActual.setHorasUsoMin(precargado.get("horasUsoMin").getAsDouble());
 					dActual.setHorasUsoMax(precargado.get("horasUsoMax").getAsDouble());
 				}
+				
+				//Est
+				dActual.setEstadoActual("Encendido");
+				
 				//Inicializando el disp a agregar en la tabla
 				LocalDateTime fechaactual = LocalDateTime.now();
 				dAAgregar.setNombreDisp(dActual.getNombreDisp());
@@ -341,6 +360,9 @@ public class JsonManager {
 				dAAgregar.setkWh(dActual.getkWh());dAAgregar.setkWhAhorro(dActual.getkWh());
 				dAAgregar.setIntervalo(new IntervaloDispositivo(fechaactual,modo.NORMAL));dAAgregar.setEstadoDisp(new Encendido());
 				dAAgregar.setHorasUsoMin(dActual.getHorasUsoMin());dAAgregar.setHorasUsoMax(dActual.getHorasUsoMax());
+				
+				//Est
+				dAAgregar.setEstadoActual("Encendido");
 				
 				DeviceFactory.tablaDI.add(dAAgregar); //Lo agregamos a la lista de precargados
 				
@@ -352,7 +374,7 @@ public class JsonManager {
 				//Inicializando el disp que corresponde al de la posicion actual en base al precargado
 				dActual.setNombreDisp(precargado.get("nombreDisp").getAsString());
 				dActual.setEquipoConcreto(precargado.get("equipoConcreto").getAsString());
-				dActual.setEsInteligente(true);
+					dActual.setEsInteligente(true);
 				dActual.setkWh(precargado.get("kWh").getAsDouble());
 				dActual.setEsBajoConsumo(precargado.get("esBajoConsumo").getAsBoolean());
 				if(dActual.getNombreDisp().equalsIgnoreCase("Heladera")) { //Las heladeras no pueden ser apagadas
@@ -361,15 +383,22 @@ public class JsonManager {
 					dActual.setHorasUsoMin(precargado.get("horasUsoMin").getAsDouble());
 					dActual.setHorasUsoMax(precargado.get("horasUsoMax").getAsDouble());
 				}
+				
+				//Est
+				dActual.setEstadoActual("No disponible");
+				
 				//Inicializando el disp a agregar en la tabla
 				LocalDateTime fechaactual = LocalDateTime.now();
 				dAAgregar.setNombreDisp(dActual.getNombreDisp());
 				dAAgregar.setEquipoConcreto(dActual.getEquipoConcreto());
 				dAAgregar.setFechaRegistro(fechaactual);
-				dAAgregar.setEsInteligente(true);dAAgregar.setEsBajoConsumo(dActual.getEsBajoConsumo());
+					dAAgregar.setEsInteligente(true);dAAgregar.setEsBajoConsumo(dActual.getEsBajoConsumo());
 				dAAgregar.setkWh(dActual.getkWh());
 				dAAgregar.setHorasUsoMin(dActual.getHorasUsoMin());dAAgregar.setHorasUsoMax(dActual.getHorasUsoMax());
 				dAAgregar.setHorasUsoDiarias(1); //por default
+				
+				//Est
+				dAAgregar.setEstadoActual("No disponible");
 				
 				DeviceFactory.tablaDE.add(dAAgregar);
 				
@@ -454,7 +483,10 @@ public class JsonManager {
     	
     	System.out.println("\nahora lo apagamos");dispi.apagar();
     	System.out.println("Ahora calculamos cuanto consumiria hasta las 6am de nuevo: " + dispi.consumoTotalEntre(dispi.getIntervalo().getInicio(),nuevoFin));
-    	
+    	List<Dispositivo> d = new ArrayList<Dispositivo>();
+    	d.add(dispi);
+    	String json = new Gson().toJson(d);
+    	System.out.println(json);
     	
     	//Disp Estandar
     	/*

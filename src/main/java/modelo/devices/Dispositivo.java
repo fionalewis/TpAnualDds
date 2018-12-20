@@ -29,6 +29,7 @@ public abstract class Dispositivo {
 	@Transient
 	boolean esInteligente = false; //esto es para el json
 	//para la fucking vista
+	
 	public String estadoActual;
 
 	protected double kWh;
