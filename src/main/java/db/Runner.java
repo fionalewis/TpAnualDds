@@ -240,13 +240,9 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 		LocalDateTime fechae = LocalDateTime.of(2018,7,24,0,0,0);
 		pepa.encender(fechae);
 		LocalDateTime fechar = LocalDateTime.of(2018,9,11,0,0,0);
-		//pepa.apagar(fechar);
-		/*((DispositivoInteligente) d1).encender(LocalDateTime.of(2018,8,21,4,0,0));
-		((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,8,21,5,0,0));
-		((DispositivoInteligente) d1).ahorroEnergia(LocalDateTime.of(2018,8,21,6,0,0));
-    	((DispositivoInteligente) d1).apagar(LocalDateTime.of(2018,8,21,8,30,0));*/
 		List<Dispositivo> disp = new ArrayList<>();disp.add(pepa);disp.add(est);
-		Cliente c = new Cliente("pepa","pig","pepi","pik",2018,8,21,TipoDocumento.DNI,"40403568","12345678","pppp 986",disp);
+		Cliente c = new Cliente("pepa","pig","pepi","pik",2018,8,21,TipoDocumento.DNI,"40403568","12345678","pppp 986");
+		c.setDispositivos(disp);
 		
 		
 		

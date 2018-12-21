@@ -214,6 +214,8 @@ public class DispositivoInteligente extends Dispositivo {
 	public void encender(){
 		if(estadoDisp instanceof Apagado) {
 			unIntervalo.setInicio(LocalDateTime.now());
+			//mm
+			unIntervalo.setFin(null);
 			unIntervalo.setModo(modo.NORMAL);
 			this.setEstadoActual("Encendido");
 		} else {
@@ -221,6 +223,8 @@ public class DispositivoInteligente extends Dispositivo {
 			guardarAuxiliar();
 			unIntervalo.setInicio(LocalDateTime.now().plusSeconds(1));
 			unIntervalo.setModo(modo.NORMAL);
+			//mm
+			unIntervalo.setFin(null);
 			this.setEstadoActual("Encendido");
 		}
 		estadoDisp.encender(this);		
@@ -230,12 +234,16 @@ public class DispositivoInteligente extends Dispositivo {
 		if(estadoDisp instanceof Apagado) {
 			unIntervalo.setInicio(LocalDateTime.now());
 			unIntervalo.setModo(modo.AHORRO);
+			//mm
+			unIntervalo.setFin(null);
 			this.setEstadoActual("Ahorro de energía");
 		} else {
 			unIntervalo.setFin(LocalDateTime.now());
 			guardarAuxiliar();
 			unIntervalo.setInicio(LocalDateTime.now().plusSeconds(1));
 			unIntervalo.setModo(modo.AHORRO);
+			//mm
+			unIntervalo.setFin(null);
 			this.setEstadoActual("Ahorro de energía");
 		}
 		estadoDisp.ahorroEnergia(this);
@@ -254,12 +262,16 @@ public class DispositivoInteligente extends Dispositivo {
 		if(estadoDisp instanceof Apagado) {
 			unIntervalo.setInicio(unafecha);
 			unIntervalo.setModo(modo.NORMAL);
+			//mm
+			unIntervalo.setFin(null);
 			this.setEstadoActual("Encendido");
 		} else {
 			unIntervalo.setFin(unafecha);
 			guardarAuxiliar();
 			unIntervalo.setInicio(unafecha.plusSeconds(1));
 			unIntervalo.setModo(modo.NORMAL);
+			//mm
+			unIntervalo.setFin(null);
 			this.setEstadoActual("Encendido");
 		}
 		estadoDisp.encender(this);		
@@ -269,6 +281,8 @@ public class DispositivoInteligente extends Dispositivo {
 		if(estadoDisp instanceof Apagado) {
 			unIntervalo.setInicio(unafecha);
 			unIntervalo.setModo(modo.AHORRO);
+			//mm
+			unIntervalo.setFin(null);
 			this.setEstadoActual("Ahorro de energía");
 		}
 		else {
@@ -276,6 +290,8 @@ public class DispositivoInteligente extends Dispositivo {
 			guardarAuxiliar();
 			unIntervalo.setInicio(unafecha.plusSeconds(1));
 			unIntervalo.setModo(modo.AHORRO);
+			//mm
+			unIntervalo.setFin(null);
 			this.setEstadoActual("Ahorro de energía");
 		}
 		estadoDisp.ahorroEnergia(this);
@@ -321,7 +337,7 @@ public class DispositivoInteligente extends Dispositivo {
 		return aux.calculoDeHoras()*getkWh();
 	}
 	
-	
+	@Override
 	public double consumoTotalEntre(LocalDateTime fechaInicio,LocalDateTime fechaFin){
 		if(intervalos.size()==0) {
 			return cons1IntEntre(fechaInicio,fechaFin);

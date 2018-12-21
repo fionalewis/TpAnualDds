@@ -9,6 +9,9 @@
 <body>
 	<h2>Estado del hogar</h2>
 	
+	<h3>Consumo total:</h3>
+	<div value={{consumoTotal}}>{{consumoTotal}}<small>kWh</small></div>
+	<br/>
 	<h3>Consumo del último mes:</h3>
 	<div value={{consumo}}>{{consumo}}<small>kWh</small></div>
 	<br/>
@@ -27,10 +30,14 @@
 		{{#each dispositivos}}
 		<tr>
 			<td>{{nombreDisp}}</td>
-			<td>{{equipoConcreto}}</td>			
-			<td>{{estado}}</td>
+			{{#if equipoConcreto}}
+			<td>{{equipoConcreto}}</td>
+			{{^}}
+			<td> - </td>
+			{{/if}}			
+			<td>{{estadoActual}}</td>
 		</tr>
-		{{/each}}
+		{{~/each}}
 	</tbody>
 	</table>
 

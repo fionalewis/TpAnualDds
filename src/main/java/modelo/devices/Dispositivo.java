@@ -30,7 +30,7 @@ public abstract class Dispositivo {
 	boolean esInteligente = false; //esto es para el json
 	//para la fucking vista
 	
-	public String estadoActual;
+	public String estadoActual = "Encendido";
 
 	protected double kWh;
 
@@ -45,7 +45,6 @@ public abstract class Dispositivo {
 	// private List<Reporte> reportes = new ArrayList<>();	
 	
 	//Getters y Setters
-
 	
 	public String getEstadoActual() {
 		return estadoActual;
@@ -162,5 +161,7 @@ public abstract class Dispositivo {
 	public static boolean esAmbos(Dispositivo undisp) {
 		return (esInteligente(undisp)||esConvertido(undisp));
 	}
+
+	public abstract double consumoTotalEntre(LocalDateTime i, LocalDateTime f);
 	
 }

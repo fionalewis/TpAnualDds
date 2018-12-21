@@ -129,6 +129,20 @@ public class Cliente extends Usuario {
 		setCateg();
 	}
 	
+	public Cliente(String name,String surname,String username,String pass,int y,int m,int d,TipoDocumento tDoc,String nDoc,String tel,String dom) {
+		setNombre(name);
+		setApellido(surname);
+		setUserName(username);
+		setPassword(pass);
+		this.fechaAlta = LocalDate.of(y,m,d);
+		this.tipoDoc = tDoc;
+		this.nroDoc = nDoc;
+		this.telefono = tel;
+		this.domicilio = dom +  ", Buenos Aires, Argentina";
+		asignarTransformador();
+		setCateg();
+	}
+	
 	//Getters y Setters
 	
 	public TipoDocumento getTipoDoc() {
@@ -261,6 +275,19 @@ public class Cliente extends Usuario {
 	
 	@Override public double calcularConsumo() {
 		double cons = obtenerLista("IyC").stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();		
+		this.consumo = cons;
+		return cons;
+	}
+	
+	public double calcularConsumo2() {
+		double cons = dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();		
+		this.consumo = cons;
+		return cons;
+	}
+	
+	public double calcularConsumoEntreFechas(LocalDateTime i,LocalDateTime f) {
+		List<Dispositivo> disps = obtenerLista("Inteligente");
+		double cons = disps.stream().mapToDouble(unDisp -> unDisp.consumoTotalEntre(i,f)).sum();		
 		this.consumo = cons;
 		return cons;
 	}

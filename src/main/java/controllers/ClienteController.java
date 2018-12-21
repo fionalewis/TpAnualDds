@@ -86,34 +86,24 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	
 	public ModelAndView hogar(Request req, Response res){
 		Map<String, Object> model = new HashMap<>();
-		
-		
-		
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
+		List<Cliente> cli = ClienteRepository.getTodosLosClientes();
 		
-
-		List<Cliente> cli = new ClienteRepository().getTodosLosClientes();
 		Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+		cliente = ClienteRepository.obtenerCliente(req.session().attribute("user"));
 		
 		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
-		double consum = disps.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
-		//String json = new Gson().toJson(disps)
-		/*List<Dispositivo> d = new ArrayList<Dispositivo>();
-		for(int i=0;i<disps.size();i++) {
-			DispositivoInteligente dd = new DispositivoInteligente();
-			dd.setEquipoConcreto(disps.get(i).getEquipoConcreto());
-			dd.setNombreDisp(disps.get(i).getNombreDisp());
-			dd.setEstadoDisp(disps.get(i).getEstadoDisp());
-			d.add(dd);
-		}
-		String json = new Gson().toJson(d);
-		System.out.println(json);*/
-
-		model.put("consumo", consum);//consumoDE + consumoDS);
-		model.put("dispositivos",disps);
+		cliente.setDispositivos(disps);
 		
+		double consumoTotal = 0;//cliente.calcularConsumo2(); //disps.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
+		LocalDateTime ahora = LocalDateTime.now();
+		LocalDateTime primerDiaMes = ahora.withDayOfMonth(1); System.out.println(primerDiaMes);
+		double consumoEsteMes = 0;//cliente.calcularConsumoEntreFechas(primerDiaMes,ahora); 
+		
+		model.put("consumoTotal",consumoTotal);
+		model.put("consumo",consumoEsteMes);
+		model.put("dispositivos",disps);		
 		return new ModelAndView(model, "hogar.hbs");		
 	}
 	

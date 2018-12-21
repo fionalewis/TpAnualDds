@@ -488,6 +488,38 @@ public class JsonManager {
     	String json = new Gson().toJson(d);
     	System.out.println(json);
     	
+    	
+    	DispositivoInteligente pepa = new DispositivoInteligente("Aire Acondicionado",1.5,2017,11,22,0,0,0,true);
+		DispositivoInteligente est = new DispositivoInteligente("Pepa",1.3,2018,11,22,0,0,0,true);
+		LocalDateTime fecha = LocalDateTime.of(2018,2,21,0,0,0);
+		pepa.ahorroEnergia(fecha);
+		LocalDateTime fechaap = LocalDateTime.of(2018,5,2,0,0,0);
+		pepa.encender(fechaap);
+		LocalDateTime fechae = LocalDateTime.of(2018,7,24,0,0,0);
+		pepa.encender(fechae);
+		LocalDateTime fechar = LocalDateTime.of(2018,9,11,0,0,0);
+		List<Dispositivo> disp = new ArrayList<>();disp.add(pepa);disp.add(est);
+		Cliente c = new Cliente("pepa","pig","pepi","pik",2018,8,21,TipoDocumento.DNI,"40403568","12345678","pppp 986");
+		c.setDispositivos(disp);
+		System.out.println("kwh:" + pepa.getkWh());
+		System.out.println("kwhAhorro:" + pepa.getkWhAhorro());
+		System.out.println("nombre:" + pepa.getNombreDisp() + " eq conc:" + pepa.getEquipoConcreto());
+		System.out.println("estado:" + pepa.getEstado());
+		System.out.println("estado actual:" + pepa.getEstadoActual());
+		System.out.println("estadodisp:" + pepa.getEstadoDisp());
+		System.out.println("inicio intervalo:" + pepa.getIntervalo().getInicio());
+		System.out.println("fin intervalo:" + pepa.getIntervalo().getFin());
+		System.out.println("modo intervalo:" + pepa.getIntervalo().getModo());
+		System.out.println("horasd de uso:" + pepa.getHorasDeUso());
+		System.out.println("fecha de registro:" + pepa.getFechaRegistro());
+		System.out.println("cantidad de intervalos finalizados:" + pepa.getIntervalos().size() + "\n");
+		for(IntervaloDispositivo i :pepa.getIntervalos()) {
+			System.out.println("inicio intervalo:" + i.getInicio());
+			System.out.println("fin intervalo:" + i.getFin());
+			System.out.println("modo intervalo:" + i.getModo());
+		}
+    	
+    	
     	//Disp Estandar
     	/*
     	Dispositivo d2 = f.crearDisp("Plancha","A vapor");
