@@ -58,7 +58,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	}
 	
 	public ModelAndView calcularConsumo(Request req, Response res){
-		try {
+		//try {
 		Map<String, Object> model = new HashMap<>();
 		//String nombreEmpresa = req.queryParams("nombreEmpresa");
 		//Empresa empresa = Repositorios.repositorioEmpresas.buscarEmpresa(nombreEmpresa);
@@ -86,8 +86,8 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		model.put("consumo", de.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(fechaInicio,fechaFin)).sum());
 		}
 		return new ModelAndView(model, "consumo.hbs");
-		}catch(Exception ex) {res.redirect("/error");}
-		return null;
+		//}catch(Exception ex) {res.redirect("/error");}
+		//return null;
 	}
 	
 	
@@ -100,26 +100,12 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 
 		Cliente cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
-		
-		/*
-		DispositivoInteligente disp1 = new DispositivoInteligente("Televisor","LED 24'");
-		DispositivoEstandar disp2 = new DispositivoEstandar("Ventilador",0.45,3,"Ventilador",1,4,true);
-		DispositivoEstandar disp3 = new DispositivoEstandar("Heladera",0.55,2,"Heladera",1,3,true);
-		cliente.agregarDispositivo(disp1);
-		cliente.agregarDispositivo(disp2);
-		cliente.agregarDispositivo(disp3);
-		*/
-		//DispositivoRepository disp = new DispositivoRepository();
-		//List <Dispositivo> d = disp.getDispositivosDeUnCliente(cliente.getNroDoc());
-		//List <Dispositivo> di = d.stream().filter(UnDisp -> UnDisp.getEsInteligente()).collect(Collectors.toList()); 
-		//List <Dispositivo> de = d.stream().filter(UnDisp -> UnDisp.getEsInteligente() != true).collect(Collectors.toList());
-		//double consumoDE = di.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(LocalDateTime.now().minusMonths(1),LocalDateTime.now())).sum();
-		//double consumoDS = de.stream().mapToDouble(UnDisp -> ((DispositivoEstandar) UnDisp).consumoXPeriodo(LocalDateTime.now().minusMonths(1), LocalDateTime.now())).sum();
-		//model.put("consumo", cliente.consumoXPeriodoNuevo(LocalDateTime.now().minusMonths(1), LocalDateTime.now(),disp));
+
 		
 		double consum = disps.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
 		
 		model.put("consumo", consum);//consumoDE + consumoDS);
+		this.actualizarEstadosDisp(disps);
 		model.put("dispositivos", disps);
 		return new ModelAndView(model, "hogar.hbs");
 		}catch(Exception ex) {res.redirect("/error");}
@@ -235,22 +221,24 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	public void cambiarEstado(Dispositivo disp){
 		DispositivoRepository repositorio = new DispositivoRepository();
 		if(disp.getEstadoActual() == "Apagado"){
-			List <IntervaloDispositivo> listaIntervalos = new ArrayList<IntervaloDispositivo>();
+			/*List <IntervaloDispositivo> listaIntervalos = new ArrayList<IntervaloDispositivo>();
 			listaIntervalos.add(new IntervaloDispositivo(LocalDateTime.now(),modo.NORMAL));
-			repositorio.addIntervaloDispositivo(disp.getId(),listaIntervalos);
+			repositorio.addIntervaloDispositivo(disp.getId(),listaIntervalos);*/
+			((DispositivoInteligente) disp).encender();
 		}
 		else
 		{
-			List <IntervaloDispositivo> intervalos = repositorio.getIntervalosDispositivo(disp.getId());
+			/*List <IntervaloDispositivo> intervalos = repositorio.getIntervalosDispositivo(disp.getId());
 			IntervaloDispositivo ultimoIntervalo = intervalos.get(intervalos.size() - 1);
-			repositorio.actualizarIntervaloDispositivo(ultimoIntervalo.getId(),LocalDateTime.now());
+			repositorio.actualizarIntervaloDispositivo(ultimoIntervalo.getId(),LocalDateTime.now());*/
+			((DispositivoInteligente) disp).apagar();
 		}
 
 	}
 	
 	@SuppressWarnings("static-access")
 	public ModelAndView accionDisp(Request req, Response res){
-		try {
+		//try {
 		Map<String, Object> model = new HashMap<>();
 		
 		Cliente cliente = new Cliente();
@@ -263,8 +251,8 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		this.cambiarEstado(disp);
 		res.redirect("/reglas");
 		return null;
-		}catch(Exception ex) {res.redirect("/error");}
-		return null;
+		//}catch(Exception ex) {res.redirect("/error");}
+		//return null;
 	}
 	
 	public ModelAndView crearRegla(Request req, Response res){
@@ -273,7 +261,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		String nombreRegla = req.queryParams("nombre");
 		String criterio = req.queryParams("criterio");
-		Sensor sensor = new Sensor(req.queryParams("magnitud"),Double.parseDouble(req.queryParams("valor")),Integer.parseInt(req.queryParams("intervalo")));
+		Sensor sensor = new Sensor(req.queryParams("magnitud"),0,Integer.parseInt(req.queryParams("intervalo")));
 		CondicionSensorYValor condicion = new CondicionSensorYValor(sensor,Double.parseDouble(req.queryParams("valorCondicion")),req.queryParams("comparacion"));
 		condicion.setNombreCondicion(req.queryParams("nombreCondicion"));
 		// hace falta agregar el nombre a la condicion
@@ -288,6 +276,10 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		}catch(Exception ex) {res.redirect("/error");}
 		return null;
 	}
+	
+	public ModelAndView modificarRegla(Request req, Response res){
+		return new ModelAndView(null, "agregar-regla.hbs");
+			}
 	
 	public ModelAndView agregarDispPantalla(Request req, Response res){
 		try {

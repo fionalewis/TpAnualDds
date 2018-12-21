@@ -53,10 +53,18 @@ public class IntervaloDispositivo {
 	}
 	
 	public double calculoDeHoras() {
+		if(fin != null){
 		Duration period = Duration.between(inicio,fin);
         double periodSeconds = period.getSeconds();
         double horasDeUso = periodSeconds/3600;
         return horasDeUso;
+		} else {
+			Duration period = Duration.between(inicio,LocalDateTime.now());
+	        double periodSeconds = period.getSeconds();
+	        double horasDeUso = periodSeconds/3600;
+	        return horasDeUso;
+			
+		}
 	}
 	
 }

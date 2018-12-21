@@ -58,15 +58,9 @@
 	<table class="table">
 		<tr>
 			<th>Nombre</th>
-			<th>Accion</th>
 		{{#each reglas}}
 		<tr>
 			<td>{{nombreRegla}}</td>
-			<form action="/modificar-regla" method="POST">
-			<td>
-				<button class="btn btn-secondary" type="submit">Modificar</a>
-			</td>
-		</form>
 		</tr>
 		{{/each}}
 	</table>
@@ -83,8 +77,8 @@
   	
 
 
-	<div class="form-row text-center">
-    	<a href="../"><input class="btn btn-primary btn-lg" value="Volver" style="width:100px"></a>
+	<div>
+    	<a href="../"><input class="btn btn-primary btn-lg" value="Ir al menu principal"></a>
   	</div>
 </body>
 {{/partial}}

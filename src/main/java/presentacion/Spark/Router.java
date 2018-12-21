@@ -76,6 +76,7 @@ public class Router {
 		Spark.post("/accion", clienteController::accionDisp,engine);
 		Spark.get("/agregar-regla", clienteController::agregarReglaPantalla,engine);
 		Spark.post("/crear-regla", clienteController::crearRegla,engine);
+		Spark.post("/modificar-regla", clienteController::modificarRegla,engine);
 		
   		
 	/*	Spark.get("/cuentas", empresasController::verArchivos,engine);

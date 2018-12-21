@@ -10,7 +10,9 @@ Agregar Regla
 	<h1>Crear regla nueva</h1>
 	
 	   <form class="form-signin" action="/crear-regla" method="POST">
-	    
+	    <button class="btn btn-lg btn-primary btn-block" type="submit">Agregar Regla</button>
+        <h1 style="color:rgb(0,255,0);" value={{mensajeRegla}}>{{mensajeRegla}}</h1>
+        {{#block "alerta"}}{{/block}}
       <br />
         <h4>Datos de la regla</h4>
          <br />
@@ -26,9 +28,12 @@ Agregar Regla
         <br />
         <label for="magnitud" class="sr-only">Magnitud</label>
         <input type="text" id="magnitud" name="magnitud" class="form-control" placeholder="Tipo de Magnitud" >
+        <label for="valor" class="sr-only">Valor</label>
+        <br />
+        <input type="number" id="valor" name="valor" class="form-control" placeholder="Valor de la magnitud" >
         <label for="intervalo" class="sr-only">Intervalo</label>
         <br />
-        <input type="number" id="intervalo" name="intervalo" class="form-control" placeholder="Intervalo cada el cual mide el sensor (en horas)">
+        <input type="number" id="intervalo" name="intervalo" class="form-control" placeholder="Intervalo cada el cual mide el sensor">
         <br />
                 <h4>Datos de la condicion</h4>
         <br />
@@ -59,14 +64,10 @@ Agregar Regla
 		  <option value="APAGAR">APAGAR</option>
 		  <option value="AHORRO">AHORRO</option>
 		</select>
-		         <button class="btn btn-lg btn-primary btn-block" type="submit">Agregar Regla</button>
-        <h1 style="color:rgb(0,255,0);" value={{mensajeRegla}}>{{mensajeRegla}}</h1>
-        {{#block "alerta"}}{{/block}}
 				</form>
 		
         <br />
          <br />
-
        
       </form>
 

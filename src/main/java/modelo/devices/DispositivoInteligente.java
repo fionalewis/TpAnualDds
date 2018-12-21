@@ -194,12 +194,26 @@ public class DispositivoInteligente extends Dispositivo {
 		unIntervalo.setFin(LocalDateTime.now());
 		guardarAuxiliar();
 		estadoDisp.apagar(this);
+		//nuwvo dudoso
+		
+		List <IntervaloDispositivo> intervalos = (new DispositivoRepository()).getIntervalosDispositivo(this.getId());
+		IntervaloDispositivo ultimoIntervalo = intervalos.get(intervalos.size() - 1);
+		ultimoIntervalo.setFin(LocalDateTime.now());
+		List <IntervaloDispositivo> listaIntervalos = new ArrayList<IntervaloDispositivo>();
+		listaIntervalos.add(ultimoIntervalo);
+		(new DispositivoRepository()).addIntervaloDispositivo(this.getId(),listaIntervalos);
+		//(new DispositivoRepository()).actualizarIntervaloDispositivo(ultimoIntervalo.getId(),LocalDateTime.now());
 	}
 	
 	public void encender(){
-		if(estadoDisp instanceof Apagado) {
+		if(getEstado() == "Apagado") {
 			unIntervalo.setInicio(LocalDateTime.now());
 			unIntervalo.setModo(modo.NORMAL);
+			
+			//nuevo, dudoso
+			List <IntervaloDispositivo> listaIntervalos = new ArrayList<IntervaloDispositivo>();
+			listaIntervalos.add(new IntervaloDispositivo(LocalDateTime.now(),modo.NORMAL));
+			(new DispositivoRepository()).addIntervaloDispositivo(this.getId(),listaIntervalos);
 		} else {
 			unIntervalo.setFin(LocalDateTime.now());
 			guardarAuxiliar();
@@ -432,8 +446,10 @@ public class DispositivoInteligente extends Dispositivo {
 			}
 			return 0;
 		}
+		if(ultFF != null){
 		if(unaFechaF.isAfter(ultFF)) {
 			return tam-1;
+		}
 		}
 		
 		while(i<tam && !(unaFechaF.isBefore(fechas[i])||unaFechaF.isEqual(fechas[i]))) {
