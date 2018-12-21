@@ -176,7 +176,15 @@ public class DispositivoInteligente extends Dispositivo {
 	@Override
 	public double consumoTotal() {
 		if(intervalos.size()!=0) {
-		return intervalos.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
+			int tam = intervalos.size();
+			IntervaloDispositivo ultimo = intervalos.get(tam - 1);
+			if(ultimo.getFin() != null) {
+				return intervalos.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
+			}
+			else {
+				ultimo.setFin(LocalDateTime.now());
+				return intervalos.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
+			}
 		} else {
 			IntervaloDispositivo aux = new IntervaloDispositivo(unIntervalo.getInicio(),LocalDateTime.now());
 			return aux.calculoDeHoras()*getkWh();
@@ -342,6 +350,7 @@ public class DispositivoInteligente extends Dispositivo {
 		if(intervalos.size()==0) {
 			return cons1IntEntre(fechaInicio,fechaFin);
 		}
+		
 		int posIntInicial = posicionInicial(fechaInicio);
 		int posIntFin = posicionFinal(fechaFin);
 		if(condicionDeError(posIntInicial,posIntFin)){
@@ -350,7 +359,12 @@ public class DispositivoInteligente extends Dispositivo {
 		//
 		if(posIntInicial == posIntFin) {
 			LocalDateTime fechaI = intervalos.get(posIntInicial).getInicio();
-			LocalDateTime fechaF = intervalos.get(posIntFin).getFin();
+			LocalDateTime fechaF;
+			if(intervalos.get(posIntFin).getFin() == null) {
+				fechaF = LocalDateTime.now();
+			} else {
+				fechaF = intervalos.get(posIntFin).getFin();
+			}
 			IntervaloDispositivo idemint = new IntervaloDispositivo(fechaI,fechaF);
 			idemint.setModo(intervalos.get(posIntInicial).getModo());
 			if(idemint.getModo() == modo.NORMAL) {
@@ -383,6 +397,7 @@ public class DispositivoInteligente extends Dispositivo {
 		if(intervalos.size()==0) {
 			return consUltHs1Int(horas);
 		}
+		
 		LocalDateTime momentoActual = LocalDateTime.now();
 		LocalDateTime momentoInicial = momentoActual.minusHours(horas);		
 		boolean condicion = false;		
@@ -486,6 +501,15 @@ public class DispositivoInteligente extends Dispositivo {
 		//Casos extremos: fechaI es antes que todas las fechasI o fechaI despues de todas
 		
 		if(unaFechaI.isAfter(ultFI)){
+			if(ultFF==null) {
+				LocalDateTime nuevoF = LocalDateTime.now();
+				if(unaFechaI.isAfter(nuevoF)) {
+					return -1;
+				}
+				else {
+					return tam - 1;
+				}
+			}
 			if(unaFechaI.isAfter(ultFF)) {
 				return -1;
 			} else {
@@ -522,14 +546,23 @@ public class DispositivoInteligente extends Dispositivo {
 		LocalDateTime ultFF = intervalos.get(tam-1).getFin();
 		
 		//Casos extremos: fechaF ocurre antes que cualquier fecha inicial
-		
+		if(primerFF == null) {
+			primerFF = LocalDateTime.now();
+		}
 		if(unaFechaF.isBefore(primerFF)||unaFechaF.isEqual(primerFF)){
 			if(unaFechaF.isBefore(primerFI)||unaFechaF.isEqual(primerFI)) { // no habria nada que calcular en estos casos
 				return -1;
 			}
 			return 0;
 		}
-		if(unaFechaF.isAfter(ultFF)) {
+		if(ultFF==null) {
+			LocalDateTime nuevoF = LocalDateTime.now();
+			if(unaFechaF.isAfter(nuevoF)) {
+				return -1;
+			} else {
+				return tam-1;
+			}
+		} else if(unaFechaF.isAfter(ultFF)) {
 			return tam-1;
 		}
 		

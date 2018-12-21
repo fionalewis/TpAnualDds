@@ -28,7 +28,13 @@
 			<input class="btn btn-primary btn-lg" type="submit" value="Calcular consumo">
 		</div>
 		
-		<h3>Consumo en horas de:</h3> <div value={{consumo}}>{{consumo}}</div>
+		{{#if consumo}}
+		<h4>Consumo del período:</h4> <div value={{consumo}}>{{consumo}}<small>kWh</small></div>
+		{{/if}}
+		{{#if horas}}
+			<h4>Cant. de horas del período:</h4> <div value={{horas}}>{{horas}}hs</div>
+		{{/if}}			
+		
 
 	<div class="form-row text-center">
     	<a href="../"><input class="btn btn-primary btn-lg" value="Volver" style="width:100px"></a>

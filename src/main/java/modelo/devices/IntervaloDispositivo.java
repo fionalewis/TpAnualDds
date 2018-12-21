@@ -65,4 +65,11 @@ public class IntervaloDispositivo {
         return horasDeUso;
 	}
 	
+	public static double calculoDeHoras(LocalDateTime i,LocalDateTime f) {
+		Duration period = Duration.between(i,f);
+        double periodSeconds = period.getSeconds();
+        double horasDeUso = periodSeconds/3600;
+        return horasDeUso;
+	}
+	
 }

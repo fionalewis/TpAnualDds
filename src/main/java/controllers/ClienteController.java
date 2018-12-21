@@ -66,19 +66,26 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		System.out.println(finPeriodo != "");
 		if(inicioPeriodo != "" && finPeriodo != ""){
 		String[] outputI = inicioPeriodo.split("-");
-		LocalDateTime fechaInicio= LocalDateTime.of(Integer.parseInt(outputI[0]), Integer.parseInt(outputI[1]), Integer.parseInt(outputI[2]), 0, 0);
+		LocalDateTime fechaInicio= LocalDateTime.of(Integer.parseInt(outputI[0]), Integer.parseInt(outputI[1]), Integer.parseInt(outputI[2]), 0, 0,0);
+		System.out.println(fechaInicio);
 		String[] outputF = finPeriodo.split("-");
-		LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[0]), Integer.parseInt(outputF[1]), Integer.parseInt(outputF[2]), 0, 0);
-		
+		LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[0]), Integer.parseInt(outputF[1]), Integer.parseInt(outputF[2]), 0, 0,0);
+		System.out.println(fechaFin);
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
 		
 		Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
-		DispositivoRepository disp = new DispositivoRepository();
-		List <Dispositivo> d = disp.getDispositivosDeUnCliente(cliente.getNroDoc());
-		List <Dispositivo> de = d.stream().filter(UnDisp -> UnDisp.getEsInteligente()).collect(Collectors.toList()); 
-		model.put("consumo", de.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(fechaInicio,fechaFin)).sum());
+		cliente = ClienteRepository.obtenerCliente(req.session().attribute("user"));
+		List <Dispositivo> d = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc());
+		
+		
+		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
+		cliente.setDispositivos(disps);
+		double horas = IntervaloDispositivo.calculoDeHoras(fechaInicio,fechaFin);
+		
+		double consumo = cliente.calcularConsumoEntreFechas(fechaInicio,fechaFin); 
+		model.put("consumo", consumo);
+		model.put("horas",horas);
 		}
 		return new ModelAndView(model, "consumo.hbs");
 	}
@@ -96,18 +103,16 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
 		cliente.setDispositivos(disps);
 		
-		double consumoTotal = 0;//cliente.calcularConsumo2(); //disps.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();
+		double consumoTotal = cliente.calcularConsumo2();
 		LocalDateTime ahora = LocalDateTime.now();
 		LocalDateTime primerDiaMes = ahora.withDayOfMonth(1); System.out.println(primerDiaMes);
-		double consumoEsteMes = 0;//cliente.calcularConsumoEntreFechas(primerDiaMes,ahora); 
+		double consumoEsteMes = cliente.calcularConsumoEntreFechas(primerDiaMes,ahora); 
 		
 		model.put("consumoTotal",consumoTotal);
 		model.put("consumo",consumoEsteMes);
 		model.put("dispositivos",disps);		
 		return new ModelAndView(model, "hogar.hbs");		
 	}
-	
-
 	
 	public ModelAndView carga(Request req, Response res){
 		return new ModelAndView(null, "carga.hbs");
