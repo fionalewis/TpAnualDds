@@ -134,15 +134,14 @@ public class AdminController {
 		return new ModelAndView(null, "carga.hbs");
 	}
 	
-	public ModelAndView cargarArchivo(Request req, Response res) throws FileNotFoundException, InstantiationException, IllegalAccessException{
-		String ruta = req.queryParams("ruta");
-		System.out.println(ruta);
+	public ModelAndView cargarArchivo(Request req, Response res) throws InstantiationException, IllegalAccessException, IOException{
+		String ruta = req.queryParams("nombre");
 		List<Dispositivo> dispositivos = DAOJson.deserializarDispositivos(Dispositivo.class, ruta);
-		//DAOJson.serializarListDisp(dispositivos);
-		
 		for (Dispositivo d : dispositivos) {
+			//DAOJson.serializar_disp(d);
 			DispositivoRepository.addDispositivo(d);
 			}
+		res.redirect("/carga");
 		return null;
 	}
 	

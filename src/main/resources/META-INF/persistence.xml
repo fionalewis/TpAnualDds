@@ -42,7 +42,7 @@
 
 >>>>>>> origin/herokubdd
             <property name="hibernate.connection.username" value="root" /> 
-            <property name="hibernate.connection.password" value="mysql" /> 
+            <property name="hibernate.connection.password" value="Gordis24" /> 
 
 <!-- 
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> 

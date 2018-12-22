@@ -210,13 +210,14 @@ public class DAOJson {
 	
 	public static void serializar_disp(Dispositivo disp) throws IOException, InstantiationException, IllegalAccessException{
 		
-		List<Dispositivo> list_disp = deserializarDispositivos(Dispositivo.class,JsonManager.rutaJsonDisp);
-		list_disp.add(disp);
-		System.out.println(list_disp);
+		List<Dispositivo> dispositivos = new ArrayList<>();
+		dispositivos = deserializarDispositivos(Dispositivo.class,JsonManager.rutaJsonDisp);
+		dispositivos.add(disp);
+		System.out.println(dispositivos);
 		
 		try(Writer writer = new FileWriter(JsonManager.rutaJsonDisp)){
 			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-			gson.toJson(list_disp,writer);
+			gson.toJson(dispositivos,writer);
 		}
 		
 	}
