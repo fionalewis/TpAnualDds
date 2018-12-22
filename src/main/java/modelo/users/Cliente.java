@@ -68,8 +68,7 @@ public class Cliente extends Usuario {
 	private Transformador transformadorActual;
 
 	@Transient
-	public
-	transient MetodoSimplex simplex = new MetodoSimplex();
+	private transient MetodoSimplex simplex = new MetodoSimplex();
 	
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
 	@Transient
@@ -126,20 +125,6 @@ public class Cliente extends Usuario {
 		this.telefono = tel;
 		this.domicilio = dom +  ", Buenos Aires, Argentina";
 		dispositivos.addAll(disp);
-		asignarTransformador();
-		setCateg();
-	}
-	
-	public Cliente(String name,String surname,String username,String pass,int y,int m,int d,TipoDocumento tDoc,String nDoc,String tel,String dom) {
-		setNombre(name);
-		setApellido(surname);
-		setUserName(username);
-		setPassword(pass);
-		this.fechaAlta = LocalDate.of(y,m,d);
-		this.tipoDoc = tDoc;
-		this.nroDoc = nDoc;
-		this.telefono = tel;
-		this.domicilio = dom +  ", Buenos Aires, Argentina";
 		asignarTransformador();
 		setCateg();
 	}
@@ -276,19 +261,6 @@ public class Cliente extends Usuario {
 	
 	@Override public double calcularConsumo() {
 		double cons = obtenerLista("IyC").stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();		
-		this.consumo = cons;
-		return cons;
-	}
-	
-	public double calcularConsumo2() {
-		double cons = dispositivos.stream().mapToDouble(unDisp -> unDisp.consumoTotal()).sum();		
-		this.consumo = cons;
-		return cons;
-	}
-	
-	public double calcularConsumoEntreFechas(LocalDateTime i,LocalDateTime f) {
-		List<Dispositivo> disps = obtenerLista("Inteligente");
-		double cons = disps.stream().mapToDouble(unDisp -> unDisp.consumoTotalEntre(i,f)).sum();		
 		this.consumo = cons;
 		return cons;
 	}

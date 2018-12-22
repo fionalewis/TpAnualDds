@@ -62,10 +62,6 @@ public class Router {
 		/*Spark.get("/carga", adminController::carga,engine);
 		Spark.post("/carga", adminController::cargarArchivo,engine);
 		Spark.post("/nuevo_disp", adminController::nuevoDisp,engine);*/
-		Spark.get("/carga_archivo", adminController::carga,engine);
-		Spark.post("/carga_archivo", adminController::cargarArchivo,engine);
-		Spark.get("/carga", adminController::carga,engine);
-		Spark.post("/nuevo_disp", adminController::nuevoDisp,engine);
 		
 		Spark.get("/consumo", clienteController::consumo,engine);
 		Spark.post("/consumo", clienteController::calcularConsumo,engine);
@@ -80,7 +76,6 @@ public class Router {
 		Spark.post("/accion", clienteController::accionDisp,engine);
 		Spark.get("/agregar-regla", clienteController::agregarReglaPantalla,engine);
 		Spark.post("/crear-regla", clienteController::crearRegla,engine);
-		Spark.post("/modificar-regla", clienteController::modificarRegla,engine);
 		
   		
 	/*	Spark.get("/cuentas", empresasController::verArchivos,engine);

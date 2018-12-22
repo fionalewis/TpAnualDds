@@ -129,10 +129,4 @@ public class DispositivoEstandar<Reporte> extends Dispositivo {
 		public String getEstado(){
 			return "Sin estado";
 		}
-
-		@Override
-		public double consumoTotalEntre(LocalDateTime i, LocalDateTime f) {
-			// TODO Auto-generated method stub
-			return 0;
-		}
 }

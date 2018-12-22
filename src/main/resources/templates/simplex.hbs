@@ -8,29 +8,23 @@
 
 <body>
 
-	<h2>¿Es un hogar eficiente?</h2>
-	<p style="font-size:12px;">Es decir, el hogar <strong>no</strong> consumió más de 612kWh en lo que va del mes</p>
+	<h2>Es un hogar eficiente?</h2>
 	<div value={{eficiente}}> <h3>{{eficiente}} </h3></div>
-	<div>Consumo simplex: {{consumoSimplex}}<small>kWh</small></div>
-	<br/>
-	<h3>Recomendación de horas máximas de uso al mes por dispositivo</h3>
+	
+	<h2>Recomendacion</h2>
 		<div class="table-responsive">
+		<h3>Dispositivos</h3>
 	<table class="table">
-	<caption>Dispositivos</caption>
-		<thead>
 		<tr>
 			<th>Dispositivo</th>
-			<th>Cant. de horas máximas</th>
+			<th>Horas Maximas recomendadas</th>
 		</tr>
-		</thead>
-		<tbody>
 		{{#each recHoras}}
 		<tr>
 			<td>{{dispositivo}}</td>
-			<td>{{value}}hs</td>
+			<td>{{value}}</td>
 		</tr>
 		{{/each}}
-		</tbody>
 	</table>
 	
 

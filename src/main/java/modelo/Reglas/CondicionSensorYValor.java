@@ -55,8 +55,4 @@ public class CondicionSensorYValor extends Condicion{
 	public void setValorFijo(double unValor){
 		valorFijo = unValor;
 	}
-	
-	public Double getValorFijo() {
-		return this.valorFijo;
-	}
 }

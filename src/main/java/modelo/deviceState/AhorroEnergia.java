@@ -4,8 +4,6 @@ import modelo.devices.DispositivoInteligente;
 
 public class AhorroEnergia implements EstadoDispositivo {
 	
-	public String state = "Ahorro de energía";
-	
 	@Override
 	public EstadoDispositivo getEstado() {
 		return this;
@@ -13,7 +11,7 @@ public class AhorroEnergia implements EstadoDispositivo {
 	
 	@Override
 	public String darEstado() {
-		return "Ahorro de energ�a";
+		return "El dispositivo se encuentra en modo ahorro de energ�a.";
 	}
 
 	@Override

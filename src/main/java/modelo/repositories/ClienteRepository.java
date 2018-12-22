@@ -39,7 +39,7 @@ public class ClienteRepository {
 		EntityManagerHelper.commit();		
 		EntityManagerHelper.closeEntityManager();
 		for (Dispositivo d : cliente.getDispositivos()){ 
-			DispositivoRepository.addDispositivoEIntervaloConCliente(cliente.getNroDoc(),d);
+			DispositivoRepository.addDispositivoEIntervaloConCliente(cliente.getNroDoc(), d);
 		}
 	}
 
@@ -60,8 +60,7 @@ public class ClienteRepository {
 	public static Cliente getCliente(String dni) {
 		Cliente cliente = EntityManagerHelper.getEntityManager().find(Cliente.class,dni);
 	    return cliente;
-	}	
-	
+	  }
 	public static Cliente obtenerCliente(String username) throws NoResultException{
 		List<Cliente> lista = new ClienteRepository().getTodosLosClientes();
 		Iterator<Cliente> iterator = lista.iterator();

@@ -4,7 +4,6 @@ import static org.junit.Assume.assumeNoException;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -70,14 +69,8 @@ public class DispositivoRepository {
 		EntityManagerHelper.beginTransaction();
 		EntityManagerHelper.getEntityManager().createQuery("UPDATE Dispositivo set cliente_id='"+nro+"' where id = "+idPreMerge).executeUpdate();
 		EntityManagerHelper.commit();
-		EntityManagerHelper.closeEntityManager();
-		//Para agregar el intervalo actual también al dispositivo
-		List<IntervaloDispositivo> listToAdd = new ArrayList<IntervaloDispositivo>();
-		for(IntervaloDispositivo i : ((DispositivoInteligente) d).getIntervalos()) {
-			listToAdd.add(i);
-		}
-		listToAdd.add(((DispositivoInteligente) d).getIntervalo());
-		addIntervaloDispositivo(idPreMerge,listToAdd); //((DispositivoInteligente) d).getIntervalos());
+		EntityManagerHelper.closeEntityManager();		
+		addIntervaloDispositivo(idPreMerge, ((DispositivoInteligente) d).getIntervalos());
 	}
 	public static Long addIntDispMerge(IntervaloDispositivo dispositivo) { 
 		EntityManagerHelper.beginTransaction();
@@ -189,14 +182,6 @@ public class DispositivoRepository {
 	public static List<Dispositivo> getDispositivosDeUnCliente(String id) {
 		EntityManagerHelper.beginTransaction();
 		List<Dispositivo> disp = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * FROM Dispositivo where cliente_id = '"+id+"'", Dispositivo.class).getResultList();
-		for(Dispositivo d : disp) {
-			long iddisp = d.id;
-			List<IntervaloDispositivo> intervs = new ArrayList<IntervaloDispositivo>();
-			if(d instanceof DispositivoInteligente) {
-			intervs = EntityManagerHelper.getEntityManager().createNativeQuery("SELECT * from IntervaloDispositivo where dispositivo_id = "+iddisp,IntervaloDispositivo.class).getResultList();
-			((DispositivoInteligente) d).setIntervalos(intervs);			
-			}
-		}
 		EntityManagerHelper.closeEntityManager();
 		return disp;
 	}

@@ -4,8 +4,6 @@ import modelo.devices.DispositivoInteligente;
 
 public class Encendido implements EstadoDispositivo {
 	
-	public String state = "Encendido";
-	
 	@Override
 	public EstadoDispositivo getEstado() {
 		return this;
@@ -13,7 +11,7 @@ public class Encendido implements EstadoDispositivo {
 	
 	@Override
 	public String darEstado() {
-		return "Encendido";
+		return "El dispositivo se encuentra en modo encendido.";
 	}
 
 	@Override
