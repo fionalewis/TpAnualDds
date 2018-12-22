@@ -67,7 +67,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		System.out.println(inicioPeriodo);
 		System.out.println(finPeriodo);
 		if(inicioPeriodo != "" && finPeriodo != ""){
-/*<<<<<<< HEAD
+
 		String[] outputI = inicioPeriodo.split("/");
 		LocalDateTime fechaInicio= LocalDateTime.of(Integer.parseInt(outputI[2]), Integer.parseInt(outputI[0]), Integer.parseInt(outputI[1]), 0, 0);
 		String[] outputF = finPeriodo.split("/");
@@ -75,12 +75,12 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		System.out.println("---");
 		System.out.println(fechaInicio);
-=======*/
-		String[] outputI = inicioPeriodo.split("-");
+
+/*		String[] outputI = inicioPeriodo.split("-");
 		LocalDateTime fechaInicio= LocalDateTime.of(Integer.parseInt(outputI[0]), Integer.parseInt(outputI[1]), Integer.parseInt(outputI[2]), 0, 0,0);
 		System.out.println(fechaInicio);
 		String[] outputF = finPeriodo.split("-");
-		LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[0]), Integer.parseInt(outputF[1]), Integer.parseInt(outputF[2]), 0, 0,0);
+		LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[0]), Integer.parseInt(outputF[1]), Integer.parseInt(outputF[2]), 0, 0,0);*/
 
 		System.out.println(fechaFin);
 		//TODO ir a buscar el cliente posta a la base de datos
@@ -146,6 +146,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		model.put("consumoTotal",consumoTotal);
 		model.put("consumo",consumoEsteMes);
 		this.actualizarEstadosDisp(disps);
+	
 		model.put("dispositivos",disps);		
 		return new ModelAndView(model, "hogar.hbs");		
 
@@ -209,22 +210,64 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	}
 	
 	public ModelAndView reglasydisp(Request req, Response res){
-		try {
+		//try {
 		Map<String, Object> model = new HashMap<>();
 
 		Cliente cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
 		List <Dispositivo> ldisp = new DispositivoRepository().getDispositivosDeUnCliente(cliente.getNroDoc());
 		//ingreso el estado correcto de cada dispositivo
+		
+		
+		
+
+		System.out.println(ldisp.get(1).getId());
+		ldisp.forEach(d -> quilomboDeRegla((DispositivoInteligente) d));
+		
+		System.out.println(ldisp.get(0).getHorasDeUso());
+		System.out.println(ldisp.get(1).getHorasDeUso());
 		this.actualizarEstadosDisp(ldisp);
 		model.put("dispositivos",ldisp);
 		ReglaRepository reg = new ReglaRepository();
 		model.put("reglas", reg.getTodasLasReglas());
 		List <String> listaDeEstados = (List<String>) ldisp.stream().map(m -> m.getEstado()).collect(Collectors.toList());
 		return new ModelAndView(model, "reglas.hbs");
-		}catch(Exception ex) {res.redirect("/error");}
-		return null;
+		//}catch(Exception ex) {res.redirect("/error");}
+		//return null;
 	}
 	
+	public void quilomboDeRegla(DispositivoInteligente disp) {
+		Actuador actuador = (new ActuadorRepository()).getActuador(disp.getId());
+		if(actuador!=null){
+		String accion = actuador.getOrden();
+		Long reglaId = actuador.getId();
+		System.out.println(accion);
+		System.out.println(reglaId);
+		CondicionSensorYValor cond = (new ReglaRepository()).getCondicion(reglaId);
+		String comparacion = cond.getComparacion();
+		Double valor = cond.getValorFijo();
+		System.out.println(comparacion);
+			if(comparacion.equals("MENOR")){
+				if(disp.getHorasDeUso()<valor){
+					if(accion.equals("PRENDER")){
+						disp.encender();
+					}else{
+						disp.apagar();
+					}
+				}
+			}else{
+				if(disp.getHorasDeUso()>valor) {
+					if(accion.equals("PRENDER")){
+						disp.encender();
+					}else{
+						disp.apagar();
+					}
+				}
+			}
+		}
+	}
+	
+	
+
 	public ModelAndView eliminarDisp(Request req, Response res){
 		try {
 		Map<String, Object> model = new HashMap<>();
