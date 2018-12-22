@@ -58,15 +58,10 @@
 	<table class="table">
 		<tr>
 			<th>Nombre</th>
-			<th>Accion</th>
 		{{#each reglas}}
 		<tr>
 			<td>{{nombreRegla}}</td>
-			<form action="/modificar-regla" method="POST">
-			<td>
-				<button class="btn btn-secondary" type="submit">Modificar</a>
-			</td>
-		</form>
+
 		</tr>
 		{{/each}}
 	</table>

@@ -359,7 +359,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	}
 	
 	public ModelAndView modificarRegla(Request req, Response res){
-		return new ModelAndView(null, "agregar-regla.hbs");
+		return new ModelAndView(null, "/modificar-regla.hbs");
 			}
 	
 	public ModelAndView agregarDispPantalla(Request req, Response res){
