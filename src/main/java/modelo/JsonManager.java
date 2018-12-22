@@ -48,7 +48,7 @@ public class JsonManager {
 	//public static List<Dispositivo> dispositivosEnGral = new ArrayList<>();
 	
 	public static String giuli = "\\C:\\Users\\Giuli\\eclipse-workspace\\TpAnualDds\\JSONs\\";
-	public static String fiona = "\\C:\\Users\\flewis\\git\\TpAnualDds\\JSONs\\";
+	public static String fiona = "C:\\Users\\flewis\\git\\TpAnualDds\\JSONs\\";
 	public static String maru = "\\C:\\Users\\Marina\\workspace\\TpAnualDds\\tpAnual\\JSONs\\";
 	public static String salo = "\\C:\\Users\\Salome\\git\\TpAnualDds\\JSONs\\";
 	public static String linux = "//home//dds//git//TpAnualDds//tpAnual//JSONs//";
@@ -66,7 +66,7 @@ public class JsonManager {
 	//RUTAS PRINCIPALES
 
 
-	public static String actual = agus;
+	public static String actual = fiona;
 
 
 	public static String rutaJsonClientes = actual + jsonClientes;
