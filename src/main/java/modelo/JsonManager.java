@@ -488,7 +488,7 @@ public class JsonManager {
     	String json = new Gson().toJson(d);
     	System.out.println(json);
     	
-    	
+    	/*
     	DispositivoInteligente pepa = new DispositivoInteligente("Aire Acondicionado",1.5,2017,11,22,0,0,0,true);
 		DispositivoInteligente est = new DispositivoInteligente("Pepa",1.3,2018,11,22,0,0,0,true);
 		LocalDateTime fecha = LocalDateTime.of(2018,2,21,0,0,0);
@@ -504,7 +504,6 @@ public class JsonManager {
 		System.out.println("kwh:" + pepa.getkWh());
 		System.out.println("kwhAhorro:" + pepa.getkWhAhorro());
 		System.out.println("nombre:" + pepa.getNombreDisp() + " eq conc:" + pepa.getEquipoConcreto());
-		System.out.println("estado:" + pepa.getEstado());
 		System.out.println("estado actual:" + pepa.getEstadoActual());
 		System.out.println("estadodisp:" + pepa.getEstadoDisp());
 		System.out.println("inicio intervalo:" + pepa.getIntervalo().getInicio());
@@ -517,7 +516,43 @@ public class JsonManager {
 			System.out.println("inicio intervalo:" + i.getInicio());
 			System.out.println("fin intervalo:" + i.getFin());
 			System.out.println("modo intervalo:" + i.getModo());
+		}*/
+    	
+    	
+    	Dispositivo pepa = f.crearDisp("Aire Acondicionado","3500 frigorias");
+    	pepa.setFechaRegistro(2018,1,2,0,0,0);
+    	((DispositivoInteligente)pepa).setIntervalo(new IntervaloDispositivo(pepa.getFechaRegistro(),modo.NORMAL));
+    
+		LocalDateTime fecha = LocalDateTime.of(2018,2,21,0,0,0);
+		((DispositivoInteligente)pepa).ahorroEnergia(fecha);
+		LocalDateTime fechaap = LocalDateTime.of(2018,5,2,0,0,0);
+		((DispositivoInteligente)pepa).encender(fechaap);
+		LocalDateTime fechae = LocalDateTime.of(2018,7,24,0,0,0);
+		((DispositivoInteligente)pepa).encender(fechae);
+		LocalDateTime fechar = LocalDateTime.of(2018,9,11,0,0,0);
+		List<Dispositivo> disp = new ArrayList<>();disp.add(pepa);
+		Cliente c = new Cliente("pepa","pig","pepi","pik",2018,8,21,TipoDocumento.DNI,"40403568","12345678","pppp 986");
+		c.setDispositivos(disp);
+		System.out.println("kwh:" + pepa.getkWh());
+		System.out.println("kwhAhorro:" + ((DispositivoInteligente)pepa).getkWhAhorro());
+		System.out.println("nombre:" + pepa.getNombreDisp() + " eq conc:" + pepa.getEquipoConcreto());
+		System.out.println("estado actual:" + pepa.getEstadoActual());
+		System.out.println("estadodisp:" + pepa.getEstadoDisp());
+		System.out.println("inicio intervalo:" + ((DispositivoInteligente)pepa).getIntervalo().getInicio());
+		System.out.println("fin intervalo:" + ((DispositivoInteligente)pepa).getIntervalo().getFin());
+		System.out.println("modo intervalo:" + ((DispositivoInteligente)pepa).getIntervalo().getModo());
+		System.out.println("horasd de uso:" + pepa.getHorasDeUso());
+		System.out.println("fecha de registro:" + pepa.getFechaRegistro());
+		System.out.println("cantidad de intervalos finalizados:" + ((DispositivoInteligente)pepa).getIntervalos().size() + "\n");
+		for(IntervaloDispositivo i :((DispositivoInteligente)pepa).getIntervalos()) {
+			System.out.println("inicio intervalo:" + i.getInicio());
+			System.out.println("fin intervalo:" + i.getFin());
+			System.out.println("modo intervalo:" + i.getModo());
 		}
+    	
+    	
+    	
+    	
     	
     	
     	//Disp Estandar

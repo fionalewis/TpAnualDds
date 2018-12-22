@@ -87,6 +87,11 @@ public class DispositivoInteligente extends Dispositivo {
 		this.estadoDisp = estadoDisp;		
 	}	
 	
+	@Override
+	public double getHorasDeUso() {
+		return horasDeUsoTotales();
+	}
+	
 	public boolean getEsInteligente(){
 		return esInteligente;
 	}

@@ -129,10 +129,13 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		return null;
 	}
 	
-	public ModelAndView simplex(Request req, Response res){
+	public ModelAndView simplex(Request req, Response res) throws FileNotFoundException, InstantiationException, IllegalAccessException{
 		Map<String, Object> model = new HashMap<>();
 		Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+		cliente = ClienteRepository.obtenerCliente(req.session().attribute("user"));
+		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
+		cliente.setDispositivos(disps);
+		double consumoSimplex = cliente.llamarSimplex().getValue();
 			try {
 				if(cliente.hogarEficiente()){
 				model.put("eficiente","SI");
@@ -150,7 +153,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 				System.out.println(rec.getDispositivo());
 				
 				
-				
+				model.put("consumoSimplex",consumoSimplex);
 				model.put("recHoras",cliente.obtenerRecomendacionDTO());
 				
 			} catch (FileNotFoundException | InstantiationException | IllegalAccessException e) {

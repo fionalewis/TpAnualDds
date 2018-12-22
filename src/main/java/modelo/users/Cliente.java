@@ -68,7 +68,8 @@ public class Cliente extends Usuario {
 	private Transformador transformadorActual;
 
 	@Transient
-	private transient MetodoSimplex simplex = new MetodoSimplex();
+	public
+	transient MetodoSimplex simplex = new MetodoSimplex();
 	
 	//Esta lista es auxiliar hasta que veamos donde guardar los DE que borramos de la lista gral
 	@Transient

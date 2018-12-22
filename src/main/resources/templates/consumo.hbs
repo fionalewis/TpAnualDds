@@ -30,6 +30,8 @@
 		
 		{{#if consumo}}
 		<h4>Consumo del período:</h4> <div value={{consumo}}>{{consumo}}<small>kWh</small></div>
+		{{^}}
+		<p style="font-size:12px;">Si el consumo del período seleccionado es menor o igual a cero no habrá resultado</p>
 		{{/if}}
 		{{#if horas}}
 			<h4>Cant. de horas del período:</h4> <div value={{horas}}>{{horas}}hs</div>

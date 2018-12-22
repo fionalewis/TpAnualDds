@@ -18,13 +18,9 @@ import modelo.Reglas.Regla;
 import modelo.deviceState.Encendido;
 import modelo.devices.IntervaloDispositivo.modo;
 import modelo.devices.*;
-import modelo.devices.Sensor;
 import modelo.repositories.*;
 import modelo.geoLocation.Transformador;
 import modelo.geoLocation.Zona;
-import modelo.devices.DispositivoEstandar;
-import modelo.devices.DispositivoInteligente;
-
 import modelo.factories.DispositivoFactory;
 import modelo.users.Administrador;
 import modelo.users.Categoria;
@@ -230,18 +226,27 @@ public class Runner implements WithGlobalEntityManager, EntityManagerOps, Transa
 	//
 	
 	public void setUpSuenio(){
-		
-		DispositivoInteligente pepa = new DispositivoInteligente("Aire Acondicionado",1.5,2017,11,22,0,0,0,true);
-		DispositivoInteligente est = new DispositivoInteligente("Pepa",1.3,2018,11,22,0,0,0,true);
+		DeviceFactory f = new DeviceFactory();
+		//DispositivoInteligente pepa = new DispositivoInteligente("Aire Acondicionado",1.5,2017,11,22,0,0,0,true);
+		Dispositivo pep = f.crearDisp("Lavarropas","Automatico de 5 kg");
+		pep.setFechaRegistro(2018,7,28,0,0,0);
+    	((DispositivoInteligente)pep).setIntervalo(new IntervaloDispositivo(pep.getFechaRegistro(),modo.NORMAL));
+    	LocalDateTime unafecha = LocalDateTime.of(2018,8,10,0,0,0);
+    	((DispositivoInteligente)pep).apagar(unafecha);
+    	LocalDateTime otrafecha = LocalDateTime.of(2018,11,28,0,0,0);
+    	((DispositivoInteligente)pep).ahorroEnergia(otrafecha);
+		Dispositivo pepa = f.crearDisp("Aire Acondicionado","3500 frigorias");
+    	pepa.setFechaRegistro(2018,1,2,0,0,0);
+    	((DispositivoInteligente)pepa).setIntervalo(new IntervaloDispositivo(pepa.getFechaRegistro(),modo.NORMAL));
 		LocalDateTime fecha = LocalDateTime.of(2018,2,21,0,0,0);
-		pepa.ahorroEnergia(fecha);
+		((DispositivoInteligente)pepa).ahorroEnergia(fecha);
 		LocalDateTime fechaap = LocalDateTime.of(2018,5,2,0,0,0);
-		pepa.encender(fechaap);
+		((DispositivoInteligente)pepa).encender(fechaap);
 		LocalDateTime fechae = LocalDateTime.of(2018,7,24,0,0,0);
-		pepa.encender(fechae);
+		((DispositivoInteligente)pepa).encender(fechae);
 		LocalDateTime fechar = LocalDateTime.of(2018,9,11,0,0,0);
-		List<Dispositivo> disp = new ArrayList<>();disp.add(pepa);disp.add(est);
-		Cliente c = new Cliente("pepa","pig","pepi","pik",2018,8,21,TipoDocumento.DNI,"40403568","12345678","pppp 986");
+		List<Dispositivo> disp = new ArrayList<>();disp.add(pepa);disp.add(pep);
+		Cliente c = new Cliente("Peppa","Pig","peppa","pig",2018,8,21,TipoDocumento.DNI,"40403568","12345678","pppp 986");
 		c.setDispositivos(disp);
 		
 		
