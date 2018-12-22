@@ -31,7 +31,8 @@
          
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> 
 
-			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp_anual_dds?useSSL=false" />
+			<!--<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/tp_anual_dds?useSSL=false" />-->
+			<property name="hibernate.connection.url" value="jdbc:mysql://b4b8eb5f538eff:b1e863ee@us-cdbr-iron-east-01.cleardb.net/heroku_ba12b0d1203acf9?reconnect=true" /> 
 
             <property name="hibernate.connection.username" value="root" /> 
             <property name="hibernate.connection.password" value="mysql" /> 
