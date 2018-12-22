@@ -4,6 +4,8 @@ import modelo.devices.DispositivoInteligente;
 
 public class Apagado implements EstadoDispositivo{
 	
+	public String state = "Apagado";
+	
 	@Override
 	public EstadoDispositivo getEstado() {
 		return this;
@@ -11,7 +13,7 @@ public class Apagado implements EstadoDispositivo{
 	
 	@Override
 	public String darEstado() {
-		return "El dispositivo se encuentra apagado.";
+		return "Apagado";
 	}
 
 	@Override

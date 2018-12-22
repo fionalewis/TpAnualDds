@@ -50,5 +50,9 @@ public class Actuador {
 		return this.idFabricante;
 	}
 	
+	public Long getId() {
+		return this.id;
+	}
+	
 	
 }
