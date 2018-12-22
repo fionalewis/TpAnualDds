@@ -7,25 +7,38 @@
 </head>
 
 <body>
-	<h1>Estado del hogar</h1>
-	<h2>Consumo ultimo mes:</h2>
-	<div value={{consumo}}> {{consumo}}</div>
-
+	<h2>Estado del hogar</h2>
 	
+	<h3>Consumo total:</h3>
+	<div value={{consumoTotal}}>{{consumoTotal}}<small>kWh</small></div>
+	<br/>
+	<h3>Consumo del último mes:</h3>
+	<div value={{consumo}}>{{consumo}}<small>kWh</small></div>
+	<br/>
 		
 	<div class="table-responsive">
-		<h3>Dispositivos</h3>
 	<table class="table">
+	<caption>Dispositivos</caption>
+	<thead>
 		<tr>
-			<th>Nombre</th>
+			<th>Nombre del dispositivo</th>
+			<th>Modelo</th>			
 			<th>Estado</th>
 		</tr>
+	</thead>
+	<tbody>
 		{{#each dispositivos}}
 		<tr>
 			<td>{{nombreDisp}}</td>
+		{{#if equipoConcreto}}
+			<td>{{equipoConcreto}}</td>
+			{{^}}
+			<td> - </td>
+			{{/if}}			
 			<td>{{estadoActual}}</td>
 		</tr>
-		{{/each}}
+		{{~/each}}
+	</tbody>
 	</table>
 
 	<div class="form-row text-center">

@@ -30,8 +30,7 @@ public class DispositivoInteligente extends Dispositivo {
 	private IntervaloDispositivo unIntervalo;
 
 	@Transient
-	boolean esInteligente = true; //Ya no se si hace falta este atributo, pero lo vemos despues
-
+	//boolean esInteligente = true; //Ya no se si hace falta este atributo, pero lo vemos despues
 	@OneToMany(mappedBy="dispositivo", cascade=CascadeType.ALL)
 	//@JoinColumn(name="dispositivo_id", referencedColumnName="id", nullable=true, unique=false)
 	private List<IntervaloDispositivo> intervalos = new ArrayList<>();
@@ -74,6 +73,7 @@ public class DispositivoInteligente extends Dispositivo {
 	//Getters y Setters
 	
 	public double getkWhAhorro() {
+		this.setkWhAhorro(getkWh());
 		return kWhAhorro;
 	}
 	public void setkWhAhorro(double kWh) {
@@ -86,6 +86,11 @@ public class DispositivoInteligente extends Dispositivo {
 	public void setEstadoDisp(EstadoDispositivo estadoDisp) {
 		this.estadoDisp = estadoDisp;		
 	}	
+	
+	@Override
+	public double getHorasDeUso() {
+		return horasDeUsoTotales();
+	}
 	
 	public boolean getEsInteligente(){
 		return esInteligente;
@@ -150,7 +155,16 @@ public class DispositivoInteligente extends Dispositivo {
 	// Funcionalidades Entrega1
 	
 	public double horasDeUsoTotales() {
+		if(intervalos.size()!=0) {
 		horasDeUso = intervalos.stream().mapToDouble(unInt -> unInt.calculoDeHoras()).sum();
+		} else {
+			//Si nunca lo cambiaron de estado no va a tener nada en la lista de intervalos
+			LocalDateTime ahora = LocalDateTime.now();
+			IntervaloDispositivo aux = new IntervaloDispositivo();
+			aux.setInicio(unIntervalo.getInicio());
+			aux.setFin(ahora);
+			horasDeUso = aux.calculoDeHoras();
+		}
 		return horasDeUso;
 	}
 	
@@ -166,7 +180,20 @@ public class DispositivoInteligente extends Dispositivo {
 		
 	@Override
 	public double consumoTotal() {
-		return intervalos.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
+		if(intervalos.size()!=0) {
+			int tam = intervalos.size();
+			IntervaloDispositivo ultimo = intervalos.get(tam - 1);
+			if(ultimo.getFin() != null) {
+				return intervalos.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
+			}
+			else {
+				ultimo.setFin(LocalDateTime.now());
+				return intervalos.stream().mapToDouble(unInt -> consumoParcial(unInt)).sum();
+			}
+		} else {
+			IntervaloDispositivo aux = new IntervaloDispositivo(unIntervalo.getInicio(),LocalDateTime.now());
+			return aux.calculoDeHoras()*getkWh();
+		}
 	}
 	
 	// Duplicadas para evaluar en una lista especifica que nosotros creemos
@@ -193,6 +220,7 @@ public class DispositivoInteligente extends Dispositivo {
 	public void apagar() {
 		unIntervalo.setFin(LocalDateTime.now());
 		guardarAuxiliar();
+		this.setEstadoActual("Apagado");
 		estadoDisp.apagar(this);
 		//nuwvo dudoso
 		
@@ -208,17 +236,23 @@ public class DispositivoInteligente extends Dispositivo {
 	public void encender(){
 		if(getEstado() == "Apagado") {
 			unIntervalo.setInicio(LocalDateTime.now());
+			//mm
+			unIntervalo.setFin(null);
 			unIntervalo.setModo(modo.NORMAL);
 			
 			//nuevo, dudoso
 			List <IntervaloDispositivo> listaIntervalos = new ArrayList<IntervaloDispositivo>();
 			listaIntervalos.add(new IntervaloDispositivo(LocalDateTime.now(),modo.NORMAL));
 			(new DispositivoRepository()).addIntervaloDispositivo(this.getId(),listaIntervalos);
+			this.setEstadoActual("Encendido");
 		} else {
 			unIntervalo.setFin(LocalDateTime.now());
 			guardarAuxiliar();
 			unIntervalo.setInicio(LocalDateTime.now().plusSeconds(1));
 			unIntervalo.setModo(modo.NORMAL);
+			//mm
+			unIntervalo.setFin(null);
+			this.setEstadoActual("Encendido");
 		}
 		estadoDisp.encender(this);		
 	}
@@ -227,11 +261,17 @@ public class DispositivoInteligente extends Dispositivo {
 		if(estadoDisp instanceof Apagado) {
 			unIntervalo.setInicio(LocalDateTime.now());
 			unIntervalo.setModo(modo.AHORRO);
+			//mm
+			unIntervalo.setFin(null);
+			this.setEstadoActual("Ahorro de energía");
 		} else {
 			unIntervalo.setFin(LocalDateTime.now());
 			guardarAuxiliar();
 			unIntervalo.setInicio(LocalDateTime.now().plusSeconds(1));
 			unIntervalo.setModo(modo.AHORRO);
+			//mm
+			unIntervalo.setFin(null);
+			this.setEstadoActual("Ahorro de energía");
 		}
 		estadoDisp.ahorroEnergia(this);
 	}
@@ -241,6 +281,7 @@ public class DispositivoInteligente extends Dispositivo {
 	public void apagar(LocalDateTime unafecha) {
 		unIntervalo.setFin(unafecha);
 		guardarAuxiliar();
+		this.setEstadoActual("Apagado");
 		estadoDisp.apagar(this);
 	}
 	
@@ -248,11 +289,17 @@ public class DispositivoInteligente extends Dispositivo {
 		if(estadoDisp instanceof Apagado) {
 			unIntervalo.setInicio(unafecha);
 			unIntervalo.setModo(modo.NORMAL);
+			//mm
+			unIntervalo.setFin(null);
+			this.setEstadoActual("Encendido");
 		} else {
 			unIntervalo.setFin(unafecha);
 			guardarAuxiliar();
 			unIntervalo.setInicio(unafecha.plusSeconds(1));
 			unIntervalo.setModo(modo.NORMAL);
+			//mm
+			unIntervalo.setFin(null);
+			this.setEstadoActual("Encendido");
 		}
 		estadoDisp.encender(this);		
 	}
@@ -261,12 +308,18 @@ public class DispositivoInteligente extends Dispositivo {
 		if(estadoDisp instanceof Apagado) {
 			unIntervalo.setInicio(unafecha);
 			unIntervalo.setModo(modo.AHORRO);
+			//mm
+			unIntervalo.setFin(null);
+			this.setEstadoActual("Ahorro de energía");
 		}
 		else {
 			unIntervalo.setFin(unafecha);
 			guardarAuxiliar();
 			unIntervalo.setInicio(unafecha.plusSeconds(1));
 			unIntervalo.setModo(modo.AHORRO);
+			//mm
+			unIntervalo.setFin(null);
+			this.setEstadoActual("Ahorro de energía");
 		}
 		estadoDisp.ahorroEnergia(this);
 	}
@@ -287,19 +340,83 @@ public class DispositivoInteligente extends Dispositivo {
 	
 	// Consultas de consumo en periodos especificos y sus metodos delegados
 	
+	public double cons1IntEntre(LocalDateTime inicio,LocalDateTime fin) {
+		double resultBetween = inicio.compareTo(fin);
+		// O sea si las fechas pasadas por parámetro son iguales o la de inicio es mayor a la final, da error
+		if(resultBetween >=0) {
+			return -1;
+		}
+		//Si el intervalo a evaluar termina antes del inicio de nuestro dispositivo, da error
+		double resultFin = fin.compareTo(unIntervalo.getInicio());
+		if(resultFin<0){
+			return -1;
+			//Si es igual a nuestra fecha de inicio, el consumo va a dar 0
+		} else if(resultFin == 0) {
+			return 0;
+		} //Si no es ninguna de las anteriores, podemos calcularlo
+		double resultInicio = inicio.compareTo(unIntervalo.getInicio());
+		IntervaloDispositivo aux;
+		if(resultInicio <=0) {
+			aux = new IntervaloDispositivo(unIntervalo.getInicio(),fin);
+		} else {
+			aux = new IntervaloDispositivo(inicio,fin);
+		}		
+		return aux.calculoDeHoras()*getkWh();
+	}
+	
+	@Override
 	public double consumoTotalEntre(LocalDateTime fechaInicio,LocalDateTime fechaFin){
+		if(intervalos.size()==0) {
+			return cons1IntEntre(fechaInicio,fechaFin);
+		}
+		
 		int posIntInicial = posicionInicial(fechaInicio);
 		int posIntFin = posicionFinal(fechaFin);
 		if(condicionDeError(posIntInicial,posIntFin)){
 			return 0;
 		}
+		//
+		if(posIntInicial == posIntFin) {
+			LocalDateTime fechaI = intervalos.get(posIntInicial).getInicio();
+			LocalDateTime fechaF;
+			if(intervalos.get(posIntFin).getFin() == null) {
+				fechaF = LocalDateTime.now();
+			} else {
+				fechaF = intervalos.get(posIntFin).getFin();
+			}
+			IntervaloDispositivo idemint = new IntervaloDispositivo(fechaI,fechaF);
+			idemint.setModo(intervalos.get(posIntInicial).getModo());
+			if(idemint.getModo() == modo.NORMAL) {
+				return idemint.calculoDeHoras()*getkWh();
+			} else {
+				return idemint.calculoDeHoras()*getkWhAhorro();
+			}
+		}
+		//
 		IntervaloDispositivo intInic = setearIntervAux(fechaInicio,posIntInicial,true);
 		IntervaloDispositivo intFin = setearIntervAux(fechaFin,posIntFin,false);
 		List<IntervaloDispositivo> intervalosAEvaluar = listaAEvaluar(intInic,intFin,posIntInicial,posIntFin);
 		return consumoTotal(intervalosAEvaluar);	
 	}
 	
+	// Consumo en ultimas horas
+	
+	public double consUltHs1Int(int horas) {
+		LocalDateTime ahora = LocalDateTime.now();
+		LocalDateTime momentoInicial = ahora.minusHours(horas);
+		int result = momentoInicial.compareTo(unIntervalo.getInicio());
+		if(result <= 0) {
+			return consumoTotalEntre(unIntervalo.getInicio(),ahora);
+		} else {
+			return consumoTotalEntre(momentoInicial,ahora);
+		}
+	}
+	
 	public double consumoEnUltimasHoras(int horas) { // En tiempo real
+		if(intervalos.size()==0) {
+			return consUltHs1Int(horas);
+		}
+		
 		LocalDateTime momentoActual = LocalDateTime.now();
 		LocalDateTime momentoInicial = momentoActual.minusHours(horas);		
 		boolean condicion = false;		
@@ -403,6 +520,15 @@ public class DispositivoInteligente extends Dispositivo {
 		//Casos extremos: fechaI es antes que todas las fechasI o fechaI despues de todas
 		
 		if(unaFechaI.isAfter(ultFI)){
+			if(ultFF==null) {
+				LocalDateTime nuevoF = LocalDateTime.now();
+				if(unaFechaI.isAfter(nuevoF)) {
+					return -1;
+				}
+				else {
+					return tam - 1;
+				}
+			}
 			if(unaFechaI.isAfter(ultFF)) {
 				return -1;
 			} else {
@@ -439,17 +565,25 @@ public class DispositivoInteligente extends Dispositivo {
 		LocalDateTime ultFF = intervalos.get(tam-1).getFin();
 		
 		//Casos extremos: fechaF ocurre antes que cualquier fecha inicial
-		
+		if(primerFF == null) {
+			primerFF = LocalDateTime.now();
+		}
 		if(unaFechaF.isBefore(primerFF)||unaFechaF.isEqual(primerFF)){
 			if(unaFechaF.isBefore(primerFI)||unaFechaF.isEqual(primerFI)) { // no habria nada que calcular en estos casos
 				return -1;
 			}
 			return 0;
 		}
-		if(ultFF != null){
-		if(unaFechaF.isAfter(ultFF)) {
+
+		if(ultFF==null) {
+			LocalDateTime nuevoF = LocalDateTime.now();
+			if(unaFechaF.isAfter(nuevoF)) {
+				return -1;
+			} else {
+				return tam-1;
+			}
+		} else if(unaFechaF.isAfter(ultFF)|| unaFechaF.isEqual(ultFF)) {
 			return tam-1;
-		}
 		}
 		
 		while(i<tam && !(unaFechaF.isBefore(fechas[i])||unaFechaF.isEqual(fechas[i]))) {

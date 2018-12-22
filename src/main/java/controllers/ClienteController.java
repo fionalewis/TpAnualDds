@@ -27,6 +27,8 @@ import javax.persistence.NoResultException;
 import org.uqbarproject.jpa.java8.extras.WithGlobalEntityManager;
 import org.uqbarproject.jpa.java8.extras.transaction.TransactionalOps;
 
+import com.google.gson.Gson;
+
 import modelo.JsonManager;
 import modelo.Actuador.Actuador;
 import modelo.Reglas.CondicionSensorYValor;
@@ -60,13 +62,12 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	public ModelAndView calcularConsumo(Request req, Response res){
 		//try {
 		Map<String, Object> model = new HashMap<>();
-		//String nombreEmpresa = req.queryParams("nombreEmpresa");
-		//Empresa empresa = Repositorios.repositorioEmpresas.buscarEmpresa(nombreEmpresa);
 		String inicioPeriodo = req.queryParams("inicioPeriodo");
 		String finPeriodo = req.queryParams("finPeriodo");
 		System.out.println(inicioPeriodo);
 		System.out.println(finPeriodo);
 		if(inicioPeriodo != "" && finPeriodo != ""){
+/*<<<<<<< HEAD
 		String[] outputI = inicioPeriodo.split("/");
 		LocalDateTime fechaInicio= LocalDateTime.of(Integer.parseInt(outputI[2]), Integer.parseInt(outputI[0]), Integer.parseInt(outputI[1]), 0, 0);
 		String[] outputF = finPeriodo.split("/");
@@ -74,16 +75,29 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		
 		System.out.println("---");
 		System.out.println(fechaInicio);
+=======*/
+		String[] outputI = inicioPeriodo.split("-");
+		LocalDateTime fechaInicio= LocalDateTime.of(Integer.parseInt(outputI[0]), Integer.parseInt(outputI[1]), Integer.parseInt(outputI[2]), 0, 0,0);
+		System.out.println(fechaInicio);
+		String[] outputF = finPeriodo.split("-");
+		LocalDateTime fechaFin= LocalDateTime.of(Integer.parseInt(outputF[0]), Integer.parseInt(outputF[1]), Integer.parseInt(outputF[2]), 0, 0,0);
+
 		System.out.println(fechaFin);
 		//TODO ir a buscar el cliente posta a la base de datos
 		//Cliente user = ClienteFactory.getCliente(req.session().id());
 		
 		Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
-		DispositivoRepository disp = new DispositivoRepository();
-		List <Dispositivo> d = disp.getDispositivosDeUnCliente(cliente.getNroDoc());
-		List <Dispositivo> de = d.stream().filter(UnDisp -> UnDisp.getEsInteligente()).collect(Collectors.toList()); 
-		model.put("consumo", de.stream().mapToDouble(unDisp ->((DispositivoInteligente) unDisp).consumoTotalEntre(fechaInicio,fechaFin)).sum());
+		cliente = ClienteRepository.obtenerCliente(req.session().attribute("user"));
+		List <Dispositivo> d = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc());
+		
+		
+		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
+		cliente.setDispositivos(disps);
+		double horas = IntervaloDispositivo.calculoDeHoras(fechaInicio,fechaFin);
+		
+		double consumo = cliente.calcularConsumoEntreFechas(fechaInicio,fechaFin); 
+		model.put("consumo", consumo);
+		model.put("horas",horas);
 		}
 		return new ModelAndView(model, "consumo.hbs");
 		//}catch(Exception ex) {res.redirect("/error");}
@@ -92,6 +106,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 	
 	
 	public ModelAndView hogar(Request req, Response res){
+/*<<<<<<< HEAD
 		try {
 		Map<String, Object> model = new HashMap<>();		
 		//TODO ir a buscar el cliente posta a la base de datos
@@ -111,6 +126,29 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		}catch(Exception ex) {res.redirect("/error");}
 		return null;
 			
+=======*/
+		Map<String, Object> model = new HashMap<>();
+		//TODO ir a buscar el cliente posta a la base de datos
+		//Cliente user = ClienteFactory.getCliente(req.session().id());
+		List<Cliente> cli = ClienteRepository.getTodosLosClientes();
+		
+		Cliente cliente = new Cliente();
+		cliente = ClienteRepository.obtenerCliente(req.session().attribute("user"));
+		
+		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
+		cliente.setDispositivos(disps);
+		
+		double consumoTotal = cliente.calcularConsumo2();
+		LocalDateTime ahora = LocalDateTime.now();
+		LocalDateTime primerDiaMes = ahora.withDayOfMonth(1); System.out.println(primerDiaMes);
+		double consumoEsteMes = cliente.calcularConsumoEntreFechas(primerDiaMes,ahora); 
+		
+		model.put("consumoTotal",consumoTotal);
+		model.put("consumo",consumoEsteMes);
+		this.actualizarEstadosDisp(disps);
+		model.put("dispositivos",disps);		
+		return new ModelAndView(model, "hogar.hbs");		
+
 	}
 	
 	public ModelAndView carga(Request req, Response res){
@@ -128,19 +166,21 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 		return null;
 	}
 	
-	public ModelAndView simplex(Request req, Response res){
-		try {
-		Map<String, Object> model = new HashMap<>();
 
+	public ModelAndView simplex(Request req, Response res) throws FileNotFoundException, InstantiationException, IllegalAccessException{
+		Map<String, Object> model = new HashMap<>();
 		Cliente cliente = new Cliente();
-		cliente = new ClienteRepository().obtenerCliente(req.session().attribute("user"));
+		cliente = ClienteRepository.obtenerCliente(req.session().attribute("user"));
+		List<Dispositivo> disps = DispositivoRepository.getDispositivosDeUnCliente(cliente.getNroDoc()).stream().collect(Collectors.toList());//.filter(x-> Dispositivo.esAmbos(x)).collect(Collectors.toList());//filtar i y c;
+		cliente.setDispositivos(disps);
+		double consumoSimplex = cliente.llamarSimplex().getValue();
 			try {
 				if(cliente.hogarEficiente()){
 				model.put("eficiente","SI");
 				}else{model.put("eficiente","NO");}
 				
 				//model.put("recomendacion", cliente.obtenerRecomendacionString());
-				List<String> recHoras = new ArrayList();
+				List<String> recHoras = new ArrayList<String>();
 				for(Entry<String, Double> unValor : cliente.horasXDisp().entrySet()) {
 					recHoras.add("La recomendaci�n de horas m�ximas para el dispositivo '" + unValor.getKey() + "' es de " + unValor.getValue() + "hs.");
 				}		
@@ -151,7 +191,7 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 				System.out.println(rec.getDispositivo());
 				
 				
-				
+				model.put("consumoSimplex",consumoSimplex);
 				model.put("recHoras",cliente.obtenerRecomendacionDTO());
 				
 			} catch (FileNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -160,8 +200,6 @@ public class ClienteController implements WithGlobalEntityManager, Transactional
 			}		
 		
 		return new ModelAndView(model, "simplex.hbs");
-		}catch(Exception ex) {res.redirect("/error");}
-		return null;
 	}
 	
 	public void actualizarEstadosDisp(List <Dispositivo> disp){

@@ -14,7 +14,6 @@ public class IntervaloDispositivo {
 	private LocalDateTime fin;
 	@Enumerated(EnumType.STRING)
 	private modo modo;
-
 	
 	@ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="dispositivo_id", referencedColumnName="dispositivo_id", nullable=true, unique=false)
@@ -30,6 +29,13 @@ public class IntervaloDispositivo {
 		setInicio(LocalDateTime.of(y,m,d,h,min,sec));
 		setModo(mod);
 	}
+	
+	//Para el intervalo auxiliar - NO USAR para otra cosa
+	public IntervaloDispositivo(LocalDateTime inicio,LocalDateTime fin) {
+		setInicio(inicio);
+		setFin(fin);
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -65,6 +71,13 @@ public class IntervaloDispositivo {
 	        return horasDeUso;
 			
 		}
+	}
+	
+	public static double calculoDeHoras(LocalDateTime i,LocalDateTime f) {
+		Duration period = Duration.between(i,f);
+        double periodSeconds = period.getSeconds();
+        double horasDeUso = periodSeconds/3600;
+        return horasDeUso;
 	}
 	
 }
