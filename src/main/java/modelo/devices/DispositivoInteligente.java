@@ -567,7 +567,7 @@ public class DispositivoInteligente extends Dispositivo {
 			} else {
 				return tam-1;
 			}
-		} else if(unaFechaF.isAfter(ultFF)) {
+		} else if(unaFechaF.isAfter(ultFF)|| unaFechaF.isEqual(ultFF)) {
 			return tam-1;
 		}
 		
